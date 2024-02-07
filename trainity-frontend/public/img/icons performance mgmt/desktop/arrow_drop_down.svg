@@ -1,0 +1,15 @@
+<svg width="8" height="9" viewBox="0 0 8 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="arrow_drop_down" clip-path="url(#clip0_4966_89167)">
+<mask id="mask0_4966_89167" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-3" y="-2" width="11" height="11">
+<rect id="Bounding box" x="-3" y="-1.99609" width="10.3789" height="10.3789" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_4966_89167)">
+<path id="arrow_drop_down_2" d="M3.01069 6.37372L1.21168 4.57471C0.992573 4.3556 0.943561 4.10478 1.06465 3.82224C1.18574 3.53971 1.40196 3.39844 1.71333 3.39844H5.27675C5.58812 3.39844 5.80435 3.53971 5.92544 3.82224C6.04652 4.10478 5.99751 4.3556 5.7784 4.57471L3.97939 6.37372C3.9102 6.44292 3.83524 6.49481 3.75451 6.52941C3.67379 6.564 3.5873 6.5813 3.49504 6.5813C3.40279 6.5813 3.31629 6.564 3.23557 6.52941C3.15484 6.49481 3.07989 6.44292 3.01069 6.37372Z" fill="#F4F5FB"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_4966_89167">
+<rect width="8" height="8" fill="white" transform="translate(0 0.546875)"/>
+</clipPath>
+</defs>
+</svg>

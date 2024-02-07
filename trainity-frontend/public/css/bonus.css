@@ -1,0 +1,223 @@
+.content-2 {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.content-2 p {
+  color: #344054;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  margin-block: auto;
+}
+
+.content-2 h1 {
+  color: #344054;
+
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 38px; /* 126.667% */
+}
+
+.content-2 h2 {
+  color: #344054;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+}
+
+.labels {
+  display: grid;
+}
+
+.labels span {
+  color: #667085;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 171.429% */
+}
+
+.faq .heading h1 {
+  margin-top: 2rem;
+  color: var(--content-on-light-primary, #181818);
+
+  font-size: 20px !important;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.questions-container {
+  /* max-width: 800px; */
+  margin: 0 auto;
+}
+
+.table {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.question {
+  border-bottom: 1px solid #eaecf0;
+  margin-top: 1rem;
+  margin-left: 0;
+  padding-bottom: 1rem;
+}
+
+.questions-container .question:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.question button {
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: var(--gray-800, #1d2939);
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 0;
+}
+.question p {
+  max-height: 0;
+  opacity: 1;
+  overflow: hidden;
+  transition: all 0.6s ease;
+  color: var(--gray-600, #475467);
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.24px;
+  padding: 0px 15px 0px 15px;
+  padding-left: 0px;
+  margin: 0;
+}
+.d-arrow {
+  transition: transform 0.2s ease-in;
+  color: #1d2939;
+}
+
+/*add this class when click*/
+.question p.show {
+  max-height: 200px;
+  opacity: 1;
+}
+.question button .d-arrow.rotate {
+  transform: rotate(180deg);
+}
+.fa-trash:hover{
+  color:#FF6565 !important
+}
+.delete-button:hover{
+color:#FF6565 !important
+}
+.text-16-600{
+  display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 1;
+overflow: hidden;
+color: var(--Gray-700, #344054);
+text-overflow: ellipsis;
+font-family: Manrope;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 150% */
+
+}
+.breakdown h2 {
+  color: var(--gray-900, #101828);
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.time-label {
+  overflow: hidden;
+  color: var(--gray-700, #344054);
+  text-overflow: ellipsis;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.money-label {
+  color: var(--gray-500, #667085);
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.date-label {
+  color: var(--gray-500, #667085);
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+}
+
+.withdraw h2 {
+  color: var(--gray-800, #1d2939);
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+}
+
+.withdraw p {
+  color: var(--gray-600, #475467);
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.24px;
+}
+
+.withdraw button {
+  color: var(--gray-500, #667085);
+  text-align: center;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.1px;
+}
+th,td{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex:1
+}
+tr{
+  width: 100%;
+  display: flex;
+}

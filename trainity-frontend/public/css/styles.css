@@ -1,0 +1,354 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --ui-separator-gap: 1rem;
+  --ui-separator-color: rgba(255, 255, 255, 0.1);
+  --ui-separator-line-color: var(--ui-separator-color);
+  --ui-separator-content-color: var(--ui-separator-color);
+  --ui-separate-line-size: 1px;
+}
+
+html,
+body {
+  font-family: 'Manrope', sans-serif !important;
+  line-height: 1.5em;
+}
+
+.login-page {
+  width: 100vw;
+  height: 100vh;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5em;
+}
+
+.login-content-container {
+  position: relative;
+  height: 100%;
+}
+
+.main-routes {
+  height: 100%;
+  transition: top 1.2s;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+  background-color: #0d2129;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-size: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .auth-container {
+    flex-direction: row;
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: #48bf84;
+  }
+}
+
+.auth-illustration {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height: 160px;
+  /* background-image: url("https://x.razorpay.com/dist/assets/img/auth/top-center-illustration.svg"); */
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+.auth-illustration-main {
+  display: none;
+}
+
+.company-logo {
+  display: block;
+  height: 2rem;
+  transform: scale(1.2);
+}
+
+@media screen and (min-width: 1024px) {
+  .auth-illustration {
+    /* background-image: url("https://x.razorpay.com/dist/assets/img/auth/top-left-element.svg"); */
+    background-position: top left;
+    background-size: 20%;
+    align-items: center;
+    width: 66.66667%;
+    height: 100%;
+  }
+  .auth-illustration-main {
+    display: block;
+    position: relative;
+    width: 75%;
+    height: 50.3933%;
+    background: url("../img/custom/login-hero.png") no-repeat center;
+    background-size: contain;
+  }
+
+  .auth-illustration-text {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 1rem;
+    font-size: 1em;
+    line-height: 1.125em;
+  }
+
+  .company-logo {
+    display: block;
+    position: absolute;
+    height: 6rem;
+    padding: 2rem;
+    top: 0;
+    left: 0;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .auth-illustration-main {
+    height: 76.9792%;
+  }
+}
+
+.auth-form-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  overflow-x: hidden;
+}
+
+.auth-form-container {
+  max-width: 20rem;
+  justify-content: space-between;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+}
+
+.auth-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  /* text-align: center; */
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.google-sign-in-btn {
+  text-decoration: none;
+  display: block;
+  /* display: inline-block; */
+  width: 100%;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.5rem;
+  background: #0d2129;
+  border: 2px solid #fff;
+  position: relative;
+  color: #fff;
+  text-align: center;
+  transition: all 0.5s 0s;
+}
+
+.google-sign-in-btn:hover {
+  background: #48bf84;
+  /* color: #0d2129; */
+}
+
+.google-sign-in-btn img {
+  position: relative;
+  width: 20px;
+  margin-right: 3%;
+  top: 4px;
+  /* transform: translateY(30%); */
+}
+
+/* Privacy Policy */
+
+.privacy-policy-text {
+  font-size: 0.625rem;
+  color: rgba(255, 255, 255, 0.54);
+  text-align: center;
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  line-height: 1.25rem;
+}
+
+.seperator-line-container {
+  display: flex;
+  align-items: center;
+  gap: var(--ui-separator-gap);
+}
+
+.seperator-line {
+  height: var(--ui-separate-line-size);
+  background-color: var(--ui-separator-line-color);
+  flex: 1;
+}
+
+.privacy-link {
+  padding-top: 0;
+  padding-bottom: 0;
+  color: #5396ff;
+  padding: 0.25rem;
+  margin-left: -0.25rem;
+  border-radius: 0.125rem;
+  cursor: pointer;
+  outline: none;
+  font-weight: bold;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.link-text {
+  text-decoration: underline;
+  font-size: 0.625rem;
+  color: rgba(255, 255, 255, 0.54);
+  padding-left: 0.25rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+@media screen and (min-width: 1024px) {
+  .auth-form-main {
+    /* background: url("https://x.razorpay.com/dist/assets/img/auth/bottom-right-element.svg")
+        no-repeat; */
+    background-size: 30%;
+    background-position: bottom right;
+    width: 33.33333%;
+    margin-left: auto;
+    margin-top: 0;
+    background-color: #0d2129;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+
+  .auth-form-container {
+    padding: 1rem;
+    /* margin-bottom: auto; */
+  }
+}
+
+.mobile-support {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.mobile-support-container {
+  max-width: 20rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.mobile-support-heading {
+  width: 100%;
+}
+
+.mobile-support-image {
+  width: 100%;
+}
+
+.mobile-support-text {
+  width: 100%;
+}
+
+.mobile-support-text span {
+  font-weight: bold;
+}
+
+.back-btn a {
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  background: #48bf84;
+  border: 2px solid black;
+  border-radius: 12px;
+}
+
+.sign-up-text {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.sign-up-text a {
+  text-decoration: none;
+  color: #48bf84;
+  display: inline-block;
+  padding-left: 2%;
+}
+
+.phone-form,
+.otp-form {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  justify-items: stretch;
+}
+
+.hide {
+  display: none;
+}
+
+.phone-container input,
+.otp-form input {
+  text-decoration: none;
+  display: block;
+  /* display: inline-block; */
+  width: 100%;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.5rem;
+  background: #fff;
+  border: 2px solid #48bf84;
+  position: relative;
+  color: #0d2129;
+  text-align: center;
+  transition: all 0.5s 0s;
+}
+
+.phone-form .auth-btn,
+.otp-form .auth-btn {
+  justify-self: center;
+  align-self: center;
+}
+
+.phone-sign-in-btn img {
+  position: relative;
+  width: 20px;
+  top: 4px;
+}
+.info-message {
+  color: #48bf84;
+  font-size: 0.9rem;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+}

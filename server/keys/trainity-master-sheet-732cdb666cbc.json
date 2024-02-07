@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "trainity-master-sheet",
+  "private_key_id": "732cdb666cbc74239d83483f2b629fa5f36be4aa",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC+Hzuaj/vWJwF8\n1iN7cxehfFeoHdWXWK+gRWMPe/E0w6LSxpMOsk04hlAV1awANZZhrJXdfWVuPI75\n88qKMSxjU83/N4x67WFmZr/RVlt57BfukJxQUHI+vlNvZWsoyZeqXADo7BALOeZa\nLbXuUxQ1knfXqtQIgZAzJURm6kHp0ypV5Cdc/yrBpnzGia3Yft+tjKHepo86Sm02\nvR0uRrRD/np2cQvIzt1llALPwC7vBbfBrE/lrHZ/DKvhSr1ZYadFw3j3ozVbA2wL\nKOwggi4Yvvod+G5/hgvya9w4KY2fBSfE2WHoKHQ3nXf0lKFYL5Q9M4e/WVBmEOWd\nse3nCXchAgMBAAECggEATHrs87bDFHlZcFoGKQV59pS6AF+MChd7guoWuOZfeB3Q\n9KA8DRft13S0Z6wuRmFILt+J4/ErKebDj0oiamfwlr5iKi4y3Up7uYFQ3YmzP78Z\nO3dB4k8SPio7Dx9Jtb0uvTHIjepUY+e1QgaMXqReB1T1z7ShGhDgrKprs0i+HiyK\nEYZ+QAGMb1yjOmI86nhLk4mKilZoumaqdsREUtGylWxr/aKC/2/kahq4GMOAD0dR\n2/ehmFJm1AJkGozZNgc75vYh25sFW5+0X2ISkI83jcSBu3ORYX/5hetSDM8El2K6\nis5JfKaW+tFp0KP8KkRe3Lw09FyL1WyTKX5J+ETXZwKBgQDjdTG0W+G4EcvJBDhA\njb7y6ahSYHfzdeEg2/M4U02fbISLD9e9eMmgXIXnBHtDUCf+UBDbmBvpIJOz8dCe\nB17Pu5ilFgEqkmQzN81dkP5nk6An2DarxuTSAww4m/gdkYSM3xAEd5zqM4Un7rF+\n3YPzHm65OE32/HJC0ObiCLozEwKBgQDV+qv5fksvPUkWzgxugPc0qGGS6JMSUsML\nBNb2mauc4hb3t5kcRAT8xaJxTwxNAN/SDBDT/pmJqRhENNHGihbTnWS/P9Rwfmod\nqPFzr5DnH2/523lDsulpxP0+dKgVy6mryJ0FBu8fcMFdSq63CnnmtC/Su0CUawdQ\nKzA5Y+H/ewKBgCnV5lx8AdovO8IvSoFlENfw7gqov6dB6TR4ABY+DCrkdMR3F4E7\n9CnQmrhQ9LL+zTxTUaZyJcANQ912/p3yURf4My06DODdqBxbiSRKhOBcILrzY6rY\nnEGcWeUXmt0lZLHcXT/VGEFjVHxxxKfG6nwO/uKGXqCs8f8kGTM907GNAoGBAKya\nBx65QOxaAxriGiUI4l8Xc52M/RVKrQm2Xa+NRWDG/r/S2S5zr5I12VKM8N8sVV6Z\nXPmj5TWlsG1ULeJ4gPExhJLAahxT3EUQgbNPaxMDyM9Cug5hwuYOgDhg4TSzk6l9\nqSrk7P3vdgpKs6PyT2JI9kqFwRH3Q27nZ37jkukBAoGAF0Il0lsXJH+n5+O1AnXV\n+DNxPSeZfrBhxUYGc8Zn4ZA7jzAAdiWqnXcLS1tm8E7RemGXv7Bmov7bmINyHPWc\n9uqiLWkc63VRDRW1tfhypbq0RD5PVWwFTuLvTOEVNEa5j3oz4IavpPm4+q1O6wG/\nAR+L5ssxMjnTMBsA6i/q4Nw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "trainity-admin@trainity-master-sheet.iam.gserviceaccount.com",
+  "client_id": "102185164426285270129",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/trainity-admin%40trainity-master-sheet.iam.gserviceaccount.com"
+}
