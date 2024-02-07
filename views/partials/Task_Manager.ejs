@@ -1,0 +1,2484 @@
+<style>
+  
+#InitiativesBox{
+  height:90vh;
+}
+</style>
+<div id="TasksBody" style="display: none;" class="tabbody">
+  <div style="display: flex;gap:8px;align-items:center; color: var(--gray-600, #475467);">
+    <div class="tabbox  <%=activeTab!='TaskSubmission'?'activeTab':''%>" onclick="ChangeTab(['Task','TaskSubmission'],'Task')" id="TaskTab">Tasks</div>
+    <div class="tabbox  <%=activeTab=='TaskSubmission'?'activeTab':''%>" onclick="ChangeTab(['Task','TaskSubmission'],'TaskSubmission')" id="TaskSubmissionTab"> Task
+      Submission</div>
+  </div>
+ 
+  <%function formateDate(inputDate) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const dateObject = new Date(inputDate);
+    const year = dateObject.getFullYear();
+    const month = months[dateObject.getMonth()];
+    const day = dateObject.getDate();
+    return `${day} ${month} ${year}`;
+  }%>
+  <div id="TaskBody" class="tabbody" style="display: <%=activeTab!='TaskSubmission'?'flex':'none'%>">
+    <div style="display: flex;flex-direction: column;gap:25px;width: 100%;">
+      <div style="display: flex;
+        align-items: center;
+        gap: 32px;
+        ">
+        <div style="color: #363636;
+        flex:1 0 0;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 22px;">Task</div>
+        <div style="display: flex;
+        padding: 8px 12px;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;">
+          <img src="../Performance dashboard Icons/left.svg" onclick="scrollLeftT('InitiativesBox')">
+          <img src="../Performance dashboard Icons/right.svg" onclick="scrollRight('InitiativesBox')">
+        </div>
+      </div>
+      <div style="display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        ">
+        <div style="display: flex;
+        align-items: center;
+        gap: 24px;">
+          <div style="display: flex;
+         width: 300px;
+         height: 44px;
+       padding: 10px 14px;
+       align-items: center;
+       gap: 8px;
+       
+       
+         justify-content: center;
+         align-items: center;border-radius: var(--radius-medium, 8px);
+       border: 1px solid var(--gray-300, #D0D5DD);
+       background: var(--White, #FFF);
+       box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+            <img src="../Project icons/Search_icon.svg">
+            <input type="text" style="border: none;width: 100%;" oninput="SerachTasks(event.target.value)">
+          </div>
+
+          <div style="display: flex;
+        padding: 10px 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        border-radius: 8px;
+        border: 1px solid var(--gray-300, #D0D5DD);
+        background: var(--White, #FFF);
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);" data-target="#FilterTaskModal" data-toggle="modal">
+            <img src="../Performance dashboard Icons/filter.svg">
+            <div style="color: var(--gray-700, #344054);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px; /* 142.857% */
+        ">Filter</div>
+          </div>
+          <div style="display: flex;
+        padding: 10px 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        border-radius: 8px;
+        border: 1px solid var(--gray-300, #D0D5DD);
+        background: var(--White, #FFF);
+        /* Shadow/xs */
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+            <img src="../Performance dashboard Icons/calander.svg">
+            <div style="color: var(--gray-700, #344054);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px; /* 142.857% */
+        ">Date/Month</div>
+          </div>
+        </div>
+        <a href="#ClicktoaddnewTasksInPage" class="create-project_btn" onclick="Addinitiatives('ClicktoaddnewTasksInPage')"><span style="width: 24px;
+          height: 24px;"><i class="fa fa-plus" aria-hidden="true"></i></span>Add</a>
+
+      </div>
+    </div>
+   
+    <%- include('./TaskManagerFrontend')%>
+  </div>
+  <div id="TaskSubmissionBody" class="tabbody" style="display: <%=activeTab=='TaskSubmission'?'flex':'none'%>";>
+    <div style="display: flex;flex-direction: column;gap:25px;max-width: min(800px,100%);">
+      <div style="display: flex;
+  align-items: center;
+ justify-content: space-between;
+  ">
+        <div style="color: #363636;
+  flex:1 0 0;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 110% */">Task Submission</div>
+        <div style="display: flex;
+  padding: 8px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;">
+          <img src="../Performance dashboard Icons/left.svg" onclick="scrollLeftT('TSInitiativesBox')">
+          <img src="../Performance dashboard Icons/right.svg" onclick="scrollRight('TSInitiativesBox')">
+        </div>
+      </div>
+      <div style="display: flex;
+  justify-content: space-between;
+  align-items: center;
+  ">
+        <div style="display: flex;
+  width: min(600px,50%);
+  align-items: center;
+  gap: 24px;">
+          <div style="display: flex;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--gray-300, #D0D5DD);
+  background: var(--White, #FFF);
+  /* Shadow/xs */
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+            <img src="../Performance dashboard Icons/filter.svg">
+            <div style="color: var(--gray-700, #344054);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+  ">Filter</div>
+          </div>
+          <div style="display: flex;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--gray-300, #D0D5DD);
+  background: var(--White, #FFF);
+  /* Shadow/xs */
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+            <img src="../Performance dashboard Icons/calander.svg">
+            <div style="color: var(--gray-700, #344054);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+  ">Date/Month</div>
+          </div>
+        </div>
+        <div style="display: flex;
+    width: 300px;
+    height: 44px;
+  padding: 10px 14px;
+  align-items: center;
+  gap: 8px;
+  
+  
+    justify-content: center;
+    align-items: center;border-radius: var(--radius-medium, 8px);
+  border: 1px solid var(--gray-300, #D0D5DD);
+  background: var(--White, #FFF);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+          <img src="../Project icons/Search_icon.svg">
+          <input type="text" style="border: none;width: 100%;" oninput="SearchTaskSubmission(event.target.value)">
+        </div>
+      </div>
+    </div>
+    <% let TaskSubmissionTableHeaders=[ { title: "Tasks" , usedNames: "tasks",style:"width: 340px;display: flex;justify-content: center;" }, { title: "From" , usedNames: "from",style:"width: 210px;display: flex;justify-content: center;" },
+      { title: "Project" , usedNames: "project",style:"width: 210px;display: flex;justify-content: center;" }, { title: "Key Result" , usedNames: "krs",style:"width: 210px;display: flex;justify-content: center;"  }, { title: "Sub-key Result"
+      , usedNames: "subkrs",style:"width: 210px;display: flex;justify-content: center;"  }, { title: "Pervious KPI Progress" , usedNames: "pervKpiProgress",style:"width: 210px;display: flex;justify-content: center;"  }, {
+      title: "Submitted KPI Progress" , usedNames: "KpiProgress",style:"width: 210px;display: flex;justify-content: center;"  }, { title: "Quality" , usedNames: "quality",  }, {
+      title: "Speed" , usedNames: "speed",  }, { title: "Ratings" , usedNames: "rating" , }, { title: "Badges" ,
+      usedNames: "badges",  }, { title: "Feedback" , usedNames: "feedback" },{title:'Files',usedNames:'files'} ,{title:'Links',usedNames:'links'},{ title: "Status" , usedNames: "status",style:"width:180px" }, {
+      title: "Submitted On" , usedNames: "submittedOn",style:"width:180px" } ]; %>
+      <div class="table-responsive" style="width: 100%;overflow: auto;height: 90vh;" id="TSInitiativesBox">
+        <table class="table align-items-center">
+          <thead>
+            <tr>
+              <th  onmouseover="ShowIconsTS('Header')" onmouseout="RemoveIconsTS('Header')">
+                <div style="display: flex;gap:8px;align-items: center;">
+                <img src="../Performance dashboard Icons/three_dot.svg"  class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="threeDotTsHeader" style="display: none;" >
+                <div aria-labelledby='threeDotTsHeader' class="dropdown-menu" style="flex-direction: column;
+                align-items: flex-start;
+                border: 1px solid var(--gray-300, #D0D5DD);
+                border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+                border-bottom: 1px solid var(--gray-300, #D0D5DD);
+                " class="container_Style">
+               
+                <div class="dropdown_tab_active" data-toggle="modal" data-target="#DeleteTSConfirmation" onclick="ChangeTsIndex(-1)">
+                <img src="../Performance dashboard Icons/dropdown_delete.svg"> Delete
+                </div>
+                <div class="dropdown_tab_active" onclick="CheckBadgesAreAllot(-1)" >
+                  <i class="fa fa-check" aria-hidden="true" style="color: #48BF84;"></i> Approve
+                </div>
+                <div class="dropdown_tab_active" onclick="SetRejectionModal(-1)" data-target="#RejectTs" data-toggle="modal">
+                  <i class="fa fa-times" aria-hidden="true" style="color: #FF6565;"></i> Reject
+                </div>
+                </div>
+              <input type="checkbox" style="display: none;" id="checkboxTsHeader" class="TScheckbox" onclick="SelectAllTs()">
+                <div>Sr No</div>
+              </div>
+              </th>
+              <% for(let header of TaskSubmissionTableHeaders) {%>
+                    <th  style="<%=header.style%>">
+                      
+                <%=header.title%>
+                </th>
+                <%}%>
+          </thead>
+          <tbody class="list" >
+
+            <% for(let i=0;i<0;i++){%>
+              <tr class="TS">
+                <td  onmouseover="ShowIconsTS('<%=i%>')" onmouseout="RemoveIconsTS('<%=i%>')">
+                  <div style="display: flex;gap:8px;align-items: center;">
+                  <img src="../Performance dashboard Icons/three_dot.svg"  class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="threeDotTs<%=i%>" style="display: none;" >
+                  <div aria-labelledby='threeDotTs<%=i%>' class="dropdown-menu" style="flex-direction: column;
+                  align-items: flex-start;
+                  border: 1px solid var(--gray-300, #D0D5DD);
+                  border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+                  border-bottom: 1px solid var(--gray-300, #D0D5DD);
+                  " class="container_Style">
+                 
+                  <div class="dropdown_tab_active" data-toggle="modal" data-target="#DeleteTSConfirmation"  onclick="ChangeTsIndex('<%=i%>')">
+                  <img src="../Performance dashboard Icons/dropdown_delete.svg"> Delete
+                  </div>
+                  <div class="dropdown_tab_active" onclick="CheckBadgesAreAllot('<%=i%>')">
+                    <i class="fa fa-check" aria-hidden="true" style="color: #48BF84;"></i> Approve
+                  </div>
+                  <div class="dropdown_tab_active" onclick="SetRejectionModal('<%=i%>')" data-target="#RejectTs" data-toggle="modal">
+                    <i class="fa fa-times" aria-hidden="true" style="color: #FF6565;"></i> Reject
+                  </div>
+                  </div>
+                <input type="checkbox" style="display: none;" id="checkboxTs<%=i%>" class="TScheckbox" >
+                  <div><%=i+1%></div>
+                </div>
+                </td>
+                <td onmouseover="showIcons('.OpenIcon<%=TaskSubmissions[i]._id%>')"
+                  onmouseout="removeIcons('.OpenIcon<%=TaskSubmissions[i]._id%>')" style="display: flex;align-items: center;gap:10px;width: 340px;">
+                 
+                    <div style="display: flex;gap:8px;align-items: center;">
+                       <div 
+                      style="border: none;
+                      border-radius: 6px;
+                      height: 30px;
+                      width: 230px;
+                      background: transparent;display: -webkit-box;
+                      -webkit-box-orient: vertical;
+                      -webkit-line-clamp: 1;
+                      overflow: hidden;
+                      color: var(--gray-900, #101828);
+                      text-overflow: ellipsis;
+                      font-size: 14px;
+                      font-style: normal;
+                      font-weight: 600;
+                      line-height: 20px; /* 142.857% */
+                      " class="TStitles">
+                      <%=TaskSubmissions[i].tasks?.title%>
+                      </div>  
+                    </div>
+                <div onclick="OpenTaskSubmissionSideBar('<%=i%>')" class="OpenIcon<%=TaskSubmissions[i]._id%>"  style="display: none;align-items: center;gap:8px;color: var(--gray-500, #667085);
+                  font-size: 14px;
+                  cursor: pointer;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 20px;">
+                  <img src="../Project icons/maximize.svg">
+                  Open
+                </div>
+                </td>
+               
+               
+                <td id="Owner<%=i%>" style="width: 210px;">
+                  <div style="display: flex;align-items: center;gap:12px;width: 150px;overflow: hidden;" id="initiativeOwner<%=i%>"
+                    data-toggle="dropdown" aria-expanded="false">
+                    <img src="<%=TaskSubmissions[i].from?.image%>"
+                      style="width: 24px;height: 24px;border-radius:200px ;">
+                   <%=TaskSubmissions[i].from?.name%>
+                  </div>
+
+                </td>
+                <td style="width: 210px;">
+                  <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            width:110px;
+            overflow: hidden;
+            text-overflow: ellipsis;">
+
+
+                    <%= TaskSubmissions[i].project?.title %>
+
+
+                  </div>
+
+                </td>
+                <td style="width: 210px;">
+                  <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            width:190px;
+            overflow: hidden;
+            text-overflow: ellipsis;" id="initiativeKR<%=i%>">
+
+                    <% for (let j=0; j < TaskSubmissions[i].krs?.length; j++) { %>
+                      <%= TaskSubmissions[i].krs[j].title %>
+                        <%= j < TaskSubmissions[i].krs?.length - 1 ? ',' : '' %>
+                          <% } %>
+
+                  </div>
+
+                </td>
+                <td style="width: 210px;">
+                  <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        overflow: hidden;
+                        width:190px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;" id="initiativeSubKR<%=i%>">
+
+                    <% for (let j=0; j < TaskSubmissions[i].subkrs?.length; j++) { %>
+                      <%= TaskSubmissions[i].subkrs[j].title %>
+                        <%= j < TaskSubmissions[i].subkrs?.length - 1 ? ',' : '' %>
+                          <% } %>
+
+
+
+
+                  </div>
+
+                </td>
+                <td style="width: 210px;">
+                 <% let currentValue=0,startingValue=0,targetValue=0; %>
+                 <% for(let kpi of TaskSubmissions[i].pervKpiProgress){ %>
+                  <% currentValue+=kpi.currentValue;%>
+                  <% startingValue+=kpi.startingValue;%>
+                  <% targetValue+=kpi.targetValue;%>
+                  <%}%>
+                  <% currentValue=currentValue/TaskSubmissions[i].pervKpiProgress.length;%>
+                  <% startingValue=startingValue/TaskSubmissions[i].pervKpiProgress.length;%>
+                  <% targetValue=targetValue/TaskSubmissions[i].pervKpiProgress.length;%>
+                  <% currentValue=Math.round(currentValue);%>
+                  <% startingValue=Math.round(startingValue);%>
+                  <% targetValue=Math.round(targetValue);%>
+                  <% currentValue=Math.min(targetValue,currentValue)%>
+                  <%let perc=Math.min(100,(currentValue/(targetValue-startingValue))*100)%>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                      <div style="display: flex;
+                            width: 19px;
+                            height: 13px;
+                            flex-direction: column;
+                            justify-content: center;
+                            color: var(--gray-500, #667085);
+                            
+                            font-size: 12px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 28px;  margin-left:<%=perc%>%;"><%=currentValue%></div>
+                           <div class="ProgressTs" style="width: 150px;">
+                             <div class="progress__bar" style="width: <%=perc%>%;" ></div>
+                           </div>
+                           <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                           <div style="display: flex;
+                           width: 19px;
+                           height: 13px;
+                           flex-direction: column;
+                           justify-content: center;
+                           color: var(--gray-500, #667085);
+                           
+                           font-size: 12px;
+                           font-style: normal;
+                           font-weight: 500;
+                           line-height: 28px; /* 233.333% */" ><%=startingValue%> </div>
+                            <div style="display: flex;
+                            width: 19px;
+                            height: 13px;
+                            flex-direction: column;
+                            justify-content: center;
+                            color: var(--gray-500, #667085);
+                            
+                            font-size: 12px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 28px; /* 233.333% */" id="ProgressBarTV${i}-${j}"> <%=targetValue%> </div>
+                           </div>
+                          </div>
+    
+                 
+                  </td>
+                  <td style="width: 210px;">
+                    <%  currentValue=0,startingValue=0,targetValue=0; %>
+                    <% for(let kpi of TaskSubmissions[i].KpiProgress){ %>
+                     <% currentValue+=kpi.currentValue;%>
+                     <% startingValue+=kpi.startingValue;%>
+                     <% targetValue+=kpi.targetValue;%>
+                     <%}%>
+                     <% currentValue=currentValue/TaskSubmissions[i].KpiProgress.length;%>
+                     <% startingValue=startingValue/TaskSubmissions[i].KpiProgress.length;%>
+                     <% targetValue=targetValue/TaskSubmissions[i].KpiProgress.length;%>
+                     <% currentValue=Math.round(currentValue);%>
+                     <% startingValue=Math.round(startingValue);%>
+                     <% targetValue=Math.round(targetValue);%>
+                     <% currentValue=Math.min(targetValue,currentValue)%>
+                  <% perc=Math.min(100,(currentValue/(targetValue-startingValue))*100)%>
+                       <div style="display: flex; flex-direction: column; gap: 6px;">
+                         <div style="display: flex;
+                               width: 19px;
+                               height: 13px;
+                               flex-direction: column;
+                               justify-content: center;
+                               color: var(--gray-500, #667085);
+                               
+                               font-size: 12px;
+                               font-style: normal;
+                               font-weight: 500;
+                               line-height: 28px;  margin-left:<%=perc%>%;"><%=currentValue%> </div>
+                              <div class="ProgressTs" style="width: 150px;">
+                                <div class="progress__bar" style="width: <%=perc%>%;" ></div>
+                              </div>
+                              <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                              <div style="display: flex;
+                              width: 19px;
+                              height: 13px;
+                              flex-direction: column;
+                              justify-content: center;
+                              color: var(--gray-500, #667085);
+                              
+                              font-size: 12px;
+                              font-style: normal;
+                              font-weight: 500;
+                              line-height: 28px; /* 233.333% */" ><%=startingValue%> </div>
+                               <div style="display: flex;
+                               width: 19px;
+                               height: 13px;
+                               flex-direction: column;
+                               justify-content: center;
+                               color: var(--gray-500, #667085);
+                               
+                               font-size: 12px;
+                               font-style: normal;
+                               font-weight: 500;
+                               line-height: 28px; /* 233.333% */" id="ProgressBarTV${i}-${j}"> <%=targetValue%> </div>
+                              </div>
+                             </div>
+       
+                    
+                     </td>
+                     <td>
+                      <div style="display:flex;align-items: center;gap:0px;"> <span style="color: #48BF84;"><input type="number" style="width:50px;text-align:right;height:30px;border:none" value="<%=TaskSubmissions[i].quality%>"
+                      onchange="changetaskSubmissiondata('<%=i%>','quality',event.target.value)"></span>/10 </div></td>
+                      <td>
+                        <div style="display:flex;align-items: center;gap:0px;"> <span style="color: #48BF84;"><input type="number" style="width:50px;text-align:right;height:30px;border:none" value="<%=TaskSubmissions[i].speed%>"
+                         onchange="changetaskSubmissiondata('<%=i%>','speed',event.target.value)"></span>/10</div></td>
+                      
+                         <td>
+                          <div style="display:flex;align-items: center;gap:0px;"> <span style="color: #48BF84;"><input type="number" style="width:50px;text-align:right;height:30px;border:none" value="<%=TaskSubmissions[i].rating%>"
+                           onchange="changetaskSubmissiondata('<%=i%>','rating',event.target.value)"></span><img src="../img/filled-star.svg" style="width: 24px; height: 24px; flex-shrink: 0;"></div></td>
+                           <td>
+                            <div style="display:flex;align-items: center;gap:0px;"><span style="color: #48BF84;"><input type="number" style="width:50px;text-align:right;height:30px;border:none" value="<%=TaskSubmissions[i].badges%>"
+                             onchange="changetaskSubmissiondata('<%=i%>','badges',event.target.value)"></span><img src="../img/gem.svg" style="width: 24px; height: 24px; flex-shrink: 0;"></div></td>
+                   
+              <td ><img src="../Performance dashboard Icons/Tasks/One feedback(number is dynamic).svg"></td>
+              <td class="d-flex align-items-center gap-3">
+                <div id="TaskSubmissionFiles<%=i%>" data-toggle="dropdown" aria-expanded="false">
+                    <div style="display:flex;align-items: center;gap:0px;"><span ><%= TaskSubmissions[i].files?.length%></span>
+                    <img src="../Performance dashboard Icons/File.svg" style="width: 24px; height: 24px;"></div>
+                </div>
+                  <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="TaskSubmissionFiles<%=i%>dropdown">
+                    <% for(let file of TaskSubmissions[i].files){ %>
+                     
+                    <div style="display: flex;
+                    padding: 12px 16px;
+                    align-items: center;
+                    gap: 12px;" >
+            <img src="../Performance dashboard Icons/Document Added.svg">
+            <a href="<%=file.url%>" target="_blank" download style="display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      gap: 4px;
+                      flex: 1 0 0;">
+              <div style="
+                        color: var(--content-on-light-primary, #181818);
+                        font-size: 16px;
+                        max-width:150px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 17.352px;">
+                <%=file.title%>
+              </div>
+              <div style="display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        
+                        overflow: hidden;
+                        max-width:150px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        color: var(--content-on-light-secondary, #898989);
+                        text-overflow: ellipsis;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 17.352px;">
+                <%=file.url%>
+              </div>
+            </a>
+            </div>
+         <%}%>
+                  </div>
+            </td>
+           
+            
+            <td class="d-flex align-items-center gap-3" >
+              <div style="padding: 5px 12px; border-radius: 16px; display: flex; gap: 8px; align-items: center;" data-toggle="dropdown" aria-expanded="false">
+                <span ><%= TaskSubmissions[i].links?.length %></span>
+                <img src="../Performance dashboard Icons/Link.svg" style="width: 24px; height: 24px;">
+                
+              </div>
+               <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="TaskSubmissionLinks<%=i%>dropdown">
+              <% for(let link of TaskSubmissions[i].links){%>
+                <div style="display: flex;
+                padding: 12px 16px;
+                align-items: center;
+                gap: 12px;
+                flex: 1 0 0;
+               ">
+        <img src="../Performance dashboard Icons/Link Added.svg">
+        <a href="<%=link.url%>" target="_blank" style="display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  gap: 4px;
+                  flex: 1 0 0;">
+          <div style="
+                    color: var(--content-on-light-primary, #181818);
+                    font-size: 16px;
+                    font-style: normal;
+                    max-width:150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    font-weight: 600;
+                    line-height: 17.352px;">
+            <%=link.title%>
+          </div>
+          <div style="display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    
+                    overflow: hidden;
+                    max-width:150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    color: var(--content-on-light-secondary, #898989);
+                    text-overflow: ellipsis;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 17.352px;">
+            <%=link.url%>
+          </div>
+        </a>
+      </div>
+                <%}%>
+              </div>
+          </td>
+                <td style="width: 180px;">
+                  <div style="padding:5px 12px;border-radius:16px;" id="TSstatus<%=i%>"
+                    data-toggle="dropdown" aria-expanded="false">
+
+
+                    <%if(TaskSubmissions[i].status=='Approved'){%>
+                      <div class="Status_completed">Approved</div>
+                      <%}%>
+                        <%if(TaskSubmissions[i].status=='Pending'){%>
+                          <div class="Status_progress">Pending</div>
+                          <%}%>
+                          <%if(TaskSubmissions[i].status=='Rejected'){%>
+                            <div class="Status_hold">Rejected</div>
+                            <%}%>
+
+
+
+                  </div>
+                  <div class="dropdown-menu" style="
+         flex-direction: column;
+       " aria-labelledby="TSstatus<%=i%>" id="TSstatus<%=i%>dropdown">
+
+                    <div class="StatusBox" onclick="CheckBadgesAreAllot('<%=i%>')">
+                      <div class="Status_completed">Approved</div>
+                    </div>
+                    <div class="StatusBox" onclick="setStatusTS('<%=i%>','Pending','status',1)">
+                      <div class="Status_progress">Pending</div>
+                    </div>
+                    <div class="StatusBox" data-target="#RejectTs" data-toggle="modal"  onclick="SetRejectionModal('<%=i%>')" >
+                      <div class="Status_hold">Rejected</div>
+                    </div>
+                  </div>
+                </td>
+
+               
+<td style="width: 180px;">
+  <%= formateDate(TaskSubmissions[i].submittedOn)%>
+</td>
+              </tr>
+              <%}%>
+
+          </tbody>
+        </table>
+      </div>
+     <div id="BottomBarTS"style="display: none;
+     align-items: center;
+     position: fixed;
+      bottom: 50px; 
+     justify-content: center;
+     align-self:center;">
+     <div style="display: flex;align-items: center;background-color: white;border-radius: 8px;">
+    <div style="
+ color: var(--content-button-active, #FFF);
+    background: var(--pill-text-blue, #3B82F6);" class="stick_box">
+    <div id="select_no">1</div>
+    <div>Selected</div>
+  </div>
+  <div   style="
+color: var(--gray-700, #344054);
+padding: 0px 16px;" class="stick_box" >
+<div data-toggle="dropdown"
+aria-expanded="false" id="tsprojects" style="display:flex;flex-direction: column;gap:12px;align-items: center;">
+   <img src="../img/project_icon.svg">
+    <div >Change Project</div>
+  </div>
+    <div class="dropdown-menu" style="
+    flex-direction: column;
+     color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* ;
+  " aria-labelledby="tsprojects">
+      <div style="display: flex;
+              width: 100%;
+              height: 44px;
+              padding: 12px;
+              gap:12px;
+              justify-content: center;
+              align-items: center;
+              border-radius: 8px 8px 0px 0px;">
+              <img src="../Project icons/Search_icon.svg">
+              <input type="text" style="border: none;width: 100%;" placeholder="Search for Project" 
+                  oninput="filterAndSortTsProject(event.target.value)">
+          </div> 
+          <div  style="max-height:200px;overflow:auto">
+            
+              <% for(let Project of projects){%>
+               <div style="display: flex;flex-direction: column;" class="tsselectprojectbody">
+                  <div style="height: 1px;
+                      
+                      background: var(--gray-200, #EAECF0);"></div>
+                  <div style="display: flex;
+                      padding: 16px 24px;
+                      align-items: center;
+                      gap: 12px;
+                      flex: 1 0 0;
+                      background: #FFF;" class="tsselectprojecttitles" data-target="#ConfirmChaneProject" data-toggle="modal" onclick="setProjectData('<%=Project.id%>','<%=Project.title%>')">
+                     <%=Project.title%>
+                  </div>
+                </div>
+                  <%}%>
+          </div>
+    </div>
+  </div>
+  <div style="
+color: var(--gray-700, #344054);
+padding: 0px 16px;" class="stick_box" onclick="CheckBadgesAreAllot(-1)">
+   <i class="fa fa-check" aria-hidden="true" style="color: #48BF84;"></i> 
+    <div>Approve</div>
+  </div>
+  <div style="
+  color: var(--gray-700, #344054);
+  padding: 0px 16px;" class="stick_box" data-target="#RejectTs" data-toggle="modal" onclick="SetRejectionModal(-1)">
+      <i class="fa fa-times" aria-hidden="true" style="color: #FF6565;"></i>
+      <div>Reject</div>
+    </div>
+    <div onclick="HideBottmBar()" style="
+    color: var(--gray-700, #344054);
+    padding: 0px 16px;" class="stick_box">
+       <img src="../img/icons performance mgmt/desktop/close_40x40.svg">
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+  
+
+
+
+ <!--Reject TS Request Modal -->
+
+ <div
+ class="modal fade docs-example-modal-lg"
+ tabindex="-1"
+ role="dialog"
+ id="RejectTs"
+ aria-hidden="true"
+>
+ <div class="modal-dialog modal-dialog-centered modal-lg">
+   <div class="modal-content" style="border-radius: 14px">
+     <div
+       class="modal-body"
+       style="
+         display: flex;
+         width: 100%;
+
+         padding: 26px 24px;
+         flex-direction: column;
+         gap: 26px;
+       "
+     >
+       <div style="flex: 1 0 0;
+       color: var(--text-content-primary, #181818);
+       font-size: 20px;
+       font-style: normal;
+       font-weight: 600;
+       line-height: 130%; /* 26px */">Task Rejection Feedback</div>
+       <svg
+         xmlns="http://www.w3.org/2000/svg"
+         width="633"
+         height="2"
+         viewBox="0 0 633 2"
+         fill="none"
+       >
+         <path
+           d="M0.5 1H632.5"
+           stroke="#ECECEC"
+           stroke-linecap="round"
+         />
+       </svg>
+       <div
+         style="
+           display: flex;
+           flex-direction: column;
+           gap: 24px;
+           align-self: stretch;
+         "
+       >
+         <div style="overflow: hidden;
+         color: var(--gray-500, #667085);
+         text-overflow: ellipsis;
+         white-space: nowrap;
+         font-size: 14px;
+         font-style: normal;
+         font-weight: 400;
+         line-height: 20px; /* 142.857% */">
+          P - management: Internal team productivity enhancement tool 
+          <div id="RejectionModalTitle" style="font-weight: 700;"></div>
+         </div>
+         <div
+           style="
+             display: flex;
+             align-items: flex-start;
+             flex-direction: column;
+             gap: 5px;
+           "
+         >
+          
+           <textarea
+             style="
+               display: flex;
+               height: 92px;
+               padding: 16px;
+               border: none;
+               align-items: flex-start;
+               gap: 10px;
+               
+               color: var(--gray-700, #344054);
+font-family: Manrope;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+               align-self: stretch;
+               border-radius: 14px;
+               background: #fafafa;
+             "
+             placeholder="Please provide your feedback or reason for rejecting the task."
+            id="ReasonFromManagerTS"
+             ></textarea>
+         </div>
+       </div>
+     </div>
+     <div class="modal-footer" style="padding: 0.7rem">
+       <button
+         style="
+           display: flex;
+           padding: 8px 16px;
+           align-items: center;
+           gap: 8px;
+           background-color: white;
+           border-radius: 14px;
+           border: 1px solid var(--stroke-secondary, #dcdcdc);
+         "
+         class="text-16-500"
+         data-dismiss="modal"
+         
+       >
+         cancel
+       </button>
+       <button
+         class="btn btn-danger"
+         style="
+           display: flex;
+           height: 48px;
+           padding: 8px 24px;
+           border-radius: 14px;
+           justify-content: center;
+           align-items: center;
+           gap: 8px;
+         "
+         data-dismiss="modal"
+       onclick="RejectTaskSubmission()"
+       >
+         Reject 
+       </button>
+     </div>
+   </div>
+ </div>
+</div>
+
+
+<!-- Submit Task Modal -->
+
+<div class="modal fade docs-example-modal-xl" tabindex="-1" role="dialog" id="SubmitTask"
+aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-xl">
+  <div class="modal-content">
+    <div class="modal-header" style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+      <div style="color: var(--gray-900, #101828);
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Initiatives</div>
+      <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+    </div>
+
+    <div class="modal-body" style="display: flex;
+    padding: 20px 32px;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 70vh;
+    align-items: flex-start;
+    gap: 32px;">
+      <div style="color: var(--gray-900, #101828);
+   
+   font-size: 24px;
+   font-style: normal;
+   font-weight: 700;
+   line-height: normal;" id="TaskTitleModal">📊 Monthly Performance Report </div>
+      <div style="display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   gap: 8px;">
+        <div style="color: var(--gray-800, #1D2939);
+   
+   font-size: 16px;
+   font-style: normal;
+   font-weight: 600;
+   line-height: normal;">Timeline</div>
+        <div style="display: flex;
+   align-items: center;
+   gap: 8px;
+   align-self: stretch;">
+          <img src="../Performance dashboard Icons/calander.svg">
+          <div style="color: var(--gray-600, #475467);
+  
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;" >
+            Start Date
+          </div>
+          <input style="display: flex;
+  height: 48px;
+  padding: 14px 20px;
+  align-items: center;
+  gap: 10px;
+  color: var(--gray-500, #667085);
+/* Text sm/Normal */
+
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 142.857% */
+
+  border-radius: 12px;
+  border: 1px solid var(--gray-300, #D0D5DD);
+  background: #FFF;" type="date" disabled  id="Task_StartDate" onchange="ChangeTSData('startDate',event.target.value)">
+          <div style="color: var(--gray-600, #475467);
+  
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;">
+            DueDate
+          </div>
+          <input style="display: flex;
+  height: 48px;
+  padding: 14px 20px;
+  align-items: center;
+  gap: 10px;
+  color: var(--gray-500, #667085);
+/* Text sm/Normal */
+
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 142.857% */
+
+  border-radius: 12px;
+  border: 1px solid var(--gray-300, #D0D5DD);
+  background: #FFF;" type="date" disabled id="Task_EndDate">
+        </div>
+      </div>
+      <div style="display: flex;gap:8px;align-items: center;">
+        <div style="color: var(--gray-800, #1D2939);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  ">Status</div>
+        <div class="Status_completed">Completed</div>
+      </div>
+      <div style="display: flex;align-items: center;gap:8px">
+        <div style="color: var(--gray-800, #1D2939);
+  font-size: 16px;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;">
+          Objective
+        </div>
+
+        <div style="color: var(--gray-600, #475467);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;" id="ObjectiveModal">
+
+        </div>
+      </div>
+      <div style="display: flex;align-items: center;gap:8px">
+        <div style="color: var(--gray-800, #1D2939);
+  
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;">
+          Project
+        </div>
+
+        <div style="color: var(--gray-600, #475467);
+
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;" id="ProjectModal">
+
+        </div>
+      </div>
+      
+      <div style="display: flex;
+flex-direction: column;
+width: 100%;
+align-items: flex-start;
+gap: 8px;">
+        <div style="color: var(--gray-800, #1D2939);
+
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Description</div>
+        <div style="display: flex;
+padding: 14px 20px;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+color: var(--gray-500, #667085);
+
+font-size: 14px;
+font-style: normal;
+min-height: 48px;
+
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+border-radius: 12px;
+border: 1px solid #ECECEC;
+background: var(--gray-50, #F9FAFB);" id="Task_Description">
+</div>
+      </div>
+      <div style="display: flex;
+flex-direction: column;
+width: 100%;
+align-items: flex-start;
+gap: 8px;">
+        <div style="color: var(--gray-800, #1D2939);
+
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Business Outcome</div>
+        <div style="display: flex;
+padding: 14px 20px;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+color: var(--gray-500, #667085);
+
+font-size: 14px;
+font-style: normal;
+min-height: 48px;
+
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+border-radius: 12px;
+border: 1px solid #ECECEC;
+
+background: var(--gray-50, #F9FAFB);"  id="Task_Business_Outcome"></div>
+      </div>
+      <div style="display: flex;
+flex-direction: column;
+width: 100%;
+align-items: flex-start;
+gap: 8px;">
+        <div style="color: var(--gray-800, #1D2939);
+
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Learnings and Next steps</div>
+        <div style="display: flex;
+padding: 14px 20px;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+color: var(--gray-500, #667085);
+
+font-size: 14px;
+font-style: normal;
+min-height: 60px;
+
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+border-radius: 12px;
+border: 1px solid #ECECEC;
+
+background: var(--gray-50, #F9FAFB);"
+         
+          id="Task_Learning"></div>
+      </div>
+      <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;
+align-self: stretch;
+">
+        <div style="color: var(--gray-800, #1D2939);
+
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Attach files and links</div>
+        <div style="display: flex;align-items: center;gap:8px;flex-wrap: wrap;" id="Task_LinkFileBody">
+
+        </div>
+        
+      </div>
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 32px;">
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 4px;">
+<div style="color: var(--gray-800, #1D2939);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Scores</div>
+<div style="display: flex;
+align-items: flex-start;
+gap: 16px;">
+<div style="display: flex;
+align-items: center;">
+<div style="color: var(--gray-600, #475467);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;">Quality</div>
+<div style="display: flex;
+height: 52px;
+gap:8px;
+padding: 16px 24px;
+justify-content: center;
+align-items: center;">
+ <img
+ onclick="UpdateScore(-1,'Task_Quality',10)"
+ src="../img/icons performance mgmt/desktop/d_substract_green.svg"
+/>
+<div style="display: flex;
+height: 23.85px;
+color: var(--gray-500, #667085);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; 
+align-items: center;
+justify-content: center;">
+
+<input  id="Task_Quality"  min="0" max="10"  size="5" style="border: none;text-align: right;color: #48BF84;">
+/10
+
+</div>
+<img
+onclick="UpdateScore(1,'Task_Quality',10)"
+src="../img/icons performance mgmt/desktop/d_add_green.svg"
+/>
+</div>
+</div>
+<div style="display: flex;
+align-items: center;">
+<div style="color: var(--gray-600, #475467);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;">Speed</div>
+<div style="display: flex;
+height: 52px;
+gap:8px;
+padding: 16px 24px;
+justify-content: center;
+align-items: center;">
+ <img
+ onclick="UpdateScore(-1,'Task_Speed',10)"
+ src="../img/icons performance mgmt/desktop/d_substract_green.svg"
+/>
+<div style="display: flex;
+height: 23.85px;
+color: var(--gray-500, #667085);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; 
+align-items: center;
+justify-content: center;">
+
+<input  id="Task_Speed" min="0" max="10"   size="5"style="text-align: right;border: none;color: #48BF84;">
+/10
+
+</div>
+<img
+onclick="UpdateScore(1,'Task_Speed',10)"
+src="../img/icons performance mgmt/desktop/d_add_green.svg"
+/>
+</div>
+</div>
+</div>
+</div>
+
+<div style="display: flex;
+align-items: flex-start;
+gap: 16px;">
+<div style="display: flex;
+align-items: center;">
+<div style="color: var(--gray-600, #475467);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;">Ratings</div>
+<div style="display: flex;
+
+height: 52px;
+gap:8px;
+padding: 16px 24px;
+justify-content: center;
+align-items: center;">
+ <img
+ onclick="UpdateScore(-0.1,'Task_Rating',5)"
+ src="../img/icons performance mgmt/desktop/d_substract_green.svg"
+/>
+<div style="display: flex;
+
+height: 23.85px;
+color: var(--gray-500, #667085);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; 
+align-items: center;
+justify-content: center;">
+
+<input  id="Task_Rating" min="0" max="5"   size="5" style="border: none;color: #48BF84;">
+<img src="../img/filled-star.svg" style="width: 24px;height: 24px;">
+
+</div>
+<img
+onclick="UpdateScore(0.1,'Task_Rating',5)"
+src="../img/icons performance mgmt/desktop/d_add_green.svg"
+/>
+</div>
+</div>
+<div style="display: flex;
+align-items: center;">
+<div style="color: var(--gray-600, #475467);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;">Badges</div>
+<div style="display: flex;
+
+height: 52px;
+gap:8px;
+padding: 16px 24px;
+justify-content: center;
+align-items: center;">
+ <img
+ onclick="UpdateScore(-0.5,'Task_Badges',100000)"
+ src="../img/icons performance mgmt/desktop/d_substract_green.svg"
+/>
+<div style="display: flex;
+
+height: 23.85px;
+color: var(--gray-500, #667085);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; 
+align-items: center;
+justify-content: center;">
+
+<input  id="Task_Badges" min="0" size="5" style="text-align: right;border: none;color: #48BF84;">
+<img src="../img/gem.svg" style="width: 24px;height: 24px;" >
+
+</div>
+<img
+onclick="UpdateScore(0.5,'Task_Badges',100000)"
+src="../img/icons performance mgmt/desktop/d_add_green.svg"
+/>
+</div>
+</div>
+</div>
+
+</div>
+<div style="display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  gap: 8px;">
+          <div style="color: var(--gray-800, #1D2939);
+  
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;">Feedbacks on the Task</div>
+          <textarea style="display: flex;
+  padding: 14px 20px;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  color: var(--gray-500, #667085);
+  
+  font-size: 14px;
+  font-style: normal;
+  height: 48px;
+  
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.21px;
+  border-radius: 12px;
+border: 1px solid #ECECEC;
+background: var(--gray-50, #F9FAFB);" placeholder="Please provide detailed feedback on the project."
+             id="Task_Feedback"></textarea>
+        </div>
+      </div>
+<div class="modal-footer" style="padding: 0.5rem;">
+ 
+  <button class="btn btn-outline-primary" style="display: flex;
+width: 189px;
+padding: 16px 40px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+align-self: stretch;
+border-radius: 12px;" data-dismiss="modal"> Cancel</button>
+  <button class="btn btn-primary" style="display: flex;
+width: 189px;
+padding: 16px 40px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+align-self: stretch;
+border-radius: 12px;" data-dismiss="modal"   onclick="SaveTaskSubmissionData()">Submit</button>
+
+</div>
+</div>
+  </div>
+</div>
+
+ <!-- A Delete TS Confirmation Modal -->
+
+ <div class="modal docs-example-modal" tabindex="-1" id="DeleteTSConfirmation" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal">
+    <div class="modal-content" id="myModalsm" style="border-radius: 12px;">
+      <div class="modal-header">
+        <div style="
+                color: var(--text-content-primary, #181818);
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 130%;
+              ">
+         Confirm Deletion
+        </div>
+      </div>
+      <div class="modal-body">
+        <div style="
+              color: var(--gray-600, #475467);
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 135%; /* 18.9px */
+letter-spacing: 0.14px;
+
+
+              ">
+         Are you sure you want to delete this task?
+        </div>
+        <div style="color: var(--gray-600, #475467);
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 135%; /* 18.9px */
+          letter-spacing: 0.14px;"> This action cannot be undone and all associated data will be permanently removed.</div>
+      </div>
+      <div style="display: flex; flex-direction: row; gap: 10px;padding:0.7rem;" class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary heading" style="display: flex;
+          padding: 8px 16px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          flex: 1 0 0;
+          align-self: stretch;
+          border-radius: var(--radius-medium, 8px);
+          color: var(--gray-700, #344054);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+
+          border: 1px solid var(--gray-300, #D0D5DD);" data-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" class="btn" style="
+              display: flex;
+height: 46px;
+padding: 10px 16px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+color: var(--content-inverted-primary, #FFF);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+letter-spacing: 0.1px;
+flex: 1 0 0;
+border-radius: var(--radius-medium, 8px);
+background: var(--Red, #FF6565);
+              " data-dismiss="modal" onclick="DeleteTS()">
+          Delete Task
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+ <!-- Complete Ratings and Badges Before Task Approval -->
+
+ <div class="modal docs-example-modal" tabindex="-1" id="CompleteRatingsandBadgesBeforeTaskApproval" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal">
+    <div class="modal-content" id="myModalsm" style="border-radius: 12px;">
+      <div class="modal-header">
+        <div style="
+                color: var(--text-content-primary, #181818);
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 130%;
+              ">
+       Complete Ratings and Badges Before Task Approval
+        </div>
+      </div>
+      <div class="modal-body">
+        <div style="
+              color: var(--gray-600, #475467);
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 135%; /* 18.9px */
+letter-spacing: 0.14px;
+
+
+              ">
+        Before you can approve the task, please ensure that you've provided the necessary ratings, badges, and scores.
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: row; gap: 10px;padding:0.7rem;" class="modal-footer">
+     
+        <button type="button" class="btn" style="
+              display: flex;
+padding: 0px 24px;
+align-items: center;
+display: flex;
+height: 48px;
+padding: 8px 24px;
+align-items: center;
+gap: 8px;
+color: #FFF;
+
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+border-radius: 14px;
+background: var(--brand-primary, #48BF84);
+
+gap: 18px;
+              " data-dismiss="modal" onclick=" setStatusTS(-1,'Approved','status',0)">
+        Ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filter Modal -->
+
+<div class="modal fade docs-example-modal-xl" tabindex="-1" role="dialog" id="FilterTaskModal"
+aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-xl">
+  <div class="modal-content">
+  
+    <div class="modal-body" style="display: flex;
+    padding: 20px 32px;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 70vh;
+    align-items: flex-start;
+    gap: 32px;">
+    <div style="color: var(--Gray-900, #101828);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 125% */">Filter</div>
+    <div style="display: flex;
+    align-items: flex-start;
+    gap: 16px;">
+    <% let PImpactLabels,ClarityLabels,StatusLabels,SubmissionApprovalLabels %>
+    <% for(let header of TaskTableHeaders) {
+      
+   if(header.usedName == 'PImpact') 
+      PImpactLabels = header.labels||[];
+   else if(header.usedName == 'Clarity')
+      ClarityLabels = header.labels||[];
+    else if(header.usedName == 'Status')
+      StatusLabels = header.labels||[];
+    else if(header.usedName == 'SubmissionApproval')
+      SubmissionApprovalLabels = header.labels||[];
+      }%>
+   
+  <div style="display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;">
+<div style="color: var(--Gray-500, #667085);
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 18px; /* 150% */
+">Projects</div>  
+<div style="display: flex;flex-direction: column;gap:4px;">
+<% for(let project of projects){ %>
+<div class="AddColumnBox" onclick="SetFilter(this,'projectId','<%=project._id%>')"><div style="width:100%;overflow: hidden;"><%=project.title%> </div></div>
+  <%}%>
+</div>
+</div> 
+<% if(PImpactLabels) {%>
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;">
+<div style="color: var(--Gray-500, #667085);
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 18px; /* 150% */
+">P-Impact</div>  
+<div style="display: flex;flex-direction: column;gap:4px;">
+  
+  
+<% for(let label of PImpactLabels){ %>
+  <div  class="AddColumnBox"   onclick="SetFilter(this,'PImpact','<%=label.label%>')">
+                <% let style = '' %>
+                <% style += label.color?.length > 0 ? 'color:' + label.color + ';' : '' %>
+                <% let title = label.label %>
+                <% style += label.bgcolor?.length > 0 ? 'background:' + label.bgcolor : '' %>
+                <div class="Status_hold" style="<%= style %>"><%= title %></div>
+              </div>
+              <%}%>
+</div>
+</div> 
+<%}%>
+
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;">
+<div style="color: var(--Gray-500, #667085);
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 18px; /* 150% */
+">Effort</div>  
+<div style="display: flex;flex-direction: column;gap:4px;">
+<% for(let i=1;i<=4;i++){ %>
+<div class="AddColumnBox" style="width: 90px;"  id="Effort<%=i%>" onclick="SetFilter(this,'Effort','<%=i%>')"><%=i%> D</div>
+<%}%>
+<div class="AddColumnBox" style="width: 90px;" id="Effort5"  onclick="SetFilter(this,'Effort','4+')">4D &lt;</div>
+</div>
+</div> 
+<% if(ClarityLabels) {%>
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;">
+<div style="color: var(--Gray-500, #667085);
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 18px; /* 150% */
+">Clarity</div>  
+<div style="display: flex;flex-direction: column;gap:4px;">
+  
+  
+<% for(let label of ClarityLabels){ %>
+  <div  class="AddColumnBox"  onclick="SetFilter(this,'Clarity','<%=label.label%>')">
+                <% let style = '' %>
+                <% style += label.color?.length > 0 ? 'color:' + label.color + ';' : '' %>
+                <% let title = label.label %>
+                <% style += label.bgcolor?.length > 0 ? 'background:' + label.bgcolor : '' %>
+                <div class="Status_hold" style="<%= style %>"><%= title %></div>
+              </div>
+              <%}%>
+</div>
+</div>  
+<%}%>
+<div style="display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;">
+<div style="color: var(--Gray-500, #667085);
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 18px; /* 150% */
+">Owner</div>  
+<div style="display: flex;flex-direction: column;gap:4px;">
+<% for(let employee of employeeList){ %>
+<div class="AddColumnBox"  onclick="SetFilter(this,'Owner','<%=employee._id%>')">
+  <div style="width:100%;overflow: hidden;">
+<img src="<%=employee.image%>" style="width: 24px;height: 24px;border-radius:24px;">
+<%=employee.displayName%>
+</div>
+</div>
+  <%}%>
+</div>
+</div>
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;">
+<div style="color: var(--Gray-500, #667085);
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 18px; /* 150% */
+">Due Date</div>  
+<div style="display: flex;flex-direction: column;gap:4px;">
+
+<div class="AddColumnBox" style="overflow: hidden;white-space: nowrap;" onclick="SetFilter(this,'DueDate','Today')">Today</div>
+<div class="AddColumnBox" style="overflow: hidden;white-space: nowrap;" onclick="SetFilter(this,'DueDate','Yesterday')">Yesterday</div>
+<div class="AddColumnBox" style="overflow: hidden;white-space: nowrap;" onclick="SetFilter(this,'DueDate','This Week')">This Week</div>
+<div class="AddColumnBox" style="overflow: hidden;white-space: nowrap;" onclick="SetFilter(this,'DueDate','Last Week')">Last Week</div>
+<div class="AddColumnBox" style="overflow: hidden;white-space: nowrap;" onclick="SetFilter(this,'DueDate','This Month')">This Month</div>
+<div class="AddColumnBox" style="overflow: hidden;white-space: nowrap;" onclick="SetFilter(this,'DueDate','Last Month')">Last Month</div>
+</div>
+</div> 
+<% if(StatusLabels){%>
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;">
+<div style="color: var(--Gray-500, #667085);
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 18px; /* 150% */
+">Status</div>  
+<div style="display: flex;flex-direction: column;gap:4px;">
+  
+  
+<% for(let label of StatusLabels){ %>
+  <div  class="AddColumnBox"   onclick="SetFilter(this,'Status','<%=label.label%>')">
+                <% let style = '' %>
+                <% style += label.color?.length > 0 ? 'color:' + label.color + ';' : '' %>
+                <% let title = label.label %>
+                <% style += label.bgcolor?.length > 0 ? 'background:' + label.bgcolor : '' %>
+                <div class="Status_hold" style="<%= style %>"><%= title %></div>
+              </div>
+              <%}%>
+</div>
+</div> 
+<%}%>
+<% if(SubmissionApprovalLabels){%>
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;">
+<div style="color: var(--Gray-500, #667085);
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 18px; /* 150% */
+">Submission Approval </div>  
+<div style="display: flex;flex-direction: column;gap:4px;">
+  
+  
+<% for(let label of SubmissionApprovalLabels){ %>
+  <div  class="AddColumnBox"  onclick="SetFilter(this,'SubmissionApproval','<%=label.label%>')">
+                <% let style = '' %>
+                <% style += label.color?.length > 0 ? 'color:' + label.color + ';' : '' %>
+                <% let title = label.label %>
+                <% style += label.bgcolor?.length > 0 ? 'background:' + label.bgcolor : '' %>
+                <div class="Status_hold" style="<%= style %>"><%= title %></div>
+              </div>
+              <%}%>
+</div>
+</div>
+<%}%>
+  </div>
+        </div>
+<div class="modal-footer" style="padding: 0.5rem;justify-content: space-between;">
+
+  <div  style="color: var(--Gray-700, #344054);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; " onclick="ResetFilterModal()"> Reset</div>
+ <div style="display: flex;align-items: center;">
+  <button class="btn btn-outline-primary" style="display: flex;
+width: 189px;
+padding: 16px 40px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+align-self: stretch;
+border-radius: 12px;" data-dismiss="modal"> Cancel</button>
+  <button class="btn btn-primary" style="display: flex;
+width: 189px;
+padding: 16px 40px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+align-self: stretch;
+border-radius: 12px;" data-dismiss="modal"   onclick="ShowFilterResult()">Apply</button>
+</div>
+</div>
+</div>
+  </div>
+</div>
+ <!-- ConfirmChaneProject -->
+
+ <div class="modal docs-example-modal" tabindex="-1" id="ConfirmChaneProject" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal">
+    <div class="modal-content" id="myModalsm" style="border-radius: 12px;">
+      <div class="modal-header">
+        <div style="
+                color: var(--text-content-primary, #181818);
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 130%;
+              ">
+      Confirm Project change
+        </div>
+      </div>
+      <div class="modal-body">
+        <div style="
+              color: var(--gray-600, #475467);
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 135%; /* 18.9px */
+letter-spacing: 0.14px;
+
+
+              ">
+        Are you sure you want to change project for selected tasks? All the related KRs and SubKR will be Disconnected </div>
+      </div>
+      <div style="display: flex; flex-direction: row; gap: 10px;padding:0.7rem;" class="modal-footer">
+        <button class="btn btn-outline-primary" style="display: flex;
+       
+       padding: 0px 24px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        align-self: stretch;
+        border-radius: 12px;" data-dismiss="modal"> Cancel</button>
+        <button type="button" class="btn" style="
+              display: flex;
+padding: 0px 24px;
+align-items: center;
+display: flex;
+height: 48px;
+padding: 8px 24px;
+align-items: center;
+gap: 8px;
+color: #FFF;
+
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+border-radius: 14px;
+background: var(--brand-primary, #48BF84);
+
+gap: 18px;
+              " data-dismiss="modal" onclick="setProjectToTS()">
+        Change Project
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="CompleteRatingsandBadgesBeforeTaskApprovalButton" data-target="#CompleteRatingsandBadgesBeforeTaskApproval" data-toggle="modal" style="width: 0px;"></div>
+<script>
+
+
+
+  let TaskSubmissions;
+  let tsIndex;
+ 
+ function setProjectData(id,title)
+ {
+  projectchangeinfo.title = title;
+  projectchangeinfo.id = id;
+ }
+ 
+  function CheckBadgesAreAllot(i)
+  {
+    
+    let btn=document.getElementById('CompleteRatingsandBadgesBeforeTaskApprovalButton')
+    if(i!=-1){
+      tsIndex=parseFloat(i);
+    if(TaskSubmissions[i].badges==0 || TaskSubmissions[i].quality==0 || TaskSubmissions[i].speed==0 || TaskSubmissions[i].rating==0)
+    {
+      btn.click()
+    }
+    else
+    {
+      setStatusTS(tsIndex,'Approved','status',0)
+    }
+  }
+  else{
+    TaskSubmissions.forEach((ts,i)=>{
+        if(document.getElementById('checkboxTs'+i).checked)
+        {
+          setStatusTS(i,'Approved','status',0)
+        }
+      })
+  }
+   
+  }
+ function RejectTaskSubmission()
+ {
+    let reason=document.getElementById('ReasonFromManagerTS').value
+    if(tsIndex==-1){
+ 
+      TaskSubmissions.forEach((ts,i)=>{
+        if(document.getElementById('checkboxTs'+i).checked)
+        {
+          TaskSubmissions[i].status='Rejected'
+          TaskSubmissions[i].reason=reason
+          setStatusTS(i,'Rejected','status',2)
+        }
+      })
+    }
+    else{
+    TaskSubmissions[tsIndex].status='Rejected'
+    TaskSubmissions[tsIndex].reason=reason
+    setStatusTS(tsIndex,'Rejected','status',2)
+    }
+ }
+
+ 
+ 
+  function HideBottmBar()
+  {
+    let bottombar=document.getElementById('BottomBarTS')
+    bottombar.style.display='none'
+  }
+ 
+async function DeleteTS()
+{
+  try{
+  let ids=[]
+  if(tsIndex==-1)
+  {
+    let checkboxes=document.querySelectorAll('.TScheckbox')
+    for(let i=1 ;i<checkboxes.length;i++){
+      if(checkboxes[i].checked)
+      {
+       ids.push({tsid:TaskSubmissions[i-1]._id.toString(),tid:TaskSubmissions[i-1]?.tasks?.id});
+      }
+    }
+  }
+  else{
+   
+    ids.push({tsid:TaskSubmissions[tsIndex]._id.toString(),tid:TaskSubmissions[tsIndex]?.tasks?.id});
+  }
+  console.log(ids);
+  let res=await fetch('/deleteTaskSubmission',{
+    method:'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body:JSON.stringify({ids})
+  })
+  location.reload();
+}
+catch(error)
+{
+  console.log(error);
+}
+}
+
+
+ function SetRejectionModal(i)
+ {
+  tsIndex=parseFloat(i);
+  let rejectionmodaltitle=document.getElementById('RejectionModalTitle')
+  let checkbox=document.querySelectorAll('.TScheckbox')
+  let count=0;
+  for(let i=1 ;i<checkbox.length;i++){
+    if(checkbox[i].checked)
+    count++;
+  }
+  rejectionmodaltitle.innerText=i==-1? count+' Tasks':TaskSubmissions[i].tasks.title
+ }
+  function SelectAllTs()
+  {
+    let checkboxes=document.querySelectorAll('.TScheckbox')
+    
+    for(let i=1 ;i<checkboxes.length;i++){
+      checkboxes[i].checked=checkboxes[0].checked;
+      if(checkboxes[i].checked)
+      checkboxes[i].style.display='flex'
+      else
+      checkboxes[i].style.display='none'
+    }
+    ShowBottomBar()
+  }
+ 
+ 
+  function ShowBottomBar()
+  {
+    let checkboxes=document.querySelectorAll('.TScheckbox')
+    let bottombar=document.getElementById('BottomBarTS')
+    let count=0;
+    for(let i=1 ;i<checkboxes.length;i++){
+      if(checkboxes[i].checked)
+      count++;
+    }
+    if(count>0)
+    {
+      bottombar.style.display='flex'
+      document.getElementById('select_no').innerText=count
+    }
+    else
+    bottombar.style.display='none'
+  }
+
+  async function GetSubmissionData()
+  {
+   let submissionData=await fetch('/getSubmissionData')
+   TaskSubmissions=await submissionData.json()
+  }
+  GetSubmissionData()
+  function changetaskSubmissiondata(i, type, value) {
+    let perv=TaskSubmissions[i][type];
+    
+    TaskSubmissions[i][type] = value;
+    SaveTS(i)
+    if(type=='badges')
+    {
+      AllotBadges(perv,i)
+    }
+  }
+  async function AllotBadges(perv,i)
+  {
+    let data={
+      perv:Number(perv),
+      owner:TaskSubmissions[i].from,
+      newBadges:Number(TaskSubmissions[i]['badges']),
+      taskId:TaskSubmissions[i].tasks.id,
+      submissionId:TaskSubmissions[i]._id,
+      tasktitle:TaskSubmissions[i].tasks.title
+    }
+let response=await fetch('/allotBadges',{
+  method:'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body:JSON.stringify(data)
+})
+  }
+  
+  function SearchTaskSubmission(value)
+  {
+    let initiatives=document.querySelectorAll('.TS')
+    let initaiveTitles=document.querySelectorAll('.TStitles')
+    initiatives.forEach((initiative,i)=>{
+      if(initaiveTitles[i].innerText.toLowerCase().includes(value.toLowerCase()))
+      {
+        initiative.style.display='flex'
+      }
+      else
+      {
+        initiative.style.display='none'
+      }
+    })
+  }
+  function setStatusTS(i,status,type,index)
+  {
+    if(i==-1)
+    i=tsIndex
+    let statusbody=document.getElementById('TS'+type+i)
+   TaskSubmissions[i][type]=status;
+  
+   let statusbodydropdown=document.getElementById('TS'+type+i+'dropdown')
+   let selectedChild = statusbodydropdown.children[index];
+   statusbody.innerHTML=selectedChild.innerHTML;
+  
+   SaveTS(i)
+  }
+  function setStatusTSModal(status,type,index)
+  {
+    
+    let statusbody=document.getElementById('TS'+type+'Modal')
+   submissionData[type]=status;
+  
+   let statusbodydropdown=document.getElementById('TS'+type+'Modaldropdown')
+   let selectedChild = statusbodydropdown.children[index];
+   statusbody.innerHTML=selectedChild.innerHTML;
+
+  }
+  
+  function ChangeTsIndex(i)
+  {
+    tsIndex=parseFloat(i);
+  }
+  
+ async function SaveTS(i)
+ {
+  try{
+  let response=await fetch('/submit/task', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(TaskSubmissions[i])
+      })
+    }
+    catch(error)
+    {
+      console.log(error)
+    }
+ }
+
+ function SetSubmitTaskModal(i) {
+  tsIndex=i;
+      let submissionData = TaskSubmissions[i];
+      let TaskTitleModal = document.getElementById('TaskTitleModal');
+      let Task_StartDate = document.getElementById('Task_StartDate');
+      let Task_EndDate = document.getElementById('Task_EndDate');
+      let Task_Description = document.getElementById('Task_Description');
+      let Task_Business_Outcome = document.getElementById('Task_Business_Outcome');
+      let Task_Feedback = document.getElementById('Task_Feedback');
+      let Task_Badges = document.getElementById('Task_Badges');
+      let Task_Rating = document.getElementById('Task_Rating');
+      let Task_Speed=document.getElementById('Task_Speed');
+      let Task_Quality=document.getElementById('Task_Quality');
+      let Task_Learning = document.getElementById('Task_Learning');
+      let Task_LinkFileBody = document.getElementById('Task_LinkFileBody');
+      let ObjectiveModal = document.getElementById('ObjectiveModal');
+      let ProjectModal = document.getElementById('ProjectModal');
+      ObjectiveModal.innerText = submissionData.objective?.title;
+      ProjectModal.innerText = submissionData.project?.title;
+      TaskTitleModal.innerText=submissionData.tasks.title;
+      Task_StartDate.value = submissionData.startDate;
+      Task_EndDate.value = submissionData.endDate;
+      Task_Description.innerText = submissionData.description;
+      Task_Business_Outcome.innerText = submissionData.businessOutcome;
+      Task_Feedback.value = submissionData.feedback;
+      Task_Badges.value = submissionData.badges;
+      Task_Rating.value = submissionData.rating.toFixed(2);
+      Task_Speed.value=submissionData.speed;
+      Task_Quality.value=submissionData.quality;
+      Task_Learning.innerText = submissionData.learning;
+      Task_LinkFileBody.innerHTML = '';
+       for (let files of submissionData.files) {
+          UpdateTSFilebody(files);
+        }
+        for (let links of submissionData.links) {
+          UpdateTSLinkbody(links);
+        }
+    }
+
+    function UpdateTSLinkbody(TaskLink) {
+      let id = TaskLink.id;
+      let body = document.getElementById('Task_LinkFileBody');
+      let innerhtmlfile = `
+          <a href="${TaskLink.url}" target="_blank" style="display: flex;
+                    padding: 12px 16px;
+                    align-items: center;
+                    gap: 12px;
+                    flex: 1 0 0;
+                    border-radius: 12px;
+                    border: 1px solid #ECECEC;
+                    background: #FFF;"  id='link-${id}'>
+            <img src="../Performance dashboard Icons/Link Added.svg">
+            <div style="display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      gap: 4px;
+                      flex: 1 0 0;">
+              <div style="align-self: stretch;
+                        color: var(--content-on-light-primary, #181818);
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 17.352px;">
+                ${TaskLink.title}
+              </div>
+              <div style="display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        align-self: stretch;
+                        overflow: hidden;
+                        color: var(--content-on-light-secondary, #898989);
+                        text-overflow: ellipsis;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 17.352px;">
+                ${TaskLink.url}
+              </div>
+            </div>
+            </a>`;
+
+      body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+    }
+
+    function UpdateTSFilebody(Taskfile) {
+      let id = Taskfile.id;
+      let body = document.getElementById('Task_LinkFileBody');
+      let innerhtmlfile = `
+          <a href="${Taskfile.url}" target="_blank" style="display: flex;
+                    padding: 12px 16px;
+                    align-items: center;
+                    gap: 12px;
+                    flex: 1 0 0;
+                    border-radius: 12px;
+                    border: 1px solid #ECECEC;
+                    background: #FFF;"id='file-${id}'>
+            <img src="../Performance dashboard Icons/Document Added.svg">
+            <div style="display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      gap: 4px;
+                      flex: 1 0 0;">
+              <div style="align-self: stretch;
+                        color: var(--content-on-light-primary, #181818);
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 17.352px;">
+                ${Taskfile.title}
+              </div>
+              <div style="display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        align-self: stretch;
+                        overflow: hidden;
+                        color: var(--content-on-light-secondary, #898989);
+                        text-overflow: ellipsis;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 17.352px;">
+                ${Taskfile.url}
+              </div>
+            </div>
+                 </a>`;
+
+      body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+    }
+
+function SaveTaskSubmissionData()
+{
+  let Task_Feedback = document.getElementById('Task_Feedback');
+      let Task_Badges = document.getElementById('Task_Badges');
+      let Task_Rating = document.getElementById('Task_Rating');
+      let Task_Speed=document.getElementById('Task_Speed');
+      let Task_Quality=document.getElementById('Task_Quality');
+     TaskSubmissions[tsIndex].badges=Task_Badges.value;
+      TaskSubmissions[tsIndex].rating=Task_Rating.value.toFixed(2);
+      TaskSubmissions[tsIndex].speed=Task_Speed.value;
+      TaskSubmissions[tsIndex].quality=Task_Quality.value;
+      TaskSubmissions[tsIndex].feedback=Task_Feedback.value;
+      SaveTS(tsIndex)
+}
+
+    function UpdateScore(value,type,maxi)
+    {
+      let score=document.getElementById(type)
+      let scoreValue=parseFloat(score.value)
+      scoreValue+=value
+      if(scoreValue<0)
+      {
+        scoreValue=0
+      }
+     
+      if(scoreValue>maxi )
+      {
+        scoreValue=maxi
+      }
+      score.value=scoreValue
+      score.size=scoreValue.toString().length+1;
+    }
+  
+
+
+function filterAndSortTsProject(text) {
+  let Projectbodies = document.querySelectorAll('.tsselectprojectbody');
+  let projectTitles = document.querySelectorAll('.tsselectprojecttitles');
+  for(let i=0;i<Projectbodies.length;i++)
+  {
+    if(projectTitles[i].innerText.toLowerCase().includes(text.toLowerCase()))
+    {
+      Projectbodies[i].style.display='flex'
+    }
+    else
+    {
+      Projectbodies[i].style.display='none'
+    }
+  }
+}
+
+async function setProjectToTS()
+{
+
+ let checkbox=document.querySelectorAll('.TScheckbox')
+ for(let i=1; i<checkbox.length; i++)
+ {
+    if(checkbox[i].checked)
+    {
+      TaskSubmissions[i-1].project=projectchangeinfo;
+      TaskSubmissions[i-1].krs=[]
+      TaskSubmissions[i-1].subkrs=[]
+     await SaveTS(i-1)
+      let taskindex=initiative.findIndex(initiative=>initiative._id==TaskSubmissions[i-1].tasks.id)
+    if(taskindex!=-1){
+      initiative[taskindex].data.projectId=projectchangeinfo.id
+      initiative[taskindex].data.projectTitle=projectchangeinfo.title
+      initiative[taskindex].data.krs=[]
+      initiative[taskindex].data.subkrs=[]
+      await SaveTask(taskindex)
+     
+    }
+    }
+ }
+ location.reload();
+}
+
+
+</script>
+
+
+<script type="text/javascript">
+
+
+
+
+
+
+function scrollLeftT(id) {
+  let Body=document.getElementById(id);
+  Body.scroll({
+    left: Body.scrollLeft - 240,
+    behavior: 'smooth'
+  });
+}
+
+function scrollRight(id) {
+  let Body=document.getElementById(id);
+  Body.scroll({
+    left: Body.scrollLeft + 240,
+    behavior: 'smooth'
+  });
+}
+
+
+ function CreateNewTask()
+{
+  let data={}
+for(let header of tableHeader)
+{
+  data[header.usedName]=''
+}
+data['projectId']=''
+data['ObjectiveId']=''
+data['ObjectiveTitle']=''
+data['projectTitle']=''
+data['PImpact']={label:'Low',bgcolor:'#F9FAFB',color:'#667085'}
+data['Effort']=1
+data['Clarity']={label:'Low',bgcolor:'',color:'#F79009',bgcolor:'#FFFAEB'}
+data['Status']={label:'Not Started',bgcolor:'#F9FAFB',color:'#667085'}
+data['SubmissionApproval']={label:'Pending',color:'#F79009',bgcolor:'#FFFAEB'}
+data['links']=[]
+data['files']=[]
+data['subkrs']=[]
+data['krs']=[]
+data['Badges']=0
+const currentDate = new Date();
+const year = currentDate.getFullYear();
+const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+const day = currentDate.getDate().toString().padStart(2, '0');
+let taskdate=year-month-day
+data['AllotmentDate'] = `${year}-${month}-${day}`;
+subTasks.push([]);
+initiative.push({data})
+}
+</script>
+
+<script>
+  let Filters={}
+  function SetFilter(element,type,value)
+  {
+    if(type=='Effort')
+    {
+      for(let i=1;i<=5;i++)
+      {
+        document.getElementById('Effort'+i).classList.remove('selected')
+      }
+      if(value=='4+')
+      {
+        value=5
+      }
+      if(Filters[type]==value)
+      {
+        Filters[type]=undefined;
+        return;
+      }
+      Filters[type]=value;
+      element.classList.add('selected')
+      return;
+    }
+    let arr=Filters[type];
+    if(arr==undefined)
+    {
+      arr=[]
+    }
+    if(arr.includes(value))
+    {
+      arr.splice(arr.indexOf(value),1)
+      element.classList.remove('selected')
+    }
+    else
+    {
+      arr.push(value)
+      element.classList.add('selected')
+    }
+    if(arr.length>0)
+   Filters[type]=arr;
+    else
+    delete Filters[type];
+}
+  function ShowFilterResult()
+  {
+    let initiatives=document.querySelectorAll('.Tasks')
+    let initaiveData=initiative;
+    initiatives.forEach((initiativebody,i)=>{
+     
+      let show=true;
+     let initiative=initaiveData[i];
+    
+      for(let type in Filters)
+      {
+        
+        if(type=='Owner')
+        {
+          if(!Filters[type].includes(initiative.data[type]?.id))
+          {
+            show=false;
+            break;
+          }
+        }
+        else if(type=='Effort')
+        { let days=initiative.data[type];
+          if(Filters[type]==5 && days<4)
+          {
+            show=false;
+            break;
+          }
+          else if(Filters[type]!=5 && days!=Filters[type])
+          {
+            show=false;
+            break;
+          }
+        }
+        else if(type=='projectId')
+        {
+          if(!Filters[type].includes(initiative.data[type]))
+          {
+            show=false;
+            break;
+          }
+        }
+        else if(type=='DueDate')
+        {
+          let date=new Date(initiative.data[type])
+          let today=new Date()
+          let diffTime = Math.abs(date - today);
+          let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+          if(Filters[type].includes('Today'))
+          {
+            if(diffDays!=0)
+            {
+              show=false;
+              break;
+            }
+          }
+          else if(Filters[type].includes('Yesterday'))
+          {
+            if(diffDays!=1)
+            {
+              show=false;
+              break;
+            }
+          }
+          else if(Filters[type].includes('This Week'))
+          {
+            if(diffDays>7)
+            {
+              show=false;
+              break;
+            }
+          }
+          else if(Filters[type].includes('Last Week'))
+          {
+            if(diffDays<7 || diffDays>14)
+            {
+              show=false;
+              break;
+            }
+          }
+          else if(Filters[type].includes('This Month'))
+          {
+            if(diffDays>30)
+            {
+              show=false;
+              break;
+            }
+          }
+          else if(Filters[type].includes('Last Month'))
+          {
+            if(diffDays<30 || diffDays>60)
+            {
+              show=false;
+              break;
+            }
+          }
+        }
+        else
+        {
+          if(!Filters[type].includes(initiative.data[type].label))
+          {
+            show=false;
+            break;
+          }
+        }
+      }
+      if(show)
+      {
+        initiativebody.style.display='flex'
+      }
+      else
+      {
+        initiativebody.style.display='none'
+      }
+    })
+  }
+  function ResetFilterModal()
+  {
+    let allModal = document.querySelectorAll('.AddColumnBox');
+    allModal.forEach((modal) => {
+      modal.classList?.remove('selected');
+    });
+    Filters={}
+  }
+ </script>
+<%- include('./TasksScript') %>

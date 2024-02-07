@@ -1,0 +1,1288 @@
+<style>
+  body {
+    font-family: "Manrope", sans-serif !important;
+  }
+
+
+  .box {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 10px;
+    gap: 1px;
+    background: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 14px;
+  }
+
+
+  .black {
+    background-color: #000;
+  }
+
+  .text-black {
+    color: black;
+  }
+
+  .yellow {
+    background-color: #fdecaa;
+  }
+
+  .orange {
+    background-color: #fffbeb;
+  }
+
+  .success {
+    background-color: #f2faf6;
+  }
+
+  .normal {
+    background-color: #fafafa;
+  }
+
+  .text-normal {
+    color: "#898989";
+  }
+
+  .text-success {
+    color: #48bf84;
+    cursor: pointer;
+  }
+
+  .p {
+    width: 169.32px;
+    height: 28px;
+    margin-top: -8px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .child:not(:last-child)::after {
+    content: "";
+    width: 1px;
+    height: 50%;
+    background-color: black;
+    position: absolute;
+    right: 0;
+
+  }
+
+
+  .active {
+    color: #48bf84;
+    padding-bottom: 10px;
+    width: 200px;
+    display: flex;
+    border-bottom: 1px solid #48bf84;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .navbar-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .navbar-toggle span {
+    width: 30px;
+    height: 3px;
+    background-color: #000;
+  }
+
+  .list-group-item {
+
+    margin: 5px;
+    border-radius: 12px;
+  }
+
+  .navbartop {
+    display: none;
+  }
+
+  .datepicker-wrapper {
+    position: relative;
+  }
+
+  .rating-button-web {
+    display: block !important;
+  }
+
+  .rating-button-mobile {
+    display: none !important;
+  }
+
+  .taskvideobox {
+    padding: 24px;
+    display: flex;
+  }
+
+  .ratingcard {
+    padding: 20px !important;
+  }
+
+  .videoNotUploaded {
+    color: #48bf84;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 24px;
+    margin: auto;
+    margin-top: 20px;
+  }
+
+  .updownarrow {
+    display: none !important;
+  }
+
+
+  .cardbutton {
+    display: flex !important;
+  }
+
+  .mobile-navbar {
+    display: none !important;
+  }
+
+  .task-color {
+    background-color: #f4f5fb;
+  }
+
+  .text-disabled {
+    color: #dcdcdc;
+  }
+
+  .btn-status-green {
+    padding: 5px 10px;
+    border-radius: 14px;
+    color: var(--pill-text-blue, #3b82f6);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.24px;
+    border-radius: 8px;
+    border-bottom: 1px solid #ececec;
+    background: #f4f5fb;
+  }
+
+  .btn-status-red {
+    padding: 5px 10px;
+    border-radius: 14px;
+    align-items: flex-start;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    letter-spacing: 0.24px;
+    background: #ebebeb;
+  }
+
+  .videoTab {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex: 1 0 0;
+    border-radius: 14px 0px 0px 14px;
+    border: 1px solid var(--stroke-primary, #ececec);
+  }
+
+  .videoTabBody {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 16px 16px 0 16px;
+    border-radius: 14px 0px 0px 14px;
+    font-size: 12px;
+  }
+
+  .datevalue {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    padding-left: 45px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+
+  .modal-user-profile {
+    width: 64px;
+    height: 64px;
+    border-radius: 61.2787px;
+  }
+
+  .modal-header-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #48bf84;
+  }
+
+  .modal-header-title {
+    width: 649px;
+    height: 27px;
+    font-style: normal;
+    margin-left: 10px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    color: #181818;
+  }
+
+  .modal-tasks-img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .badges-button-body {
+    display: flex;
+    height: 69px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-secondary, #dcdcdc);
+    background: var(--surface-primary, #fff);
+  }
+
+  .rating-button-body {
+    display: flex;
+    padding: 6px 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 12px;
+  }
+
+  .modal-badges-meter-col {
+    display: flex;
+    flex-direction: row;
+    padding: 24px;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 280px;
+    border-radius: 12px;
+    border: 1px solid #ececec;
+    background: #ececec;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 16px;
+    color: black;
+  }
+
+  .modal-badges-meter-star {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    color: #facc15;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .borderless-number-input {
+    border: none;
+    width: 40px;
+    text-align: center;
+    -moz-appearance: textfield;
+    /* Firefox */
+  }
+
+  .borderless-number-input::-webkit-inner-spin-button,
+  .borderless-number-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .closeButton {
+      display: none !important;
+    }
+
+    .taskvideobox {
+      padding: 10px;
+      display: flex;
+    }
+
+    .modal-tasks-img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .rating-button-body {
+      display: flex;
+      width: 100%;
+      padding: 0px;
+    }
+
+    .starbox {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .navbar-toggle {
+      display: flex;
+    }
+
+    .modal-header {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .youtube {
+      width: 300px;
+      height: 200px;
+    }
+
+    #datevalue {
+      padding-left: 0 !important;
+    }
+
+    #navcontainer {
+      display: none;
+    }
+
+    .rating-button {
+      width: 300px;
+      height: 70px;
+      margin: auto;
+    }
+
+    .review-rating-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1 0 0;
+      align-self: stretch;
+    }
+
+    .navbartop {
+      display: flex;
+      /* show navbar */
+      align-items: center;
+    }
+
+    .cardbutton {
+      display: none;
+    }
+
+    .containers {
+      display: none;
+    }
+
+
+    .navbarcard {
+      margin: 20px;
+    }
+
+    .updownarrow {
+      display: block !important;
+    }
+
+    .mobile-header {
+      display: flex !important;
+    }
+
+    .navbar-sidebar {
+      display: none !important;
+    }
+
+    .text {
+      display: none !important;
+    }
+
+    .mobile-navbar {
+      display: block !important;
+    }
+
+    .navbtn {
+      color: white;
+    }
+
+    .modal-user-profile {
+      width: 48px;
+      height: 48px;
+      border-radius: 61.2787px;
+    }
+
+    .modal-header-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: #48bf84;
+    }
+
+    .modal-header-title {
+      margin-left: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 27px;
+      color: #181818;
+    }
+
+    .heading {
+      font-style: normal;
+
+      font-size: 16px;
+      line-height: normal;
+      color: #000000;
+    }
+
+
+    .btn-status-green {
+      display: flex;
+      padding: 4px 8px;
+      align-items: flex-start;
+      gap: 8px;
+      border-radius: 8px;
+      background: var(--pill-surface-blue, #f4f5fb);
+    }
+
+    .btn-status-red {
+      border-radius: 8px;
+      background: var(--surface-fourth, #ebebeb);
+      display: flex;
+      padding: 4px 8px;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .rating-badges-body {
+      padding: 24px;
+      align-items: center;
+      width: 100%;
+      border-radius: 12px;
+      background: var(--surface-primary, #fff);
+    }
+
+    .ratingcard {
+      padding: 0px !important;
+    }
+
+    .badges-button-body {
+      margin-bottom: 20px;
+    }
+  }
+</style>
+
+
+
+<div class="modal docs-example-modal-xl" tabindex="-1" role="dialog" id="review-rating-modal"
+  aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header" style="padding-bottom: 0.2rem">
+        <div style="display: flex; gap: 10px">
+          <div>
+            <img src="" id="RatingReviewmodal-userprofile" class="modal-user-profile" />
+          </div>
+          <div>
+            <h5 class="mb-0">
+              <span class="reviw-rating-header-name" id="modal-header-name"></span><span
+                class="modal-header-title">Rating Review Request</span>
+            </h5>
+            <p id="RatingReviewmodal-header-date" style="margin-left:10px;color:black"></p>
+          </div>
+        </div>
+
+        <div class="closeButton" type="button" data-dismiss="modal">
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" />
+        </div>
+      </div>
+      <div class="modal-body heading" style="background-color: #fbfcff; max-height: 70vh; overflow-y: auto">
+        <ul class="nav nav-tabs" style="margin:-10px 0px 20px 0px">
+          <li class="nav-item" style="padding:5px" onclick="ChanageRatingReviewTab(1)">
+            <div class="active" id="RatingReviewTab1">Employee's Self-Rating</div>
+          </li>
+          <li class="nav-item" style="padding:5px" onclick="ChanageRatingReviewTab(2)">
+            <div id="RatingReviewTab2">Manager's Rating </div>
+          </li>
+
+        </ul>
+
+        <div class="row" id="RatingReviewBody1" style="gap:24px">
+
+          <div class="card col" style="
+                display: flex;
+            padding: 20px 16px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            flex: 1 0 0;
+            align-self: stretch;
+            border-radius: 14px;
+            border: 1px solid var(--stroke-secondary, #DCDCDC);
+            background: var(--surface-primary, #FFF);
+              ">
+            <div style="font-size: 16px;font-weight: 700;margin-bottom: 20px;" id="RatingReviewModal1EmployeeName"> Self Ratings given by Employee</div>
+
+            <div style="display: flex;flex-direction: column;gap:20px;width:100%" id="EmployeeRatingBody">
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="text-black">Average rating</div>
+                <div style="color:black;font-size:20px;" id="avgrating">
+
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="text-black">Work Size</div>
+                <div class="star-rating">
+                  <i class="fas fa-star" size="24" style="color: #dddfe1">
+                  <div class="Left" style="width: 60%; height: 100%; background-color: #48bf84;"></div>
+                  
+                  </i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="heading">Quality
+                </div>
+                <div class="star-rating">
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="heading">Loom Uploads
+
+                </div>
+                <div class="star-rating">
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="heading">Task Summary
+
+                </div>
+
+                <div class="star-rating">
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="heading">Explanation Clarity
+
+                </div>
+
+                <div class="star-rating">
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex;justify-content: space-between;align-items: center;width:100%;margin-top: 20px;">
+              <div style="display: flex;gap:20px;align-items: center;">
+                <div style="color:#48bf84;cursor: pointer;" data-toggle="modal" data-target="#ApproveReviewRatingModal">
+                  Approve</div>
+                <div style="color: #FF6565;cursor: pointer;" data-target="#DisApproveReviewRatingModal"
+                  data-toggle="modal">Disapprove</div>
+              </div>
+              <div style="display: flex;gap:10px;align-items: center;color:#48bf84;cursor: pointer;"
+                onclick="EditRating()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                  <path
+                    d="M15.9307 5.58492C16.1161 5.39947 16.3363 5.25237 16.5786 5.15202C16.8209 5.05165 17.0806 5 17.3428 5C17.6051 5 17.8648 5.05165 18.1071 5.15202C18.3493 5.25237 18.5695 5.39947 18.755 5.58492C18.9404 5.77036 19.0875 5.99051 19.1879 6.2328C19.2882 6.47509 19.3398 6.73478 19.3398 6.99703C19.3398 7.25928 19.2882 7.51897 19.1879 7.76126C19.0875 8.00355 18.9404 8.2237 18.755 8.40915L9.22316 17.9409L5.33984 19L6.39893 15.1167L15.9307 5.58492Z"
+                    stroke="#48BF84" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Edit Ratings
+              </div>
+            </div>
+          </div>
+          <div class="card col" style="
+            display: flex;
+        padding: 20px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        flex: 1 0 0;
+        align-self: stretch;
+        border-radius: 14px;
+        border: 1px solid var(--stroke-secondary, #DCDCDC);
+        background: var(--surface-primary, #FFF);
+          ">
+            <h6 class="heading" style="font-size: 16px;font-weight: 700;">Justification and comments</h6>
+            <div id="JustificationEmployee">
+              I feel, I Completed the assigned tasks and updated my teammates on my progress for feedbacks and worked
+              extra hours
+              I feel, I Completed the assigned tasks and updated my teammates on my progress for feedbacks and worked
+              extra hours
+            </div>
+          </div>
+        </div>
+        <div class="row" id="RatingReviewBody2" style="display: none; gap:24px">
+
+          <div class="card col" style="
+                display: flex;
+            padding: 20px 16px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            flex: 1 0 0;
+            align-self: stretch;
+            border-radius: 14px;
+            border: 1px solid var(--stroke-secondary, #DCDCDC);
+            background: var(--surface-primary, #FFF);
+              ">
+            <div style="display: flex;align-items: flex-start;justify-content: space-between;width:100%">
+              <div style="font-size: 16px;font-weight: 700;margin-bottom: 20px;"> Ratings given:</div>
+              <div style="display: flex;gap:10px;align-items: center;color:#48bf84;cursor: pointer;"
+                onclick="EditRating()" id="EditRatingButtonHeader">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                  <path
+                    d="M15.9307 5.58492C16.1161 5.39947 16.3363 5.25237 16.5786 5.15202C16.8209 5.05165 17.0806 5 17.3428 5C17.6051 5 17.8648 5.05165 18.1071 5.15202C18.3493 5.25237 18.5695 5.39947 18.755 5.58492C18.9404 5.77036 19.0875 5.99051 19.1879 6.2328C19.2882 6.47509 19.3398 6.73478 19.3398 6.99703C19.3398 7.25928 19.2882 7.51897 19.1879 7.76126C19.0875 8.00355 18.9404 8.2237 18.755 8.40915L9.22316 17.9409L5.33984 19L6.39893 15.1167L15.9307 5.58492Z"
+                    stroke="#48BF84" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Edit Ratings
+              </div>
+              <div style="display: none;" id="SelectOptions">
+                <select style="border-radius: 12px;padding:5px" onchange="ChangeOptions(event.target.value)"
+                  id="OptionsForRating">
+                  <option value='1' selected> Pervious</option>
+                  <option value='2' id="UpdatedOptions">Updated</option>
+                </select>
+              </div>
+            </div>
+            <div style="display: flex;flex-direction: column;gap:20px;width:100%" id="ManagerRatingBody">
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="text-black">Average rating</div>
+                <div style="color:black;font-size:20px;" id="avgrating">
+
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="text-black">Work Size</div>
+                <div class="star-rating">
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="heading">Quality
+                </div>
+                <div class="star-rating">
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="heading">Loom Uploads
+
+                </div>
+                <div class="star-rating">
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="heading">Task Summary
+
+                </div>
+
+                <div class="star-rating">
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between" class="review-rating-box">
+                <div class="heading">Explanation Clarity
+
+                </div>
+
+                <div class="star-rating">
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                  <i class="fas fa-star" size="24" style="color: #dddfe1"></i>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content: space-between;align-items: center;width:100%;margin-top: 20px;">
+
+              <div style="display: none;gap:10px;align-items: center;color:#48bf84;cursor: pointer;"
+                id="EditRatingButtonFooter" onclick="EditRating()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                  <path
+                    d="M15.9307 5.58492C16.1161 5.39947 16.3363 5.25237 16.5786 5.15202C16.8209 5.05165 17.0806 5 17.3428 5C17.6051 5 17.8648 5.05165 18.1071 5.15202C18.3493 5.25237 18.5695 5.39947 18.755 5.58492C18.9404 5.77036 19.0875 5.99051 19.1879 6.2328C19.2882 6.47509 19.3398 6.73478 19.3398 6.99703C19.3398 7.25928 19.2882 7.51897 19.1879 7.76126C19.0875 8.00355 18.9404 8.2237 18.755 8.40915L9.22316 17.9409L5.33984 19L6.39893 15.1167L15.9307 5.58492Z"
+                    stroke="#48BF84" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Edit Ratings
+              </div>
+            </div>
+          </div>
+          <div class="card col" style="
+            display: flex;
+        padding: 20px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        flex: 1 0 0;
+        align-self: stretch;
+        border-radius: 14px;
+        border: 1px solid var(--stroke-secondary, #DCDCDC);
+        background: var(--surface-primary, #FFF);
+          ">
+            <h6 class="heading" style="font-size: 16px;font-weight: 700;">Feedback on the self-rating</h6>
+            <textarea placeholder="Share your response to the employee's self-rating here" style="display: flex;
+             padding: 16px;
+             align-items: flex-start;
+             gap: 10px;
+             color:black;
+             flex: 1 0 0;
+             align-self: stretch;
+             border-radius: 14px;
+             background: #FAFAFA;" id="JustificationManager" oninput="SaveJustification(event)">
+
+             </textarea>
+          </div>
+        </div>
+        <div class="card row"
+          style="gap: 10px ;display: flex;flex-direction: row;padding:20px 40px;margin-bottom: -20px; justify-content: space-between; flex-wrap: wrap;align-items: center;">
+          <div style="display: flex;flex-direction: column;align-items: center;gap:10px">
+            <div style="display: flex; flex-direction: row; gap: 10px;align-items: center;">
+
+              Overview for
+            </div>
+            <div class="heading" id="RatingReviewmodal-footer-date"
+              style="display: flex; flex-direction: row; gap: 10px;align-items: center;">
+              <i class="fa fa-angle-left" style="font-size:24px"></i> 05 June <i class="fa fa-angle-right"
+                style="font-size:24px"></i>
+            </div>
+          </div>
+
+          <div class="col child" style="flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;"
+            style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+            <div style="display: flex; flex-direction: row; gap: 10px">
+
+              <img src="../img/icons performance mgmt/desktop/d_signin_done_disabled_big.svg"
+                id="RatingReviewmodal-signin-image" />
+              Sign In
+            </div>
+            <div class="text-black" id="RatingReviewmodal-signin-text" style=" margin-top: 5px;">
+              Incomplete
+            </div>
+          </div>
+          <div class="col child" style="flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;">
+            <div style="display: flex; flex-direction: row; gap: 10px;align-items: center;">
+              <img src="../img/icons performance mgmt/desktop/d_tasks_done_disabled_big.svg"
+                id="RatingReviewmodal-task-image" />
+              Tasks
+            </div>
+            <div class="text-normal" id="RatingReviewmodal-task-text" style="margin-top: 5px;color:#DCDCDC">
+              Check
+            </div>
+          </div>
+          <div class="col child " style="flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;">
+            <div style="display: flex; flex-direction: row; gap: 10px;align-items: center;">
+
+              <img src="../img/icons performance mgmt/desktop/d_noon_done_disabled_big.svg"
+                id="RatingReviewmodal-noon-image">
+              Noon Update
+            </div>
+            <div class="text-normal" id="RatingReviewmodal-noon-text" style="margin-top: 5px;color:#DCDCDC">
+              Check
+            </div>
+          </div>
+          <div class="col child " style="flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;">
+            <div style="display: flex; flex-direction: row; gap: 10px;align-items: center;">
+
+              <img src="../img/icons performance mgmt/desktop/d_eod_disabled_big.svg"
+                id="RatingReviewmodal-eod-image" />
+              EOD Update
+            </div>
+            <div class="text-normal" id="RatingReviewmodal-eod-text" style="margin-top: 5px;color:#DCDCDC">
+              Check
+            </div>
+
+          </div>
+
+
+
+
+        </div>
+      </div>
+      <div class="modal-footer" style="padding: 10px">
+        <div style="float: right">
+          <button type="button" class="btn btn-primary" disabled style="border-radius: 14px;"
+            id="SubmitRatingReviewButton" data-dismiss="modal" onclick="SubmitRatingReview()">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Approve Modal -->
+<div class="modal docs-example-modal-sm" tabindex="-1" id="ApproveReviewRatingModal" role="dialog"
+  aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content" id="myModalsm" style="width: 350px;border-radius:12px ;">
+      <div class="modal-header">
+        <h6>Confirm Approve</h6>
+      </div>
+      <div class="modal-body">
+        <p>
+          Are you sure you want to approve the employee's rating request?
+        </p>
+      </div>
+      <div style="display: flex; flex-direction: row; gap: 10px" class="modal-footer">
+        <button type="button" class="btn btn-outline-success heading" style="width: 140px;border-radius: 14px;color:#48bf84"
+          data-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-success  heading" style="width: 140px;border-radius: 14px;color:white"
+          data-dismiss="modal" onclick="Approvedrating()">
+          Approve
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Disaprove Modal -->
+
+<div class="modal docs-example-modal-sm" tabindex="-1" id="DisApproveReviewRatingModal" role="dialog"
+  aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content" id="myModalsm" style="width: 350px;border-radius:12px ;">
+      <div class="modal-header">
+        <h6>Are you sure?</h6>
+      </div>
+      <div class="modal-body">
+        <p>
+          Are you sure you want to keep the ratings unchanged?
+        </p>
+      </div>
+      <div style="display: flex; flex-direction: row; gap: 10px" class="modal-footer">
+        <button type="button" class="btn btn-outline-success heading" style="width: 140px;border-radius: 14px;color:#48bf84"
+          data-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-success  heading"
+          style="width: 140px;border-radius: 14px; background: var(--pill-text-red, #FF6565);color:white;border:none" data-dismiss="modal"
+          onclick="DisApprovedrating()">
+          Disapprove
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+  employeeID;
+  admindata = [];
+  ratingList = [];
+  let previousRating = [0, 0, 0, 0, 0], updatedRating = [0, 0, 0, 0, 0];
+  let justificationManager = '', justificationEmployee = '';
+  let RatingReviewData;
+  let status = '';
+  date = '';
+  let optionvalue = '1';
+  function ChanageRatingReviewTab(i) {
+    let index = i;
+    for (let j = 1; j <= 2; j++) {
+      const videodiv = document.getElementById("RatingReviewBody" + j);
+      const tab = document.getElementById("RatingReviewTab" + j);
+
+      if (j === index) {
+        videodiv.style.display = "flex";
+        tab.classList.add("active");
+      } else {
+        videodiv.style.display = "none";
+        tab.classList.remove("active");
+      }
+    }
+  }
+
+
+
+
+
+  function ChangeDate(date) {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    const formattedDate = new Date(date).toLocaleDateString(undefined, options);
+    return formattedDate;
+  }
+
+
+
+  function findaverage(ratingList) {
+    let sum = 0;
+    for (let i = 0; i < ratingList.length; i++) {
+      sum += ratingList[i];
+    }
+    return sum / 5 .toFixed(2)
+  }
+
+  function SetRatingsBox(ratingList, ratingboxId) {
+    let avg = findaverage(ratingList);
+    // RatingList=[avg,...ratingList];
+    const ratingDiv = document.getElementById(`${ratingboxId}`);
+    const avgratingbox = ratingDiv.querySelector('#avgrating');
+    avgratingbox.innerHTML = avg;
+    RatingList = ratingList
+
+
+    let stars = ratingDiv.getElementsByTagName("i");
+    for (let i = 0; i < RatingList.length; i++) {
+      let rating = RatingList[i];
+      for (let j = 0; j < 5; j++) {
+        if (j < Math.floor(rating)) {
+          stars[j + 5 * i].style.color = "#facc15";
+        } else {
+          stars[j + 5 * i].style.color = "#eff2f7";
+        }
+      }
+    }
+  }
+  function handleStarClickRatingReview(index, stars,incr) {
+    for (let i = index - (index % 5); i < index - (index % 5) + 5; i++) {
+      stars[i].className='fas fa-star'
+    }
+    for (let i = index - (index % 5); i < index - (index % 5) + 5; i++) {
+      if (i <= index) {
+        stars[i].style.color = "#facc15"; // Yellow color
+        if(incr<1 && index==i)
+        {
+          stars[i].className='fas fa-star-half'
+         
+        }
+      } else {
+        stars[i].style.color = "#eff2f7";
+      }
+    }
+  
+   
+  }
+
+  starRatingDivs = document.getElementById("ManagerRatingBody");
+  let stars = starRatingDivs.getElementsByTagName("i");
+
+  for (let j = 0; j < stars.length; j++) {
+    stars[j].addEventListener("click", function () {
+      let optionValue = document.getElementById("OptionsForRating").value;
+      if (optionValue === '2' && status === 'Edited') {
+       
+        
+        let boxProperty = stars[j].getBoundingClientRect();
+       
+       let diff=e.clientX-boxProperty.x;
+       console.log(boxProperty.x,e.clientX,diff)
+       if(diff<(boxProperty.width)/2)
+       {
+        updatedRating[Math.floor(j / 5)] = j % 5 + 0.5;
+         handleStarClickRatingReview(j, stars,0.5);
+       }
+      else
+      { updatedRating[Math.floor(j / 5)] = j % 5 + 1;
+        handleStarClickRatingReview(j, stars,1);
+     }
+     RatingReviewData.updatedRating = updatedRating;
+        let avg = findaverage(updatedRating);
+
+        const ratingDiv = document.getElementById('ManagerRatingBody');
+        const avgratingbox = ratingDiv.querySelector('#avgrating');
+        avgratingbox.innerHTML = avg;
+        ChangeButtonVisbility();
+      }
+    });
+  }
+
+
+  function ChangeVisiblity(checkbox, index) {
+    starRatingDivs = document.querySelectorAll(".selfratingdiv");
+    if (checkbox.checked)
+      starRatingDivs[index].classList.remove("disabled");
+    else
+      starRatingDivs[index].classList.add("disabled");
+  }
+
+  function ChangeButtonVisbility() {
+    for (let i = 0; i < 5; i++) {
+      if (previousRating[i] != updatedRating[i]) {
+        const button = document.getElementById('SubmitRatingReviewButton');
+        button.disabled = false;
+        break;
+      }
+      else {
+        const button = document.getElementById('SubmitRatingReviewButton');
+        button.disabled = true;
+      }
+    }
+  }
+
+  function SaveJustification(event) {
+    justificationManager = event.target.value;
+    RatingReviewData.justificationFromManager = justificationManager;
+    const button = document.getElementById('SubmitRatingReviewButton');
+    if (justificationManager.length > 0)
+      button.disabled = false;
+    else
+      button.disabled = true;
+  }
+
+  function ChangeOptions(value) {
+    optionvalue = value;
+    if (value == '1') {
+      SetRatingsBox(previousRating, 'ManagerRatingBody');
+    }
+    else {
+      SetRatingsBox(updatedRating, 'ManagerRatingBody');
+    }
+
+  }
+
+  function Approvedrating() {
+    RatingReviewData.requestApproved = true;
+    ChanageRatingReviewTab(2);
+    updatedRating = RatingReviewData.selfRating;
+    RatingReviewData.updatedRating = updatedRating;
+    ChangeOptions('2');
+    ChangeVisiblityOfEditOptions('Approved')
+    status = 'Approved';
+    justificationManager
+    RatingReviewData.status = 'Approved';
+
+  }
+  function DisApprovedrating() {
+    RatingReviewData.requestApproved = false;
+    ChanageRatingReviewTab(2);
+    ChangeVisiblityOfEditOptions('DisApproved')
+    status = 'DisApproved';
+    SetRatingsBox(previousRating, 'ManagerRatingBody');
+    RatingReviewData.status = 'DisApproved';
+  }
+  function EditRating() {
+    RatingReviewData.requestApproved = false;
+    ChanageRatingReviewTab(2);
+    updatedRating = [0, 0, 0, 0, 0];
+    status = 'Edited';
+    ChangeOptions('2');
+    ChangeVisiblityOfEditOptions('Approved')
+    RatingReviewData.status = 'Edited';
+  }
+
+  function ChangeVisiblityOfEditOptions(type) {
+
+    let editbuttonheader = document.getElementById('EditRatingButtonHeader')
+    let editbuttonfooter = document.getElementById('EditRatingButtonFooter')
+    if (type == 'Approved') {
+      editbuttonheader.style.display = 'none'
+      editbuttonfooter.style.display = 'flex'
+      let selectElement = document.getElementById("OptionsForRating");
+      let selectoptions = document.getElementById('SelectOptions');
+      selectoptions.style.display = 'flex';
+      selectElement.selectedIndex = 1;
+    } else {
+      let selectoptions = document.getElementById('SelectOptions');
+      selectoptions.style.display = 'none';
+      editbuttonfooter.style.display = 'none';
+      editbuttonheader.style.display = 'flex';
+    }
+    let button = document.getElementById('SubmitRatingReviewButton');
+    button.disabled = false;
+  }
+
+  async function SetContentToModal(employeeId, date) {
+
+    date = date;
+    let response = await fetch(`/reviewRating/${employeeId}/${date}`, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, // Add Content-Type header
+    });
+
+
+    response = await response.json();
+    let ratingReviewitems = response;
+    RatingReviewData = ratingReviewitems;
+
+    let taskLinks = response.performanceRecord.links;
+    let employeeName=response.admin.displayName;
+    let image = response.admin.image;
+    let RatingReview = response.ratingreview;
+    RatingReviewData = RatingReview;
+    let managerRating = RatingReview.originalRating;
+    let employeerating = RatingReview.selfRating;
+    updatedRating = RatingReview.updatedRating;
+    previousRating = RatingReview.originalRating;
+
+    date = RatingReview.date;
+    let employeeNameBox=document.getElementById('RatingReviewModal1EmployeeName');
+    employeeNameBox.innerHTML=`Self Ratings given by ${employeeName}`;
+    let signinimage = document.getElementById("RatingReviewmodal-signin-image");
+    let signintext = document.getElementById("RatingReviewmodal-signin-text");
+    let taskimage = document.getElementById("RatingReviewmodal-task-image");
+    let tasktext = document.getElementById("RatingReviewmodal-task-text");
+    let noonimage = document.getElementById("RatingReviewmodal-noon-image");
+    let noontext = document.getElementById("RatingReviewmodal-noon-text");
+    let eodimage = document.getElementById("RatingReviewmodal-eod-image");
+    let eodtext = document.getElementById("RatingReviewmodal-eod-text");
+
+    for (let i = 0; i < taskLinks.length; i++) {
+      if (i == 0) {
+
+        if (taskLinks.length > 1) {
+          signinimage.src = '../img/icons performance mgmt/desktop/d_signin_done_big.svg';
+          signintext.innerHTML = `<div  style="color:#48BF84">Done</di>`;
+        }
+        else {
+          signinimage.src = '../img/icons performance mgmt/desktop/d_signin_done_disabled_big.svg';
+          signintext.innerHTML = `Incomplete`;
+          signintext.style.color = '#DCDCDC'
+        }
+      }
+      else if (i == 1) {
+        if (taskLinks[i].length > 1) {
+          taskimage.src = '../img/icons performance mgmt/desktop/d_tasks_done_big.svg';
+          tasktext.innerHTML = `<a href="${taskLinks[i]}" target='_blank' style="color:#48BF84">Check</a>`;
+        }
+        else {
+          taskimage.src = '../img/icons performance mgmt/desktop/d_tasks_done_disabled_big.svg';
+          tasktext.innerHTML = `Check`;
+          tasktext.style.color = '#DCDCDC'
+        }
+      }
+      else if (i == 2) {
+        if (taskLinks[i].length > 1) {
+          noonimage.src = '../img/icons performance mgmt/desktop/d_noon_done_big.svg';
+          noontext.innerHTML = `<a href="${taskLinks[i]}" target='_blank' style="color:#48BF84">Check</a>`;
+        }
+        else {
+          noonimage.src = '../img/icons performance mgmt/desktop/d_noon_done_disabled_big.svg';
+          noontext.innerHTML = `Check`;
+          noontext.style.color = '#DCDCDC'
+        }
+      }
+      else if (i == 3) {
+        if (taskLinks[i].length > 1) {
+          eodimage.src = '../img/icons performance mgmt/desktop/d_eod_done_big.svg';
+          eodtext.innerHTML = `<a href="${taskLinks[i]}" target='_blank' style="color:#48BF84">Check</a>`;
+        }
+        else {
+          eodimage.src = '../img/icons performance mgmt/desktop/d_eod_disabled_big.svg';
+          eodtext.innerHTML = `Check`;
+          eodtext.style.color = '#DCDCDC'
+        }
+      }
+    }
+
+    let headerdatebox = document.getElementById('RatingReviewmodal-header-date');
+    headerdatebox.innerHTML = ChangeDate(date);
+    let footerdatebox = document.getElementById('RatingReviewmodal-footer-date');
+    footerdatebox.innerHTML = ChangeDate(date);
+    let profileimage = document.getElementById('RatingReviewmodal-userprofile')
+    profileimage.src = image;
+
+    let JustficationEmployee = document.getElementById('JustificationEmployee')
+    let JustificationManager = document.getElementById('JustificationManager');
+
+    JustficationEmployee.innerHTML = RatingReview.justificationFromEmployee;
+    JustificationManager.value = RatingReview.justificationFromManager;
+    SetRatingsBox(employeerating, 'EmployeeRatingBody');
+    SetRatingsBox(managerRating, 'ManagerRatingBody');
+
+  }
+
+  async function SubmitRatingReview() {
+    try {
+  
+      console.log(RatingReviewData)
+ if(RatingReviewData.status!='DisApproved') {
+  let data={
+        rating:findaverage(RatingReviewData.updatedRating), employeeID:RatingReviewData.employeeId, date:RatingReviewData.date, ratingList:RatingReviewData.updatedRating
+      }
+  let response = await fetch('/mark/performance', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, // Add Content-Type header
+        body: JSON.stringify(data) 
+      });
+      console.log(response)
+ }
+
+      let response = await fetch(`/reviewRating/${RatingReviewData.employeeId}/${RatingReviewData.date}`, {
+        method: 'PUT',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, // Add Content-Type header
+        body: JSON.stringify(RatingReviewData) // Send RatingReviewData directly without the 'data' property
+      });
+      const responseData = await response.json();
+     
+      if (!responseData.ok) {
+        $('#successModal').modal('show');
+      }
+
+     
+
+    } catch (error) {
+      $('#errorModal').modal('show');
+    }
+  }
+
+
+</script>

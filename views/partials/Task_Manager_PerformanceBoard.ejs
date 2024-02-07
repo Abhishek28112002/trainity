@@ -1,0 +1,1321 @@
+<style>
+  .ProgressTs {
+    height: 8px;
+    flex-shrink: 0;
+    width: 120px;
+    border-radius: 4px;
+    background: var(--success-100, #D1FADF);
+  }
+  .text-16-600{
+    color: var(--Gray-800, #1D2939);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  }
+  .deleteicon:hover{
+    color:#FF6565;
+  }
+input:hover{
+  border: 1px solid var(--Gray-400, #98A2B3);
+}
+.TextAreaStyleSubmissionModal{
+  display: flex;
+       padding: 14px 20px;
+       align-items: center;
+       gap: 10px;
+       align-self: stretch;
+       color: var(--gray-500, #667085);
+       
+       font-size: 14px;
+       font-style: normal;
+       height: 48px;
+       
+       font-weight: 500;
+       line-height: normal;
+       letter-spacing: 0.21px;
+       border-radius: 12px;
+border: 1px solid var(--Gray-400, #98A2B3);
+background: var(--Gray-50, #F9FAFB);
+}
+
+
+  .create-project_btn {
+    display: flex;
+    padding: 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    color: var(--White, #FFF);
+    background: #48bf84;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    /* 150% */
+    border-radius: var(--radius-medium, 8px);
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+</style>
+<%function formateDate(inputDate) { const months=['Jan', 'Feb' , 'Mar' , 'Apr' , 'May' , 'Jun' , 'Jul' , 'Aug' , 'Sep'
+  , 'Oct' , 'Nov' , 'Dec' ]; const dateObject=new Date(inputDate); const year=dateObject.getFullYear(); const
+  month=months[dateObject.getMonth()]; const day=dateObject.getDate(); return `${day} ${month} ${year}`; }%>
+  <div id="InitiativeBody" style="display: flex;
+padding: 32px;
+width: 100%;
+flex-direction: column;
+align-items: flex-start;
+gap: 20px;
+align-self: stretch;
+border-radius: 14px;
+" class="container_Style">
+    <div style="display: flex;
+justify-content: space-between;
+align-items: center;
+align-self: stretch;">
+      <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 2px;">
+        <div style="color: var(--content-on-light-primary, #181818);
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+">Initiatives</div>
+        <div style="color: var(--gray-500, #667085);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px; /* 171.429% */" class="TasklessHeaderinfo">Your Tasks for this month <u
+            style="font-weight: 700;margin-left: 4px;cursor: pointer;"
+            onclick="ExpendBlock('.TasklessHeaderinfo','.TaskmoreHeaderinfo')">Read More</u>
+
+
+        </div>
+        <div class="TaskmoreHeaderinfo" style="
+                  color: var(--gray-500, #667085);
+                  font-size: 14px;
+                  display: none;
+                  font-style: normal;
+                  font-weight: 500;
+                  line-height: 24px; /* 171.429% */">
+          <span>
+            Your Tasks for this month. Mark them completed as you progress and submit t upon completion from <span
+              style="font-weight: 700;">“Submit Live Initiatives” </span> to receive badges from your manager!
+            <u onclick="ExpendBlock('.TasklessHeaderinfo','.TaskmoreHeaderinfo')" style="font-size: 14px;
+          font-style: normal;
+          cursor: pointer;
+          font-weight: 700;
+          line-height: 24px; ">Read Less</u>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div style="width:100%;display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 20px;">
+      <%- include('./TaskManagerFrontend')%>
+    </div>
+    <!-- <a href='/projectTask/task' style="display: flex;
+padding: 10px 16px;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+gap: 8px;
+color: var(--brand-primary, #48BF84);
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 150% */
+border-radius: var(--radius-medium, 8px);">View All Tasks</a> -->
+
+
+
+
+
+    <% let TaskSubmissionTableHeaders=[ { title: "Tasks" , usedNames: "tasks" }, { title: "From" , usedNames: "from" },
+      { title: "Project" , usedNames: "project" }, { title: "Key Result" , usedNames: "krs" }, { title: "Sub-key Result"
+      , usedNames: "subkrs" }, { title: "Pervious KPI Progress" , usedNames: "pervKpiProgress" }, {
+      title: "Submitted KPI Progress" , usedNames: "KpiProgress" }, { title: "Quality" , usedNames: "quality" }, {
+      title: "Speed" , usedNames: "speed" }, { title: "Ratings" , usedNames: "rating" }, { title: "Badges" ,
+      usedNames: "badges" }, { title: "Feedback" , usedNames: "feedback" },{title:'Files',usedNames:'files'} ,{
+      title: "Status" , usedNames: "status" },{title:'Links',usedNames:'links'}, { title: "Submitted On" ,
+      usedNames: "submittedOn" } ]; %>
+      <% if(TaskSubmissions.length>0){%>
+        <% TaskSubmissionTableHeaders=[]%>
+        <div style="width: 100%;">
+          <div style="color: var(--content-on-light-primary, #181818);
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;">Weekly Submissions</div>
+
+
+          <!-- <div style="display: flex;
+                align-items: center;
+                gap: 12px;
+                align-self: stretch;">
+            <div class="progressTask">
+              <div class="progress__fill" id="completedTaskProgressFill"></div>
+            </div>
+            <div style="color: var(--gray-700, #344054);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 28px; /* 200% */">
+              <sapn id="completedTask"></sapn>/<%=initiative.length%> Tasks submitted
+            </div>
+          </div> -->
+        </div>
+        <div class="table-responsive" style="width: 100%;overflow: auto;" id="InitiativesBox">
+          <table class="table align-items-center">
+            <thead style="background: var(--gray-100, #F2F4F7);">
+              <tr>
+                <!-- <th scope="col">Sr No</th> -->
+                <% for(let header of TaskSubmissionTableHeaders) {%>
+                  <th scope="col">
+                    <%=header.title%>
+                  </th>
+                  <%}%>
+                 
+              
+                    <th style="width: 250px;">Initiative Name</th>
+                    <th style="width: 90px;">Metric Moved</th>
+                    <th style="width: 50px;">Badges</th>
+                    <th style="width: 50px;">Quality</th>
+                    <th style="width: 50px;">Speed</th>
+                    <th style="width: 120px;">Review</th>
+                    <th style="width: 50px;">Comment</th>
+                    <th style="width: 120px;">Live Status</th>
+                    <th style="width: 120px;">In-Usage</th>
+                    <th style="width: 120px;">Value Generated</th>
+                    <th style="width: 120px;">B-Impact</th>
+                    <th style="width: 120px;">User Adoption</th>
+                    <th style="width: 150px;">Customer Satisfaction</th>
+                    
+
+            </thead>
+            <tbody class="list">
+
+              <% for(let i=0;i<0;i++){%>
+                <tr >
+                  <td>
+                    <%=i+1%>
+                  </td>
+                  <td onmouseover="showIcons('.OpenIcon<%=TaskSubmissions[i]._id%>')"
+                    onmouseout="removeIcons('.OpenIcon<%=TaskSubmissions[i]._id%>')">
+                    <div style="display: flex;align-items: center;gap:40px">
+                      <div style="display: flex;gap:12px;align-items: center;">
+
+                        <div style="border: none;
+                              border-radius: 6px;
+                              height: 30px;
+                              background: transparent;display: -webkit-box;
+                              -webkit-box-orient: vertical;
+                              -webkit-line-clamp: 1;
+                              overflow: hidden;
+                              color: var(--gray-900, #101828);
+                              text-overflow: ellipsis;
+                              font-size: 14px;
+                              font-style: normal;
+                              font-weight: 600;
+                              line-height: 20px; /* 142.857% */
+                              ">
+                          <%=TaskSubmissions[i].tasks?.title%>
+                        </div>
+
+
+                      </div>
+                      <a href="/task/<%=TaskSubmissions[i].tasks?.id%>" id="OpenIcon<%=TaskSubmissions[i]._id%>" style="display: none;align-items: center;gap:8px;color: var(--gray-500, #667085);
+                          font-size: 14px;
+                          font-style: normal;
+                          font-weight: 600;
+                          line-height: 20px;">
+                        <img src="../Project icons/maximize.svg">
+                        Open
+                      </a>
+                    </div>
+                  </td>
+                  <!-- <td id="Owner<%=i%>">
+                    <div style="display: flex;align-items: center;gap:12px;" id="initiativeOwner<%=i%>"
+                      data-toggle="dropdown" aria-expanded="false">
+                      <img src="<%=TaskSubmissions[i].from?.image%>"
+                        style="width: 24px;height: 24px;border-radius:200px ;">
+                      <%=TaskSubmissions[i].from?.name%>
+                    </div>
+
+                  </td> -->
+                  <td>
+                    <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 1;
+                  overflow: hidden;
+                  width:150px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;">
+
+
+                      <%= TaskSubmissions[i].project.title %>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 1;
+                  overflow: hidden;
+                  width:150px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;" id="initiativeKR<%=i%>">
+
+                      <% for (let j=0; j < TaskSubmissions[i].krs?.length; j++) { %>
+                        <%= TaskSubmissions[i].krs[j].title %>
+                          <%= j < TaskSubmissions[i].krs?.length - 1 ? ',' : '' %>
+                            <% } %>
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+                              -webkit-box-orient: vertical;
+                              -webkit-line-clamp: 1;
+                              overflow: hidden;
+                              width:150px;
+                              overflow: hidden;
+                              text-overflow: ellipsis;" id="initiativeSubKR<%=i%>">
+
+                      <% for (let j=0; j < TaskSubmissions[i].subkrs?.length; j++) { %>
+                        <%= TaskSubmissions[i].subkrs[j].title %>
+                          <%= j < TaskSubmissions[i].subkrs?.length - 1 ? ',' : '' %>
+                            <% } %>
+
+
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <% let currentValue=0,startingValue=0,targetValue=0; %>
+                      <% for(let kpi of TaskSubmissions[i].pervKpiProgress){ %>
+                        <% currentValue+=kpi.currentValue;%>
+                          <% startingValue+=kpi.startingValue;%>
+                            <% targetValue+=kpi.targetValue;%>
+                              <%}%>
+                                <% currentValue=currentValue/TaskSubmissions[i].pervKpiProgress.length;%>
+                                  <% startingValue=startingValue/TaskSubmissions[i].pervKpiProgress.length;%>
+                                    <% targetValue=targetValue/TaskSubmissions[i].pervKpiProgress.length;%>
+                                      <% currentValue=Math.round(currentValue);%>
+                                        <% startingValue=Math.round(startingValue);%>
+                                          <% targetValue=Math.round(targetValue);%>
+                                            <% currentValue=Math.min(targetValue,currentValue)%>
+                                              <%let perc=Math.min(100,(currentValue/(targetValue-startingValue))*100)%>
+                                                <div style="display: flex; flex-direction: column; gap: 6px;">
+                                                  <div style="display: flex;
+                                  width: 19px;
+                                  height: 13px;
+                                  flex-direction: column;
+                                  justify-content: center;
+                                  color: var(--gray-500, #667085);
+                                  
+                                  font-size: 12px;
+                                  font-style: normal;
+                                  font-weight: 500;
+                                  line-height: 28px;  margin-left:<%=perc%>%;">
+                                                    <%=currentValue%>
+                                                  </div>
+                                                  <div class="ProgressTs">
+                                                    <div class="progress__fill" style="width: <%=perc%>%;"></div>
+                                                  </div>
+                                                  <div
+                                                    style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                                                    <div style="display: flex;
+                                 width: 19px;
+                                 height: 13px;
+                                 flex-direction: column;
+                                 justify-content: center;
+                                 color: var(--gray-500, #667085);
+                                 
+                                 font-size: 12px;
+                                 font-style: normal;
+                                 font-weight: 500;
+                                 line-height: 28px; /* 233.333% */">
+                                                      <%=startingValue%>
+                                                    </div>
+                                                    <div style="display: flex;
+                                  width: 19px;
+                                  height: 13px;
+                                  flex-direction: column;
+                                  justify-content: center;
+                                  color: var(--gray-500, #667085);
+                                  
+                                  font-size: 12px;
+                                  font-style: normal;
+                                  font-weight: 500;
+                                  line-height: 28px; /* 233.333% */" id="ProgressBarTV${i}-${j}">
+                                                      <%=targetValue%>
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+
+                  </td>
+                  <td>
+                    <% currentValue=0,startingValue=0,targetValue=0; %>
+                      <% for(let kpi of TaskSubmissions[i].KpiProgress){ %>
+                        <% currentValue+=kpi.currentValue;%>
+                          <% startingValue+=kpi.startingValue;%>
+                            <% targetValue+=kpi.targetValue;%>
+                              <%}%>
+                                <% currentValue=currentValue/TaskSubmissions[i].KpiProgress.length;%>
+                                  <% startingValue=startingValue/TaskSubmissions[i].KpiProgress.length;%>
+                                    <% targetValue=targetValue/TaskSubmissions[i].KpiProgress.length;%>
+                                      <% currentValue=Math.round(currentValue);%>
+                                        <% startingValue=Math.round(startingValue);%>
+                                          <% targetValue=Math.round(targetValue);%>
+                                            <% currentValue=Math.min(targetValue,currentValue)%>
+                                              <% perc=Math.min(100,(currentValue/(targetValue-startingValue))*100)%>
+                                                <div style="display: flex; flex-direction: column; gap: 6px;">
+                                                  <div style="display: flex;
+                                     width: 19px;
+                                     height: 13px;
+                                     flex-direction: column;
+                                     justify-content: center;
+                                     color: var(--gray-500, #667085);
+                                     
+                                     font-size: 12px;
+                                     font-style: normal;
+                                     font-weight: 500;
+                                     line-height: 28px;  margin-left:<%=perc%>%;">
+                                                    <%=currentValue%>
+                                                  </div>
+                                                  <div class="ProgressTs">
+                                                    <div class="progress__fill" style="width: <%=perc%>%;"></div>
+                                                  </div>
+                                                  <div
+                                                    style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                                                    <div style="display: flex;
+                                    width: 19px;
+                                    height: 13px;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    color: var(--gray-500, #667085);
+                                    
+                                    font-size: 12px;
+                                    font-style: normal;
+                                    font-weight: 500;
+                                    line-height: 28px; /* 233.333% */">
+                                                      <%=startingValue%>
+                                                    </div>
+                                                    <div style="display: flex;
+                                     width: 19px;
+                                     height: 13px;
+                                     flex-direction: column;
+                                     justify-content: center;
+                                     color: var(--gray-500, #667085);
+                                     
+                                     font-size: 12px;
+                                     font-style: normal;
+                                     font-weight: 500;
+                                     line-height: 28px; /* 233.333% */" id="ProgressBarTV${i}-${j}">
+                                                      <%=targetValue%>
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+
+                  </td>
+                  <td>
+                    <span style="color: #48BF84;"><input type="number"
+                        style="width:50px;text-align:right;height:30px;"
+                        value="<%=TaskSubmissions[i].quality%>"
+                        onchange="changetaskSubmissiondata('<%=i%>','quality',event.target.value)"></span>/10
+                  </td>
+                  <td>
+                    <span style="color: #48BF84;"><input type="number"
+                        style="width:50px;text-align:right;height:30px;"
+                        value="<%=TaskSubmissions[i].speed%>"
+                        onchange="changetaskSubmissiondata('<%=i%>','speed',event.target.value)"></span>/10
+                  </td>
+
+                  <td>
+                    <span style="color: #48BF84;"><input type="number"
+                        style="width:50px;text-align:right;height:30px;"
+                        value="<%=TaskSubmissions[i].rating%>"
+                        onchange="changetaskSubmissiondata('<%=i%>','rating',event.target.value)"></span><img
+                      src="../img/filled-star.svg" style="width: 24px; height: 24px; flex-shrink: 0;">
+                  </td>
+                  <td>
+                    <span style="color: #48BF84;"><input type="number"
+                        style="width:50px;text-align:right;height:30px"
+                        value="<%=TaskSubmissions[i].badges%>"
+                        onchange="changetaskSubmissiondata('<%=i%>','badges',event.target.value)"></span>
+                  </td>
+
+                  <td><img src="../Performance dashboard Icons/Tasks/One feedback(number is dynamic).svg"></td>
+                  <td class="d-flex align-items-center gap-3">
+                    <div id="TaskSubmissionFiles<%=i%>" data-toggle="dropdown" aria-expanded="false">
+                      <span>
+                        <%= TaskSubmissions[i].files?.length%>
+                      </span>
+                      <img src="../Performance dashboard Icons/File.svg" style="width: 24px; height: 24px;">
+                    </div>
+                    <div class="dropdown-menu"
+                      style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;"
+                      id="TaskSubmissionFiles<%=i%>dropdown">
+                      <% for(let file of TaskSubmissions[i].files){ %>
+
+                        <div style="display: flex;
+                          padding: 12px 16px;
+                          align-items: center;
+                          gap: 12px;">
+                          <img src="../Performance dashboard Icons/Document Added.svg">
+                          <a href="<%=file.url%>" target="_blank" download style="display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            gap: 4px;
+                            flex: 1 0 0;">
+                            <div style="
+                              color: var(--content-on-light-primary, #181818);
+                              font-size: 16px;
+                              max-width:150px;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              font-style: normal;
+                              font-weight: 600;
+                              line-height: 17.352px;">
+                              <%=file.title%>
+                            </div>
+                            <div style="display: -webkit-box;
+                              -webkit-box-orient: vertical;
+                              -webkit-line-clamp: 1;
+                              
+                              overflow: hidden;
+                              max-width:150px;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              color: var(--content-on-light-secondary, #898989);
+                              text-overflow: ellipsis;
+                              font-size: 12px;
+                              font-style: normal;
+                              font-weight: 500;
+                              line-height: 17.352px;">
+                              <%=file.url%>
+                            </div>
+                          </a>
+                        </div>
+                        <%}%>
+                    </div>
+                  </td>
+
+
+
+                  <td>
+                    <div style="padding:5px 12px;border-radius:16px;" id="TSstatus<%=i%>" data-toggle="dropdown"
+                      aria-expanded="false">
+
+
+                      <%if(TaskSubmissions[i].status=='Approved'){%>
+                        <div class="Status_completed">Approved</div>
+                        <%}%>
+                          <%if(TaskSubmissions[i].status=='Pending'){%>
+                            <div class="Status_progress">Pending</div>
+                            <%}%>
+
+
+
+                    </div>
+                    <div class="dropdown-menu" style="
+               flex-direction: column;
+             " aria-labelledby="TSstatus<%=i%>" id="TSstatus<%=i%>dropdown">
+
+                      <div class="StatusBox" onclick="setStatusTS('<%=i%>','Approved','status',0)">
+                        <div class="Status_completed">Approved</div>
+                      </div>
+                      <div class="StatusBox" onclick="setStatusTS('<%=i%>','Pending','status',1)">
+                        <div class="Status_progress">Pending</div>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td class="d-flex align-items-center gap-3">
+                    <div style="padding: 5px 12px; border-radius: 16px; display: flex; gap: 8px; align-items: center;"
+                      data-toggle="dropdown" aria-expanded="false">
+                      <span>
+                        <%= TaskSubmissions[i].links?.length %>
+                      </span>
+                      <img src="../Performance dashboard Icons/Link.svg" style="width: 24px; height: 24px;">
+
+                    </div>
+                    <div class="dropdown-menu"
+                      style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;"
+                      id="TaskSubmissionLinks<%=i%>dropdown">
+                      <% for(let link of TaskSubmissions[i].links){%>
+                        <div style="display: flex;
+                          padding: 12px 16px;
+                          align-items: center;
+                          gap: 12px;
+                          flex: 1 0 0;
+                         ">
+                          <img src="../Performance dashboard Icons/Link Added.svg">
+                          <a href="<%=link.url%>" target="_blank" style="display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            gap: 4px;
+                            flex: 1 0 0;">
+                            <div style="
+                              color: var(--content-on-light-primary, #181818);
+                              font-size: 16px;
+                              font-style: normal;
+                              max-width:150px;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              font-weight: 600;
+                              line-height: 17.352px;">
+                              <%=link.title%>
+                            </div>
+                            <div style="display: -webkit-box;
+                              -webkit-box-orient: vertical;
+                              -webkit-line-clamp: 1;
+                              
+                              overflow: hidden;
+                              max-width:150px;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              color: var(--content-on-light-secondary, #898989);
+                              text-overflow: ellipsis;
+                              font-size: 12px;
+                              font-style: normal;
+                              font-weight: 500;
+                              line-height: 17.352px;">
+                              <%=link.url%>
+                            </div>
+                          </a>
+                        </div>
+                        <%}%>
+                    </div>
+                  </td>
+                  <td>
+                    <%= formateDate(TaskSubmissions[i].submittedOn)%>
+                  </td>
+                </tr>
+                <%}%>
+                <% for(let i=0;i<TaskSubmissions.length;i++){%>
+                  <tr>
+                  <td onmouseover="showIcons('.OpenIcon<%=TaskSubmissions[i]._id%>')"
+                    onmouseout="removeIcons('.OpenIcon<%=TaskSubmissions[i]._id%>')" style="width: 250px;">
+                    <div style="display: flex;align-items: center;gap:20px;width: 100%;">
+                   <input style="
+                              border-radius: 6px;
+                              height: 30px;
+                              width: 90%;
+                              background: transparent;display: -webkit-box;
+                              -webkit-box-orient: vertical;
+                              -webkit-line-clamp: 1;
+                              overflow: hidden;
+                              color: var(--gray-900, #101828);
+                              text-overflow: ellipsis;
+                              font-size: 14px;
+                              font-style: normal;
+                              font-weight: 600;
+                              line-height: 20px; /* 142.857% */
+                              " value="<%=TaskSubmissions[i].tasktitle%>" onchange="changetaskSubmissiondata('<%=i%>','tasktitle',event.target.value)">
+                        
+                        
+
+
+              
+                      <div onclick="OpenTaskSubmissionSideBar('<%=i%>')" class="OpenIcon<%=TaskSubmissions[i]._id%>" style="display: none;align-items: center;gap:8px;color: var(--gray-500, #667085);
+                          font-size: 14px;
+                          font-style: normal;
+                          font-weight: 600;
+                          line-height: 20px;">
+                        <img src="../Project icons/maximize.svg">
+                        Open
+                      </div>
+                    </div>
+                  </td>
+                  <td style="width: 90px;">
+                    <div style="padding:5px 12px;border-radius:16px;" id="TSliveStatus<%=i%>" data-toggle="dropdown"
+                      aria-expanded="false">
+
+
+                      <%if(TaskSubmissions[i].liveStatus){%>
+                        <div class="Status_completed">Yes</div>
+                        <%}else{%>
+                            <div class="Status_hold">No</div>
+                            <%}%>
+
+
+
+                    </div>
+                    <div class="dropdown-menu" style="
+               flex-direction: column;
+             " aria-labelledby="TSliveStatus<%=i%>" id="TSliveStatus<%=i%>dropdown">
+
+                      <div class="StatusBox" onclick="setStatusTS('<%=i%>',true,'liveStatus',0)">
+                        <div class="Status_completed">Yes</div>
+                      </div>
+                      <div class="StatusBox" onclick="setStatusTS('<%=i%>',false,'liveStatus',1)">
+                        <div class="Status_hold">No</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="width: 50px;">
+                    <span style="display:flex;gap:0px;align-items: center;"><input type="number"
+                        style="width:50px;text-align:right;height:30px"
+                        value="<%=TaskSubmissions[i].badges%>"
+                        onchange="changetaskSubmissiondata('<%=i%>','badges',event.target.value)"> <img src="../img/gem.svg" style="width:24px;height:24px;"></span>
+                  </td>
+                  <td style="width: 50px;">
+                    <input type="number"
+                        style="width:50px;text-align:right;height:30px;"
+                        min=0 max=10
+                        value="<%=TaskSubmissions[i].quality%>"
+                        onchange="changetaskSubmissiondata('<%=i%>','quality',event.target.value)">
+                  </td>
+                  <td style="width: 50px;">
+                    <input type="number"
+                    min=0 max=10
+                        style="width:50px;text-align:right;height:30px;"
+                        value="<%=TaskSubmissions[i].speed%>"
+                        onchange="changetaskSubmissiondata('<%=i%>','speed',event.target.value)"> 
+                  </td>
+                  <td style="width: 120px;justify-content: center;"> 
+                    <div style="border-radius:16px;" id="TSstatus<%=i%>" data-toggle="dropdown"
+                      aria-expanded="false">
+
+
+                      <%if(TaskSubmissions[i].status=='Completed'){%>
+                        <div class="Status_completed">Completed</div>
+                        <%}%>
+                          <%if(TaskSubmissions[i].status=='Pending'){%>
+                            <div class="Status_progress">Pending</div>
+                            <%}%>
+
+
+
+                    </div>
+                    <div class="dropdown-menu" style="
+               flex-direction: column;
+             " aria-labelledby="TSstatus<%=i%>" id="TSstatus<%=i%>dropdown">
+
+                      <div class="StatusBox" onclick="setStatusTS('<%=i%>','Completed','status',0)">
+                        <div class="Status_completed">Completed</div>
+                      </div>
+                      <div class="StatusBox" onclick="setStatusTS('<%=i%>','Pending','status',1)">
+                        <div class="Status_progress">Pending</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td data-target="#AddTSFeedback" data-toggle="modal" onclick="SetSubmitTask('<%=i%>');SetFeedback('CommentBody')" style="width: 50px;position: relative;"> 
+                    <% if(TaskSubmissions[i].feedback?.length==0){%>
+                    <img src="../img/feedback.svg">
+                  <%}else{%>
+                    <div style="display: flex;">
+                      <div style="position: absolute;
+                      color: #3B82F6;
+                      z-index: 99;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      margin-top: 3px;
+                      margin-left: 10px;"><%= TaskSubmissions[i].feedback.length%> </div>
+                      <img src="../img/feedback_active.svg"></div>
+                    <%}%>
+                  </td>
+                  <% let StatusArrUsedNames = [
+                  { usedName: 'liveStatus' },
+                  { usedName: 'inUsageStatus' },
+                  { usedName: 'valueGenerated' },
+                  { usedName: 'bImpact' },
+                  { usedName: 'userAdoption' },
+                  { usedName: 'customerSatisfaction' }
+              ]; %>
+              
+              <% for (let option of StatusArrUsedNames) { %>
+                <td style="justify-content: center;width: <%= option.usedName === 'customerSatisfaction' ? '150px' : '120px' %>;">
+                  <% if (TaskSubmissions[i][option.usedName] && TaskSubmissions[i][option.usedName].style && TaskSubmissions[i][option.usedName].title) { %>
+                          <div style="display: flex; padding: 2px 10px; justify-content: center; align-items: center; border-radius: 16px;<%= TaskSubmissions[i][option.usedName].style %>">
+                              <%= TaskSubmissions[i][option.usedName].title %>
+                          </div>
+                      <% } else { %>
+                          -
+                      <% } %>
+                  </td>
+              <% } %>
+                </tr>
+                  <%}%>
+
+            </tbody>
+          </table>
+        </div>
+        <%}else{%>
+          <div style="display: flex;
+flex-direction: column;
+align-items: center;
+gap: 24px;
+align-self: stretch;">
+            <div style="display: flex;
+justify-content: space-between;
+align-items: center;
+align-self: stretch;">
+              <div style="color: var(--content-on-light-primary, #181818);
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">
+                Weekly Submissions
+              </div>
+              <div style="color: var(--gray-700, #344054);
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 28px; /* 200% */
+">
+                0 Tasks submitted
+              </div>
+            </div>
+            <div style="display: flex;
+height: 239px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 12px;
+align-self: stretch;">
+              <div style="color: #363636;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 22px; /* 110% */">No Submitted Tasks Yet</div>
+              <div style="color: #363636;
+text-align: center;
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: 135%; /* 24.3px */
+letter-spacing: 0.18px;">The employee hasn't submitted any tasks for your review. Encourage submissions or check back
+                later for updates.</div>
+            </div>
+          </div>
+          <%}%>
+
+            <!-- <div style="display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    align-self: stretch;
+    " class="Tasks">
+            <div style="color: var(--gray-600, #475467);
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 137.5% */
+  ">Assign Tasks to <%=employee.displayName%>
+            </div>
+            <div style="color: var(--gray-500, #667085);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px; /* 157.143% */
+  ">You're in <%=employee.firstName%>'s dashboard, ready to assign them tasks.
+  It's empty for now, but you can fill it with important Initiatives to keep them on track.
+            </div>
+            <div onclick="AddTask()" class="create-project_btn" style="width:140px; cursor: pointer;" ><span style="width: 24px;
+              height: 24px;"><i class="fa fa-plus" aria-hidden="true"></i></span>Add Tasks</div>
+          
+          </div> -->
+
+
+
+
+  </div>
+
+
+   <!-- Feedback ts  Modal -->
+   <% function ChangeDate(date) {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    const formattedDate = new Date(date).toLocaleDateString(undefined, options);
+    return formattedDate;
+  } %>
+  <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="AddTSFeedback" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="width: 100vw;">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="max-height: 70vh;overflow: auto;">
+        <div class="modal-header" style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+          <div style="color: var(--gray-900, #101828);
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Comments</div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+        </div>
+
+        <div class="modal-body" style="background-color: #FAFAFA;padding: 24px 32px;max-height: 80vh;overflow: auto;">
+
+          <div style="display: flex;
+          flex-direction: column;
+                        align-items: flex-start;
+                        gap: 8px;
+                        align-self: stretch;">
+                     <div class="text-16-600">Add comment or feedback for the initiative</div>
+                      <textarea class="TextAreaStyleSubmissionModal" placeholder="Enter comment/feedback" id="CommentBox"></textarea>
+
+                    </div>
+                      <div style="display: flex;margin:32px 0px;flex-direction: column;gap:12px;align-items: flex-start;" id="CommentBody">
+                     
+                        
+                      
+                      </div>
+        </div>
+        <div class="modal-footer" style="padding: 16px 32px;display: flex;justify-content: space-between;align-items: center;">
+        <div data-dismiss="modal" class="text-16-600">cancel</div>
+        <button class="btn btn-outline-primary" style="display: flex;
+        margin-top: 12px;
+         justify-content: center;
+         align-items: center;
+         gap: 8px;
+         align-self: stretch;
+         border-radius: 12px;" onclick="SaveComment()" data-dismiss="modal"> Save</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+function generateRandomId() {
+                  return '_' + Math.random().toString(36).substr(2, 9);
+                }
+function SaveComment(){
+   let commentid=generateRandomId()
+  let value=document.getElementById('CommentBox').value;
+  if(value.length>0){
+  let comments=TaskSubmissions[tsIndex].feedback;
+  comments.push({image:'<%=managerVisitingInfo?.image%>',employeeId:'<%=managerVisitingInfo?.id%>',content:value,date:new Date(),commentid,name:'<%=managerVisitingInfo.displayName%>'});
+  TaskSubmissions[tsIndex].feedback=comments;
+  }
+  SaveTS();
+}
+
+function SetFeedback(id)
+{
+  let CommentBody=document.getElementById(id);
+  CommentBody.innerHTML='';
+  let comments=TaskSubmissions[tsIndex].feedback;
+  let innerhtml='';
+  
+  for(let comment of comments)
+  {
+ innerhtml+=` <div style="display:flex;
+padding:16px;
+align-items: flex-start;
+gap: 16px;
+align-self: stretch;
+border-radius: var(--Radius-medium, 8px);
+border: 1px solid var(--Gray-200, #EAECF0);
+background: var(--White, #FFF);" onmouseover="ShowIcons('.deleteicon${comment.commentid}')" onmouseout="RemoveIcons('.deleteicon${comment.commentid}')" class="feedback${comment.commentid}">
+                      <img src="${comment.image}" style="display: flex;
+                      width: 32px;
+                      height: 32px;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      border-radius: 200px;">
+                      <div style="display: flex;align-items: flex-start;flex-direction: column;width:100%;gap:12px;">
+                        <div style="display: flex;justify-content: space-between;align-items: center;width:100%">
+                        <div class="text-16-600" style="font-size: 14px;">${comment.name}</div>
+                        <i class="fa fa-trash deleteicon deleteicon${comment.commentid}" aria-hidden="true" style="display:none"   onclick="DeleteFeedback('${comment.commentid}')"></i>
+                        </div>
+                      <div class="TextAreaStyleSubmissionModal" style="background-color: white;" placeholder="Leave a comment">${comment.content}</div>
+                    </div>
+                      </div>`
+  }
+  CommentBody.innerHTML=innerhtml;
+}
+
+function DeleteFeedback(id)
+{
+  let comments=TaskSubmissions[tsIndex].feedback;
+  for(let i=0;i<comments.length;i++)
+  {
+    if(comments[i].commentid==id)
+    {
+      comments.splice(i,1);
+      document.querySelectorAll('.feedback'+id).forEach(feedback=>feedback.remove());
+      break;
+    }
+  }
+  TaskSubmissions[tsIndex].feedback=comments;
+}
+
+
+    let tsIndex='';
+    let TaskSubmissions =[]
+   
+ function SetSubmitTask(i)
+ {
+    tsIndex=parseFloat(i);
+    SetSubmitTaskModal();
+ }
+ function ChangeTSEData(type,value)
+  { let x=TaskSubmissions[tsIndex][type]
+    TaskSubmissions[tsIndex][type]=value;
+    if(type=='expectedBadges')
+    {
+      TaskSubmissions[tsIndex].badges=parseFloat(value);
+      AllotBadges(x,tsIndex)
+    }
+    if(type=='quality')
+    {
+      document.getElementById('QualityValue').innerHTML=value;
+      document.getElementById('QualityValue').style.marginLeft=parseFloat(value)*10+'%';
+    }
+    if(type=='speed')
+    {
+      document.getElementById('SpeedValue').innerHTML=value;
+      document.getElementById('SpeedValue').style.marginLeft=parseFloat(value)*10+'%';
+    }
+  }
+     function UpdateTSEBadges(number)
+     { let x= TaskSubmissions[tsIndex].expectedBadges  
+      if(parseFloat(document.getElementById('Task_ExpectedBadges').value)+number==0)
+      return;
+      document.getElementById('Task_ExpectedBadges').value=parseFloat(document.getElementById('Task_ExpectedBadges').value)+number;
+      TaskSubmissions[tsIndex].expectedBadges=parseFloat(document.getElementById('Task_ExpectedBadges').value)
+      TaskSubmissions[tsIndex].badges=parseFloat(document.getElementById('Task_ExpectedBadges').value)
+      AllotBadges(x,tsIndex) 
+    }
+   
+    function changetaskSubmissiondata(i, type, value) {
+      let x= TaskSubmissions[i][type]
+      TaskSubmissions[i][type] = value;
+    
+      if(type=='badges')
+    {  
+      TaskSubmissions[i].expectedBadges = value;
+      AllotBadges( x,i) 
+    }
+      tsIndex=i;
+      SaveTS()
+    }
+    function setStatusTS(i, status, type, index) {
+      let statusbody = document.getElementById('TS' + type + i)
+      TaskSubmissions[i][type] = status;
+
+      let statusbodydropdown = document.getElementById('TS' + type + i + 'dropdown')
+      let selectedChild = statusbodydropdown.children[index];
+      statusbody.innerHTML = selectedChild.innerHTML;
+tsIndex=i;
+      SaveTS()
+    }
+    function SetSubmitTaskModal() {
+      submissionData = TaskSubmissions[tsIndex];
+
+      document.getElementById('Task_Tasks').value = submissionData.tasktitle;
+    document.getElementById('Task_InitialInfo').value = submissionData.initialInfo;
+    document.getElementById('Task_ExpectedBadges').value = submissionData.expectedBadges;
+    if(submissionData.effortStatus?.color)
+    { 
+      let {effortDays,color,percentage} =submissionData.effortStatus;
+      document.getElementById('TimeElapsedModal').style.display='flex'
+document.getElementById('TimeElapsedModal').innerHTML=`<div class="progresscircle-bar" style="background:radial-gradient(closest-side, white 79%, transparent 80% 100%),
+            conic-gradient(${color} ${percentage}%, #F2F4F7 0); animation: html-progresscircle 2s 1 forwards;" data-toggle="tooltip" data-placement="top" title="">
+            <div class="EffortsDays" style="color: var(--gray-500, #667085); font-size: 12px; font-style: normal; margin-top: 8px;
+     font-weight: 500;     text-align: center;line-height: 20px;">
+              ${Math.round(effortDays)}D
+                <progress id="progresstask" min="0" max="100" value="9"></progress>
+            </div>
+        </div>`
+    }
+    else{
+      document.getElementById('TimeElapsedModal').style.display='none'
+    }
+    // Corrected element IDs for radio buttons
+    document.getElementById('yesRadio').checked = submissionData.liveStatus;
+    document.getElementById('noRadio').checked = !submissionData.liveStatus;
+    document.getElementById('QualityValue').innerHTML=submissionData.quality;
+      document.getElementById('QualityValue').style.marginLeft=parseFloat(submissionData.quality)*10+'%';
+      document.getElementById('SpeedValue').innerHTML=submissionData.speed;
+      document.getElementById('SpeedValue').style.marginLeft=parseFloat(submissionData.speed)*10+'%';
+      document.getElementById('QualitySlider').value=parseFloat(submissionData.speed);
+      document.getElementById('SpeedSlider').value=parseFloat(submissionData.speed);
+      if(submissionData.status=='Completed'){
+                 document.getElementById('TSstatusModal').innerHTML=`<div class="Status_completed">Completed</div><i class="fa fa-angle-down"></i>`
+                        }else if(submissionData.status=='Pending'){
+                          document.getElementById('TSstatusModal').innerHTML=`<div class="Status_progress">Pending</div><i class="fa fa-angle-down"></i>`
+                            }
+                            if(submissionData.OutcomeStatus=='Completed'){
+                 document.getElementById('TSOutcomeStatusModal').innerHTML=`<div class="Status_completed">Completed</div>`
+                        }else if(submissionData.OutcomeStatus=='Pending'){
+                          document.getElementById('TSOutcomeStatusModal').innerHTML=`<div class="Status_progress">Pending</div>`
+                            }
+                            else if(submissionData.OutcomeStatus=='Iterations'){
+                              document.getElementById('TSOutcomeStatusModal').innerHTML=`<div class="Status_iterations" >Iterations</div>`
+                            }
+                            else {
+                              document.getElementById('TSOutcomeStatusModal').innerHTML=`Select the status that best describes the current state of your task`
+                            }
+                            document.getElementById('TSOutcomeStatusModal').innerHTML+=`<i class="fa fa-angle-down"></i>`
+    document.getElementById('Task_StartDate').value = submissionData.startDate || '';
+    document.getElementById('Task_EndDate').value = submissionData.endDate || '';
+    document.getElementById('Task_BusinessOutcome').value = submissionData.businessOutcome;
+    document.getElementById('Task_Learning').value = submissionData.learning;
+    document.getElementById('Task_NextStep').value = submissionData.nextStep;
+ let innerhtml='';
+      for(let file of submissionData.files){
+     innerhtml+=`<div style="display: flex;
+                          padding: 12px 16px;
+                          align-items: center;
+                          gap: 12px;">
+                          <img src="../Performance dashboard Icons/Document Added.svg">
+                          <a href="${file.url}" target="_blank" download style="display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            gap: 4px;
+                            flex: 1 0 0;">
+                            <div style="
+                              color: var(--content-on-light-primary, #181818);
+                              font-size: 16px;
+                              max-width:150px;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              font-style: normal;
+                              font-weight: 600;
+                              line-height: 17.352px;">
+                              ${file.title}
+                            </div>
+                            <div style="display: -webkit-box;
+                              -webkit-box-orient: vertical;
+                              -webkit-line-clamp: 1;
+                              
+                              overflow: hidden;
+                              max-width:150px;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              color: var(--content-on-light-secondary, #898989);
+                              text-overflow: ellipsis;
+                              font-size: 12px;
+                              font-style: normal;
+                              font-weight: 500;
+                              line-height: 17.352px;">
+                              ${file.url}
+                            </div>
+                          </a>
+                        </div>`
+                      }
+                        for(let link of submissionData.links){
+                      innerhtml+=`<div style="display: flex;
+                          padding: 12px 16px;
+                          align-items: center;
+                          gap: 12px;
+                          flex: 1 0 0;
+                         ">
+                          <img src="../Performance dashboard Icons/Link Added.svg">
+                          <a href="${link.url}" target="_blank" style="display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            gap: 4px;
+                            flex: 1 0 0;">
+                            <div style="
+                              color: var(--content-on-light-primary, #181818);
+                              font-size: 16px;
+                              font-style: normal;
+                              max-width:150px;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              font-weight: 600;
+                              line-height: 17.352px;">
+                              ${link.title}
+                            </div>
+                            <div style="display: -webkit-box;
+                              -webkit-box-orient: vertical;
+                              -webkit-line-clamp: 1;
+                              
+                              overflow: hidden;
+                              max-width:150px;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                              color: var(--content-on-light-secondary, #898989);
+                              text-overflow: ellipsis;
+                              font-size: 12px;
+                              font-style: normal;
+                              font-weight: 500;
+                              line-height: 17.352px;">
+                              ${link.url}
+                            </div>
+                          </a>
+                        </div>`
+                        }
+                        document.getElementById('Task_LinkFileBody').innerHTML=innerhtml;
+                        SetFeedback('CommentBodySubmitTaskModal');
+                        
+      // SetKrs()
+      // let krbodyModal = document.getElementById('KeyResultsBodyModal');
+      // krbodyModal.innerHTML = ''
+
+
+      // let allkrs = krs.get(initiative[initiativeindex].data?.ObjectiveId);
+
+      // for (let i = 0; i < allkrs.length; i++) {
+      //   let kr = allkrs[i];
+      //   let checkbox = false;
+      //   if (initiative[initiativeindex].data.krs?.some((kr_) => kr_.id == kr._id))
+      //     checkbox = true;
+      //   krbodyModal.innerHTML += `
+      //       <tr >
+      //           <td ><input type="checkbox"  id='checkboxkr${kr._id}' style="width:24px;height:24px" ${checkbox && 'checked'}></td>
+      //           <td><div >${kr.title}</div></td>
+      //           <td id="AssignedTo${kr._id}${i}" style="max-width: 200px;overflow: hidden;display: flex;align-items: center;gap:8px;white-space:nowrap;">
+      //               ${kr.teams.length === 0 ? `<div style="display: flex;width: 32px;height: 32px;padding: 6px;justify-content: center;align-items: center;flex-shrink: 0;border-radius: 200px;background: var(--primary-50, #F9F5FF);"><img src="../Performance dashboard Icons/Empty_User.svg"></div>Not Assigned yet` : ''}
+      //           </td>
+      //           <td><div >${kr.timePeriod.endDate}</div></td>
+      //           <td>
+      //               <div  style="padding:5px 12px;border-radius:16px;" id="KRStatus${i}" >
+      //                   ${kr.status === 'On Track' ? `<div class="Status_completed">On Track</div>` : ''}
+      //                   ${kr.status === 'At risk' ? `<div class="Status_progress">At risk</div>` : ''}
+      //                   ${kr.status === 'Off Track' ? `<div class="Status_hold">Off Track</div>` : ''}
+      //                   ${kr.status === 'Achieved' ? `<div class="Status_completed">Achieved</div>` : ''}
+      //                   ${kr.status === 'Partial' ? `<div class="Status_progress">Partial</div>` : ''}
+      //                   ${kr.status === 'Missed' ? `<div class="Status_hold">Missed</div>` : ''}
+      //                   ${kr.status === 'Dropped' ? `<div class="Status_notStarted">Dropped</div>` : ''}
+      //               </div>
+      //           </td>
+      //           <td>
+      //               <div style="display: flex;flex-direction: column;">
+      //                   <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarCV${i}">
+      //                       ${kr.matrix.currentValue}${kr.matrix.type}
+      //                   </div>
+      //                   <div class="ProgressKeyResult">
+      //                       <div class="progress__bar" style="width: ${kr.matrix.currentValue}%;" id="ProgressBar${i}"></div>
+      //                   </div>
+      //                   <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+      //                       <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarIV${i}">
+      //                           ${kr.matrix.startingValue}${kr.matrix.type}
+      //                       </div>
+      //                       <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarTV${i}">
+      //                           ${kr.matrix.targetValue}${kr.matrix.type}
+      //                       </div>
+      //                   </div>
+      //               </div>
+      //           </td>
+      //       </tr>`;
+      //   SetkrTeamImages(`AssignedTo${kr._id}${i}`, kr.teams);
+      //   // for (let files of submissionData.files) {
+      //   //   Taskfile = files;
+      //   //   UpdateTSFilebody();
+      //   // }
+      //   // for (let links of submissionData.links) {
+      //   //   TaskLink = links;
+      //   //   UpdateTSLinkbody();
+      //   // }
+      // }
+
+    }
+  
+    function SaveSubmitTask(){
+   let commentid=generateRandomId()
+  let value=document.getElementById('CommentBoxSubmitTaskModal').value;
+  if(value.length>0){
+  let comments=TaskSubmissions[tsIndex].feedback;
+  comments.push({image:'<%=managerVisitingInfo?.image%>',employeeId:'<%=managerVisitingInfo?.id%>',content:value,date:new Date(),commentid,name:'<%=managerVisitingInfo.displayName%>'});
+  TaskSubmissions[tsIndex].feedback=comments;
+  }
+  SaveTS();
+}
+
+function ShowIcons(classname)
+{
+  document.querySelectorAll(classname).forEach(icon=>icon.style.display='flex')
+}
+function RemoveIcons(classname)
+{
+  document.querySelectorAll(classname).forEach(icon=>icon.style.display='none')
+}
+async function SaveTS() {
+  try {
+    let response = await fetch('/submit/task/Manger', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(TaskSubmissions[tsIndex])
+    })
+  }
+  catch (error) {
+    console.log(error)
+  }
+}
+function CreateNewTask() {
+  let data = {}
+  for (let header of tableHeader) {
+    data[header.usedName] = ''
+  }
+  data['projectId'] = ''
+  data['ObjectiveId'] = ''
+  data['ObjectiveTitle'] = ''
+  data['projectTitle'] = ''
+  data['PImpact'] = { label: 'Low', bgcolor: '#F9FAFB', color: '#667085' }
+  data['Effort'] = 1
+  data['Clarity'] = { label: 'Low', bgcolor: '', color: '#F79009', bgcolor: '#FFFAEB' }
+  data['Status'] = { label: 'Not Started', bgcolor: '#F9FAFB', color: '#667085' }
+  data['SubmissionApproval'] = { label: 'Pending', color: '#F79009', bgcolor: '#FFFAEB' }
+  data['links'] = []
+  data['files'] = []
+  data['subkrs'] = []
+  data['krs'] = []
+  data['Badges'] = 0
+  data['Owner'] = { id: '<%=employee._id%>', name: '<%=employee.displayName%>', image: '<%=employee.image%>' }
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+  const day = currentDate.getDate().toString().padStart(2, '0');
+  let taskdata = `${year}-${month}-${day}`;
+  data['AllotmentDate'] = `${year}-${month}-${day}`;
+  subTasks.push([]);
+  initiative.push({ data })
+}
+
+async function AllotBadges(perv,i)
+{
+let data={
+  perv:Number(perv),
+  owner:TaskSubmissions[i].from,
+  newBadges:Number(TaskSubmissions[i]['badges']),
+  taskId:TaskSubmissions[i].tasks?.id,
+  submissionId:TaskSubmissions[i]._id,
+  tasktitle:TaskSubmissions[i].tasktitle
+}
+let response=await fetch('/allotBadges',{
+method:'POST',
+headers: {
+'Content-Type': 'application/json',
+},
+body:JSON.stringify(data)
+})
+}
+function setStatusTSModal(status,type,index)
+  {
+    
+    let statusbody=document.getElementById('TS'+type+'Modal')
+   submissionData[type]=status;
+  
+   let statusbodydropdown=document.getElementById('TS'+type+'Modaldropdown')
+   let selectedChild = statusbodydropdown.children[index];
+   statusbody.innerHTML=selectedChild.innerHTML +`<i class="fa fa-angle-down"></i>`;
+  }
+  
+  </script>
+
+  <%- include('./TasksScript') %>

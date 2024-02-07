@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+      user-select: none; /* Disable text selection during dragging */
+    }
+
+    th {
+      background-color: #f2f2f2;
+      cursor: ew-resize; /* Set cursor for resizing */
+    }
+
+    .dragged {
+      opacity: 0.5; /* Set opacity for the dragged column */
+    }
+
+    .placeholder {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+<table id="resizableTable">
+  <thead>
+    <tr>
+      <th id="col1" draggable="true">Column 1</th>
+      <th id="col2" draggable="true">Column 2</th>
+      <th id="col3" draggable="true">Column 3</th>
+      <th id="col4" draggable="true">Column 4</th>
+      <th id="col5" draggable="true">Column 5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Row 1, Cell 1</td>
+      <td>Row 1, Cell 2</td>
+      <td>Row 1, Cell 3</td>
+      <td>Row 1, Cell 4</td>
+      <td>Row 1, Cell 5</td>
+    </tr>
+    <tr>
+      <td>Row 2, Cell 1</td>
+      <td>Row 2, Cell 2</td>
+      <td>Row 2, Cell 3</td>
+      <td>Row 2, Cell 4</td>
+      <td>Row 2, Cell 5</td>
+    </tr>
+    <!-- Add more rows as needed -->
+  </tbody>
+</table>
+
+<script>
+  let resizing = false;
+  let startOffset = 0;
+  let draggedColumn = null;
+  let placeholder = null;
+
+  const handleMouseDown = (event, column) => {
+    resizing = true;
+    startOffset = column.offsetWidth - event.pageX;
+  };
+
+  const handleMouseMove = (event) => {
+    if (resizing) {
+      const newWidth = startOffset + event.pageX;
+      document.getElementById('col1').style.width = `${newWidth}px`;
+    }
+
+    if (draggedColumn) {
+      const targetColumn = getTargetColumn(event.clientX);
+      showPlaceholder(targetColumn);
+    }
+  };
+
+  const handleMouseUp = () => {
+    resizing = false;
+    hidePlaceholder();
+  };
+
+  const handleDragStart = (event, column) => {
+    draggedColumn = column;
+    column.classList.add('dragged');
+    placeholder = document.createElement('th');
+    placeholder.className = 'placeholder';
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    const targetColumn = getTargetColumn(event.clientX);
+    if (draggedColumn && targetColumn && draggedColumn !== targetColumn) {
+      const parent = targetColumn.parentNode;
+      const draggedIndex = Array.from(parent.children).indexOf(draggedColumn);
+      const targetIndex = Array.from(parent.children).indexOf(targetColumn);
+
+      if (draggedIndex !== -1 && targetIndex !== -1) {
+        parent.insertBefore(draggedColumn, targetColumn);
+      }
+    }
+
+   
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const targetColumn = getTargetColumn(event.clientX);
+    if (draggedColumn && targetColumn && draggedColumn !== targetColumn) {
+      const parent = targetColumn.parentNode;
+      const draggedIndex = Array.from(parent.children).indexOf(draggedColumn);
+      const targetIndex = Array.from(parent.children).indexOf(targetColumn);
+
+      if (draggedIndex !== -1 && targetIndex !== -1) {
+        parent.insertBefore(draggedColumn, targetColumn);
+      }
+    }
+
+    draggedColumn.classList.remove('dragged');
+    draggedColumn = null;
+    hidePlaceholder();
+  };
+
+  document.getElementById('col1').addEventListener('mousedown', (event) => handleMouseDown(event, document.getElementById('col1')));
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseup', handleMouseUp);
+
+  document.querySelectorAll('th[draggable="true"]').forEach(column => {
+    column.addEventListener('dragstart', (event) => handleDragStart(event, column));
+    column.addEventListener('dragover', handleDragOver);
+    column.addEventListener('drop', handleDrop);
+  });
+
+  function getTargetColumn(clientX) {
+    const elements = document.elementsFromPoint(clientX, event.clientY);
+    return elements.find(el => el.tagName === 'TH');
+  }
+
+  function showPlaceholder(targetColumn) {
+    if (targetColumn) {
+      targetColumn.parentNode.insertBefore(placeholder, targetColumn);
+    }
+  }
+
+  function hidePlaceholder() {
+    if (placeholder && placeholder.parentNode) {
+      placeholder.parentNode.removeChild(placeholder);
+    }
+  }
+</script>
+
+</body>
+</html>

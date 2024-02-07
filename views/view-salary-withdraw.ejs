@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <meta name="author" content="Webpixels" />
+  <title>Trainity - Admin Panel</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+  <!-- Purpose CSS -->
+  <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="../libs/fullcalendar/dist/fullcalendar.min.css" />
+
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <style>
+    .editsalaryinfo:hover {
+
+      background: var(--Gray-300, #D0D5DD);
+    }
+    .text-14-500{
+   color: var(--Gray-500, #667085);
+                 
+                 font-size: 14px;
+                 font-style: normal;
+                 font-weight: 500;
+                 line-height: 20px; 
+  }
+    .editsalaryinfo {
+      display: flex;
+      width: 36px;
+      height: 36px;
+      padding: 9.47px 9.033px;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      border-radius: 4px;
+    }
+
+    .box1 {
+      display: inline-flex;
+      height: 40px;
+      padding: 10px 16px;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      border-radius: var(--Radius-medium, 8px);
+      border: 1px solid var(--Gray-300, #D0D5DD);
+      background: var(--White, #FFF);
+      /* Shadow/xs */
+      box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    }
+
+    .rating-status {
+      display: flex;
+      padding: 4px 8px;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+      color: black;
+    }
+
+    .dotted-rule {
+      flex: 1;
+      border-bottom: 2px dashed #D0D5DD;
+      height: 2px;
+      margin-top: -15px;
+    }
+
+    .current-rule {
+      border-bottom: 2px dashed #D0D5DD;
+      height: 2px;
+      margin-top: -15px;
+      width: var(--value)px;
+    }
+
+    .solid-rule {
+      flex: 1;
+      height: 6px;
+      flex-shrink: 0;
+      margin: 0px -5px;
+      background: #fff;
+    }
+
+    .big {
+      border-radius: 8px;
+      border: 1px solid var(--brand-primary, #48BF84);
+      background: var(--pill-surface-trainity, #F2FAF6);
+    }
+
+    .small {
+      border-radius: 8px;
+      border: 1px dashed var(--stroke-primary, #ECECEC);
+      background: var(--surface-primary, #FFF);
+    }
+
+    .streak-count {
+      flex-wrap: wrap;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 0px;
+      gap: 8px;
+      width: 100%;
+      overflow-x: hidden;
+      margin-top: 10px;
+      flex: none;
+      order: 1;
+      align-self: stretch;
+      flex-grow: 0;
+      overflow: auto;
+    }
+
+    .dotted-line {
+      width: 2px;
+      height: 50px;
+      margin-top: -20px;
+      margin-left: 50px;
+      position: relative;
+    }
+
+    .green {
+      background-color: #48bf84;
+      color: white;
+    }
+
+    .text-green {
+      color: #48bf84;
+    }
+
+    .dotted-line::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 100%;
+      background: repeating-linear-gradient(to bottom, transparent, transparent 3px, black 3px, black 6px);
+    }
+
+    .graph {
+      display: flex;
+      padding: 0px 4px;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+      width: 40px;
+    }
+
+    .decrease {
+      border-radius: 8px;
+      background: var(--pill-text-red, #FF6565);
+    }
+
+    .increase {
+      border-radius: 8px;
+      background: var(--pill-text-blue, #3B82F6);
+    }
+
+    .current_day {
+      border: 1px dashed var(--warning-400, #FDB022);
+      background: var(--warning-25, #FFFCF5);
+    }
+
+    .perv_day {
+      border: 1px dashed var(--pill-text-red, #FF6565);
+      background: var(--error-50, #FEF3F2);
+    }
+
+    .complete_day {
+      border: 1px dashed var(--ref-primary-primary-60-brand, #48BF84);
+      background: var(--ref-primary-primary-99, #F5FFF5);
+    }
+
+    .text-red-14-700 {
+      color: #FF6565;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+
+    .circle {
+      display: flex;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    align-self: stretch;
+    border-radius: 8px;
+}
+
+    .text-30-700 {
+      color: var(--Gray-800, #1D2939);
+
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 38px;
+    }
+
+    .box2 {
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 20px;
+      flex: 1 0 0;
+      align-self: stretch;
+      border-radius: var(--Radius-medium, 8px);
+
+      background: #FFF;
+
+      /* Shadow/sm */
+      box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+
+    }
+
+    .text-16-700 {
+      color: var(--Gray-700, #344054);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px;
+      /* 150% */
+
+    }
+
+    .golden-rating-status {
+      border-radius: 14px;
+      background: linear-gradient(129deg, #FBE6A2 0%, #FFFCF3 34.55%, #FBEECA 66.59%, #FEFAEB 100%);
+    }
+
+    .skyblue-rating-status {
+      border-radius: 14px;
+      background: var(--pill-surface-trainity, #F2FAF6);
+    }
+
+    .orange-rating-status {
+      border-radius: 14px;
+      background: var(--pill-surface-orange, #FFFBEB);
+    }
+
+    .red-rating-status {
+      border-radius: 14px;
+      background: var(--pill-text-red, #FF6565);
+    }
+
+    .streakcount-line {
+      flex: 1;
+      height: 1px;
+      min-width: 50px;
+      margin-top: 70px;
+      border: 1px dashed #999;
+      margin-bottom: 10px;
+    }
+  </style>
+  <script>
+    (function (h, o, t, j, a, r) {
+      h.hj =
+        h.hj ||
+        function () {
+          (h.hj.q = h.hj.q || []).push(arguments);
+        };
+      h._hjSettings = {
+        hjid: 3534926,
+        hjsv: 6,
+      };
+      a = o.getElementsByTagName("head")[0];
+      r = o.createElement("script");
+      r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.3/dist/flatpickr.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+</head>
+
+
+<body class="application application-offset"
+  style="background:#F7F7F7;margin-left:300px;width: calc(100vw - 300px);padding:0 32px;display: flex;justify-content: center;"
+  id="MainPageContent">
+  <!-- Chat modal -->
+
+
+
+  <!-- Application container -->
+  <div style="width: 100%;">
+    <div><%- include('partials/sidepanel'); -%></div>
+    <!-- Content -->
+    <div class="main-content position-relative">
+      <!-- Main nav -->
+
+      <!-- Page content -->
+      <div class="page-content" style="width: 100%;">
+        <%- include('partials/utility-modals'); -%>
+          <!-- Page title -->
+          <div class="page-title" style="width: 100%;">
+            <div style="display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;">
+
+              <div class="text-30-700">Salary Withdrawal</div>
+              <div style="display: flex;align-content: center;gap:20px;">
+
+                <input type="month" id="MonthSelector" onchange="getData('',event.target.value)" class="box1"
+                  value="<%= yearMonth %>" style="width:180px">
+                <div>
+                  <div style="display: flex;align-items: center;gap:12px;width: 200px;overflow: hidden;cursor: pointer;"
+                    id="employeeBox" data-toggle="dropdown" aria-expanded="false" class="box1" >
+                    <img src="<%=employee.image%>" style="width: 24px;height: 24px;border-radius: 24px;">
+                    <div class="text-16-700" style="white-space: nowrap;">
+                      <%=employee.displayName%>
+                    </div> <i class="fas fa-chevron-down" style="color: #344054;"></i>
+                  </div>
+                  <div class="dropdown-menu ownerbody"
+                    style="flex-direction: column; padding: 5px 12px; border-radius:8px;" aria-labelledby="employeeBox">
+
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex;
+          width: 100%;
+          flex-wrap: wrap;
+          align-items: flex-start;
+          gap: 16px;">
+                <div class="box2">
+                  <div style="display: flex;
+align-items: center;
+justify-content: space-between;
+align-self: stretch;">
+                    <div class="text-16-700">Current Salary</div>
+                    <img src="../img/edit_pencile_square.svg" onclick="SetModalofSalary()" class="editsalaryinfo"
+                      data-toggle="modal" data-target="#SetSalary">
+                  </div>
+                  <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;
+align-self: stretch;">
+                    <div style="color: var(--Gray-900, #101828);
+font-size: 29px;
+font-style: normal;
+font-weight: 700;
+line-height: 38px; /* 131.034% */" id="currentSalary">₹20,000</div>
+                    <div class="text-14-500">per month</div>
+                  </div>
+
+                </div>
+                <div class="box2">
+                  <div style="display: flex;
+            align-items: center;
+            justify-content: space-between;
+            align-self: stretch;">
+                    <div class="text-16-700"><span class="monthanme">Dec</span> Bonus</div>
+                    <img src="../img/edit_pencile_square.svg" class="editsalaryinfo" onclick="SetModalofBonusOfSalary()"
+                      data-toggle="modal" data-target="#SetBonus">
+                  </div>
+                  <div style="display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            align-self: stretch;">
+                    <div style="color: var(--Gray-900, #101828);
+            font-size: 29px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 38px; /* 131.034% */" id="bonus">₹0</div>
+                    <div style="width: 100%;overflow: hidden;max-height: 30px;" class="text-14-500" id="bonusText" data-toggle="tooltip" data-placement="top" title=""></div>
+                  </div>
+
+                </div>
+                <div class="box2">
+                  <div style="display: flex;
+                        align-items: center;
+                        gap: 30px;
+                        align-self: stretch;">
+                    <div class="text-16-700" id="leavesText"><span class="monthanme">Dec</span> Leaves </div>
+                  </div>
+                  <div style="display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 8px;
+                        align-self: stretch;">
+                    <div style="color: var(--Gray-900, #101828);
+                        font-size: 29px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: 38px; /* 131.034% */" id="leaves">3</div>
+                    <div class="text-14-500">Total Leaves</div>
+                  </div>
+
+                </div>
+                <div style="display: flex;
+                 width: 374px;
+                 padding: 16px;
+                 gap:12px;
+                 flex-direction: column;
+                 justify-content: space-between;
+                 align-items: flex-start;
+                 border-radius: var(--Radius-medium, 8px);
+                 background: var(--White, #FFF);
+                 box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);">
+                  <div style="display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                align-self: stretch;
+                ">
+                    <div style="display: flex;
+              align-items: center;
+              gap: 12px;
+              align-self: stretch;
+              ">
+                      <div style="flex: 1 0 0;" class="text-16-700" id="balanceText"><span class="monthanme">Dec</span> Balance</div>
+                      <div class="text-30-700" id="balance">₹19,046</div>
+                    </div>
+                    <div style="display: flex;flex-direction: column;gap:0px;width: 100%;">
+                      <div style="display: flex;
+            align-items: flex-start;
+           justify-content: space-between;
+            align-self: stretch;
+          color: var(--Success-500, #12B76A);
+          " class="text-14-500">
+                        <div >Total Bonus - <span class="monthanme">Dec</span></div>
+                        <div id="bonus2"> ₹0</div>
+                      </div>
+                      <div style="display: flex;
+                    align-items: flex-start;
+                   justify-content: space-between;
+                    align-self: stretch;
+                  color: var(--Success-500,  #FF6565);
+                  " id="deductionBox" class="text-14-500">
+                        <div>Total Deduction -<span class="monthanme">Dec</span></div>
+                        <div id="deducted"> ₹0</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display: flex;align-items: center;gap:20px" onmouseover="showIcons('.undoicon')"
+                    onmouseout="removeIcons('.undoicon')">
+                    <div id="SalaryStatus" style="display: flex;gap:8px;display: flex;
+            
+                  justify-content: center;
+                  align-items: center;
+                  color: #48BF84;
+                  gap: 8px;
+                 " class="text-16-700"></div>
+
+                    <i class="fa fa-undo undoicon " style="color: #101828;" aria-hidden="true"  style="display: none;"
+                      onclick="UndoSalaryStatus()"></i>
+                  </div>
+                </div>
+              </div>
+              <div
+                style="display: flex;
+          width: 100%;
+           padding: 24px;
+           flex-direction: column;
+           align-items: flex-start;
+           gap: 24px;
+           flex-shrink: 0;
+           border-radius: 13.022px;
+           background: #FFF;
+           
+           box-shadow: 0px 1.267px 2.534px 0px rgba(16, 24, 40, 0.06), 0px 1.267px 3.801px 0px rgba(16, 24, 40, 0.10);">
+                <div style="color: var(--Gray-700, #344054);
+           
+           font-size: 20px;
+           font-style: normal;
+           font-weight: 700;
+           line-height: 30.409px; /* 152.047% */">Monthly overview</div>
+                <div style="display: flex;
+           align-items: flex-start;
+           gap: 30px;
+           flex-wrap: wrap;
+           align-self: stretch;">
+                  <div class="box2">
+                    <div class="text-16-700">Performance score</div>
+                    <div style="display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          align-self: stretch;
+          ">
+                      <div class="text-30-700" id="performanceScore">60</div>
+                      <div style="
+        text-align: center;
+        font-size: 14px;
+        display: flex;
+padding: 2px 8px 2px 6px;
+justify-content: center;
+align-items: center;
+gap: 6px;
+border-radius: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 18px; /* 150% */
+        " id="performanceScoreStatus"><svg xmlns="http://www.w3.org/2000/svg" width="8" height="9" viewBox="0 0 8 9"
+                          fill="none">
+                          <circle cx="4" cy="4.1582" r="3" fill="#FDB022" />
+                        </svg> Fair</div>
+
+                    </div>
+                  </div>
+                  <div class="box2">
+                    <div class="text-16-700"><span class="monthanme">Dec</span> Average rating</div>
+                    <div style="display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          align-self: stretch;
+          ">
+                      <div style="display: flex;
+      width: 96px;
+      align-items: center;
+      gap: 8px;">
+                        <img src="../img/filled-star.svg" style="width: 38px;
+    height: 38px;
+    flex-shrink: 0;">
+                        <div class="text-30-700" id="avgRating">4.6</div>
+                      </div>
+                      <div style="display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    color: var(--Gray-500, #667085);
+    
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+    align-self: stretch;">
+                        <div>Average rating </div>
+                        <div style="display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;">
+                          <img src="../img/filled-star.svg" style="width: 16px;
+  height: 19px;">
+                          <div id="NetavgRating">4.6</div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="box2">
+                    <div class="text-16-700"><span class="monthanme">Dec</span> Badges </div>
+                    <div style="display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          align-self: stretch;
+          ">
+                      <div style="display: flex;
+      width: 96px;
+      align-items: center;
+      gap: 8px;">
+                        <img src="../img/gem.svg" style="width: 38px;
+    height: 38px;
+    flex-shrink: 0;">
+                        <div class="text-30-700" id="badges">46</div>
+                      </div>
+                      <div style="display: flex;
+   gap:30px;
+    align-items: flex-start;
+    color: var(--Gray-500, #667085);
+    
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+    align-self: stretch;">
+                        <div>Total </div>
+                        <div style="display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;">
+                          <img src="../img/gem.svg" style="width: 16px;
+  height: 19px;">
+                          <div id="totalBadges">46</div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div id="StreakBody" class="streak-count">
+
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <%- include('partials/manager-rating-feedback'); -%>
+            <!--Edit saalary -->
+            <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="SetSalary" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content" style="border-radius: 14px">
+                  <div class="modal-header">
+                    <h5 class="modal-title h6" id="myLargeModalLabel">
+                      Edit Current salary
+                    </h5>
+                    <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal" />
+                  </div>
+                  <div class="modal-body" style="
+              border: 1px solid var(--stroke-primary, #ececec);
+              display: flex;
+              background: var(--surface-primary, #fff);
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 32px;
+            ">
+
+                    <div style="display: flex;
+         flex-direction: column;
+         align-items: flex-start;
+         gap: 8px;
+         align-self: stretch;
+         
+         ">
+                      <div class="text-16-700">Current Salary</div>
+                      <input type="number" placeholder="Enter the amount" style="display: flex;
+height: 48px;
+padding: 14px 20px;
+align-items: center;
+gap: 10px;
+width: 100%;
+align-self: stretch;
+border-radius: 12px;
+border: 1px solid var(--Gray-400, #98A2B3);
+background: var(--Gray-50, #F9FAFB);" id="salarym">
+                    </div>
+
+
+
+
+
+                  </div>
+                  <div class="modal-footer" style="padding: 1rem">
+                    <button class="btn btn-outline-primary" style="
+                display: flex;
+                height: 48px;
+                padding: 8px 16px;
+                align-items: center;
+                gap: 8px;
+                border-radius: 14px;
+              " data-dismiss="modal">
+                      Cancel
+                    </button>
+                    <button class="btn btn-primary" id="ShortLeaveSubmitButton" style="
+                display: flex;
+                height: 48px;
+                padding: 8px 16px;
+                align-items: center;
+                gap: 8px;
+                border-radius: 14px;
+              " data-dismiss="modal" onclick="ChangeSalary()">
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--Add Bonus -->
+            <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="SetBonus" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content" style="border-radius: 14px">
+                  <div class="modal-header">
+                    <h5 class="modal-title h6" id="myLargeModalLabel">
+                      Add Bonus
+                    </h5>
+                    <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal" />
+                  </div>
+                  <div class="modal-body" style="
+              border: 1px solid var(--stroke-primary, #ececec);
+              display: flex;
+              background: var(--surface-primary, #fff);
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 32px;
+            ">
+
+                    <div style="display: flex;
+         flex-direction: column;
+         align-items: flex-start;
+         gap: 8px;
+         align-self: stretch;
+         
+         ">
+                      <div class="text-16-700">Bonus amount</div>
+                      <input type="number" placeholder="Enter the amount" style="display: flex;
+height: 48px;
+padding: 14px 20px;
+width: 100%;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+border-radius: 12px;
+border: 1px solid var(--Gray-400, #98A2B3);
+background: var(--Gray-50, #F9FAFB);" id="bonusm">
+                    </div>
+
+                    <div style="display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        align-self: stretch;
+        
+        ">
+                      <div class="text-16-700">Reason</div>
+                      <textarea placeholder="Enter the reason for the bonus" style="display: flex;
+       height: 65px;
+       width: 100%;
+       padding: 14px 20px;
+       align-items: flex-start;
+       gap: 10px;
+       align-self: stretch;
+       border-radius: 12px;
+       border: 1px solid var(--Gray-400, #98A2B3);
+       background: var(--Gray-50, #F9FAFB);
+       " id="reasonFBonus"></textarea>
+                    </div>
+
+
+
+                  </div>
+                  <div class="modal-footer" style="padding: 1rem">
+                    <button class="btn btn-outline-primary" style="
+                display: flex;
+                height: 48px;
+                padding: 8px 16px;
+                align-items: center;
+                gap: 8px;
+                border-radius: 14px;
+              " data-dismiss="modal">
+                      Cancel
+                    </button>
+                    <button class="btn btn-primary" id="ShortLeaveSubmitButton" style="
+                display: flex;
+                height: 48px;
+                padding: 8px 16px;
+                align-items: center;
+                gap: 8px;
+                border-radius: 14px;
+              " data-dismiss="modal" onclick="SetBonus()">
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <script>
+              let streakDays;
+              let currentemployeeList = []
+              let yearMonths = '<%=yearMonth%>'
+              let employeeInfo = { _id: '<%=employee._id%>', displayName: '<%=employee.displayName%>', image: '<%=employee.image%>' }
+              let salaryData = ''
+
+              function MonthChange(value) {
+                let monthanme = document.querySelectorAll('.monthanme');
+                let month = value.split('-')[1];
+                let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                for (let i = 0; i < monthanme.length; i++) {
+                  monthanme[i].innerHTML = months[month - 1];
+                }
+                modalstreakchange(value);
+
+                yearMonths = value;
+              }
+              function modalstreakchange(selectedMonth) {
+                yearMonths = selectedMonth;
+                fetch('/streakmonth/' + selectedMonth + '/' + employeeInfo._id)
+                  .then(response => response.json())
+                  .then(data => {
+                    streakDays = data.streakdays;
+                    SetModalStreakDates('StreakBody', streakDays);
+                    setStreakData();
+                  })
+                  .catch(error => {
+                    // Handle any errors
+                    console.error(error);
+                  });
+              }
+
+              function setStreakData() {
+                let avgRating = 0, count = 0, TotalBadges = 0, TotalLeaves = 0, TotalUnPaidLeaves = 0;
+                let workingDays = 0;
+                let totalworkingDays = streakDays.length;
+                let salaryPerDay = (salaryData?.salary || 0) / totalworkingDays;
+                for (let i = 0; i < streakDays.length; i++) {
+                  if (streakDays[i].rating > 0) {
+                    avgRating += streakDays[i].rating;
+                    count++;
+                  }
+                  if (streakDays[i].badges) {
+                    TotalBadges += streakDays[i].badges;
+                  }
+                  if (streakDays[i].onLeave) {
+                    TotalLeaves++;
+                    if (streakDays[i].leaveType?.toLowerCase() == "unpaid")
+                      TotalUnPaidLeaves++;
+                    else if (streakDays[i].leaveType?.toLowerCase() == "paid")
+                      workingDays++;
+                  }
+                  else if (streakDays[i].countTaskStatus > 2 || streakDays[i].holiday) {
+                    workingDays++;
+                  }
+                }
+                if (count > 0) {
+                  avgRating = avgRating / count;
+                }
+                let ratingBox = document.getElementById('avgRating');
+                ratingBox.innerHTML = avgRating.toFixed(1);
+                let NetavgRatingBox = document.getElementById('NetavgRating');
+                NetavgRatingBox.innerHTML = (employeeInfo.rating.value / employeeInfo.rating.cnt).toFixed(1);
+                let BadgesBox = document.getElementById('badges');
+                BadgesBox.innerHTML = TotalBadges;
+                let LeavesBox = document.getElementById('leaves');
+                LeavesBox.innerHTML = TotalLeaves;
+               
+               
+                let deducted = document.getElementById('deducted');
+                let balance = document.getElementById('balance');
+                let totalBalance = workingDays * salaryPerDay || 0;
+                totalBalance += salaryData?.bonus || 0;
+                let deductionBox = document.getElementById('deductionBox');
+                if(TotalUnPaidLeaves>0)
+              {  deductionBox.style.display = 'flex';
+              deductionBox.style.visibility = 'visible';
+                deducted.innerHTML = '-₹' + (salaryPerDay * TotalUnPaidLeaves).toFixed(1);}
+                else
+                deductionBox.style.visibility = 'hidden';
+               
+                balance.innerHTML = '₹' + totalBalance.toFixed(1);
+
+               
+                let totalBadgesBox = document.getElementById('totalBadges');
+                totalBadgesBox.innerHTML = employeeInfo.badges;
+
+              }
+              function getCurrentDay() {
+                let days = 0;
+                let streakCountHTML = "";
+                let today = new Date();
+                today = new Date(today.getTime() + today.getTimezoneOffset() * 60000); // Convert to GMT
+
+                const year = today.getFullYear();
+                let month = today.getMonth() + 1;
+                let day = today.getDate();
+
+
+                if (month < 10) {
+                  month = `0${month}`;
+                }
+                if (day < 10) {
+                  day = `0${day}`;
+                }
+
+                today = {
+                  date: `${year}-${month}-${day}`
+                };
+                return today;
+              }
+
+              function SetModalStreakDates(id, streakDays) {
+
+                let days = 0;
+                let today = getCurrentDay();
+                streakCountHTML = '';
+                let container = document.getElementById(id);
+
+
+                for (let i = 0; i < streakDays.length; i++) {
+                  let styleblendmode = streakDays[i].ratingReviewStatus == 'Pending' ? '' : 'luminosity'
+
+                  if (streakDays[i].isdone || streakDays[i].date >= today.date) {
+                    days += 1;
+                  } else {
+                    days = 0;
+                  }
+
+                  let ratingClass = 'rating-status'
+                  let rating = streakDays[i].rating ? streakDays[i].rating : 0;
+                  let starpath = "../img/black_star.svg"
+                  if (rating != 0) {
+                    if (rating >= 4.5) {
+                      ratingClass += ' golden-rating-status'
+                    } else if (rating >= 3.5) {
+                      ratingClass += ' skyblue-rating-status'
+                    } else if (rating >= 2.5) {
+                      ratingClass += ' orange-rating-status'
+                    } else {
+                      starpath = '../img/white_star.svg'
+                      ratingClass += ' red-rating-status'
+                    }
+                  }
+                  let taskStatus = streakDays[i].taskStatus;
+                  let taskStatusSrc = '';
+                  let taskDivClass = '';
+
+                  if (streakDays[i].date < today.date) {
+                    taskDivClass = 'perv_day';
+                    for (let j = 1; j < 4; j++) {
+                      if (!taskStatus[j] || taskStatus.length <= j) {
+                        if (j === 1) {
+                          taskStatusSrc = '../img/icons performance mgmt/desktop/sunrise_perv.svg';
+                          break;
+                        } else if (j === 2) {
+                          taskStatusSrc = '../img/icons performance mgmt/desktop/sun_perv.svg';
+                          break;
+                        } else {
+                          taskStatusSrc = '../img/icons performance mgmt/desktop/sunset_perv.svg';
+                          break;
+                        }
+                      }
+                    }
+                    let tasksubmmitedcount = 0;
+                    for (let i = 1; i < taskStatus.length; i++) {
+                      if (taskStatus[i])
+                        tasksubmmitedcount++;
+                    }
+
+                    if (taskStatusSrc == '' && (taskStatus.length == 4 || streakDays[i].rating > 0)) {
+                      if (streakDays[i].rating > 0 && streakDays[i].rating >= 2.5 && streakDays[i].rating <= 3.5) {
+                        taskDivClass = 'current_day';
+                        taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_yellow.svg';
+                      } else if (streakDays[i].rating > 0 && streakDays[i].rating < 2.5) {
+                        taskDivClass = 'perv_day';
+                        taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_red.svg';
+                      } else {
+                        taskDivClass = 'complete_day';
+                        taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_green.svg';
+                      }
+                    } else if (taskStatusSrc == '' || tasksubmmitedcount <= 1) {
+                      taskDivClass = 'perv_day';
+                      taskStatusSrc = '../img/icons performance mgmt/desktop/Cross_red.svg';
+                    }
+                  } else if (streakDays[i].date === today.date) {
+                    taskDivClass = 'current_day';
+                    for (let j = 0; j < 4; j++) {
+                      if (!taskStatus[j] || taskStatus.length <= j) {
+                        if (j === 1) {
+                          taskStatusSrc = '../img/icons performance mgmt/desktop/sunrise.svg';
+                        } else if (j === 2) {
+                          taskStatusSrc = '../img/icons performance mgmt/desktop/sun.svg';
+                        } else {
+                          taskStatusSrc = '../img/icons performance mgmt/desktop/sunset.svg';
+                        }
+                      }
+                    }
+                    if (taskStatusSrc == '' && taskStatus.length == 4) {
+                      taskDivClass = 'complete_day';
+                      taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_green.svg';
+                    }
+                  }
+
+                  if (streakDays[i].onLeave) {
+                    taskDivClass = 'perv_day';
+                    if (streakDays[i].leaveType.toLowerCase() == 'paid')
+                      taskStatusSrc = '../img/icons performance mgmt/desktop/PTO.svg';
+                    else
+                      taskStatusSrc = '../img/icons performance mgmt/desktop/UTO.svg';
+                  }
+
+
+                  streakCountHTML += ` <div>
+<div style="display: flex; gap: 5px; justify-content: center; align-items: center; margin-bottom: 10px; width: 60px; height: 30px;">
+${streakDays[i].ratingReviewStatus !== '' ?
+                      `<div style="
+    display: flex;
+    width: 24px;
+    height: 24px;
+    padding: 4px 0px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    background: var(--indigo-50, #EEF4FF);  
+    mix-blend-mode: ${styleblendmode};
+  "
+ > 
+    <img src="../img/icons performance mgmt/desktop/ratingReviewPerformance.svg">
+  </div>` : ''}
+${streakDays[i].onLeave && streakDays[i].date < today.date ?
+                      `<div class="dropdown">
+    ${streakDays[i].countTaskStatus > 0 ?
+                        `<div 
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          color: #FF6565;
+          font-size: 14px;
+          font-weight: 500;
+          width:90px;
+        "
+        onclick="ChangeVisibility('dropdownRaiseIssue-${streakDays[i].date}')">
+        ${streakDays[i].leaveType ? streakDays[i].leaveType.toLowerCase() == 'paid' ? 'PTO' : 'UTO' : ''} 
+      </div>
+      ` :
+                        `<div 
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          color: #FF6565;
+          font-size: 14px;
+          font-weight: 500;
+          width:90px;
+        ">
+        ${streakDays[i].leaveType ? streakDays[i].leaveType.toLowerCase() == 'paid' ? 'PTO' : 'UTO' : ''}  
+      </div>`
+                      }
+   </div>` :
+                      `<div 
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          color: #FF6565;
+          font-size: 14px;
+          font-weight: 500;
+          width:90px;
+        "
+        >
+        ${streakDays[i].leaveType ? streakDays[i].leaveType.toLowerCase() == 'paid' ? 'PTO' : 'UTO' : ''}  
+      </div>`}
+</div>
+
+`
+
+                  if (days == 3 || days == 5 || days == 10 || days == 15 || days == 23) {
+                    if (streakDays[i].date > today.date) {
+                      streakCountHTML += `
+      <div  style="align-items: center;
+        display: flex;
+        flex-direction: column;" data-dismiss='modal' onclick="openmodal('${streakDays[i].date}')" data-toggle='modal' data-target='#managerModalRating'> 
+        <div style="font-size: 14px; padding: 0px 4px" class="circle small">
+          <div>+${days == 3 ? 3 : days == 5 ? 7 : days == 10 ? 15 : days == 15 ? 22 : days == 23 ? 32 : 0}<img src='../img/gem.svg'/></div>
+          <img src='../img/icons performance mgmt/desktop/Streak states_notDone.svg' />
+          <div>${streakDays[i].date.slice(-2)}</div>
+        </div>
+        <div class=" ${ratingClass}" >${rating != 0 ? rating + `<img style="width:15px;margin-bottom:4px"  src=${starpath}>` : ''}</div>
+      </div>
+      </div>
+    `;
+                    } else {
+                      streakCountHTML += `
+      <div  style="align-items: center;
+        display: flex;
+        flex-direction: column;" data-dismiss='modal' onclick="openmodal('${streakDays[i].date}')" data-toggle='modal' data-target='#managerModalRating'>
+        <div style="font-size: 14px; padding: 0px 4px" class="circle big ${streakDays[i].isdone ? 'green' : 'text-green'}">
+          <div>+${days == 3 ? 3 : days == 5 ? 7 : days == 10 ? 15 : days == 15 ? 22 : days == 23 ? 32 : 0}<img src='../img/gem.svg'/></div>
+          <img src='../img/icons performance mgmt/desktop/Streak states.svg' />
+          <div>${streakDays[i].date.slice(-2)}</div>
+        </div>
+        <div class=" ${ratingClass}" >${rating != 0 ? rating + `<img style="width:15px;margin-bottom:4px"  src=${starpath}>` : ''}</div>
+      </div>
+    </div>
+    `;
+                    }
+
+                    if (i + 1 != streakDays.length) {
+                      streakCountHTML += `<div class="streakcount-line" style="border: 1px dashed #48BF84"></div>`;
+                    }
+                  } else {
+                    streakCountHTML += `
+    <div   style="align-items: center;
+      display: flex;
+      flex-direction: column;" class="streakcount-box" data-dismiss='modal' onclick="openmodal('${streakDays[i].date}')" data-toggle='modal' data-target='#managerModalRating'>
+      <div class="circle small ${streakDays[i].isdone ? 'streak-green' : taskDivClass}">
+        <img src="${streakDays[i].isdone ? '../img/icons performance mgmt/desktop/Streak states.svg' : streakDays[i].date > today.date ? '../img/icons performance mgmt/desktop/Streak states_notDone.svg' : taskStatusSrc}" />
+        <div>${streakDays[i].date.slice(-2)}</div>
+      </div>
+      <div class=" ${ratingClass}" >${rating != 0 ? rating + `<img style="width:15px;margin-bottom:4px" src=${starpath}>` : ''}</div>
+    </div>
+  </div>
+  `;
+
+                    if (i + 1 != streakDays.length) {
+                      if (streakDays[i].isdone) {
+                        streakCountHTML += `<div class="streakcount-line" style="border: 1px dashed #48bf84"></div>`;
+                      } else {
+                        streakCountHTML += `<div class="streakcount-line" style="border: 1px dashed #999"></div>`;
+                      }
+                    }
+                  }
+
+                }
+                container.innerHTML = streakCountHTML
+              }
+
+              async function openmodal(date) {
+                let employeeID = employeeInfo._id;
+                let response = await fetch(`/fetch/recordbydate/${date}/${employeeID}`, {
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                });
+                let data = await response.json();
+                let admin = {
+                  image: employeeInfo.image,
+                  firstName: employeeInfo.firstName
+                }
+
+                const adminPerformance = {
+                  admin: admin,
+                  performanceRecord: data.performanceRecord
+                };
+                sendData(JSON.stringify(adminPerformance), employeeID, date);
+
+
+              }
+              function setownerToTaskDropdown() {
+                let ownerbodies = document.querySelectorAll('.ownerbody');
+
+                for (let i = 0; i < ownerbodies.length; i++) {
+                  let ownerbody = ownerbodies[i];
+                  ownerbody.innerHTML = '';
+
+                  ownerbody.innerHTML += `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 gap:12px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;" >
+                 <img src="../Project icons/Search_icon.svg">
+                 <input type="text" style="border: none;width: 100%;" placeholder="Search for Employee" id="searchownerInput"
+                     oninput="filterAndSortModalOwner(event.target.value, ${i})">
+             </div> 
+             <div id="initiativesOwnerdropdownbody${i}" style="max-height:200px;overflow:auto">
+                 ${currentemployeeList.map(owner => `
+                     <div style="height: 1px;
+                         
+                         background: var(--gray-200, #EAECF0);"></div>
+                     <div style="display: flex;
+                         padding: 16px 24px;
+                         align-items: center;
+                         gap: 12px;
+                         flex: 1 0 0;" onclick="getData('${owner._id}','')"  class="hoverbgWhite">
+                         <img src="${owner.image}" style="width:24px;height:24px;border-radius:200px"> ${owner.displayName}
+                     </div>`).join('')}
+             </div>`;
+                }
+              }
+
+              function filterAndSortModalOwner(text, index) {
+                let ownerbody = document.getElementById(`initiativesOwnerdropdownbody${index}`);
+
+                let filteredOwners = currentemployeeList.filter(owner => owner.displayName.toLowerCase().includes(text.toLowerCase()));
+
+                ownerbody.innerHTML = '';
+
+                if (filteredOwners.length === 0) {
+                  ownerbody.innerHTML += `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;">
+                 No employee matches with ${text}
+             </div>`;
+                } else {
+                  for (let owner of filteredOwners) {
+                    ownerbody.innerHTML += `
+                 <div style="height: 1px;
+                     
+                     background: var(--gray-200, #EAECF0);"></div>
+                 <div style="display: flex;
+                     padding: 16px 24px;
+                     align-items: center;
+                     gap: 12px;
+                     flex: 1 0 0;
+                      " onclick="getData('${owner._id}','')" class="hoverbgWhite">
+                     <img src="${owner.image}" style="width:24px;height:24px;border-radius:200px"> ${owner.displayName}
+                 </div>`;
+                  }
+                }
+              }
+
+              async function getData(employeeId, date) {
+                let id = employeeInfo._id;
+                if (date && date != '')
+                  yearMonths = date;
+                if (employeeId && employeeId != '')
+                  id = employeeId;
+                let res = await fetch(`/salaryData/?id=${id}&yearMonth=${yearMonths}`)
+                res = await res.json();
+                currentemployeeList = res.employeeList;
+                salaryData = res.salaryDetails
+                employeeInfo = res.employee;
+                setownerToTaskDropdown();
+                UpdatePerformanceScore(yearMonths)
+                MonthChange(yearMonths);
+                SetData();
+              }
+             async function UpdatePerformanceScore(monthYear)
+              {
+                let response=await fetch(`/performanceModal/?id=${employeeInfo._id}&monthYear=${monthYear}`)
+    response=await response.json();
+    performanceScoreModal=response.performanceScoreModal;
+    document.getElementById('performanceScore').innerHTML=performanceScoreModal?.score;
+    document.getElementById('performanceScoreStatus').innerHTML=performanceScoreModal?.level?.info
+              }
+              getData(employeeInfo._id, '');
+
+              function showIcons(classname) {
+                const box = document.querySelectorAll(classname);
+                box.forEach((element) => {
+                  element.style.display = 'flex';
+                });
+              }
+
+              function removeIcons(classname) {
+                const box = document.querySelectorAll(classname);
+                box.forEach((element) => {
+                  element.style.display = 'none';
+                });
+              }
+              function setStreak()
+    {
+     
+      modalstreakchange(yearMonths);
+    }
+              function SetData() {
+                let employeeBox = document.getElementById("employeeBox");
+                employeeBox.innerHTML = ` <img src="${employeeInfo.image}" style="width: 24px;height: 24px;border-radius: 24px;">
+                  <div class="text-16-700" style="white-space: nowrap;">
+                    ${employeeInfo.displayName}
+                  </div> <i class="fas fa-chevron-down " style="color:black"></i>`
+                let salary = document.getElementById("currentSalary");
+                let bonus = document.getElementById("bonus");
+                let bonusText = document.getElementById("bonusText");
+                let salaryText = document.getElementById("salaryText");
+                let bonus2 = document.getElementById("bonus2");
+                salary.innerText = `₹${salaryData?.salary || 0}`;
+                bonus.innerText = `₹${salaryData?.bonus || 0}`;
+                bonus2.innerText = `₹${salaryData?.bonus || 0}`;
+                bonusText.innerText = `${salaryData?.reasonFBonus || ''}`;
+                bonusText.setAttribute('title', `${salaryData?.reasonFBonus || ''}`);
+                let SalaryStatusBox = document.getElementById('SalaryStatus');
+                if (salaryData.status) {
+                  SalaryStatusBox.innerHTML = `Sent <i class="fa fa-check" aria-hidden="true"></i>
+`
+
+                }
+                else {
+                  SalaryStatusBox.addEventListener('click', ChangeSalaryStatus)
+                  SalaryStatusBox.innerHTML = ` 
+                    <button class="btn btn-sm btn-primary" style="display: flex;gap:8px;display: flex;
+               padding: 8px 16px;
+               justify-content: center;
+               align-items: center;
+               gap: 4px;
+               border-radius: var(--Radius-medium, 8px);
+               background: var(--content-Brand, #48BF84);">
+               <i class="fa fa-check" aria-hidden="true"></i>
+Mark as sent</button>
+                   `
+                }
+                if(!undoEnable)
+                {
+                  let undo=document.querySelector('.undoicon');
+                  undo.style.visibility='hidden';
+                }
+                else{
+                  let undo=document.querySelector('.undoicon');
+                  undo.style.visibility='visible';
+                }
+              }
+            </script>
+
+            <script>
+              let undoEnable = false;
+              function ChangeSalary() {
+                salaryData.salary = parseFloat(document.getElementById("salarym").value);
+                SaveNewSalary('/save/salary')
+              }
+              function ChangeSalaryStatus() {
+                salaryData.status = true;
+                undoEnable = true;
+                SaveNewSalary('/update/salary')
+              }
+              function UndoSalaryStatus() {
+                undoEnable = true;
+                salaryData.status = !salaryData.status;
+                SaveNewSalary('/update/salary')
+              }
+              function SetModalofSalary() {
+                let salary = document.getElementById("salarym");
+                salary.value = salaryData.salary;
+              }
+              function SetModalofBonusOfSalary() {
+                let bonus = document.getElementById("bonusm");
+                bonus.value = salaryData.bonus;
+                let reasonFBonus = document.getElementById("reasonFBonus");
+                reasonFBonus.value = salaryData.reasonFBonus;
+              }
+              function SetBonus() {
+                let bonus = document.getElementById("bonusm").value;
+                let reasonFBonus = document.getElementById("reasonFBonus").value;
+                salaryData.bonus = parseFloat(bonus);
+                salaryData.reasonFBonus = reasonFBonus;
+                SaveNewSalary('/update/salary')
+              }
+              async function SaveNewSalary(endpoint) {
+                try {
+
+                  let res = await fetch(endpoint, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(salaryData)
+                  })
+                  SetData();
+                  setStreakData()
+                }
+                catch (error) {
+                  console.log(error)
+                }
+
+              }
+
+            </script>
+
+
+            <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script
+              src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+            <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+            <script src="../js/purpose.core.js"></script>
+            <!-- Page JS -->
+            <script src="../libs/autosize/dist/autosize.min.js"></script>
+
+            <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+            <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+            <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+            <script src="../libs/moment/min/moment.min.js"></script>
+
+            <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+            <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+            <!-- Purpose JS -->
+            <script src="../js/purpose.js"></script>
+            <!-- Demo JS - remove it when starting your project -->
+            <script src="../js/demo.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+</body>
+
+</html>

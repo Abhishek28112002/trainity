@@ -1,0 +1,801 @@
+<style>
+
+.tox-checklist > li:not(.tox-checklist--hidden) {
+  list-style: none;
+  margin: 0.25em 0;
+  position: relative;
+}
+.tox-checklist > li:not(.tox-checklist--hidden)::before {
+  content: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cg%20id%3D%22checklist-unchecked%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Crect%20id%3D%22Rectangle%22%20width%3D%2215%22%20height%3D%2215%22%20x%3D%22.5%22%20y%3D%22.5%22%20fill-rule%3D%22nonzero%22%20stroke%3D%22%234C4C4C%22%20rx%3D%222%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E%0A");
+  cursor: pointer;
+  height: 1em;
+  margin-left: -1.5em;
+  margin-top: 0.125em;
+  position: absolute;
+  width: 1em;
+}
+.tox-checklist li:not(.tox-checklist--hidden).tox-checklist--checked::before {
+  content: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cg%20id%3D%22checklist-checked%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Crect%20id%3D%22Rectangle%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%234099FF%22%20fill-rule%3D%22nonzero%22%20rx%3D%222%22%2F%3E%3Cpath%20id%3D%22Path%22%20fill%3D%22%23FFF%22%20fill-rule%3D%22nonzero%22%20d%3D%22M11.5703186%2C3.14417309%20C11.8516238%2C2.73724603%2012.4164781%2C2.62829933%2012.83558%2C2.89774797%20C13.260121%2C3.17069355%2013.3759736%2C3.72932262%2013.0909105%2C4.14168582%20L7.7580587%2C11.8560195%20C7.43776896%2C12.3193404%206.76483983%2C12.3852142%206.35607322%2C11.9948725%20L3.02491697%2C8.8138662%20C2.66090143%2C8.46625845%202.65798871%2C7.89594698%203.01850234%2C7.54483354%20C3.373942%2C7.19866177%203.94940006%2C7.19592841%204.30829608%2C7.5386474%20L6.85276923%2C9.9684299%20L11.5703186%2C3.14417309%20Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E%0A");
+}
+
+
+
+.text-gray-14-500{
+    color: var(--Gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+}
+.tox-bottom-anchorbar .tox-statusbar{
+    display: none !important;
+}
+.small-heading {
+  font-size: 16px;
+}
+
+.large-heading {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.text-black-20-700{
+    color: var(--Content-On-Light-Primary, #181818);
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.text-gray-16-600{
+    color: var(--Gray-500, #667085);
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+
+}
+.text-black-14-500{
+    color: var(--Gray-700, #344054);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */
+
+}
+.text-black-16-500{
+    color: var(--Gray-800, #1D2939);
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */
+}
+.dropdown_tab_active {
+    color: var(--gray-700, #344054);
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    /* 142.857% */
+    display: flex;
+    padding: 10px 16px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+cursor: pointer;
+    border-bottom: 1px solid var(--gray-300, #D0D5DD);
+    background: var(--White, #FFF);
+    /* Shadow/xs */
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+
+  }
+  .bluecolor{
+    color: var(--Blue-500, #2E90FA);
+}
+
+
+
+
+</style>
+<script src="https://cdn.tiny.cloud/1/4ulpslqx1e9t10fat1tebpm1y4mehthljgzexo8tz013x0ya/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+    <script>
+        tinymce.init({
+          selector: '#TextAreaFieldOT',
+          plugins: 'lists link image media',
+          toolbar: 'undo redo | formatselect | bold italic | numlist bullist | alignleft aligncenter alignright | image media | checklist',
+          formats: {
+            h1small: { block: 'h1', classes: 'small-heading' },
+            h1large: { block: 'h1', classes: 'large-heading' }
+          },
+          style_formats: [
+            { title: 'Heading 1 (small)', format: 'h1small' },
+            { title: 'Heading 1 (large)', format: 'h1large' }
+          ],
+          checklist_adv_status: true, // Enable advanced checklist
+         checklist_styling: 'checkbox', // Use checkboxes for checklist items
+   
+          file_picker_callback: function(callback, value, meta) {
+            // Open a file picker dialog
+            const input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*,');
+      
+            // Listen for changes in the file input
+            input.onchange = async function() {
+              const file = input.files[0];
+              let url = await handleFileUpload(file);
+      
+              // Pass the URL to the TinyMCE callback
+              callback(url, { text: file.name });
+            };
+      
+            // Trigger a click on the file input
+            input.click();
+          },
+        });
+      </script>
+      
+  
+      
+<div style="display: none;
+width: 50%;
+height: 100vh;
+z-index:100;
+overflow: scroll;
+align-items: flex-start;
+flex-shrink: 0;
+border-radius: 12px 0px 0px 12px;
+background: #FFF;
+position: fixed;
+top: 0;
+right: 0;" id="OpenTaskSideBar">
+<div id="borderOT" style="min-width: 7px;
+height: 100%;
+background-color: #D0D5DD;
+display: flex;
+justify-content: center;
+align-items: center;transition: .4s ease-out;
+    transition-delay: 2s;" onmouseover="showIcons('.ReSizeIcon')" onmouseout="removeIcons('.ReSizeIcon')" onmousedown="startResize(event)">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="ReSizeIcon" style="display:none;">
+        <path d="M14.8594 12C15.1355 12 15.3594 11.7761 15.3594 11.5C15.3594 11.2239 15.1355 11 14.8594 11C14.5832 11 14.3594 11.2239 14.3594 11.5C14.3594 11.7761 14.5832 12 14.8594 12Z" fill="#1D2939" stroke="#1D2939" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9.14062 12C9.41677 12 9.64062 11.7761 9.64062 11.5C9.64062 11.2239 9.41677 11 9.14062 11C8.86448 11 8.64062 11.2239 8.64062 11.5C8.64062 11.7761 8.86448 12 9.14062 12Z" fill="#1D2939" stroke="#1D2939" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M14.8594 5C15.1355 5 15.3594 4.77614 15.3594 4.5C15.3594 4.22386 15.1355 4 14.8594 4C14.5832 4 14.3594 4.22386 14.3594 4.5C14.3594 4.77614 14.5832 5 14.8594 5Z" fill="#1D2939" stroke="#1D2939" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9.14062 5C9.41677 5 9.64062 4.77614 9.64062 4.5C9.64062 4.22386 9.41677 4 9.14062 4C8.86448 4 8.64062 4.22386 8.64062 4.5C8.64062 4.77614 8.86448 5 9.14062 5Z" fill="#1D2939" stroke="#1D2939" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M14.8594 19C15.1355 19 15.3594 18.7761 15.3594 18.5C15.3594 18.2239 15.1355 18 14.8594 18C14.5832 18 14.3594 18.2239 14.3594 18.5C14.3594 18.7761 14.5832 19 14.8594 19Z" fill="#1D2939" stroke="#1D2939" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9.14062 19C9.41677 19 9.64062 18.7761 9.64062 18.5C9.64062 18.2239 9.41677 18 9.14062 18C8.86448 18 8.64062 18.2239 8.64062 18.5C8.64062 18.7761 8.86448 19 9.14062 19Z" fill="#1D2939" stroke="#1D2939" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+</div>
+<div style="padding: var(--Spacing-x6, 24px);
+display: flex;
+width: 100%;
+height: 100%;
+overflow: auto;
+gap: var(--Spacing-x6, 24px);
+flex-direction: column;" id="OTBody">
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;
+width: 100%;
+">
+<svg xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;" width="24" height="24" viewBox="0 0 24 24" fill="none" onclick="CloseTaskSideBar()">
+    <path d="M18 6L6 18" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M6 6L18 18" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <input type="text" style="width: 100%;padding: 4px;" class="text-black-20-700" id="TaskTitleOT" value="Open Task">
+
+</div>
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 20px;
+align-self: stretch;">
+<div style="display: flex;
+padding: 12px;
+color:#48bf84;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 20px;
+border-bottom: 4px solid #48BF84;
+background: var(--success-50, #ECFDF3);">
+Updates
+</div>
+<div style="display: flex;
+height: 48px;
+padding: 14px 20px;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+border-radius: 12px;
+border: 1px solid var(--Gray-400, #98A2B3);
+background: var(--Gray-50, #F9FAFB);
+" class="text-gray-14-500" id="TextAreaInitial" onclick="ShowInputField('TextAreaInitial','TextAreaActual')">
+Add an update 
+</div>
+<div style="display: none;
+flex-direction: column;
+align-items: flex-start;
+gap: 12px;
+align-self: stretch;" id="TextAreaActual">
+<textarea style="display: flex;
+height: 48px;
+width: 100%;
+padding: 14px 20px;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+border-radius: 12px;
+border: 1px solid var(--Gray-400, #98A2B3);
+background: var(--Gray-50, #F9FAFB);
+" class="text-gray-14-500" id="TextAreaFieldOT">
+Add an update 
+</textarea>
+<div style="
+    padding: 12px;
+    justify-content: center;
+    align-items: center;" class="buttonOT" onclick="SavePostOT()">
+Update
+</div>
+</div>
+</div>
+<div style="display: flex;flex-direction: column;align-items: flex-start;gap: 20px;align-self: stretch;" id="postBodyOT">
+
+</div>
+</div>
+<div id="TSBody" style="
+display: flex;
+width: 100%;
+height: 100%;
+overflow: auto;
+gap: var(--Spacing-x6, 24px);
+flex-direction: column;">
+<div style="padding: var(--Spacing-x6, 24px);
+display: flex;
+width: 100%;
+height: 100%;
+overflow: auto;
+gap: var(--Spacing-x6, 24px);
+flex-direction: column;">
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;
+align-self: stretch;">
+<svg xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;" width="24" height="24" viewBox="0 0 24 24" fill="none" onclick="CloseTaskSideBar()">
+  <path d="M18 6L6 18" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M6 6L18 18" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<div style="display: flex;align-items: center;justify-content: space-between;width: 100%;gap:12px;">
+  <input 
+  style="flex:1;border:none"
+    placeholder="Enter the name of the initiative"
+    onchange="ChangeTSEData('tasktitle',event.target.value)" id="Task_Tasks">
+    <div style="display: flex;
+    align-items: center;
+    gap: 13px;">
+    <div class="text-16-600">Review Status</div>
+     <div style="border-radius:16px;display: flex;gap:12px;align-items: center;display: flex;
+     padding: 8px 16px;
+     gap: 4px;
+     border-radius: var(--Radius-medium, 8px);
+     border: 1px solid var(--Gray-300, #D0D5DD);
+     background: #FFF;" id="TSstatusModal" data-toggle="dropdown"
+      aria-expanded="false">
+
+    </div>
+    <div class="dropdown-menu" style="
+flex-direction: column;
+" aria-labelledby="TSstatusModal" id="TSstatusModaldropdown">
+
+      <div class="StatusBox" onclick="setStatusTSModal('Completed','status',0)">
+        <div class="Status_completed">Completed</div>
+      </div>
+      <div class="StatusBox" onclick="setStatusTSModal('Pending','status',1)">
+        <div class="Status_progress">Pending</div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<div style="display: flex;
+flex-direction: column;
+width: 100%;
+align-items: flex-start;
+gap: 8px;">
+
+       
+          <div style="display: flex;
+padding: 12px;
+color:#48bf84;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 20px;
+border-bottom: 4px solid #48BF84;
+background: var(--success-50, #ECFDF3);">
+Submitted Report
+</div>
+        </div>
+        <div style="display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+        gap: 8px;">
+                  <div class="text-16-600">Initial Info Provided<span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+                  <textarea class="TextAreaStyleSubmissionModal"
+                    placeholder="Enter the Initial Info provided for the initiative"
+                    onchange="ChangeTSEData('initialInfo',event.target.value)" id="Task_InitialInfo"></textarea>
+                </div>
+ <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;">
+   <div class="text-16-600">Timeline <span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+   <div style="display: flex;
+align-items: center;
+gap: 8px;
+align-self: stretch;">
+     <img src="../Performance dashboard Icons/calander.svg">
+     <div style="color: var(--gray-600, #475467);
+
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;" >
+       Start Date
+     </div>
+     <input class="TextAreaStyleSubmissionModal" type="date" id="Task_StartDate" onchange="ChangeTSEData('startDate',event.target.value)">
+     <div style="color: var(--gray-600, #475467);
+
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;">
+       endDate
+     </div>
+     <input class="TextAreaStyleSubmissionModal" type="date" onchange="ChangeTSEData('endDate',event.target.value)" id="Task_EndDate">
+     <div id="TimeElapsedModal">
+
+     </div>
+    </div>
+  
+ </div>
+<div style="display: flex;
+align-items: center;
+gap: 12px;" class="text-16-600">
+<div >
+Live Status  <span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span>
+</div> 
+<div style="display: flex; align-items: center; gap: 8px;">
+<input type="radio" name="liveStatus" value="yes" id="yesRadio" checked onclick="ChangeTSEData('liveStatus',true)"> Yes
+</div>
+<div style="display: flex; align-items: center; gap: 8px;">
+<input type="radio" name="liveStatus" value="No" id="noRadio"  onclick="ChangeTSEData('liveStatus',false)"> No
+</div>
+
+</div>
+<div style="display: flex;
+align-items: flex-start;
+gap: 64px;
+align-self: stretch;">
+<div style="display: flex;
+width: 312px;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;">
+<div class="text-16-600">
+Quality of Execution
+</div>  
+<div style="height: 56px;
+align-self: stretch;
+gap:8px;
+border-radius: var(--Radius-medium, 8px);
+background: #FFF;">
+<div style="margin-left:0px;" id="QualityValue" class="text-16-600">0</div>
+<input style="width: 100%;" type="range" min="0" max="10" value="0" class="slider" id="QualitySlider" onchange="ChangeTSEData('quality',event.target.value)">
+<div style="display: flex;justify-content: space-between;align-items: center;">
+<div class="text-16-600">0</div>
+<div class="text-16-600">10</div>
+</div>
+</div>
+</div> 
+<div style="display: flex;
+width: 312px;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;">
+<div class="text-16-600">
+Speed of Execution
+</div>  
+<div style="height: 56px;
+align-self: stretch;
+gap:8px;
+border-radius: var(--Radius-medium, 8px);
+background: #FFF;">
+<div style="margin-left:0px;" id="SpeedValue" class="text-16-600">0</div>
+<input style="width: 100%;"  type="range" min="0" max="10" value="0" class="slider" id="SpeedSlider" onchange="ChangeTSEData('speed',event.target.value)">
+<div style="display: flex;justify-content: space-between;align-items: center;">
+<div class="text-16-600">0</div>
+<div class="text-16-600">10</div>
+</div>
+</div>
+</div> 
+</div>
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;
+align-self: stretch;">
+<div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+gap: 2px;">
+<div style="color: var(--Gray-800, #1D2939);
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">
+Outcome Reporting Status <span style="color: var(--Red, #FF6565);">*</span>
+</div>
+<div style="color: var(--Gray-600, #475467);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;">Choose the status that best describes the current state of your task and share any additional comments.</div>
+</div>
+<div style="display: flex;
+height: 48px;
+padding: 14px 20px;
+justify-content: space-between;
+align-items: center;
+align-self: stretch;
+border-radius: 12px;
+border: 1px solid var(--Gray-400, #98A2B3);
+background: var(--Gray-50, #F9FAFB);" data-toggle="dropdown" id="TSOutcomeStatusModal">
+Select the status that best describes the current state of your task
+<i class="fa fa-angle-down"></i>
+</div>
+<div class="dropdown-menu" style="
+flex-direction: column;
+" aria-labelledby="TSOutcomeStatusModal" id="TSOutcomeStatusModaldropdown">
+
+      <div class="StatusBox" onclick="setStatusTSModal('Completed','OutcomeStatus',0)">
+        <div class="Status_completed">Completed</div>
+      </div>
+      <div class="StatusBox" onclick="setStatusTSModal('Pending','OutcomeStatus',1)">
+        <div class="Status_progress">Pending</div>
+      </div>
+      <div class="StatusBox" onclick="setStatusTSModal('Iterations','OutcomeStatus',2)">
+        <div class="Status_iterations" >Iterations</div>
+        </div>
+    </div>
+</div>
+<div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+gap: 8px;">
+<div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+gap: 2px;">
+<div class="text-16-600">
+Badges
+</div> 
+<div style="color: var(--Gray-600, #475467);
+
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;">
+Employee's Self-Assessment
+</div> 
+</div> 
+<div style="display: flex;
+width: 158px;
+height: 52px;
+padding: 16px 24px;
+justify-content: center;
+align-items: center;">
+<img
+onclick="UpdateTSEBadges(-0.5)"
+src="../img/icons performance mgmt/desktop/d_substract_green.svg"
+/>
+<div
+style="
+display: flex;
+font-size: 21px;
+font-weight: 600;
+color: black;
+"
+>
+<div >
+<input
+ type="number"
+ id="Task_ExpectedBadges"
+ class="TSEData"
+ value=0
+ onchange="ChangeTSEData('expectedBadges',event.target.value)"
+ style="width: 50px;
+ text-align: right;"
+/>
+</div>
+<img
+src="../img/icons performance mgmt/desktop/d_badge.svg"
+/>
+</div>
+<img
+onclick="UpdateTSEBadges(0.5)"
+src="../img/icons performance mgmt/desktop/d_add_green.svg"
+/>
+</div> 
+</div>
+
+ <div style="display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+ gap: 8px;
+ align-self: stretch;
+ ">
+             <div class="text-16-600">Attach files and links <span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+             <div style="display: flex;align-items: center;gap:8px;flex-wrap: wrap;" id="Task_LinkFileBody">
+ 
+             </div>
+             <!-- <div style="display: flex;
+ align-items: flex-start;
+ gap: 8px;">
+               <div style="display: flex;
+ width: 103px;
+ height: 52px;
+ padding: 16px 24px;
+ justify-content: center;
+ align-items: center;
+ gap: 10px;
+ background: #FFF;" onclick="OpenTSFileInput('FileInputField')">
+                 <input type="file" id="FileInputField" style="width: 0px;" onchange="handleTSFileSelect(event)">
+                 <img src="../Performance dashboard Icons/File.svg">
+                 <img src="../Performance dashboard Icons/AddMedia.svg">
+               </div>
+               <div style="display: flex;
+ width: 103px;
+ height: 52px;
+ padding: 16px 24px;
+ justify-content: center;
+ align-items: center;
+ gap: 10px;
+ background: #FFF;" data-target="#AddTSLink" data-toggle="modal">
+                 <img src="../Performance dashboard Icons/Link.svg">
+                 <img src="../Performance dashboard Icons/AddMedia.svg">
+               </div>
+             </div> -->
+           </div>
+ <div style="display: flex;
+flex-direction: column;
+width: 100%;
+align-items: flex-start;
+gap: 8px;">
+   <div class="text-16-600">Business Outcome <span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+   <textarea class="TextAreaStyleSubmissionModal" placeholder="Describe the specific business outcome you achieved through this task."
+     onchange="ChangeTSEData('businessOutcome',event.target.value)" id="Task_BusinessOutcome"></textarea>
+ </div>
+ <div style="display: flex;
+flex-direction: column;
+width: 100%;
+align-items: flex-start;
+gap: 8px;">
+   <div class="text-16-600">Next steps <span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+   <textarea class="TextAreaStyleSubmissionModal"
+     placeholder="Describe the next steps for the initiative in keywords"
+     onchange="ChangeTSEData('nextStep',event.target.value)" id="Task_NextStep"></textarea>
+ </div>
+ <div style="display: flex;
+flex-direction: column;
+width: 100%;
+align-items: flex-start;
+gap: 8px;">
+   <div class="text-16-600">Improvement Area and Learnings <span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+   <textarea class="TextAreaStyleSubmissionModal"
+     placeholder="Reflect on the learnings or insights gained from this task. What did you discover, understand, or gain as knowledge during the process? Please summarize them here."
+     onchange="ChangeTSEData('learning',event.target.value)" id="Task_Learning"></textarea>
+ </div>
+ <div style="display: flex;
+ flex-direction: column;
+               align-items: flex-start;
+               gap: 8px;
+               align-self: stretch;">
+            <div class="text-16-600">Add comment or feedback for the initiative</div>
+             <textarea class="TextAreaStyleSubmissionModal" placeholder="Enter comment/feedback" id="CommentBoxSubmitTaskModal"></textarea>
+
+           </div>
+             <div style="display:flex;flex-direction: column;gap:12px;align-items: flex-start;width: 100%;" id="CommentBodySubmitTaskModal">
+            
+               
+             
+             </div>
+      </div>
+        <div style="padding: 0.5rem;bottom: 10px;right:0px;display:flex;justify-content: space-between;background-color: white;" class="container_Style">
+ 
+          <button class="btn btn-outline-primary" style="display: flex;
+        width: 189px;
+        padding: 16px 40px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        align-self: stretch;
+        border-radius: 12px;" onclick="CloseTaskSideBar()"> Cancel</button>
+          <button class="btn btn-primary" style="display: flex;
+        width: 189px;
+        padding: 16px 40px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        align-self: stretch;
+        border-radius: 12px;"  onclick="SaveSubmitTask();CloseTaskSideBar()">Submit</button>
+        
+        </div>
+      </div>
+</div>
+<!-- A Delete Task Header Confirmation Modal -->
+
+<div class="modal docs-example-modal" tabindex="-1" id="DeletePostConfirmationOT" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal">
+        <div class="modal-content" id="myModalsm" style="border-radius: 12px;">
+            <div class="modal-header">
+                <div style="
+                  color: var(--text-content-primary, #181818);
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 130%;
+                ">
+                    Confirm Deletion
+                </div>
+            </div>
+            <div class="modal-body">
+                <div style="
+                color: var(--gray-600, #475467);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 135%; /* 18.9px */
+  letter-spacing: 0.14px;
+  
+  
+                ">
+                   Are you sure you want to delete this Update? 
+                   This action cannot be undone.
+                </div>
+                <div style="color: var(--gray-600, #475467);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 135%; /* 18.9px */
+            letter-spacing: 0.14px;"> This action cannot be undone and all associated data will be permanently removed.
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 10px;padding:0.7rem;" class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary heading" style="display: flex;
+            padding: 8px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex: 1 0 0;
+            align-self: stretch;
+            border-radius: var(--radius-medium, 8px);
+            color: var(--gray-700, #344054);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  
+            border: 1px solid var(--gray-300, #D0D5DD);" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn" style="
+                display: flex;
+  height: 46px;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: var(--content-inverted-primary, #FFF);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.1px;
+  flex: 1 0 0;
+  border-radius: var(--radius-medium, 8px);
+  background: var(--Red, #FF6565);
+                " data-dismiss="modal" onclick="DeletePost()">
+                    Delete Update <Header></Header>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+ let isResizing = false;
+let startOffsetOT = 0;
+
+function startResize(event) {
+  isResizing = true;
+  const sidebar = document.getElementById('OpenTaskSideBar');
+  startOffsetOT = event.pageX - sidebar.offsetWidth;
+  sidebar.style.cursor = 'ew-resize';
+  document.addEventListener('mousemove', handleMouseMoveOT);
+  document.addEventListener('mouseup', stopResizeOT);
+}
+
+SetInitialWidth();
+
+function SetInitialWidth() {
+  let width_ = localStorage.getItem('SideBarOT');
+ 
+  const sidebar = document.getElementById('OpenTaskSideBar');
+  sidebar.style.width = width_ || '50%';
+}
+
+function handleMouseMoveOT(event) {
+  if (isResizing) {
+    const sidebar = document.getElementById('OpenTaskSideBar');
+  
+    let newWidth = event.pageX;
+    newWidth = `calc(100% - ${newWidth}px)`;
+    
+    sidebar.style.width = newWidth;
+    localStorage.setItem('SideBarOT', newWidth);
+  }
+}
+
+
+function stopResizeOT() {
+  isResizing = false;
+  const sidebar = document.getElementById('OpenTaskSideBar');
+  startOffsetOT = event.pageX - sidebar.offsetWidth;
+  sidebar.style.cursor = 'auto';
+  document.removeEventListener('mousemove', handleMouseMoveOT);
+  document.removeEventListener('mouseup', stopResizeOT);
+}
+
+</script>

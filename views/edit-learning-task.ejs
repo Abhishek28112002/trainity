@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Get trained, work on virtual projects and get certified in 8 weeks."
+    />
+    <meta name="author" content="Webpixels" />
+    <title>Trainity Dashboard</title>
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      href="../../img/custom/favicon-32x32.jpg"
+      type="image/png"
+    />
+    <!-- Font Awesome 5 -->
+    <link
+      rel="stylesheet"
+      href="../../libs/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../libs/flatpickr/dist/flatpickr.min.css" />
+    <!-- <link rel="stylesheet" href="../../libs/select2/dist/css/select2.min.css" /> -->
+    <!-- Purpose CSS -->
+    <link rel="stylesheet" href="../../css/purpose.css" id="stylesheet" />
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+    <link rel="stylesheet" href="../../libs/select2/dist/css/select2.min.css" />
+    <!-- <link rel="stylesheet" href="../../libs/flatpickr/dist/flatpickr.min.css" /> -->
+
+    <!-- Link Swiper's CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+<!-- Hotjar Tracking Code for Admin Website -->
+<script>
+  (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:3534926,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+    <style>
+      .swiper {
+        width: 100% !important;
+        height: 40vh !important;
+      }
+
+      .swiper-slide {
+        text-align: center !important;
+        font-size: 18px !important;
+        background: #fff !important;
+        border: 1px solid rgba(69, 69, 69, 0.453);
+
+        /* Center slide text vertically */
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: -webkit-flex !;
+        display: flex !important;
+        -webkit-box-pack: center !important;
+        -ms-flex-pack: center !important;
+        -webkit-justify-content: center !important;
+        justify-content: center !important;
+        -webkit-box-align: center !important;
+        -ms-flex-align: center !important;
+        -webkit-align-items: center !important;
+        align-items: center !important;
+      }
+
+      .swiper-slide img {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+      }
+    </style>
+  </head>
+
+  <body class="application application-offset">
+    <!-- Chat modal -->
+    <!-- Application container -->
+    <div class="container-fluid container-application">
+      <!-- Sidenav -->
+      <%- include('partials/sidepanel'); -%>
+      <!-- Content -->
+      <div class="main-content footer-margin-mobile position-relative">
+        <!-- Main nav -->
+        <%- include('partials/navbar'); -%>
+        <!-- Page content -->
+        <div class="page-content">
+          <!-- Page title -->
+          <div class="page-title">
+            <div class="row justify-content-between align-items-center">
+              <div
+                class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0"
+              >
+                <!-- Page title + Go Back button -->
+                <div class="d-inline-block">
+                  <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">
+                    Account Settings
+                  </h5>
+                </div>
+                <!-- Additional info -->
+              </div>
+              <div
+                class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-end"
+              ></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 order-lg-1">
+              <div class="card">
+                <div class="card-body">
+                  <form class="mt-4">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label class="form-control-label"> Course ID </label>
+                          <select
+                            class="custom-select"
+                            required
+                            name="courseID"
+                            id="courseID"
+                          >
+                            <!-- <option selected>Open this select menu</option> -->
+                            <option value="102" selected>Data</option>
+                            <option value="101">Software</option>
+                            <option value="103">Marketing</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label class="form-control-label"> Type </label>
+                          <select
+                            class="custom-select"
+                            required
+                            name="type"
+                            id="type"
+                          >
+                            <!-- <option selected>Open this select menu</option> -->
+                            <% if(learningTask.type==0) { %>
+                            <option value="0" selected>Text + Image</option>
+                            <option value="1">Vimeo + Text + Image</option>
+                            <option value="2">Youtube + Text + Image</option>
+                            <option value="3">VdoCipher + Text + Image</option>
+                            <% } else if (learningTask.type==1) { %>
+                            <option value="0">Text + Image</option>
+                            <option value="1" selected>
+                              Vimeo + Text + Image
+                            </option>
+                            <option value="2">Youtube + Text + Image</option>
+                            <option value="3">VdoCipher + Text + Image</option>
+                            <% } else if(learningTask.type==2){ %>
+                            <option value="0">Text + Image</option>
+                            <option value="1">Vimeo + Text + Image</option>
+                            <option value="2" selected>
+                              Youtube + Text + Image
+                            </option>
+                            <option value="3">VdoCipher + Text + Image</option>
+                            <% } else if(learningTask.type==3) { %>
+                            <option value="0">Text + Image</option>
+                            <option value="1">Vimeo + Text + Image</option>
+                            <option value="2">Youtube + Text + Image</option>
+                            <option value="3" selected>
+                              VdoCipher + Text + Image
+                            </option>
+                            <% } %>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label class="form-control-label">Title</label>
+                          <input
+                            type="text"
+                            name="title"
+                            class="form-control"
+                            value="<%= learningTask.title %>"
+                            required
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-control-label">Module</label>
+                          <input
+                            type="text"
+                            name="module"
+                            class="form-control"
+                            value="<%= learningTask.module %>"
+                            required
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-control-label"> Days After </label>
+                          <input
+                            type="number"
+                            name="daysAfter"
+                            value="<%= learningTask.daysAfter %>"
+                            required
+                            class="form-control"
+                          />
+                        </div>
+
+                        <div class="form-group">
+                          <label class="form-control-label">Vimeo ID</label>
+                          <input
+                            type="text"
+                            value="<%= learningTask.vimeoID %>"
+                            name="vimeoID"
+                            class="form-control"
+                          />
+                        </div>
+
+                        <div class="form-group">
+                          <label class="form-control-label">Youtube ID</label>
+                          <input
+                            type="text"
+                            name="youtubeID"
+                            value="<%= learningTask.youtubeID %>"
+                            class="form-control"
+                          />
+                        </div>
+
+                        <div class="form-group">
+                          <label class="form-control-label">Video ID</label>
+                          <input
+                            type="text"
+                            name="videoID"
+                            value="<%= learningTask.videoID %>"
+                            class="form-control"
+                          />
+                        </div>
+
+                        <div class="form-group">
+                          <label class="form-control-label">Handbook URI</label>
+                          <input
+                            type="text"
+                            name="handbookURI"
+                            value="<%= learningTask.handbookURI %>"
+                            class="form-control"
+                          />
+                        </div>
+
+                        <div class="form-group">
+                          <label class="form-control-label mb-0">
+                            Description
+                          </label>
+
+                          <div id="quillEditor"></div>
+                        </div>
+
+                        <!-- Task date -->
+                        <!-- Button trigger modal -->
+                        <button type="submit" class="btn btn-primary">
+                          Save Changes
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+    <!-- Scripts -->
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        freeMode: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+    </script>
+
+    <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+    <script src="../../js/purpose.core.js"></script>
+    <!-- Page JS -->
+    <script src="../../libs/flatpickr/dist/flatpickr.min.js"></script>
+    <!-- <script src="../../libs/select2/dist/js/select2.min.js"></script> -->
+    <!-- <script src="../../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script> -->
+    <!-- Purpose JS -->
+    <script src="../../js/purpose.js"></script>
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="../../libs/select2/dist/js/select2.min.js"></script>
+    <script src="../../libs/flatpickr/dist/flatpickr.min.js"></script>
+
+    <!-- Demo JS - remove it when starting your project -->
+    <!-- <script src="../../js/demo.js"></script> -->
+  </body>
+</html>
+
+<script>
+  var options = {
+    placeholder: "",
+    theme: "snow",
+  };
+
+  const editor = new Quill("#quillEditor", options);
+  editor.root.innerHTML = `<%- learningTask.innerHTML %>`;
+  // console.log(editor);
+
+  const svg = document.querySelector(".ql-picker-label");
+  svg.remove();
+
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const courseID = form.courseID.value;
+    const type = form.type.value;
+    const title = form.title.value;
+    const module = form.module.value;
+    const innerHTML = editor.root.innerHTML;
+    const daysAfter = form.daysAfter.value;
+    const vimeoID = form.vimeoID.value;
+    const youtubeID = form.youtubeID.value;
+    const handbookURI = form.handbookURI.value;
+    const videoID = form.videoID.value;
+    const id = `<%= learningTask._id %>`;
+
+    try {
+      const res = await fetch("/edit/task/learning", {
+        method: "PATCH",
+        body: JSON.stringify({
+          courseID,
+          type,
+          title,
+          module,
+          innerHTML,
+          daysAfter,
+          vimeoID,
+          id,
+          handbookURI,
+          youtubeID,
+          videoID,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+
+      console.log(data);
+
+      if (data.id) {
+        alert("Task Created Successfully!");
+      }
+
+      // alert(data.status);
+    } catch (error) {
+      alert("Oops! Something went Wrong! Try again later.");
+    }
+  });
+</script>

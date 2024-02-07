@@ -1,0 +1,3691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <meta name="author" content="Webpixels" />
+  <title>Trainity - Admin Panel</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+  <!-- Purpose CSS -->
+  <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+
+  <link rel="stylesheet" href="../libs/fullcalendar/dist/fullcalendar.min.css" />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../assets/libs/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: 'Manrope', sans-serif !important;
+    }
+  .text-16-700{
+    color: var(--gray-800, #1D2939);
+         font-size: 18px;
+         font-style: normal;
+         font-weight: 500;
+         line-height: normal;
+         letter-spacing: 0.09px;
+  }
+    .text-24-700{
+      color: #000;
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+    }
+    .fontsize34 {
+      font-size: 34px;
+    }
+    .streak-dates-box{
+      max-width: max(32vw,475px);
+    display: flex;
+    padding: 16px;
+    height: 200px;
+    align-items: flex-start;
+    border-radius: 8px;
+    background: #FFF;
+    box-shadow: 0px 0px 0px 4px #F2F4F7, 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+}
+
+  
+    .daily-task-card {
+      border: 1px solid #ececec;
+      border-radius: 14px;
+      padding: 20px 24px;
+    }
+  
+    .modal-box {
+      display: flex;
+      padding: 16px;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 8px;
+      flex: 1 0 0;
+      border-radius: 12px;
+      border: 1px solid var(--stroke-secondary, #DCDCDC);
+      background: var(--surface-primary, #FFF);
+    }
+  
+    .heading {
+      font-style: normal;
+  
+      font-size: 16px;
+      line-height: normal;
+      color: #000000;
+    }
+  
+    .active {
+      color: #48bf84;
+      padding-bottom: 10px;
+      width: 200px;
+      display: flex;
+      border-bottom: 1px solid #48bf84;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .modal-heading {
+      color: var(--text-content-primary, #181818);
+      font-size: 24px;
+  
+      font-style: normal;
+      font-weight: 700;
+      line-height: 100%;
+    }
+  
+    .months {
+      display: flex;
+      padding: 4px 8px;
+      align-items: center;
+      gap: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--stroke-primary, #ECECEC);
+    }
+  
+    .rating-status {
+      display: flex;
+      padding: 4px 8px;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+      color: black;
+    }
+  
+    #sliderValue {
+      color: var(--pill-text-blue, #3B82F6);
+      font-size: 12px;
+      font-style: normal;
+      width: 7%;
+      font-weight: 700;
+      line-height: 158.6%;
+      /* 19.032px */
+    }
+  
+    .golden-rating-status {
+      border-radius: 14px;
+      background: linear-gradient(129deg, #FBE6A2 0%, #FFFCF3 34.55%, #FBEECA 66.59%, #FEFAEB 100%);
+    }
+  
+    .skyblue-rating-status {
+      border-radius: 14px;
+      background: var(--pill-surface-trainity, #F2FAF6);
+    }
+  
+    .orange-rating-status {
+      border-radius: 14px;
+      background: var(--pill-surface-orange, #FFFBEB);
+    }
+  
+    .red-rating-status {
+      border-radius: 14px;
+      background: var(--pill-text-red, #FF6565);
+    }
+  
+    .streakcount-line {
+      width: 35.32px;
+      height: 1px;
+      margin-top: 70px;
+      border: 1px dashed #999;
+      margin-bottom: 10px;
+    }
+  
+    .roadmap {
+      display: flex;
+      align-items: center;
+    }
+  
+    .checkpoint {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .checkpoint img {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .checkpoint-title {
+      margin-top: 10px;
+    }
+  
+    .dotted-rule {
+      flex: 1;
+      border-bottom: 2px dashed #fff;
+      height: 2px;
+    }
+  
+    .solid-rule {
+      flex: 1;
+      height: 6px;
+      flex-shrink: 0;
+      margin: 0px -5px;
+      background: #fff;
+    }
+  
+    .circle {
+      display: flex;
+      padding: 10px;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      align-self: stretch;
+      border-radius: 8px;
+    }
+  
+    .avatar-group {
+      display: flex;
+      align-items: center;
+    }
+  
+    .avatar-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      /* Adjust the spacing between avatars */
+    }
+  
+  
+    .avatar-container img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+      margin-left: -20px;
+      /* Adjust this value to control the overlap */
+    }
+  
+    .more-avatar {
+      background-color: #e1e1e1;
+      /* Set the background color of the "+7" tag */
+      border-radius: 50%;
+      width: 24px;
+      /* Set the size of the "+7" tag */
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+      ;
+    }
+  
+    .big {
+      border-radius: 8px;
+      border: 1px solid var(--brand-primary, #48BF84);
+      background: var(--pill-surface-trainity, #F2FAF6);
+    }
+  
+    .small {
+      border-radius: 8px;
+      border: 1px dashed var(--stroke-primary, #ECECEC);
+      background: var(--surface-primary, #FFF);
+    }
+  
+    .streak-count {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 0px;
+      gap: 8px;
+      width: 100%;
+      overflow-x: hidden;
+      margin-top: 10px;
+      flex: none;
+      order: 1;
+      align-self: stretch;
+      flex-grow: 0;
+      overflow: auto;
+    }
+  
+    .bonus {
+      font-size: 17px;
+      font-weight: bold;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 2px 4px;
+      margin-bottom: -25px;
+      background: linear-gradient(105.25deg, #087941 16.01%, #1AF287 103.85%);
+      border: 1px solid #DCDCDC;
+      border-radius: 8px;
+    }
+  
+    .words {
+      overflow: hidden;
+      max-width: 120px;
+      text-overflow: ellipsis;
+      font-size: 14px;
+      font-style: normal;
+      line-height: normal;
+      max-height: 30px;
+      margin: 10px 0px;
+      display: flex;
+  
+      justify-content: space-between;
+    }
+  
+    .notes {
+      margin-left: 30px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 8px 16px;
+      gap: 8px;
+      width: 737px;
+      height: 54px;
+      background: #FFFBEB;
+      border-radius: 8px;
+    }
+  
+    .dotted-line {
+      width: 2px;
+      height: 50px;
+      margin-top: -20px;
+      margin-left: 50px;
+      position: relative;
+    }
+  
+    .green {
+      background-color: #48bf84;
+      color: white;
+    }
+  
+    .text-green {
+      color: #48bf84;
+    }
+  
+    .dotted-line::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 100%;
+      background: repeating-linear-gradient(to bottom, transparent, transparent 3px, black 3px, black 6px);
+    }
+  
+    .graph {
+      display: flex;
+      padding: 0px 4px;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+      width: 40px;
+    }
+  
+    .decrease {
+      border-radius: 8px;
+      background: var(--pill-text-red, #FF6565);
+    }
+  
+    .increase {
+      border-radius: 8px;
+      background: var(--pill-text-blue, #3B82F6);
+    }
+  
+    .current_day {
+      border: 1px dashed var(--warning-400, #FDB022);
+      background: var(--warning-25, #FFFCF5);
+    }
+  
+    .perv_day {
+      border: 1px dashed var(--pill-text-red, #FF6565);
+      background: var(--error-50, #FEF3F2);
+    }
+  
+    .complete_day {
+      border: 1px dashed var(--ref-primary-primary-60-brand, #48BF84);
+      background: var(--ref-primary-primary-99, #F5FFF5);
+    }
+    .text-red-14-700{
+      color: #FF6565;
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+    }
+    .frameLevelProgress {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 25px;
+  padding: 24px 32px;
+  position: relative;
+  background-color: var(--white);
+  border-radius: 8px;
+}
+
+.frameLevelProgress .div {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.frameLevelProgress .featured-icon {
+  position: relative;
+  width: 56.57px;
+  height: 56.57px;
+  margin-top: -4.29px;
+  margin-bottom: -4.29px;
+  margin-left: -4.29px;
+  background-color: var(--success-100);
+  border-radius: 24px;
+  border: 8.57px solid;
+  border-color: var(--success-50);
+}
+
+.frameLevelProgress .noun-mission {
+  position: relative;
+  width: 25px;
+  height: 27px;
+  top: 11px;
+  left: 11px;
+  overflow: hidden;
+}
+
+.frameLevelProgress .layer {
+  position: absolute;
+  width: 23px;
+  height: 20px;
+  top: 2px;
+  left: 1px;
+}
+
+.frameLevelProgress .overlap-group {
+  width: 50px;
+  height: 9px;
+  top: 32px;
+  position: absolute;
+  left: 0;
+}
+
+.frameLevelProgress .text-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  color: var(--brandprimary);
+  font-size: 3.9px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.frameLevelProgress .text-wrapper-2 {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  color: var(--brandprimary);
+  font-size: 3.9px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.frameLevelProgress .text-wrapper-3 {
+  position: relative;
+  width: fit-content;
+  font-family: "Manrope-Bold", Helvetica;
+  font-weight: 700;
+  color: var(--contenton-lightprimary);
+  font-size: 18px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.frameLevelProgress .div-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.frameLevelProgress .div-3 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 105.6px;
+  background-color: #ffffff;
+}
+
+.frameLevelProgress .overlap {
+  width: 865px;
+  height: 127px;
+  top: -22px;
+  position: absolute;
+  left: 0;
+}
+
+.frameLevelProgress .progress-bar {
+  width: 818px;
+  top: 45px;
+  left: 47px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+}
+
+.frameLevelProgress .progress-bar-2 {
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  height: 8px;
+  border-radius: 8px;
+}
+
+.frameLevelProgress .progress {
+  width: 1px;
+  height: 8px;
+  background-color: var(--brandprimary);
+}
+
+.frameLevelProgress .element {
+  position: absolute;
+  width: 66px;
+  height: 104px;
+  top: 23px;
+  left: 0;
+}
+
+.frameLevelProgress .project-badge {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  top: 2px;
+  left: 9px;
+  background-color: var(--brandprimary);
+  border-radius: 21.15px;
+  border-color: var(--brandprimary);
+}
+
+.frameLevelProgress .check {
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  top: 13px;
+  left: 13px;
+}
+
+.frameLevelProgress .level {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: absolute;
+  top: 54px;
+  left: 0;
+}
+
+.frameLevelProgress .div-4 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.frameLevelProgress .gem {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  object-fit: cover;
+}
+
+.frameLevelProgress .text-wrapper-4 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  font-family: "Manrope-SemiBold", Helvetica;
+  font-weight: 600;
+  color: var(--gray-400);
+  font-size: 11.1px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.frameLevelProgress .button {
+  display: inline-flex;
+  height: 22.6px;
+  align-items: center;
+  justify-content: center;
+  padding: 5.4px 5.7px 6.2px 5.8px;
+  position: relative;
+  background-color: #181818;
+  border-radius: 800px;
+}
+
+.frameLevelProgress .text-wrapper-5 {
+  position: relative;
+  width: 43px;
+  height: 9.95px;
+  margin-top: -0.47px;
+  font-family: "Nunito-Bold", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 11px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 11px;
+  white-space: nowrap;
+}
+
+.frameLevelProgress .progress-bar-wrapper {
+  width: 774px;
+  top: 44px;
+  left: 53px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+}
+
+.frameLevelProgress .line {
+  position: absolute;
+  width: 713px;
+  height: 1px;
+  top: 8px;
+  left: 143px;
+}
+
+.frameLevelProgress .progress-2 {
+  position: absolute;
+  width: 106px;
+  height: 8px;
+  top: 0;
+  left: 0;
+  background-color: var(--brandprimary);
+}
+
+.frameLevelProgress .div-5 {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  top: 0;
+  left: 159px;
+}
+
+.frameLevelProgress .heading {
+  position: relative;
+  width: 34px;
+  margin-top: -1px;
+  font-family: var(--text-md-medium-font-family);
+  font-weight: var(--text-md-medium-font-weight);
+  color: var(--brandprimary);
+  font-size: var(--text-md-medium-font-size);
+  letter-spacing: var(--text-md-medium-letter-spacing);
+  line-height: var(--text-md-medium-line-height);
+  font-style: var(--text-md-medium-font-style);
+}
+
+.frameLevelProgress .img {
+  position: relative;
+  width: 35px;
+  height: 35px;
+}
+
+.frameLevelProgress .frameLevelProgress-wrapper {
+  position: absolute;
+  width: 49px;
+  height: 99px;
+  top: 22px;
+  left: 309px;
+}
+
+.frameLevelProgress .img-2 {
+  position: absolute;
+  width: 49px;
+  height: 49px;
+  top: 0;
+  left: 0;
+}
+
+.frameLevelProgress .img-wrapper {
+  position: absolute;
+  width: 49px;
+  height: 99px;
+  top: 22px;
+  left: 601px;
+}
+
+.frameLevelProgress .element-2 {
+  position: absolute;
+  width: 77px;
+  height: 106px;
+  top: 0;
+  left: 893px;
+}
+
+.frameLevelProgress .level-2 {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: absolute;
+  top: 59px;
+  left: 0;
+}
+
+.frameLevelProgress .overlap-group-wrapper {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  top: -1px;
+  left: 10px;
+}
+
+.frameLevelProgress .lock-wrapper {
+  position: relative;
+  width: 49px;
+  height: 49px;
+  top: 4px;
+  left: 3px;
+  border-radius: 24.67px;
+  border: 3.34px solid;
+  border-color: var(--brandprimary);
+}
+
+.frameLevelProgress .lock {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  top: 8px;
+  left: 9px;
+}
+
+.frameLevelProgress .div-6 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.frameLevelProgress .ph-path-bold {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.frameLevelProgress .heading-2 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  font-family: "Manrope-Bold", Helvetica;
+  font-weight: 700;
+  color: var(--brandprimary);
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+  </style>
+
+  <!-- Hotjar Tracking Code for Admin Website -->
+  <script>
+    (function(h, o, t, j, a, r) {
+      h.hj = h.hj || function() {
+        (h.hj.q = h.hj.q || []).push(arguments)
+      };
+      h._hjSettings = {
+        hjid: 3534926,
+        hjsv: 6
+      };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script');
+      r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  </script>
+
+</head>
+
+<body class="application application-offset" style="margin-left:300px;width: calc(100vw - 300px);background: #fafafa;display: flex;
+padding: 32px;
+flex-direction: column;
+align-items: flex-start;
+gap: 24px;
+flex: 1 0 0;" id="MainPageContent">
+  <!-- Chat modal -->
+    <!-- Sidenav -->
+    <%- include('partials/sidepanel'); -%>
+    <!-- Content -->
+    <div class="main-content position-relative" style="margin-top:0px;display: flex;
+    padding: 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;">
+   
+      <div style="display: flex;align-items: flex-start;width: 100%;gap:4px;flex-direction: column;">
+        <div  style="color: var(--gray-900, #101828);
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 38px; /* 126.667% */">
+          Howdy, <%= user.displayName %>
+      </div>
+        <div style="color: var(--gray-500, #667085);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px; /* 150% ">Let's take a look at your progress so far</small>
+      </div>
+    </div>
+
+    
+        <%- include('rating-feedback-test'); -%>
+        <%if(progresslevels){%>
+         <%- include('partials/level_progression'); -%>  
+         <%}%>
+         <%- include('partials/leave-announcement'); -%>  
+        <%- include('partials/utility-modals'); -%>
+        <!-- Level Map -->
+     
+        <%if(showprogress){%>
+<button type="button" class="btn btn-primary" id="progresslevelButton" style="width: 0px;height: 0px;" data-toggle="modal" data-target="#level_progression">
+.
+</button>
+          <script>
+            const progressbutton = document.getElementById('progresslevelButton')
+             progressbutton.click()
+              progressbutton.style.display='none'
+            </script>
+       <% } %>
+<% if(leaveAnncouncement){%>
+
+  <button  data-target="#leave_announcement" data-toggle="modal" id="leaveAnncouncementbutton"> leave_announcement</button>
+  <script>
+    const leaveAnncouncementbutton = document.getElementById('leaveAnncouncementbutton')
+    leaveAnncouncementbutton.click()
+    leaveAnncouncementbutton.style.display='none'
+    </script>
+<%}%>
+
+        <div style="display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        align-self: stretch;">
+        <div style="display: flex;
+        width: 213px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;">
+        <img src="<%=employee.image%>" style="display: flex;
+        width: 90px;
+        height: 90px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 225px;">
+        <div style="display: flex;flex-direction: column;gap:4px;align-items: center;justify-content: center;align-self: stretch;">
+        <div style="color: var(--text-content-primary, #181818);
+        
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;"><%=employee.displayName%></div>
+        <div style="color: var(--text-content-secondary, #898989);
+        
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;"><%=employee.team%></div>
+        <div style="display: flex;
+        height: 22.6px;
+        padding: 5.4px 5.7px 6.2px 5.8px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 800px;
+        display: flex;
+width: 50px;
+flex-direction: column;
+color: #FFF;
+text-align: center;
+font-family: Nunito;
+font-size: 11px;
+font-style: normal;
+font-weight: 700;
+line-height: 11px;
+        background: #181818;">Level <%=employee.currentLevel%></div>
+</div>
+      </div>
+    
+      <div class="frameLevelProgress">
+        <div class="div">
+          <div class="featured-icon">
+            <div class="noun-mission">
+              <img class="layer" src="img/layer-20.png" />
+              <div class="overlap-group">
+                <div class="text-wrapper">Created by Anggara Putra</div>
+                <div class="text-wrapper-2">from the Noun Project</div>
+              </div>
+            </div>
+          </div>
+          <div class="text-wrapper-3">Your progress</div>
+        </div>
+        <div class="div-2">
+          <div class="div-3">
+            <div class="overlap">
+              <div class="progress-bar">
+                <div class="progress-bar-2"><div class="progress"></div></div>
+              </div>
+              <div class="element">
+                <div class="project-badge"><img class="check" src="img/check.svg" /></div>
+                <div class="level">
+                  <div class="div-4">
+                    <img class="gem" src="img/gem-1-5.png" />
+                    <div class="text-wrapper-4">0 Badges</div>
+                  </div>
+                  <div class="button"><div class="text-wrapper-5">LEVEL 1</div></div>
+                </div>
+              </div>
+              <div class="progress-bar-wrapper">
+                <div class="progress-bar-2">
+                  <img class="line" src="img/line-202.svg" />
+                  <div class="progress-2"></div>
+                </div>
+              </div>
+              <div class="div-5">
+                <div class="heading">15%</div>
+                <img class="img" src="img/frameLevelProgress-42536.svg" />
+              </div>
+              <div class="frameLevelProgress-wrapper"><img class="img-2" src="img/frameLevelProgress-1000005185.svg" /></div>
+              <div class="img-wrapper"><img class="img-2" src="img/image.svg" /></div>
+            </div>
+            <div class="element-2">
+              <div class="level-2">
+                <div class="div-4">
+                  <img class="gem" src="img/image.png" />
+                  <div class="text-wrapper-4">150 Badges</div>
+                </div>
+                <div class="button"><div class="text-wrapper-5">LEVEL 2</div></div>
+              </div>
+              <div class="overlap-group-wrapper">
+                <div class="lock-wrapper"><img class="lock" src="img/lock.svg" /></div>
+              </div>
+            </div>
+          </div>
+          <div class="div-6">
+            <img class="ph-path-bold" src="img/ph-path-bold.svg" />
+            <div class="heading-2">View Roadmap</div>
+          </div>
+        </div>
+      </div>
+    
+          <div class="roadmap">
+            <% for(let i=0; i<levels.length; i++) { %>
+            <% if(levels[i].state===0) { %>
+            <div class="checkpoint">
+              <img src="../img/LevelLocked.svg" alt="Checkpoint Icon 1">
+
+            </div>
+            <% if(i<(levels.length-1)) { %>
+            <div class="dotted-rule"></div>
+            <% } %>
+            <% } else if(levels[i].state===1) { %>
+            <div class="checkpoint">
+              <img src="../img/LevelOngoing.svg" alt="Checkpoint Icon 1">
+
+            </div>
+            <% if(i<(levels.length-1)) { %>
+            <div class="dotted-rule"></div>
+            <% } %>
+            <% } else { %>
+            <div class="checkpoint">
+              <img src="../img/LevelComplete.svg" alt="Checkpoint Icon 1">
+
+            </div>
+            <% if (i < (levels.length - 1)) { %>
+            <% let percbadges =(((user.badges - levels[i].badges) / (levels[i + 1].badges - levels[i].badges)) * 100).toFixed(2); %>
+
+            <div style="width:<%= percbadges>=100?100:percbadges-21%>px;">
+              <div class="solid-rule"></div>
+            </div>
+            <% if(percbadges < 100) { %>
+            <div class="greendot" style=" width:20px">
+              <div style="color:white"><%=percbadges%>%</div>
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 17 17" fill="none">
+                  <circle cx="8.86328" cy="8.40234" r="7.5" fill="#fff" stroke="white" />
+                </svg>
+              </div>
+              <div style="
+    width: 57.902px;
+    color: #FFF;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;">
+                <% if (percbadges < 50) { %>
+                <%= user.badges %> badges achieved
+                <% } else if (percbadges >= 50 && percbadges < 70) { %>
+                Halfway there
+                <% } else { %>
+                Only <%= levels[i+1].badges - user.badges %> more to go
+                <% } %>
+              </div>
+
+            </div>
+
+            <div style="width:<%= 100-percbadges%>px;">
+              <div class="dotted-rule"></div>
+            </div>
+            <% } %>
+            <% } %>
+
+            <% } %>
+
+            <% } %>
+
+          </div>
+          <div class="roadmap mt-3 mb-3" style="gap:30px">
+            <% for(let i=0; i<levels.length; i++) { %>
+            <div class="checkpoint">
+              <button class="btn badge-pill badge" style="font-size: 11px; letter-spacing: 15%; font-weight: 700; color: #fff; padding: 5px; background: #181818;" data-toggle="modal" data-target="#levelModal-<%= i %>"> LEVEL <%= i+1 %> </button>
+              <!-- <p class="mb-0" style="font-size: 16px;  font-weight: 600; color: #fff;">TRAINITY FELLOW</p> -->
+              <p class="mb-0" style="font-size: 11px;  font-weight: 600; color: #fff; text-align: center;">
+                <img src="../img/gem.svg" style="width: 20px;" /> <%= levels[i].badges %>
+              </p>
+            </div>
+            <% if(i<(levels.length-1)) { %>
+            <div style="height: 0px; flex: 1;"></div>
+            <% } %>
+
+            <!-- Modal -->
+            <div class="modal fade" id="levelModal-<%= i %>" tabindex="-1" role="dialog" aria-labelledby="levelModal-<%= i %>Label" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="levelModal-<%= i %>Label">LEVEL <%= i+1 %></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="card bg-gradient-info px-4 py-5">
+                      <div class="card-body">
+                        <h5 class="h4 text-white"><%= levels[i].title %></h5>
+                        <p class="mt-4 mb-0 text-white">
+                          <%= levels[i].description %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <% } %>
+          </div>
+
+        </div>
+
+
+        <div class="container" >
+          <div class="card bg-white" style="padding:40px">
+                <div style="display:flex;justify-content: space-between;">
+                  <div style="display: flex;align-items: center;gap:20px;margin-bottom:30px">
+                    <div style="
+                        height: 106px;
+                        padding: 8px 15px 32px 15px;
+                        gap: 10px;
+                        border-radius: 14px;
+                        border: 1px solid var(--stroke-secondary, #DCDCDC);
+                        background: var(--pill-surface-blue, #F4F5FB);
+                        ">
+                      <div class="graph  <%=avgpervbadges>=avgpervtopervbadges?'increase':'decrease'%>  dropdown" style="height:24px;display: flex;">
+                        <img class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" src="<%=avgpervbadges>=avgpervtopervbadges?'../img/icons performance mgmt/desktop/increase.svg':'../img/icons performance mgmt/desktop/decrease.svg'%>">
+                        <img src="../img/icons performance mgmt/desktop/arrow_drop_down.svg" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" />
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width:350px;padding:20px;font-size: 15px;">
+                          <h6>Weekly Comparison</h6>
+                          <div style="display: flex; gap:30px">
+                            <div class="graph <%=avgpervbadges>=avgpervtopervbadges?'increase':'decrease'%> dropdown" style="width: 100px;
+                           color: white;
+                           display: flex;
+                           flex-direction: column;
+                           font-size: 10px;">
+                              <div style="display: flex;gap:5px">
+                                <img src="<%=avgpervbadges>=avgpervtopervbadges?'../img/icons performance mgmt/desktop/increase.svg':'../img/icons performance mgmt/desktop/decrease.svg'%>" />
+                                <%=avgpervbadges==0?100:Math.round(Math.abs(avgpervtopervbadges-avgpervbadges)/avgpervbadges *100) %>% <img src="../img/gem.svg" width="12px">
+                              </div>
+                              Badges <%=avgpervbadges>=avgpervtopervbadges?'Increased':'Decreased'%>
+                            </div>
+                            <div>
+                              <div><span style="font-weight: 500;color:black">Last Week:</span><%=avgpervbadges%> <img src="../img/gem.svg" width="8px"></div>
+                              <div><span style="font-weight: 500;color:black">Last to Last Week:</span><%=avgpervtopervbadges%><img src="../img/gem.svg" width="8px"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="display: flex;align-items: flex-start;margin-top:5px;margin-left:15px">
+                        <div style="display: flex;
+                          width: 58.945px;
+                          flex-direction: column;
+                          justify-content: center;line-height:17px;">
+                          <div>Total Badges</div>
+                        </div>
+                        <div>
+                          <img src="../img/gem.svg" style="width: 40px;" />
+                        </div>
+                        <div style="display: flex;
+                             gap:10px;
+                             align-items: center;
+                             flex-direction: column;
+                             justify-content: center;line-height:17px;">
+                          <div style="font-size: 40px; font-weight: 700;color:black"><%= user.badges %></div>
+                          <div style="font-size:12px;color:#3B82F6;">+<%=user.recent.badges%> Yesterday</div>
+                        </div>
+                        <div style="    margin-left: 10px;
+                            line-height: 20px;
+                            font-size: 14px;">
+                          <div>current Badges</div>
+                          <div> <img src="../img/gem.svg" style="margin-left:20px;width:20px" /> <%= user.badges-user.usedBadges %></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="
+                        height: 106px;
+                        padding: 8px 15px 32px 15px;
+                        gap: 5px;
+                        border-radius: 14px;
+                        border: 1px solid var(--stroke-secondary, #DCDCDC);
+                        background: var(--pill-surface-blue, #F4F5FB);
+                        ">
+                      <div class="graph <%=avgpervrating>=avgpervtopervrating?'increase':'decrease'%> " style="height:24px;display: flex;">
+                        <img class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" src="<%=avgpervrating>=avgpervtopervrating?'../img/icons performance mgmt/desktop/increase.svg':'../img/icons performance mgmt/desktop/decrease.svg'%>">
+                        <img src="../img/icons performance mgmt/desktop/arrow_drop_down.svg" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" />
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width:350px;padding:20px;font-size: 15px;">
+                          <h6>Weekly Comparison</h6>
+                          <div style="display: flex; gap:30px">
+                            <div class="graph <%=avgpervrating>=avgpervtopervrating?'increase':'decrease'%> dropdown" style="width: 100px;
+                            color: white;
+                            display: flex;
+                            flex-direction: column;
+                            font-size: 10px;">
+                              <div style="display: flex; gap:5px">
+                                <img src="<%=avgpervrating>=avgpervtopervrating?'../img/icons performance mgmt/desktop/increase.svg':'../img/icons performance mgmt/desktop/decrease.svg'%>" />
+                                <%=Math.abs((avgpervrating-avgpervtopervrating).toFixed(2))%> <img src="../img/icons performance mgmt/desktop/d_star_full.svg" width="12px">
+                              </div>
+                              Rating <%=avgpervrating>=avgpervtopervrating?'Increased':'Decreased'%>
+                            </div>
+                            <div>
+                              <div><span style="font-weight: 500;color:black">Last Week:</span><%=avgpervrating%> <img src="../img/icons performance mgmt/desktop/d_star_full.svg" width="8px"></div>
+                              <div><span style="font-weight: 500;color:black">Last to Last Week:</span><%=avgpervtopervrating%> <img src="../img/icons performance mgmt/desktop/d_star_full.svg" width="8px"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="display: flex;
+                        justify-content: center;
+                        gap:15px;
+                        align-items: flex-start;margin-left:15px">
+                        <div style="width:51px;line-height: 20px;">
+                          <p class="mb-0 mt-1 text-center">Avg. Rating</p>
+                        </div>
+                        <div>
+                          <img src="../img/Star.svg" />
+                        </div>
+                        <div style="display: flex;flex-direction: column;gap:10px">
+                          <div style="font-size: 40px; font-weight: 700;color:black;line-height:30px">
+                            <% if(user.rating.cnt===0) { %>
+                            0.0
+                            <% } else { %>
+                            <%= Math.round((user.rating.value/user.rating.cnt)*100)/100 %>
+                            <% } %>
+                          </div>
+                          <div style="line-height: 15px;font-size: 12px;color:#3B82F6"><%=user.recent.rating%> Yesterday</div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div  style="    display: flex;
+                    gap: 5px;
+                    align-items: center;
+                    margin-bottom: 20px">
+                   
+                    <a href="/rewards/<%=employee._id%>"style="display: flex;
+                    align-items: center;
+                    gap:10px;
+                    padding: 10px 15px;
+                    color:white;
+                    border-radius: 12px;
+                    background: var(--pill-surface-trainity,#48bf84) ;">
+                    <div style="display: flex;
+                    flex-direction: column;
+                    padding-top:10px;
+                    justify-content: center;
+                    align-items: center;">
+                      <div style="color:black">Next Reward</div>
+                      <div style="font-size: 16px;"><%=user.badges-user.usedBadges%>/<%=rewards[0][2]%> <img src="../img/gem.svg" style="width: 16px;" /> </div>
+                      <div class="words"> <%=rewards[0][0]%></div>
+                    </div>
+                      <img src="<%=rewards[0][3]%>" style="width: 120px;height:100px;border-radius: 12px;" />
+                  </a>
+                   
+                   
+                    <a href="/rewards/<%=employee._id%>">
+                      <h6 style="color:#48BF84">Rewards <img src="../img/icons performance mgmt/desktop/RightArrow.svg" /></h6>
+                    </a>
+                  </div>
+                </div>
+                <div style="
+padding: 24px;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;
+align-self: stretch;
+border-radius: 10.277px;
+border: 0.8px solid #DCDCDC;
+background: #F4F5FB;
+  ">
+                  <% let day = 0 %>
+                  <% let streakCount=0; %>
+                  <% let targetdate %>
+                  <% for (let i = 0; i < streakDays.length; i++) { %>
+                  <% if (streakDays[i].date>=currentday.date) { %>
+                  <%if(streakDays[i].date==currentday.date) {%>
+                  <% streakCount=day;%>
+                  <%}%>
+                          <% if (!streakDays[i].isdone) { %>
+                  <% day += 1; %>
+                  <% }else { %>
+                  <% day = 0; %>
+                  <% }%>
+
+                  <% if (day === 3) { %>
+                  <% targetdate = streakDays[i].date.slice(-2) %>
+                  <% day = 3 %>
+                  <% break; %>
+                  <% } else if (day === 5) { %>
+                  <% targetdate = streakDays[i].date.slice(-2) %>
+                  <% day = 7 %>
+                  <% break; %>
+                  <% }else if (day === 10) { %>
+                  <% targetdate = streakDays[i].date.slice(-2) %>
+                  <% day = 15 %>
+                  <% break; %>
+                  <% } else if (day=== 15) { %>
+                  <% targetdate = streakDays[i].date.slice(-2) %>
+                  <% day = 22 %>
+                  <% break; %>
+                  <% } else if (day === 23) { %>
+                  <% targetdate = streakDays[i].date.slice(-2) %>
+                  <% day = 35 %>
+                  <% break; %>
+                  <% } %>
+                  <% } else if (streakDays[i].isdone) { %>
+                  <% day += 1; %>
+                  <% }else { %>
+                  <% day = 0; %>
+                  <% }%>
+                  <%}%>
+                    
+                       
+                   
+                      <div style="display:flex;justify-content:space-between;align-items: center;width:100%">    
+                        <div style="display:flex;gap:20px;align-items: center;"> 
+                              <div class="months" id="months" style="display:flex">
+                                <select id="monthSelect" style=" border:none;  padding: 2px;color: #48bf84;
+                                font-size: 20px;
+                                background-color: transparent;
+                                font-weight: 600;">
+                   <option value="01" <%= streakmonth === 1 ? 'selected' : '' %>>January</option>
+                  <option value="02" <%= streakmonth === 2 ? 'selected' : '' %>>February</option>
+                  <option value="03" <%= streakmonth === 3 ? 'selected' : '' %>>March</option>
+                  <option value="04" <%= streakmonth === 4 ? 'selected' : '' %>>April</option>
+                  <option value="05" <%= streakmonth === 5 ? 'selected' : '' %>>May</option>
+                  <option value="06" <%= streakmonth === 6 ? 'selected' : '' %>>June</option>
+                  <option value="07" <%= streakmonth === 7 ? 'selected' : '' %>>July</option>
+                  <option value="08" <%= streakmonth === 8 ? 'selected' : '' %>>August</option>
+                  <option value="09" <%= streakmonth === 9 ? 'selected' : '' %>>September</option>
+                  <option value="10" <%= streakmonth === 10 ? 'selected' : '' %>>October</option>
+                  <option value="11" <%= streakmonth === 11 ? 'selected' : '' %>>November</option>
+                  <option value="12" <%= streakmonth === 12 ? 'selected' : '' %>>December</option>
+                  </select>
+                </div>
+                <div style="
+                   
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 18px;
+                        line-height: 25px;
+                        color: #181818;" id="streakHeader">Current Streak: <span style="color:#48bf84;margin-left:5px"><%=streakCount%> Days <img src='../img/icons performance mgmt/desktop/Streak states.svg' /></span> <span style="font-size:12px; font-weight:normal;background: #D9FDEB;padding:5px; border-radius: 8px; width: 250px;
+height: 25px;margin-left:20px">Continue 4.5+ <img src="../img/Star.svg" width="17px" /> streak till<span style="font-size:17px; font-weight: 700"> <%=targetdate%> </span> to get +<span style="font-size:17px; font-weight: 700;"><%=day%></span> <img src="../img/gem.svg" style="width: 17px;" /></span></div>
+              </div>
+              <div style="margin-right:10px" onclick="togglestreakbox()">
+                <i class="fa fa-angle-up" id="streakboxicon" style="width: 40px;
+                        height: 40px;border-radius: 40px;background: var(--surface-fourth, #EBEBEB);    display: flex;
+    align-items: center;
+    justify-content: center;"></i>
+              </div>
+            </div>
+            <script>
+              const button = document.getElementById('feedbackrating')
+              var it = 0;
+              
+
+              function getpervday(date) {
+                const currentDate = new Date(date);
+                currentDate.setDate(currentDate.getDate() - 1);
+
+                const year = currentDate.getFullYear();
+                const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                const day = String(currentDate.getDate()).padStart(2, '0');
+
+                const previousDateString = `${year}-${month}-${day}`;
+                return previousDateString;
+              }
+              async function updateperviousDayPopUp(employeeId, date) {
+
+                const response = await fetch('/performance/previousDayPopUp', {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    employeeId,
+                    date
+                  }),
+                });
+
+
+              }
+            </script>
+
+            <% if (showpopup ) { %>
+              <div data-toggle='modal' id="PervDayRatingModal" data-target='#RatingInfoModal' style="width:0.1px;"></div>
+            <script>
+             let  pervdaybutton=document.getElementById('PervDayRatingModal');
+             pervdaybutton.click();
+              const pervdate = getpervday('<%= currentday.date %>');
+              getPerformanceByDate(pervdate)
+            </script>
+            <% } %>
+
+            <div class="streak-count" id="streak-count" style="display: flex;
+             justify-content: space-between;
+           margin-top: 40px;
+             gap:24px;
+                          align-self: stretch;
+                          flex-wrap: wrap;">
+
+        
+            </div>
+            <div>
+              <div style="display:flex;flex-direction: row-reverse;margin-top: 10px;cursor: pointer;" id="monthly-overview">
+                <h5 style="color:#48bf84" data-target="#modal-monthl-overview" data-toggle="modal">Monthly Overview <img src="../img/icons performance mgmt/desktop/RightArrow.svg" /></h5>
+              </div>
+            </div>
+          </div>
+
+
+      </div>
+       </div>
+
+  
+    <div class="container">
+     
+        <div  style="margin-top:20px">
+          <div class="card">
+            <div class="card-body" style="display: flex;justify-content: space-between;">
+
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" id="tab_project" style="padding:20px">
+                    <h6 style="display:flex;gap:5px;align-items: center;justify-content: center;">
+                      <img src="../img/icons performance mgmt/desktop/d_tab_projects_big.svg" />Projects
+                    </h6>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="tab_task" style="padding:20px">
+                    <h6 style="display:flex;gap:5px;align-items: center;justify-content: center;">
+                      <img src="../img/icons performance mgmt/desktop/d_tab_tasks_disabled_big.svg" />Tasks
+                    </h6>
+                  </a>
+                </li>
+              </ul>
+              <a href="/project/<%=employee._id%>" style="display: flex;align-items: center;justify-content: flex-end;gap:5px;margin-right:25px;color:#48BF84">
+                View All <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                  <path d="M17.1353 2.71875H8.75531C5.11531 2.71875 2.94531 4.88875 2.94531 8.52875V16.8988C2.94531 20.5487 5.11531 22.7188 8.75531 22.7188H17.1253C20.7653 22.7188 22.9353 20.5487 22.9353 16.9088V8.52875C22.9453 4.88875 20.7753 2.71875 17.1353 2.71875ZM15.7353 13.2487L12.2053 16.7787C12.0553 16.9287 11.8653 16.9988 11.6753 16.9988C11.4853 16.9988 11.2953 16.9287 11.1453 16.7787C10.8553 16.4887 10.8553 16.0087 11.1453 15.7188L14.1453 12.7188L11.1453 9.71875C10.8553 9.42875 10.8553 8.94875 11.1453 8.65875C11.4353 8.36875 11.9153 8.36875 12.2053 8.65875L15.7353 12.1888C16.0353 12.4788 16.0353 12.9587 15.7353 13.2487Z" fill="#48BF84"/>
+                </svg>
+              </a>
+            </div>
+           
+      <div  style="display: flex;
+              padding: 24px;
+              align-items: flex-start;
+              gap: 20px;
+              flex-wrap: wrap;
+              align-self: stretch;
+              background: var(--surface-primary, #FFF);" id="projectBody">
+                <% for (var i=0; i < Math.min(2,projects.length); i++) { %>
+                  <% var milestoneProject=projects[i]; %>
+                    <div onclick="ViewEditProject('editviewtag-<%=milestoneProject._id%>');"
+                      style="display: flex;
+                      padding: 24px;
+                      flex-direction: column;
+                      justify-content: flex-end;
+                      align-items: flex-start;
+                      width:500px;
+                      gap:16px;
+                      padding-top:5px;
+                      border-radius: 14px;
+                      background: var(--surface-primary, #FFF);
+                      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);" class="project-cards" id="project-<%=milestoneProject._id%>" >
+                 <a  href='<%=milestoneProject.notionLink%>' target="_blank"  id="editviewtag-<%=milestoneProject._id%>" style="width:1px;"></a>
+                    <div  style="width: 100%;">
+                      <div id="pinboxproject-<%=milestoneProject._id%>"  
+                        onclick="PinProject('<%=milestoneProject._id%>','<%=milestoneProject.isPinnedByAdmin%>')">
+                        <% if (milestoneProject.isPinnedByAdmin) { %>
+                          <img src="../img/icons performance mgmt/desktop/d_pin_active.svg" />
+                          <% } else { %>
+                            <img src="../img/icons performance mgmt/desktop/d_pin_hover.svg" />
+                            <% } %>
+                      </div>
+                      <div style="display: flex;justify-content: space-between;gap:16px;align-items: center;width:100%">
+                          <div style="display: flex;
+                          height: 54px;
+                          flex-direction: column;
+                          justify-content: center;
+                          flex: 1 0 0;
+                          color: var(--text-on-light-primary, #181818);
+                          font-size: 20px;
+                          font-style: normal;
+                          font-weight: 700;
+                          overflow: hidden;
+                          line-height: normal;" class="project-title">
+                            <%= milestoneProject.title %>
+                      </div>
+                      <div class="cursor" >
+                        <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                        style="overflow: hidden;width:40px"
+                         >
+                          <img src="../img/icons performance mgmt/desktop/more-circle.svg" />
+                        </div>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <div style="display: flex;
+                      flex-direction: column;
+                      gap: 10px;
+                      padding:10px 10px 0px 10px;
+                      color: black;
+                      width:250px;
+                      border-radius: 14px;">
+                            <a  href='/editProject/<%=milestoneProject._id%>' class="cursor" style=" 
+                       color: var(--text-content-primary, #181818);
+                    font-size: 16px;
+                  
+                    display: flex;
+                    font-weight: 500;
+                    gap: 10px;
+                    line-height: 17.352px;
+                    align-items: center;"
+                   >
+                              <img src='../img/icons performance mgmt/desktop/d_edit_option_big.svg' />
+                             <%= milestoneProject.canedit?'Edit the project':'View Project'%>
+                        </a>
+                            <div class="cursor" style=" 
+                              color: var(--text-content-primary, #181818);
+                          font-size: 16px;
+                        
+                          display: flex;
+                          font-weight: 500;
+                          gap: 10px;
+                          line-height: 17.352px;
+                          align-items: center;" onclick="PinProject('<%=milestoneProject._id%>','<%=milestoneProject.isPinnedByAdmin%>')"  >
+                              <img src='../img/icons performance mgmt/desktop/d_pin_unpin_option_big.svg' /> <%=milestoneProject.isPinnedByAdmin?'UnPin':'Pin'%>
+                              the project
+                            </div>
+                            <!-- <div class="cursor"style=" 
+                       color: var(--text-content-primary, #181818);
+                    font-size: 16px;
+                  
+                    display: flex;
+                    font-weight: 500;w
+                    gap: 10px;
+                    line-height: 17.352px;
+                    align-items: center;
+                "  data-target="#BadgesAndFeedback" data-toggle="modal" onclick="BadgesAndFeedback('<%= JSON.stringify(milestoneProject) %>')">
+                              <img
+                                src='../img/icons performance mgmt/desktop/fluent_person-feedback-48-regular.svg' />Check
+                              Badges and feedback for the project.
+                            </div> -->
+                          
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      </div>
+                      <div style="width: 100%;margin-top:-9px">
+                        <% let pvalue = milestoneProject.progress ? milestoneProject.progress : 0 %>
+                        <div id="sliderValue" style="margin-left: <%= pvalue-5 %>%;"><%= pvalue %>%</div>
+                        <input type="range" id="progressbtn" value="<%= pvalue %>" min="0" max="100" style="width: 100%"  oninput="updateSliderValue(this)"/>
+                      </div>
+                      
+                      <script>
+                        // Function to prevent user interaction with the range slider
+                        function updateSliderValue(slider) {
+                          slider.value = slider.defaultValue;
+                        }
+                      </script>
+                      
+                     
+                      <div style="display: flex;
+                      padding: 8px 16px;
+                      align-items: center;
+                      gap: 8px;
+                      align-self: stretch;
+                      border-radius: 8px;
+                      background: var(--surface-secondary, #FAFAFA);
+                      ">
+                      <div style="color: var(--text-content-secondary, #898989);
+                      font-size: 16px;
+                      font-style: normal;
+                      font-weight: 500;
+                      line-height: normal;"> Objective:
+                      </div>
+                      <div style="display: flex;
+                      height: 44px;
+                      align-items: center;
+                      overflow: hidden;
+                      color: #000;
+                      text-overflow: ellipsis;
+                      font-size: 16px;
+                      font-style: normal;
+                      font-weight: 400;
+                      line-height: normal;">
+                      <%=milestoneProject.objective?milestoneProject.objective:''%>
+                      </div>
+
+                      </div>
+                        <div style="display: flex;
+                        align-items: flex-start;
+                        gap: 24px;
+                        margin-top: 10px;
+                        align-self: stretch;
+                        height: 80px;">
+              
+              <% const teamsIndex = milestoneProject.teams && milestoneProject.teams.findIndex((team)=>team._id==user._id);%>
+              <% const ownersIndex = milestoneProject.owners && milestoneProject.owners.findIndex((owner)=>owner._id==user._id);%>
+               <% let owners = milestoneProject.owners?milestoneProject.owners:[];%>
+               <% let teams = milestoneProject.teams?milestoneProject.teams:[];%>
+              <div style="display: flex;flex-direction: column;justify-content: space-between;align-items: center;gap:24px;">
+                  <div style="display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  align-self: stretch;">
+                     <img src="../img/icons performance mgmt/desktop/d_badge.svg" style="width:40px;height:40px;">
+                     
+              <% if (ownersIndex!=-1) { %>
+                <div style="display: flex;
+                padding: 8px 16px;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                border-radius: 8px;
+                color:black;
+                background: var(--surface-tertiary, #F7F7F7);
+                ">
+                <%= owners[ownersIndex].badges && owners[ownersIndex].badges.get !== '' ? owners[ownersIndex].badges.get : 0 %>
+              </div>
+              
+              <div style="display: flex;
+              padding: 8px 16px;
+              flex-direction: column;
+              align-items: center;
+              gap: 8px;
+              font-size:12px;
+              font-weight: 500;
+              border-radius: 8px;
+              ">
+              of
+              </div>
+
+
+              <div style="display: flex;
+              padding: 8px 16px;
+              flex-direction: column;
+              align-items: center;
+              gap: 8px;
+              border-radius: 8px;
+              background: var(--surface-tertiary, #F7F7F7);
+              ">
+              <%= owners[ownersIndex].badges && owners[ownersIndex].badges.total !== '' ? owners[ownersIndex].badges.total : 0 %>
+               </div>
+             
+                <% } else if (teamsIndex!=-1) { %>
+                  <div style="display: flex;
+                  padding: 8px 16px;
+                  flex-direction: column;
+                  align-items: center;
+                  gap: 8px;
+                  border-radius: 8px;
+                  color:black;
+                  background: var(--surface-tertiary, #F7F7F7);
+                  ">
+                  <%= teams[teamsIndex].badges && teams[teamsIndex].badges.get !== '' ? teams[teamsIndex].badges.get : 0 %>
+
+                </div>
+              <div style="display: flex;
+              padding: 8px 16px;
+              flex-direction: column;
+              align-items: center;
+              gap: 8px;
+              font-size:12px;
+              font-weight: 500;
+              border-radius: 8px;
+            
+              ">of</div>
+              <div style="display: flex;
+              padding: 8px 16px;
+              flex-direction: column;
+              align-items: center;
+              gap: 8px;
+              border-radius: 8px;
+              background: var(--surface-tertiary, #F7F7F7);
+              ">
+               <%= teams[teamsIndex].badges && teams[teamsIndex].badges.total !== '' ? teams[teamsIndex].badges.total : 0 %>
+
+              </div>
+           
+<%}%>
+</div> 
+                          <div style="display: flex;
+                          padding: 8px;
+                          justify-content: space-between;
+                          align-items: center;
+                          align-self: stretch;">
+                            <div style="display: flex;align-items: center;gap:10px; color: var(--text-content-primary, #181818);
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 700;
+                            line-height: normal;">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                            <path d="M17.6955 4.50531V2.94531C17.6955 2.53531 17.3555 2.19531 16.9455 2.19531C16.5355 2.19531 16.1955 2.53531 16.1955 2.94531V4.44531H9.69554V2.94531C9.69554 2.53531 9.35554 2.19531 8.94554 2.19531C8.53554 2.19531 8.19554 2.53531 8.19554 2.94531V4.50531C5.49554 4.75531 4.18554 6.36531 3.98554 8.75531C3.96554 9.04531 4.20554 9.28531 4.48554 9.28531H21.4055C21.6955 9.28531 21.9355 9.03531 21.9055 8.75531C21.7055 6.36531 20.3955 4.75531 17.6955 4.50531Z" fill="#48BF84"/>
+                            <path d="M20.9453 10.7891H4.94531C4.39531 10.7891 3.94531 11.2391 3.94531 11.7891V17.9491C3.94531 20.9491 5.44531 22.9491 8.94531 22.9491H16.9453C20.4453 22.9491 21.9453 20.9491 21.9453 17.9491V11.7891C21.9453 11.2391 21.4953 10.7891 20.9453 10.7891ZM10.1553 19.1591C10.1053 19.1991 10.0553 19.2491 10.0053 19.2791C9.94531 19.3191 9.88531 19.3491 9.82531 19.3691C9.76531 19.3991 9.70531 19.4191 9.64531 19.4291C9.57531 19.4391 9.51531 19.4491 9.44531 19.4491C9.31531 19.4491 9.18531 19.4191 9.06531 19.3691C8.93531 19.3191 8.83531 19.2491 8.73531 19.1591C8.55531 18.9691 8.44531 18.7091 8.44531 18.4491C8.44531 18.1891 8.55531 17.9291 8.73531 17.7391C8.83531 17.6491 8.93531 17.5791 9.06531 17.5291C9.24531 17.4491 9.44531 17.4291 9.64531 17.4691C9.70531 17.4791 9.76531 17.4991 9.82531 17.5291C9.88531 17.5491 9.94531 17.5791 10.0053 17.6191C10.0553 17.6591 10.1053 17.6991 10.1553 17.7391C10.3353 17.9291 10.4453 18.1891 10.4453 18.4491C10.4453 18.7091 10.3353 18.9691 10.1553 19.1591ZM10.1553 15.6591C9.96531 15.8391 9.70531 15.9491 9.44531 15.9491C9.18531 15.9491 8.92531 15.8391 8.73531 15.6591C8.55531 15.4691 8.44531 15.2091 8.44531 14.9491C8.44531 14.6891 8.55531 14.4291 8.73531 14.2391C9.01531 13.9591 9.45531 13.8691 9.82531 14.0291C9.95531 14.0791 10.0653 14.1491 10.1553 14.2391C10.3353 14.4291 10.4453 14.6891 10.4453 14.9491C10.4453 15.2091 10.3353 15.4691 10.1553 15.6591ZM13.6553 19.1591C13.4653 19.3391 13.2053 19.4491 12.9453 19.4491C12.6853 19.4491 12.4253 19.3391 12.2353 19.1591C12.0553 18.9691 11.9453 18.7091 11.9453 18.4491C11.9453 18.1891 12.0553 17.9291 12.2353 17.7391C12.6053 17.3691 13.2853 17.3691 13.6553 17.7391C13.8353 17.9291 13.9453 18.1891 13.9453 18.4491C13.9453 18.7091 13.8353 18.9691 13.6553 19.1591ZM13.6553 15.6591C13.6053 15.6991 13.5553 15.7391 13.5053 15.7791C13.4453 15.8191 13.3853 15.8491 13.3253 15.8691C13.2653 15.8991 13.2053 15.9191 13.1453 15.9291C13.0753 15.9391 13.0153 15.9491 12.9453 15.9491C12.6853 15.9491 12.4253 15.8391 12.2353 15.6591C12.0553 15.4691 11.9453 15.2091 11.9453 14.9491C11.9453 14.6891 12.0553 14.4291 12.2353 14.2391C12.3253 14.1491 12.4353 14.0791 12.5653 14.0291C12.9353 13.8691 13.3753 13.9591 13.6553 14.2391C13.8353 14.4291 13.9453 14.6891 13.9453 14.9491C13.9453 15.2091 13.8353 15.4691 13.6553 15.6591ZM17.1553 19.1591C16.9653 19.3391 16.7053 19.4491 16.4453 19.4491C16.1853 19.4491 15.9253 19.3391 15.7353 19.1591C15.5553 18.9691 15.4453 18.7091 15.4453 18.4491C15.4453 18.1891 15.5553 17.9291 15.7353 17.7391C16.1053 17.3691 16.7853 17.3691 17.1553 17.7391C17.3353 17.9291 17.4453 18.1891 17.4453 18.4491C17.4453 18.7091 17.3353 18.9691 17.1553 19.1591ZM17.1553 15.6591C17.1053 15.6991 17.0553 15.7391 17.0053 15.7791C16.9453 15.8191 16.8853 15.8491 16.8253 15.8691C16.7653 15.8991 16.7053 15.9191 16.6453 15.9291C16.5753 15.9391 16.5053 15.9491 16.4453 15.9491C16.1853 15.9491 15.9253 15.8391 15.7353 15.6591C15.5553 15.4691 15.4453 15.2091 15.4453 14.9491C15.4453 14.6891 15.5553 14.4291 15.7353 14.2391C15.8353 14.1491 15.9353 14.0791 16.0653 14.0291C16.2453 13.9491 16.4453 13.9291 16.6453 13.9691C16.7053 13.9791 16.7653 13.9991 16.8253 14.0291C16.8853 14.0491 16.9453 14.0791 17.0053 14.1191C17.0553 14.1591 17.1053 14.1991 17.1553 14.2391C17.3353 14.4291 17.4453 14.6891 17.4453 14.9491C17.4453 15.2091 17.3353 15.4691 17.1553 15.6591Z" fill="#48BF84"/>
+                          </svg>
+                         <% let dateRange = milestoneProject.deadline ? milestoneProject.deadline : '-';
+                               let formattedDateRange;
+                              
+                               if (dateRange) {
+                                let endYear;
+                                let [startDate, endDate] = dateRange.split(' - ');
+                                 if(endDate){
+                                 const [startDay, startMonth, endDay, endMonth] = [
+                                   startDate.split(' ')[0],
+                                   startDate.split(' ')[1],
+                                   endDate.split(' ')[0],
+                                   endDate.split(' ')[1]
+                                 ];
+                              
+                                 endYear=endDate.split(' ')[2];
+                                 if(!endYear)
+                                 endyear=startDate.split(' ')[2];
+                                 formattedDateRange = `${startDay} ${startMonth} - ${endDay} ${endMonth} ${endYear}`;
+                                 }
+                                 else
+                                 formattedDateRange=dateRange
+                               } else {
+                                 formattedDateRange = '';
+                                 // You don't need to declare a new const variable for startDate since it's already declared above.
+                                 startDate = '';
+                               }
+                             %>
+                             <%=formattedDateRange%>
+                          </div>
+                            
+                          </div>
+                        </div>
+                        
+                        <div> 
+                          <div style="width: 210.71px;
+                          height: 121.742px;
+                          transform: rotate(2.397deg);
+                          flex-shrink: 0;"> <img src="../Project icons/Newspaper.png">
+                          </div> 
+                          <div style="width: 185px;
+                          height: 100px;
+                          z-index: 2;
+                          padding: 10px;
+                          overflow: hidden;
+                          transform: translate(9%, -110%) rotate(-0.397deg);
+                          flex-shrink: 0;
+                          background: #E2DFDA;"> 
+                            <div><img src="../img/icons performance mgmt/Hindustan times.svg"></div>
+                            <div style="overflow: hidden;
+                            color: var(--text-content-primary, #181818);
+                            text-overflow: ellipsis;
+                            height:80px;
+                            font-size: 10px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 120%;">
+                              <% if (milestoneProject.prdescription) { %>
+                                <%= milestoneProject.prdescription %>
+                              <% } else { %>
+                                Trainity releases a P-mgmt SAAS, which they internally developed as a tool, Post release the team-members are absolutely loving it, managers are using it and not just that, startups have also joined their waitlist for beta release.
+                              <% } %>
+                        </div>
+                        </div>
+                      </div>
+                      </div>
+                      <div style="width:100%;height:1px;margin-top:55px;background-color: #DCDCDC;"></div>
+                      
+                      <div style="display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                      align-self: stretch;margin-left: 20px;">
+<div style="display: flex;gap:40px;align-items: center;">
+<%  owners = milestoneProject.owners ? milestoneProject.owners.slice(0, 1) : []; %>
+<div class="avatar-group" style="display: flex;">
+<div class="avatar-container">
+  <% for (let i = 0; i < owners.length; i++) { %>
+    <img src="<%= owners[i].image %>" alt="Avatar" style="border: 2px solid var(--pill-text-blue, #3B82F6);">
+  <% } %>
+</div>
+<% if (milestoneProject.owners && milestoneProject.owners.length > 2) { %>
+  <div class="more-avatar">
+    <span>+<%= milestoneProject.owners.length - 1 %></span>
+  </div>
+<% } %>
+</div>
+
+<%  teams = milestoneProject.teams ? milestoneProject.teams.slice(0, 3) : []; %>
+
+<div class="avatar-group" style="display: flex;">
+<div class="avatar-container">
+  <% for (let i = 0; i < teams.length; i++) { %>
+    <img src="<%= teams[i].image %>" alt="Avatar">
+  <% } %>
+</div>
+<% if (milestoneProject.teams && milestoneProject.teams.length > 2) { %>
+  <div class="more-avatar">
+    <span>+<%= milestoneProject.teams.length - 3 %></span>
+  </div>
+<% } %>
+</div>
+
+                          </div> 
+                       <div style="display: flex;
+                        padding: 8px 16px;
+                        align-items: center;
+                        gap: 4px;
+                        border-radius: 8px;
+                        background: var(--surface-tertiary, #F7F7F7);
+                        "> 
+                          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                            <path d="M6.75846 20.8335C6.03721 20.8335 5.34472 20.535 4.79282 19.9826C3.56911 18.7549 3.56911 16.7581 4.79253 15.5312L14.3344 5.39858C15.8232 3.90743 18.1036 4.04142 19.7679 5.70776C20.5136 6.4548 20.932 7.53176 20.9163 8.66375C20.9006 9.78379 20.4631 10.8557 19.7152 11.6048L12.5038 19.2821C12.303 19.4972 11.9665 19.507 11.7522 19.3052C11.5385 19.1032 11.5281 18.7661 11.7296 18.5518L18.952 10.8629C19.5169 10.2969 19.841 9.49398 19.8529 8.64885C19.8649 7.80319 19.5594 7.00589 19.016 6.46117C17.9952 5.43817 16.333 4.90249 15.0974 6.14108L5.55576 16.2737C4.73534 17.0962 4.73561 18.4172 5.54512 19.2289C5.92474 19.6088 6.37535 19.7938 6.85521 19.7648C7.33002 19.7358 7.81812 19.4923 8.22966 19.0797L15.8218 10.9989C16.0969 10.7232 16.6499 10.0474 16.0871 9.48331C15.7683 9.16403 15.5445 9.1837 15.4709 9.18982C15.2606 9.20843 15.0149 9.35385 14.76 9.60959L9.04555 15.6872C8.84377 15.9017 8.50694 15.9121 8.29398 15.7098C8.07997 15.5083 8.07013 15.1706 8.27138 14.9569L13.9962 8.86787C14.4463 8.41566 14.9065 8.17055 15.3749 8.12854C15.7405 8.09609 16.2841 8.174 16.8387 8.73016C17.6618 9.55481 17.5594 10.7644 16.5848 11.7412L8.99266 19.8214C8.38653 20.4297 7.65462 20.783 6.92035 20.8282C6.86638 20.8319 6.81241 20.8335 6.75844 20.8335L6.75846 20.8335Z" fill="#898989"/>
+                          </svg>
+                         <%=milestoneProject.linksAndfiles?milestoneProject.linksAndfiles.length:0%>
+
+                        </div>
+                      </div>
+
+                      </div>
+                   
+                  
+                    <% } %>
+              </div>
+              </div>
+            <div class="container" style="display:none" id="taskBody">
+              <!-- <div class="card" style="display: flex;flex-direction:row;gap:15px">
+                <div class="input-group input-group-merge" style="border: none; height: 40px;">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"
+                        aria-hidden="true"></i></span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Search for Tasks"
+                    aria-describedby="basic-addon1">
+                </div>
+                <div data-target="#AddTaskModal" data-toggle="modal" onclick="AddTask()">
+                  <button type="button" class="btn btn-primary btn-icon" style="display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                padding: 8px 16px;
+                width: 160px;
+                height: 48px;
+                gap:10px;
+                background: #48BF84;
+                border-radius: 12px;">
+                    <span class="btn-inner--icon"
+                      style="background-color:white;color:#48BF84;width:20px;height:20px;font-size:14px;border-radius: 5px;">
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                    </span>
+                    <span>Add Task</span>
+                  </button>
+                </div>
+              </div>
+              <div style="width: 100%;">
+                <% for(var milestoneTask of tasks) { %>
+                  <div class="card"
+                    style="display: flex;flex-direction:row;  border-radius: 20px;padding: 10px 20px;">
+                    <div style="width:98%">
+                      <div class="card-header border-0">
+                        <div style="display: flex;
+                    justify-content: space-between;">
+                          <div id="pinboxTask" class="cursor"
+                            onclick="pintask('<%=milestoneTask._id%>','<%=milestoneTask.isPinnedByManager%>')">
+                            <% if (milestoneTask.isPinnedByManager) { %>
+                              <img src="../img/icons performance mgmt/desktop/d_pin_active.svg" />
+                              <% } else { %>
+                                <img src="../img/icons performance mgmt/desktop/d_pin_hover.svg" />
+                                <% } %>
+                          </div>
+                          <div style="display: flex; gap:10px;">
+                            <div style="display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 8px;
+                         width: 139px;
+                        height: 25px;
+                        background: #F7F7F7;
+                        border-radius: 4px;font-weight: 400;
+                          font-size: 12px;">
+                              <%= milestoneTask.assignedByManager?'MANAGER ASSIGNED':'EMPLOYEE ASSIGNED' %>
+                            </div>
+                            <div style="display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 8px 12.31px 8px 8px;
+                        
+                       
+                        height: 24px;
+                        color: #8E65FF;
+                        background: #F4F2FA;
+                        border-radius: 4px;font-weight: 400;
+                        font-size: 12px;"><%=milestoneTask.time%></div>
+                          </div>
+                        </div>
+                        <div>
+                          <h5 class="card-title mb-0" style="color: #181818; font-weight: 700">
+                            <%= milestoneTask.title %>
+                          </h5>
+                        </div>
+                      </div>
+
+                      <div class="card-body pt-0" style="display: flex;
+                  gap: 10px;
+                  flex-direction: column;
+                  justify-content: center;">
+
+
+                        <div>
+                          <p class="card-text">
+                            <%= milestoneTask.description %>
+                          </p>
+                        </div>
+                        <div style="display: flex;justify-content:space-between;align-items: center;">
+                          <div>
+                            <p>Project association:<span style="font-weight: 600;margin-left:5px;
+                          font-size: 14px;color:black"><%=milestoneTask.projectTitle%>
+                                <span style="color:#48BF84;margin-left:10px"class="cursor">View</span>
+                              </span>
+                            </p>
+                          </div>
+                          <div style="display: flex;gap:10px;justify-content: center;align-items: center;">
+
+                            Status
+                            <select class="custom-select custom-select-sm" onchange="ChangeStatus(this.value, '<%= JSON.stringify(milestoneTask) %>')">
+                              <% if(milestoneTask.status=='0' ){%>
+                                <option value="0" selected style="color:red">Yet to start</option>
+                                <option value="1">Started</option>
+                                <option value="2" style="color:orange">On going</option>
+                                <option value="3" style="color:#48bf84">Finished</option>
+                                <% }else if(milestoneTask.status=='1' ){%>
+                                  <option value="0" style="color:red">Yet to start</option>
+                                  <option value="1" selected>Started</option>
+                                  <option value="2" style="color:orange">On going</option>
+                                  <option value="3" style="color:#48bf84">Finished</option>
+                                  <% }else if(milestoneTask.status=='2' ){%>
+                                    <option value="0" style="color:red">Yet to start</option>
+                                    <option value="1">Started</option>
+                                    <option value="2" selected style="color:orange">On going</option>
+                                    <option value="3" style="color:#48bf84">Finished</option>
+                                    <% }else{%>
+                                      <option value="0" style="color:red">Yet to start</option>
+                                      <option value="1">Started</option>
+                                      <option value="2" style="color:orange">On going</option>
+                                      <option value="3" selected style="color:#48bf84">Finished</option>
+                                      <% }%>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <% if(milestoneTask.assignedByManager){%>
+                    <div style="display: flex;
+              flex-direction: column;
+              justify-content: center;">
+                      <div style="cursor: pointer;"  data-target="#AddTaskModal" data-toggle="modal" onclick="EditTask('<%=milestoneTask._id%>','<%= JSON.stringify(milestoneTask) %>')"><img
+                          src="../img/icons performance mgmt/desktop/d_edit_option_big.svg" /></div>
+                      <div data-toggle="modal" data-target="#deleteTask" style="cursor: pointer;" onclick="DeleteTask('<%=milestoneTask._id%>')"><img
+                          src="../img/icons performance mgmt/desktop/d_remove.svg" /></div>
+                    </div>
+                    <% } %>
+                  </div>
+                  <% } %>
+              </div> -->
+              <img src="../Project icons/Coming Soon.svg" alt="Coming Soon" style="width:100%">
+            </div>
+          </div>
+        </div>
+   
+    <div class="container">
+      <div class="card bg-white px-2 py-3">
+       
+          <div class="card-body row">
+            <div class="col">
+              <ul class="nav ">
+                <li class="nav-item" style="padding:5px" onclick="ChanageRatingReviewTab(1)">
+                  <h5 class="h4 mb-4 active" style="color: #181818; font-size: 20px"  id="PerformanceTab1">
+                    Weekly Performance
+                  </h5>
+                </li>
+                <li class="nav-item" style="padding:5px" onclick="ChanageRatingReviewTab(2)">
+                  <h5 class="h4 mb-4" style="color: #181818; font-size: 20px" id="PerformanceTab2">
+                    Rating Breakdown
+                  </h5>
+                </li>
+               
+              </ul>
+             
+            </div>
+            <div class="col text-right" style="cursor: pointer;">
+                  <input type="date" class="form-control" id="datepicker" style="float: right;width:50%" max="<%= today.date %>">
+                </div>
+  
+             
+            </div>
+         <div id="PerformanceBody1">
+        <div class="week-btns mb-3" id="week-btns" style="display: flex; flex-direction: row; justify-content: center;">
+          <% for(let i=0; i<weekDays.length; i++) { %>
+          <% if(weekDays[i].weekDay<currentday.weekDay) { %>
+          <button id="<%= weekDays[i].date %>" onclick="getPerformance(`<%= weekDays[i].date %>`)" class="btn btn-info"><%= weekDays[i].day %></button>
+          <% } else if(weekDays[i].weekDay==currentday.weekDay) { %>
+          <button id="<%= weekDays[i].date %>" onclick="getPerformance(`<%= weekDays[i].date %>`)" class="btn btn-primary"><%= weekDays[i].day %></button>
+          <% }  else if(weekDays[i].date>today.date) { %>
+          <button class="btn btn-secondary" disabled><%= weekDays[i].day %></button>
+          <% } else { %>
+          <button class="btn btn-info" id="<%= weekDays[i].date %>" onclick="getPerformance(`<%= weekDays[i].date %>`)"><%= weekDays[i].day %></button>
+          <% } %>
+          <% } %>
+        </div>
+      
+        
+  
+        <div class="container" style="
+                      border: 1px solid #ececec;
+                      border-radius: 14px;
+                      min-height: 420px;
+                    ">
+          <div class="row">
+            <div class="col-lg-13 col-sm-12 px-4 py-5" id="task-status-div">
+              <% if(dailyTaskList.length==0){ %>
+              <div class="daily-task-card mb-4" style="border: 1px solid #48bf84;">
+                <p class="mb-0" style="color: #181818;"> <i class="fas fa-check-circle mr-2" style="color: #48bf84"></i>You don't have any task for Today</p>
+              </div>
+              <%}%>
+                        
+                    <% let time=new Date()%>
+                    
+                          <% for(let i=0; i<dailyTaskList.length; i++) { %>
+
+                            <% let taskDeadline=new Date(performanceRecord.date) %>
+                           
+                            <% taskDeadline=new Date(taskDeadline.getTime() + dailyTaskList[i].deadline) %>
+                            <% taskDeadline.setHours(taskDeadline.getHours()-5, taskDeadline.getMinutes()-30) %>
+  
+                          
+                            <% let taskmodalname=i==3?'#tasksubmiteodmodal':'#tasksubmitmodal' %>
+                          
+                            
+                            <% if(performanceRecord.taskStatus.length>i) { %>
+                             
+                              <% if(performanceRecord.rating>0 &&i>0) { %>
+                                <div class="daily-task-card mb-4"
+                                  style="display:flex;justify-content:space-between; border: 1px solid #48bf84;">
+                                  <p class="mb-0" style="color: #181818;"> <i class="fas fa-check-circle mr-2" style="color: #48bf84"></i>
+                                    <%= dailyTaskList[i].description %>
+                                  </p>
+                        
+                                  <button type="button" class="btn btn-secondary btn-sm " data-toggle="modal"
+                                    data-target="#cantSubmitTask">Submit</button>
+                        
+                                </div>
+                        
+                                <%}else if(performanceRecord.taskStatus[i]) { %>
+                                  <div class="daily-task-card mb-4"
+                                    style="display:flex;justify-content:space-between; border: 1px solid #48bf84;">
+                                    <p class="mb-0" style="color: #181818;"> <i class="fas fa-check-circle mr-2" style="color: #48bf84"></i>
+                                      <%= dailyTaskList[i].description %>
+                                    </p>
+                                    <% if(i==0) {%>
+                                      <span class="badge badge-success">
+                                        Marked
+                                      </span>
+                                      <%} else {%>
+                                        <button type="button" class="btn btn-success btn-sm" id="tasksubmitbtn<%=i%>"
+                                          onclick="showtaskno('<%=i%>','<%=.links[i]%>')" data-toggle="modal"
+                                          data-target="<%=taskmodalname%>">Edit</button>
+                                        <%}%>
+                                  </div>
+                        
+                        
+                                  <% } else { %>
+                                    <div class="daily-task-card mb-4"
+                                      style="display:flex;justify-content:space-between; border: 1px solid #ff6565; background: #FCF4F3;">
+                                      <p class="mb-0" style="color: #181818;"> <i class="fas fa-exclamation-circle mr-2"
+                                          style="color: #FF6565"></i>
+                                        <%= dailyTaskList[i].description %>
+                                      </p>
+
+                                     <% if(taskDeadline>time) { %>
+                                      <button type="button" class="btn btn-outline-success btn-sm" id="tasksubmitbtn<%=i%>"
+                                        onclick="showtaskno('<%=i%>','<%=performanceRecord.links[i]%>')" data-toggle="modal"
+                                        data-target="<%=taskmodalname%>">Submit</button>
+                                        <%}else{%>
+                                          <button type="button" class="btn btn-outline-success btn-sm" 
+                                           disabled >Submit</button>
+                                          <%}%>
+                                    </div>
+                        
+                                    <% } %>
+                                      <% } else { %>
+                                        <div class="daily-task-card mb-4" style="display:flex;justify-content:space-between;">
+                                          <p class="mb-0"> <i class="fas fa-check-circle mr-2"></i>
+                                            <%= dailyTaskList[i].description %>
+                                          </p>
+                                          <% if(taskDeadline>time) { %>
+                                          <button type="button" class="btn btn-outline-success btn-sm" id="tasksubmitbtn<%=i%>"
+                                            onclick="showtaskno('<%=i%>','<%=performanceRecord.links[i]%>')" data-toggle="modal"
+                                            data-target="<%=taskmodalname%>">Submit</button>
+                                            <%}else { %> 
+                                              <button type="button" class="btn btn-outline-success btn-sm" 
+                                              disabled >Submit</button>
+                                              <%}%>
+                                        </div>
+                                        <% } %>
+                                          <% if(i+1<dailyTaskList.length){ %>
+                                            <div class="dotted-line"></div>
+                                            <%}%>
+                                              <% } %>
+  
+              </div>
+              <!-- <div class="col-lg-6 col-sm-12 px-4 py-5">
+                        <div
+                          style="
+                            border-radius: 14px;
+                            padding: 20px 24px;
+                            border: 1px solid #ececec;
+                          "
+                        >
+                          <div
+                            style="
+                              display: grid;
+                              grid-template-columns: auto 1fr auto;
+                              gap: 20px;
+                              align-items: center;
+                            "
+                          >
+                            <img src="../img/Star.svg" />
+                            <div>
+                              <h6 class="mb-0">Daily Rating</h6>
+                              <small class="mb-0" style="display: block"
+                                >By <%= manager.firstName + " " + manager.lastName %>  </small
+                              >
+                            </div>
+                            <div
+                            id="rating-div"
+                              style="
+                                display: grid;
+                                grid-template-columns: repeat(5, 1fr);
+                                gap: 3px;
+                              "
+                            >
+                              <% for(let i=1; i<=performanceRecord.rating; i++) { %>
+                                  <i class="fas fa-star" style="color: #48bf84 "></i>
+                              
+                              <% } %>
+                              <% for(let i=1; i<=5-performanceRecord.rating; i++) { %>
+                                  <i class="fas fa-star" style="color: #dcdcdc "></i>
+                              
+                              <% } %>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mt-3"
+                          style="
+                            border-radius: 14px;
+                            padding: 20px 24px;
+                            border: 1px solid #ececec;
+                          "
+                        >
+                          <div>
+                          <h6 class="mb-0">Manager Feedback</h6>
+                          <small class="mb-0" style="display: block"
+                            >By <%= manager.firstName + " " + manager.lastName %>  </small
+                          >
+                          <div id="feedback-div">
+                              <% if(performanceRecord.feedback.length > 0) { %>
+                                  <div class="mt-2" style="font-size: 12px; font-weight: 500; color: #181818;">
+                                      <%= performanceRecord.feedback %>
+                                  </div>
+                              <% } else { %>
+                                  <div class="mt-2 d-flex justify-content-center align-items-center" style="font-size: 14px; font-weight: 500; background: #fafafa; height: 170px; border-radius: 14px; ">
+                                      <p style="max-width: 50%; text-align: center;">Feedback shared by manager will be displayed here</p>
+                                  </div>
+                              <% } %>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div> -->
+            </div>
+          </div>
+        </div>
+        <div id="PerformanceBody2" style="display: none;padding:0px 28px">
+          <div style="display: flex;flex-direction: column;">
+        <div>Average Rating</div>
+        <div style="display: flex;align-items: flex-start;gap:10px">
+        <h2 style="color:black;font-weight: 700;"><%=performanceRecord.rating%></h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="35" viewBox="0 0 30 35" fill="none">
+          <path d="M10.7296 9.07588C12.6301 5.66787 13.5795 3.96387 15 3.96387C16.4205 3.96387 17.3699 5.66787 19.2704 9.07588L19.7624 9.95789C20.3024 10.9269 20.5724 11.4114 20.9924 11.7309C21.4123 12.0504 21.9373 12.1689 22.9873 12.4059L23.9413 12.6219C27.6312 13.4574 29.4747 13.8744 29.9142 15.2859C30.3521 16.6959 29.0952 18.1674 26.5797 21.1089L25.9287 21.8694C25.2148 22.7049 24.8563 23.1234 24.6958 23.6394C24.5353 24.1569 24.5893 24.7149 24.6973 25.8294L24.7963 26.8449C25.1758 30.7704 25.3663 32.7325 24.2173 33.604C23.0683 34.477 21.3404 33.6805 17.8874 32.0905L16.992 31.6795C16.011 31.2264 15.5205 31.0015 15 31.0015C14.4795 31.0015 13.989 31.2264 13.0065 31.6795L12.1141 32.0905C8.65965 33.6805 6.93169 34.4755 5.78422 33.6055C4.63374 32.7325 4.82424 30.7704 5.20373 26.8449L5.30273 25.8309C5.41073 24.7149 5.46472 24.1569 5.30273 23.6409C5.14373 23.1234 4.78524 22.7049 4.07126 21.8709L3.42027 21.1089C0.904832 18.1689 -0.352139 16.6974 0.0858505 15.2859C0.52534 13.8744 2.3703 13.4559 6.06021 12.6219L7.01419 12.4059C8.06266 12.1689 8.58615 12.0504 9.00764 11.7309C9.42763 11.4114 9.69762 10.9269 10.2376 9.95789L10.7296 9.07588Z" fill="#FACC15"/>
+        </svg>
+      </div>
+          </div>
+          <div style="font-size: 18px;color:black;margin:15px 0px"> Your Performance in Key Areas</div>
+          <div style="display: flex;justify-content: space-between;">
+              <ol class="rounded-list" style="width:600px">
+                <li>
+                  <div style="display: flex; justify-content: space-between">
+                    <div>
+                      <h6>Work Size</h6>
+                      <p class="p">
+                        Ability to do good amount of work
+                      </p>
+                    </div>
+                    <div >
+                      <%let  divrating = performanceRecord.ratingList[0];%>
+                      <% for (let i = 0; i < 5; i++) {%>
+                        <% if (i < divrating) {%>
+                    
+                          <i class="fas fa-star" style="color: #facc15; font-size: 20px;"></i>
+                    <% } else {%>
+                    
+                          <i class="fas fa-star" style="color: #e6e6e6; font-size: 20px;"></i>
+                    
+                    <%  }%>
+                    <% }%>
+                    
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div style="display: flex; justify-content: space-between">
+                    <div>
+                      <h6>Quality</h6>
+                      <p class="p">
+                        Driving positive business outcome
+                      </p>
+                    </div>
+                    <div >
+                      <% divrating = performanceRecord.ratingList[1];%>
+                      <% for (let i = 0; i < 5; i++) {%>
+                        <% if (i < divrating) {%>
+                    
+                          <i class="fas fa-star" style="color: #facc15; font-size: 20px;"></i>
+                    <% } else {%>
+                    
+                          <i class="fas fa-star" style="color: #e6e6e6; font-size: 20px;"></i>
+                    
+                    <%  }%>
+                    <% }%>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div style="display: flex; justify-content: space-between">
+                    <div>
+                      <h6>Loom Uploads</h6>
+                      <p class="p">
+                        Submissions of daily Loom Uploads
+                      </p>
+                    </div>
+                    <div >
+                      <% divrating = performanceRecord.ratingList[2];%>
+                      <% for (let i = 0; i < 5; i++) {%>
+                        <% if (i < divrating) {%>
+                    
+                          <i class="fas fa-star" style="color: #facc15; font-size: 20px;"></i>
+                    <% } else {%>
+                    
+                          <i class="fas fa-star" style="color: #e6e6e6; font-size: 20px;"></i>
+                    
+                    <%  }%>
+                    <% }%>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div style="display: flex; justify-content: space-between">
+                    <div>
+                      <h6> Task Summary</h6>
+                      <p class="p">
+                        Keeping everyone updated with your work
+                      </p>
+                    </div>
+                    <div >
+                      <% divrating = performanceRecord.ratingList[3];%>
+                      <% for (let i = 0; i < 5; i++) {%>
+                        <% if (i < divrating) {%>
+                    
+                          <i class="fas fa-star" style="color: #facc15; font-size: 20px;"></i>
+                    <% } else {%>
+                    
+                          <i class="fas fa-star" style="color: #e6e6e6; font-size: 20px;"></i>
+                    
+                    <%  }%>
+                    <% }%>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div style="display: flex; justify-content: space-between">
+                    <div>
+                      <h6>Explanation Clarity</h6>
+                      <p class="p">
+                        Driving results/solving problems with the founder 
+                      </p>
+                    </div>
+                    <div>
+                      
+                      <% divrating = performanceRecord.ratingList[4];%>
+                      <% for (let i = 0; i < 5; i++) {%>
+                        <% if (i < divrating) {%>
+                    
+                          <i class="fas fa-star" style="color: #facc15; font-size: 20px;"></i>
+                    <% } else {%>
+                    
+                          <i class="fas fa-star" style="color: #e6e6e6; font-size: 20px;"></i>
+                    
+                    <%  }%>
+                    <% }%>
+                    
+                    </div>
+                  </div>
+                </li>
+              </ol>
+<div class="heading" style="font-size: 14px;cursor: pointer;" data-target="#Rating-Review-modal-step1" data-toggle="modal" onclick="SetRatingForSelfRatingBody('<%-JSON.stringify(performanceRecord.ratingList)%>','<%=currentday.date%>')">
+ <u> Request Review</u>
+</div>
+            </div>
+          
+        </div>
+        </div>
+      </div>
+  </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteTask" tabindex="-1" role="dialog" aria-labelledby="deleteTaskLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteTaskLabel">Delete Task</h5>
+      </div>
+      <div class="modal-body">
+        Warning: This will delete the Task and the changes are irrecoverable
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn " style="background:#FF6565;color:white;font-weight:500">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+      <!-- Large modal -->
+
+<div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="tasksubmitmodal"
+  aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="background-color: #FAFAFA;">
+
+      <div style="margin:30px 50px -20px 30px;display: flex;justify-content: space-between;">
+        <h2 class="modal-title h6 b-700" id="myLargeModalLabel">Video Link*</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="font-size: 35px;
+          color: black;
+          font-weight: 700;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="color: var(--gray-700, #344054);
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 100 100" id="video">
+            <path
+              d="M84.9 26.4L68 37.3V34c0-4.4-3.6-8-8-8H20c-4.4 0-8 3.6-8 8v32c0 4.4 3.6 8 8 8h40c4.4 0 8-3.6 8-8v-3.3l16.9 10.9c1.9 1 3.1-.7 3.1-1.7V28c0-1-1.1-2.8-3.1-1.6zM64 66c0 2.2-1.8 4-4 4H20c-2.2 0-4-1.8-4-4V34c0-2.2 1.8-4 4-4h40c2.2 0 4 1.8 4 4v32zm20 2.3L68 58V42l16-10.3v36.6z">
+            </path>
+            <path fill="#48bf84" d="M1224-650v1684H-560V-650h1784m8-8H-568v1700h1800V-658z"></path>
+          </svg>
+          Record your Tasks video and submit it.
+        </div>
+        <div style="margin-top:10px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="34.13px" height="23.9px" viewBox="5.368 13.434 53.9 37.855"
+            id="youtube">
+            <path fill="#FFF"
+              d="M41.272 31.81c-4.942-2.641-9.674-5.069-14.511-7.604v15.165c5.09-2.767 10.455-5.301 14.532-7.561h-.021z">
+            </path>
+            <path fill="FF0000"
+              d="M41.272 31.81c-4.942-2.641-14.511-7.604-14.511-7.604l12.758 8.575c.001 0-2.324 1.289 1.753-.971z">
+            </path>
+            <path fill="#CD201F"
+              d="M27.691 51.242c-10.265-.189-13.771-.359-15.926-.803-1.458-.295-2.725-.95-3.654-1.9-.718-.719-1.289-1.816-1.732-3.338-.38-1.268-.528-2.323-.739-4.9-.323-5.816-.4-10.571 0-15.884.33-2.934.49-6.417 2.682-8.449 1.035-.951 2.239-1.563 3.591-1.816 2.112-.401 11.11-.718 20.425-.718 9.294 0 18.312.317 20.426.718 1.689.317 3.273 1.267 4.203 2.492 2 3.146 2.035 7.058 2.238 10.118.084 1.458.084 9.737 0 11.195-.316 4.836-.57 6.547-1.288 8.321-.444 1.12-.823 1.711-1.479 2.366a7.085 7.085 0 0 1-3.76 1.922c-8.883.668-16.426.813-24.987.676zM41.294 31.81c-4.942-2.641-9.674-5.09-14.511-7.625v15.166c5.09-2.767 10.456-5.302 14.532-7.562l-.021.021z">
+            </path>
+          </svg>
+          <span style="color:#48bf84">Record & Upload on Youtube as unlisted </span><a href="http://www.youtube.com"
+            target="_blank"><img src="../img/icons/arrow_outward.png" /></a>
+        </div>
+        <div>
+          <div class="container" id="Youtubetutorial" style='display: none;'>
+            <div class="row">
+              <div class="col">
+                <p style="font-weight: 700;font-size: 14px;margin-bottom: 0px;margin-top:4px">Recording:</p>
+                <div style="display:flex">
+                  <img src="../img/icons/vector.svg"
+                    style="width:12px ;height:12px ;margin-top:5px;margin-right:8px;" />
+                  <span>Mac:<span style="font-weight: 700;font-size: 14px;">Cmd+ Shift+ 5</span></span>
+                </div>
+                <div style="display:flex">
+                  <img src="../img/icons/Vector.png"
+                    style="width:12px ;height:12px;margin-top:5px ;margin-right:8px;" />
+                  <span> Windows:<span style="font-weight: 700;font-size: 14px;">Windows btn + G</span></span>
+                </div>
+              </div>
+              <div class="col-7">
+                <p style="font-weight: 700;font-size: 14px;margin-bottom: 0px;margin-top:4px">Uploading:</p>
+                <div style="display:flex">
+                  <img src="../img/icons/image 476.svg" style="width: 57.27px;
+                height: 21.66px;margin-top:5px;margin-left:4px;">
+                  <p style="font-size: 14px;margin-bottom: 0px;margin-top:4px ">Click Create on top right</p></span>
+                </div>
+                <div>
+                  <p style="font-size: 14px;margin-bottom: 0px;margin-top:4px">Follow the steps on youtube to upload</p>
+                  <div style="display:flex">
+                    <img src="../img/icons/image 477.png" style="width: 57.27px;
+                height: 21.66px;margin-top:5px;margin-left:4px;">
+                    <span>
+                      <p style="font-size: 14px;margin-bottom: 0px;margin-top:4px">In Visibility tab select unlisted and
+                        copy link</p>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="color: var(--brand-primary, #48BF84);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            margin-top:5px;
+            display: flex;
+            align-items: center;gap:5px;
+            line-height: normal;" id="TutorialButton" onclick="ChangeVisbility('Youtubetutorial','TutorialButton')">See
+            Tutorial <i class="fa fa-angle-down " style="font-size: 24px;"></i></div>
+          <div style="display: flex;
+        justify-content: center;
+        align-items: center;">
+            <h6>OR</h6>
+          </div>
+          <div>
+            <div style="display:flex"><img src="../img/icons/loom_icon.png" style="margin:8px;width:25px" />
+              <h4 style="font-weight: 700; margin-top:5px">loom</h4><a style="margin-top:8px;margin-left:5px"
+                href="http://loom.com" target="_blank">Use loom <img src="../img/icons/arrow_outward.png" /></a>
+            </div>
+
+          </div>
+          <div class="input-group">
+            <input type="text" style="display: flex;
+              height: 48px;
+              padding: 14px 20px;
+              align-items: center;
+              gap: 10px;
+              width:93%;
+              align-self: stretch;
+              border-radius: 12px;
+              border: 1px solid #ECECEC;
+              background: #FFF;" id="linkSubmit" oninput="ChangeButtonState('submitlinkbutton',event)"
+              placeholder="Paste your YouTube or Loom video link here..">
+            <div class="input-group-append">
+              <span class="input-group-text" onclick="ClearValue('linkSubmit')" style="font-size: 15px;
+            font-weight: 600;
+            border:none;
+            background-color: transparent;
+            color: black">X</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer" style="padding:0.5rem">
+
+        <button type="button" style="display: flex;
+          padding: 16px 40px;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          width:150px;
+          border-radius: 12px;" class="btn btn-outline-primary" data-dismiss="modal">
+          Cancel
+        </button>
+
+        <button type="button" id="submitlinkbutton" onclick="SubmitTaskLink()" data-dismiss="modal" class="btn btn-primary"
+          disabled style="display: flex;
+          padding: 16px 40px;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          width:150px;
+          border-radius: 12px;">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loom Submission  for eod modal -->
+
+<div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="tasksubmiteodmodal"
+  aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+        <div style="color: var(--gray-900, #101828);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;">EOD Update Submission</div>
+        <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+      </div>
+
+      <div class="modal-body" style="background-color: #FAFAFA;">
+        <div style="color: var(--gray-700, #344054);
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 100 100" id="video">
+            <path
+              d="M84.9 26.4L68 37.3V34c0-4.4-3.6-8-8-8H20c-4.4 0-8 3.6-8 8v32c0 4.4 3.6 8 8 8h40c4.4 0 8-3.6 8-8v-3.3l16.9 10.9c1.9 1 3.1-.7 3.1-1.7V28c0-1-1.1-2.8-3.1-1.6zM64 66c0 2.2-1.8 4-4 4H20c-2.2 0-4-1.8-4-4V34c0-2.2 1.8-4 4-4h40c2.2 0 4 1.8 4 4v32zm20 2.3L68 58V42l16-10.3v36.6z">
+            </path>
+            <path fill="#48bf84" d="M1224-650v1684H-560V-650h1784m8-8H-568v1700h1800V-658z"></path>
+          </svg>
+          Record your Tasks video and submit it.
+        </div>
+        <div style="margin-top:10px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="34.13px" height="23.9px" viewBox="5.368 13.434 53.9 37.855"
+            id="youtube">
+            <path fill="#FFF"
+              d="M41.272 31.81c-4.942-2.641-9.674-5.069-14.511-7.604v15.165c5.09-2.767 10.455-5.301 14.532-7.561h-.021z">
+            </path>
+            <path fill="FF0000"
+              d="M41.272 31.81c-4.942-2.641-14.511-7.604-14.511-7.604l12.758 8.575c.001 0-2.324 1.289 1.753-.971z">
+            </path>
+            <path fill="#CD201F"
+              d="M27.691 51.242c-10.265-.189-13.771-.359-15.926-.803-1.458-.295-2.725-.95-3.654-1.9-.718-.719-1.289-1.816-1.732-3.338-.38-1.268-.528-2.323-.739-4.9-.323-5.816-.4-10.571 0-15.884.33-2.934.49-6.417 2.682-8.449 1.035-.951 2.239-1.563 3.591-1.816 2.112-.401 11.11-.718 20.425-.718 9.294 0 18.312.317 20.426.718 1.689.317 3.273 1.267 4.203 2.492 2 3.146 2.035 7.058 2.238 10.118.084 1.458.084 9.737 0 11.195-.316 4.836-.57 6.547-1.288 8.321-.444 1.12-.823 1.711-1.479 2.366a7.085 7.085 0 0 1-3.76 1.922c-8.883.668-16.426.813-24.987.676zM41.294 31.81c-4.942-2.641-9.674-5.09-14.511-7.625v15.166c5.09-2.767 10.456-5.302 14.532-7.562l-.021.021z">
+            </path>
+          </svg>
+          <span style="color:#48bf84">Record & Upload on Youtube as unlisted </span><a href="http://www.youtube.com"
+            target="_blank"><img src="../img/icons/arrow_outward.png" /></a>
+        </div>
+        <div>
+          <div class="container" id="Youtubetutorialeod" style='display: none;'>
+            <div class="row">
+              <div class="col">
+                <p style="font-weight: 700;font-size: 14px;margin-bottom: 0px;margin-top:4px">Recording:</p>
+                <div style="display:flex">
+                  <img src="../img/icons/vector.svg"
+                    style="width:12px ;height:12px ;margin-top:5px;margin-right:8px;" />
+                  <span>Mac:<span style="font-weight: 700;font-size: 14px;">Cmd+ Shift+ 5</span></span>
+                </div>
+                <div style="display:flex">
+                  <img src="../img/icons/Vector.png"
+                    style="width:12px ;height:12px;margin-top:5px ;margin-right:8px;" />
+                  <span> Windows:<span style="font-weight: 700;font-size: 14px;">Windows btn + G</span></span>
+                </div>
+              </div>
+              <div class="col-7">
+                <p style="font-weight: 700;font-size: 14px;margin-bottom: 0px;margin-top:4px">Uploading:</p>
+                <div style="display:flex">
+                  <img src="../img/icons/image 476.svg" style="width: 57.27px;
+                height: 21.66px;margin-top:5px;margin-left:4px;">
+                  <p style="font-size: 14px;margin-bottom: 0px;margin-top:4px ">Click Create on top right</p></span>
+                </div>
+                <div>
+                  <p style="font-size: 14px;margin-bottom: 0px;margin-top:4px">Follow the steps on youtube to upload</p>
+                  <div style="display:flex">
+                    <img src="../img/icons/image 477.png" style="width: 57.27px;
+                height: 21.66px;margin-top:5px;margin-left:4px;">
+                    <span>
+                      <p style="font-size: 14px;margin-bottom: 0px;margin-top:4px">In Visibility tab select unlisted and
+                        copy link</p>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="color: var(--brand-primary, #48BF84);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            margin-top:5px;
+            display: flex;
+            align-items: center;gap:5px;
+            line-height: normal;" id="TutorialButtoneod"
+            onclick="ChangeVisbility('Youtubetutorialeod','TutorialButtoneod')">See Tutorial <i
+              class="fa fa-angle-down " style="font-size: 24px;"></i></div>
+          <div style="display: flex;
+        justify-content: center;
+        align-items: center;">
+            <h6>OR</h6>
+          </div>
+          <div>
+            <div style="display:flex"><img src="../img/icons/loom_icon.png" style="margin:8px;width:25px" />
+              <h4 style="font-weight: 700; margin-top:5px">loom</h4><a style="margin-top:8px;margin-left:5px"
+                href="http://loom.com" target="_blank">Use loom <img src="../img/icons/arrow_outward.png" /></a>
+            </div>
+
+          </div>
+          <div class="input-group" style="margin-top: 10px;">
+            <input type="text" id="eodlinkinput" style="display: flex;
+              height: 48px;
+              padding: 14px 20px;
+              align-items: center;
+              gap: 10px;
+              width:93%;
+              align-self: stretch;
+              border-radius: 12px;
+              border: 1px solid #ECECEC;
+              background: #FFF;" id="linkSubmiteod" oninput="ChangeVisbilityEodButton('submiteodbutton','eodlinkinput')"
+              placeholder="Paste your YouTube or Loom video link here..">
+            <div class="input-group-append">
+              <span class="input-group-text" onclick="ClearValue('linkSubmiteod')" style="font-size: 15px;
+            font-weight: 600;
+            border:none;
+            background-color: transparent;
+            color: black">X</span>
+            </div>
+          </div>
+
+        </div>
+        <div style="display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 20px;
+          margin-top:10px;
+          align-self: stretch;">
+          <div style="color: var(--gray-800, #1D2939);
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;">Summarize Today's Tasks in Key Points <span
+              style="color: var(--error-500, #F04438);">*</span><span style="color: var(--gray-500, #667085);">(min
+              3)</span></div>
+              <div style="width:100%;display: flex;flex-direction: column;gap:10px;align-items: flex-start;color:black" id="KeyPointBody">
+          <div style="display: flex;align-items: center;gap:4px;width:100%">
+            <div id="keypointno3">1.</div>
+            <div style="width:100%;    display: flex;
+            align-items: center;
+            gap: 10px;" onmouseover="showIcons('keypoint3')" onmouseout="removeIcons('keypoint3')">
+              <input style="display: flex;
+    height: 48px;
+    padding: 14px 20px;
+    align-items: center;
+    gap: 10px;
+    flex: 1 0 0;
+    border-radius: 12px;
+    border: 1px solid #ECECEC;
+    background: #FFF;" placeholder="E.g., Resolved XYZ issue" oninput="ChangeKeyPoint(3,event)">
+              <img style="display: none;" src="../Project icons/Delete.svg" id="keypoint3" onclick="DeleteKeyPoint(3)">
+            </div>
+          </div>
+          <div style="display: flex;align-items: center;gap:4px;width:100%">
+            <div id="keypointno2">2.</div>
+            <div style="width:100%;display: flex;
+            align-items: center;
+            gap: 10px;" onmouseover="showIcons('keypoint2')" onmouseout="removeIcons('keypoint2')">
+              <input style="display: flex;
+    height: 48px;
+    padding: 14px 20px;
+    align-items: center;
+    gap: 10px;
+    flex: 1 0 0;
+    border-radius: 12px;
+    border: 1px solid #ECECEC;
+    background: #FFF;" placeholder="E.g., Resolved XYZ issue" oninput="ChangeKeyPoint(2,event)">
+              <img style="display: none;" src="../Project icons/Delete.svg" id="keypoint2" onclick="DeleteKeyPoint(2)">
+            </div>
+          </div>
+          <div style="display: flex;align-items: center;gap:4px;width:100%">
+            <div id="keypointno1">3.</div>
+            <div style="width:100%;    display: flex;
+            align-items: center;
+            gap: 10px;" onmouseover="showIcons('keypoint1')" onmouseout="removeIcons('keypoint1')">
+              <input style="display: flex;
+    height: 48px;
+    padding: 14px 20px;
+    align-items: center;
+    gap: 10px;
+    flex: 1 0 0;
+    border-radius: 12px;
+    border: 1px solid #ECECEC;
+    background: #FFF;" placeholder="E.g., Resolved XYZ issue" oninput="ChangeKeyPoint(1,event)">
+              <img style="display: none;" src="../Project icons/Delete.svg" id="keypoint1" onclick="DeleteKeyPoint(1)">
+            </div>
+          </div>
+        </div>
+       <button class="btn btn-outline-primary" style="width:140px;border-radius: 12px;" onclick="AddKeyPoints('KeyPointsBody')"><span style="font-size: 17px;"> + </span>Add</button>
+        </div>
+      </div>
+      <div class="modal-footer" style="padding:0.5rem">
+
+        <button type="button" style="display: flex;
+                padding: 16px 40px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                width:150px;
+                border-radius: 12px;" class="btn btn-outline-primary" data-dismiss="modal">
+          Cancel
+        </button>
+
+        <button type="button" onclick="SubmitTaskLink()" id="submiteodbutton" class="btn btn-primary" disabled style="display: flex;
+                padding: 16px 40px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                width:150px;
+                border-radius: 12px;" data-dismiss="modal">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade docs-example-modal" id="cantSubmitTask" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content" style="width:700px">
+      <div class="modal-header">
+        <h5 class="modal-title h6" id="mySmallModalLabel">Changes not possible</h5>
+      </div>
+      <div class="modal-body">
+        You are trying to provide video link in past date which is not possible. Go to present date to provide video
+        link.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No thanks</button>
+        <a href='/performanceBoardemployee/<%=today.date%>'><button type="button" class="btn btn-primary">Go to Present
+            Date</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modal-monthl-overview" tabindex="-1" role="dialog" aria-labelledby="modal-change-username"
+  aria-hidden="true" style="margin-left: 20px">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+    <form>
+      <div class="modal-content model-xl" style="height:90vh;overflow: auto;">
+        <div class="modal-header" style="display:flex;justify-content: space-between;align-items: center;">
+          <div style="
+            display: flex;
+            align-items: center;
+            gap: 20px;
+          ">
+            <div class="months" id="modal-months">
+              <select id="modal-monthSelect" style=" border-radius: 12px; border:none; padding: 2px;color: #48bf84;
+                font-size: 20px;
+                font-weight: 600;" onchange="modalstreakchange(event.target.value)">
+                <option value="01" <%=streakmonth===1 ? 'selected' : '' %>>January</option>
+                <option value="02" <%=streakmonth===2 ? 'selected' : '' %>>February</option>
+                <option value="03" <%=streakmonth===3 ? 'selected' : '' %>>March</option>
+                <option value="04" <%=streakmonth===4 ? 'selected' : '' %>>April</option>
+                <option value="05" <%=streakmonth===5 ? 'selected' : '' %>>May</option>
+                <option value="06" <%=streakmonth===6 ? 'selected' : '' %>>June</option>
+                <option value="07" <%=streakmonth===7 ? 'selected' : '' %>>July</option>
+                <option value="08" <%=streakmonth===8 ? 'selected' : '' %>>August</option>
+                <option value="09" <%=streakmonth===9 ? 'selected' : '' %>>September</option>
+                <option value="10" <%=streakmonth===10 ? 'selected' : '' %>>October</option>
+                <option value="11" <%=streakmonth===11 ? 'selected' : '' %>>November</option>
+                <option value="12" <%=streakmonth===12 ? 'selected' : '' %>>December</option>
+              </select>
+            </div>
+            <span class="modal-heading">Monthly Overview</span>
+
+          </div>
+
+          <div style="display: flex;gap:20px">
+            <div style="display: flex; flex-direction: column;justify-content: center;align-items: center;gap:5px">
+              <div class="modal-heading" id="modal-total-badges"><img src="../img/gem.svg" style="width:24px">
+                <%= user.badges %>
+              </div>
+              <div style="color: #181818;font-size:12px" id="modal-streak-month">
+                Total Badges Earned in
+              </div>
+            </div>
+            <div id="rating">
+              <button type="button" class="btn" style="
+                 display: flex;
+                 flex-direction: column;
+padding: 6px 16px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+border-radius: 12px;
+background: #0F0F0F;
+                ">
+                <div id="modal-rating-avg" style="color:#FACC15;display: flex;gap:5px;font-size: 20px;">
+
+                  <img src="../img/icons performance mgmt/desktop/d_star_full.svg" />
+                </div>
+                <div style="
+                      font-weight: 500;
+                      font-size: 12px;
+                      color: #edf1f5;
+                      flex: none;
+                    ">
+                  Monthly Avarage
+                </div>
+              </button>
+            </div>
+            <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal"
+              style="cursor: pointer;">
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="row" style="gap: 20px" id="feedback-modal">
+            <div class="modal-box">
+              <div><img src="../img/icons performance mgmt/desktop/mini_streak.svg" /></div>
+              <div>
+                <div id="modal-mini-streak" class="modal-heading"> Days</div>
+                <div>Shortest Streak</div>
+              </div>
+            </div>
+            <div class="modal-box ">
+              <div><img src="../img/icons performance mgmt/desktop/max_streak.svg" /></div>
+              <div>
+                <div id="modal-maxi-streak" class="modal-heading"> Days</div>
+                <div>Longest Streak</div>
+              </div>
+            </div>
+            <div class="modal-box ">
+              <div><img src="../img/icons performance mgmt/desktop/modal-badges.svg" /></div>
+              <div>
+                <div id="modal-streak-rewards" class="modal-heading">Badges</div>
+                <div>Streakes Reward</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="streak-count" id="modal-streak-count" style="margin-top:20px;
+         margin-top:30px;
+        gap: 32px 0px;
+       
+        align-self: stretch;
+        flex-wrap: wrap;">
+
+          </div>
+          <div style="display: flex;
+      padding: 4px 16px;
+      align-items: center;
+      gap: 4px;
+      margin-top: 30px;
+      width:fit-content;
+      border-radius: 8px;
+      color:black;
+      font-weight: 600;
+      background: #D9FDEB;">Break previous month’s Longest streak of 15 Days to earn <img src="../img/gem.svg"> badges
+            extra</div>
+        </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+<!-- RaiseIssueOnLeave -->
+<div class="modal fade" id="RaiseIssueOnLeave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="display: flex;
+    width: 358px;
+    border-radius: 14px;">
+      
+    <div style="display: flex;
+    padding: 16px 24px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;">
+      <div style="color: var(--text-content-primary, #181818);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 130%;">Issue Raised with the manager</div>
+      <div style="color: var(--text-content-secondary, #898989);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px;">The issue will be resolved as soon as possible.</div>
+      <textarea style="display: flex;
+      padding: 8px 16px;
+      align-items: flex-start;
+      gap: 10px;
+      border:none;
+      color: black;
+      align-self: stretch;
+      border-radius: 14px;
+      background: var(--surface-secondary, #FAFAFA);" placeholder="Write any point you want to convey to the manager" oninput="ChangeIssueRaiseReason(this.value,'IssueRaiseButton')"></textarea>
+    </div> 
+      <div class="modal-footer" style="padding: 10px;">
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal" style="display: flex;
+        height: 48px;
+        padding: 8px 16px;
+        align-items: center;
+        gap: 8px;
+
+        border-radius: 14px;">Cancel</button>
+        <button type="button" class="btn btn-primary" id="IssueRaiseButton" disabled onclick="SubmitRaiseIssueonLeave()"  data-dismiss="modal" style="display: flex;
+        height: 48px;
+        padding: 8px 16px;
+        align-items: center;
+        gap: 8px;
+        border-radius: 14px;">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  <!-- Include JavaScript files -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <script>
+   $('.dropdown-toggle').dropdown()
+   const morningTaskbtn = document.getElementById('tasksubmitbtn1')
+   const noonTaskbtn = document.getElementById('tasksubmitbtn2')
+   const eodTaskbtn = document.getElementById('tasksubmitbtn3')
+   const pinnedProject = '<%=pinnedProjectByEmployee%>'
+
+   let keypoint = '<%= performanceRecord.keyPoints ? JSON.stringify(performanceRecord.keyPoints) : "[]" %>';
+
+   let tempElement = document.createElement("textarea");
+   tempElement.innerHTML = keypoint;
+   keypoint = tempElement.value;
+
+   try {
+     keypoint = JSON.parse(keypoint);
+   } catch (error) {
+     console.error("Error parsing keypoint:", error);
+   }
+
+   let keypoints = keypoint.length > 2 ? keypoint : ['', '', ''];
+   let link = '';
+
+   function ChanageRatingReviewTab(i) {
+     let index = i;
+     for (let j = 1; j <= 2; j++) {
+       const videodiv = document.getElementById("PerformanceBody" + j);
+       const tab = document.getElementById("PerformanceTab" + j);
+
+       if (j === index) {
+         videodiv.style.display = "block";
+         tab.classList.add("active");
+       } else {
+         videodiv.style.display = "none";
+         tab.classList.remove("active");
+       }
+     }
+   }
+   UpdateKeyPointBody();
+
+   function AddKeyPoints(id) {
+     const keypointbody = document.getElementById(id);
+     keypoints.push('');
+     UpdateKeyPointBody();
+   }
+
+   function DeleteKeyPoint(id) {
+     keypoints.splice(id - 1, 1);
+     UpdateKeyPointBody();
+     ChangeVisbilityEodButton('submiteodbutton', 'eodlinkinput');
+   }
+
+   function UpdateKeyPointBody() {
+     const keypointbody = document.getElementById('KeyPointBody');
+     let innerhtml = '';
+
+     for (let i = keypoints.length - 1; i >= 0; i--) {
+       let keyno = i + 1;
+
+       innerhtml += ` <div style="display: flex;align-items: center;gap:4px;width:100%">
+              <div id="keypointno${keyno}">${keypoints.length + 1 - keyno}.</div>
+              <div style="width:100%;    display: flex;
+              align-items: center;
+              gap: 10px;" onmouseover="showIcons('keypoint${keyno}')" onmouseout="removeIcons('keypoint${keyno}')">
+                <input style="display: flex;
+      height: 48px;
+      padding: 14px 20px;
+      align-items: center;
+      gap: 10px;
+      flex: 1 0 0;
+      border-radius: 12px;
+      border: 1px solid #ECECEC;
+      background: #FFF;" placeholder="E.g., Resolved XYZ issue" oninput="ChangeKeyPoint(${keyno},event)" value='${keypoints[keyno - 1] ? keypoints[keyno - 1] : ''}'>
+                <img style="display: none;" src="../Project icons/Delete.svg" id="keypoint${keyno}" onclick="DeleteKeyPoint(${keyno})">
+              </div>
+            </div>`
+     }
+     keypointbody.innerHTML = innerhtml;
+   }
+
+   function ChangeKeyPoint(id, event) {
+     keypoints[id - 1] = event.target.value.replace('"', '\\\"');
+     ChangeVisbilityEodButton('submiteodbutton', 'eodlinkinput');
+   }
+
+   function ChangeVisbilityEodButton(id, inputid) {
+     let submitButton = document.getElementById(id);
+     const inputValue = document.getElementById(inputid).value.trim();
+     link = inputValue;
+     let count = 0;
+     for (let i = 0; i < keypoints.length; i++) {
+       if (keypoints[i].length > 0)
+         count++;
+     }
+     if (inputValue.length > 0 && count > 2) {
+       submitButton.disabled = false;
+     } else {
+       submitButton.disabled = true;
+     }
+   }
+
+   function showIcons(id) {
+     const box = document.getElementById(id);
+     box.style.display = 'flex';
+   }
+
+   function removeIcons(id) {
+     const box = document.getElementById(id);
+     box.style.display = 'none';
+   }
+   
+
+   function ChangeVisbility(boxid, buttonid) {
+     const box = document.getElementById(boxid);
+     const button = document.getElementById(buttonid);
+     if (box.style.display == 'none') {
+       box.style.display = "flex";
+       button.innerHTML = "Close Tutorial <i class='fa fa-angle-up '> </i>";
+     } else {
+       box.style.display = "none";
+       button.innerHTML = "Show Tutorial <i class='fa fa-angle-down '> </i>";
+     }
+   }
+
+
+
+   const projecttab = document.getElementById("tab_project")
+   const tasktab = document.getElementById("tab_task")
+   const projectBody = document.getElementById("projectBody")
+   const taskBody = document.getElementById("taskBody")
+   projecttab.addEventListener("click", function() {
+     projectBody.style.display = 'flex';
+     taskBody.style.display = 'none';
+     projecttab.classList.add('active')
+     tasktab.classList.remove('active')
+   })
+   tasktab.addEventListener("click", function() {
+     taskBody.style.display = 'block';
+     projectBody.style.display = 'none';
+     tasktab.classList.add('active')
+     projecttab.classList.remove('active')
+   })
+   const linkInput = document.getElementById('linkSubmit');
+
+   function ClearValue(id) {
+     document.getElementById(id).value = '';
+   }
+   var taskno;
+
+   function showtaskno(i, link) {
+     taskno = i;
+     if (i == 3) {
+       document.getElementById('eodlinkinput').value = link;
+     } else
+       linkInput.value = link;
+
+   }
+   const submitButton = document.getElementById('submitlinkbutton');
+
+   function ChangeButtonState(id, event) {
+     let submitButton = document.getElementById(id);
+     const inputValue = event.target.value.trim();
+     link = inputValue;
+     if (inputValue.length > 0) {
+
+       submitButton.disabled = false;
+     } else {
+
+       submitButton.disabled = true;
+     }
+   }
+
+
+
+   async function SubmitTaskLink() {
+
+     const data = {
+       link: link,
+       taskno: taskno,
+       date: '<%=selectedDate%>',
+       keyPoints: keypoints
+     };
+
+     try {
+       const response = await fetch('/submit/dailytasklink', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(data),
+       });
+
+       if (!response.ok) {
+         throw new Error('Error in API request');
+       }
+       location.reload();
+     } catch (error) {
+       alert('Error:', error.message);
+     }
+   }
+
+   async function PinProject(projectId, isPinnedByAdmin) {
+     if (pinnedProject == 3 && !isPinnedByAdmin) {
+       $('#errorModal').modal('show');
+       return;
+     }
+     try {
+       let response = await fetch(`/pin/project/${projectId}`, {
+         method: 'PUT',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({
+           employeeID: '<%=employee._id%>'
+         })
+       });
+       response = await response.json();
+       const box = document.getElementById('pinboxproject-' + projectId)
+       location.reload();
+     } catch (error) {
+       console.log(error);
+       $('#errorModal').modal('show');
+     }
+   }
+
+   function getCurrentDay() {
+     let days = 0;
+     let streakCountHTML = "";
+     let today = new Date();
+    today= new Date(today.getTime() + today.getTimezoneOffset() * 60000); // Convert to GMT
+
+     const year = today.getFullYear();
+     let month = today.getMonth() + 1;
+     let day = today.getDate();
+
+
+     if (month < 10) {
+       month = `0${month}`;
+     }
+     if (day < 10) {
+       day = `0${day}`;
+     }
+
+     today = {
+       date: `${year}-${month}-${day}`
+     };
+     return today;
+   }
+
+
+   function streakchange() {
+
+     $("#loadingModal").modal('show');
+     var selectedMonth = document.getElementById("monthSelect").value;
+     const streakHeader = document.getElementById('streakHeader');
+     let streakDays;
+     fetch('/streakmonth/' + selectedMonth + '/' + '<%=employee._id%>')
+       .then(response => response.json())
+       .then(data => {
+         streakDays = data.streakdays;
+
+         let days = 0;
+         let streakCountHTML = "";
+         let streakCount = 0;
+         let targetdate;
+         SetStreakDates('streak-count', streakDays)
+         let today = getCurrentDay();
+         if (selectedMonth == today.date.split('-')[1]) {
+           for (let i = 0; i < streakDays.length; i++) {
+             if (streakDays[i].date >= today.date) {
+               if (streakDays[i].date === today.date) {
+                 streakCount = day;
+               }
+               if (!streakDays[i].isdone) {
+                 day += 1;
+               } else {
+                 day = 0;
+               }
+
+               if (day === 3) {
+                 targetdate = streakDays[i].date.slice(-2);
+                 day = 3;
+                 break;
+               } else if (day === 5) {
+                 targetdate = streakDays[i].date.slice(-2);
+                 day = 7;
+                 break;
+               } else if (day === 10) {
+                 targetdate = streakDays[i].date.slice(-2);
+                 day = 15;
+                 break;
+               } else if (day === 15) {
+                 targetdate = streakDays[i].date.slice(-2);
+                 day = 22;
+                 break;
+               } else if (day === 23) {
+                 targetdate = streakDays[i].date.slice(-2);
+                 day = 35;
+                 break;
+               }
+             } else if (streakDays[i].isdone) {
+               day += 1;
+             } else {
+               day = 0;
+             }
+           }
+
+           streakHeader.innerHTML = `Current Streak: <span style="color:#48bf84;margin-left:5px">${streakCount} Days <img src='../img/icons performance mgmt/desktop/Streak states.svg'/></span> <span style="font-size:12px; font-weight:normal;background: #D9FDEB;padding:5px; border-radius: 8px; width: 250px;
+               height: 25px;margin-left:20px">Continue 4.5+  <img src="../img/Star.svg" width="17px"/> streak till ${targetdate} to get +<span style="font-size:17px; font-weight: 700;">${day}</span> <img src="../img/gem.svg" style="width: 17px;"/></span>`
+         } else {
+           let longestStreak = 0;
+           let streak = 0;
+           for (let i = 0; i < streakDays.length; i++) {
+             if (streakDays[i].isdone) {
+               streak += 1;
+             } else {
+               longestStreak = longestStreak > streak ? longestStreak : streak;
+               streak = 0;
+             }
+           }
+
+           streakHeader.innerHTML = `Longest Streak: <span style="color:#48bf84">${longestStreak} Days <img src='../img/icons performance mgmt/desktop/Streak states.svg'/></span> `
+
+         }
+
+
+         $("#loadingModal").modal('hide');
+       })
+       .catch(error => {
+         // Handle any errors
+         console.error(error);
+       });
+
+   }
+
+   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+   document.getElementById("monthSelect").addEventListener("change", streakchange);
+
+
+   function modalstreakchange(selectedMonth) {
+     let streakDays;
+     fetch('/streakmonth/' + selectedMonth + '/' + '<%=employee._id%>')
+       .then(response => response.json())
+       .then(data => {
+         streakDays = data.streakdays;
+         let today = getCurrentDay();
+         SetStreakDates('modal-streak-count', streakDays);
+
+         let longestStreak = 0;
+         let shortestStreak = 30;
+         let currentStreak = 0;
+         let totalRating = 0;
+         let totalBadges = 0;
+         let streakrewards = 0;
+         let streakStart = null;
+         let streakEnd = null;
+         let currentdays = 0;
+         for (let i = 0; i < streakDays.length; i++) {
+           if (streakDays[i].date <= today.date)
+             currentdays++;
+           totalRating += streakDays[i].rating;
+           totalBadges += streakDays[i].badges;
+           if (streakDays[i].isdone) {
+             currentStreak++;
+             if (currentStreak > longestStreak) {
+               longestStreak = currentStreak;
+             }
+           } else {
+
+             if (currentStreak > 0) {
+               if (currentStreak < shortestStreak) {
+                 shortestStreak = currentStreak;
+               }
+               currentStreak = 0;
+             }
+           }
+           if (currentStreak == 3)
+             streakrewards += 3;
+           else if (currentStreak == 5)
+             streakrewards += 7;
+           else if (currentStreak == 10)
+             streakrewards += 15;
+           else if (currentStreak == 15)
+             streakrewards += 22;
+           else if (currentStreak == 23)
+             streakrewards += 32;
+         }
+
+         const averageRating = totalRating / currentdays;
+         totalBadges += streakrewards;
+
+         const modaltotalBadges = document.getElementById('modal-total-badges');
+         const modalavgrating = document.getElementById('modal-rating-avg')
+         const modalministreak = document.getElementById('modal-mini-streak')
+         const modalmaxistreak = document.getElementById('modal-maxi-streak')
+         const modalstreakrewards = document.getElementById('modal-streak-rewards');
+         const modalStreakMonth = document.getElementById('modal-streak-month');
+         modalStreakMonth.innerHTML = `Total Badges Earned in ${months[Number(selectedMonth) - 1]}`
+         modaltotalBadges.innerHTML = `${totalBadges} <img src="../img/gem.svg" style='width:24px'>`
+         modalavgrating.innerHTML = `${averageRating.toFixed(2)}  <img src="../img/icons performance mgmt/desktop/d_star_full.svg"/>`
+         modalministreak.innerHTML = `${shortestStreak == 30 ? 0 : shortestStreak} Days`;
+         modalmaxistreak.innerHTML = `${longestStreak} days`
+         modalstreakrewards.innerHTML = `${streakrewards} Badges`
+
+       })
+       .catch(error => {
+         // Handle any errors
+         console.error(error);
+       });
+   }
+
+   function SetStreakDates(id, streakDays) {
+     let days = 0;
+     let today = getCurrentDay();
+     streakCountHTML = '';
+     let container = document.getElementById(id);
+     let dayToStartNextWeek = 0;
+     let weekNo = 0;
+     let ClassAdded = false;
+     for (let i = 0; i < streakDays.length; i++) {
+
+       let date = new Date(streakDays[i].date);
+       if (date.getDay() != 1)
+         dayToStartNextWeek++;
+       else
+         break;
+     }
+     if (dayToStartNextWeek == 0)
+       dayToStartNextWeek = 5;
+     for (let i = 0; i < streakDays.length; i++) {
+       let styleblendmode = streakDays[i].ratingReviewStatus == 'Pending' ? '' : 'luminosity'
+
+       if (streakDays[i].isdone || streakDays[i].date >= today.date) {
+         days += 1;
+       } else {
+         days = 0;
+       }
+
+       let ratingClass = 'rating-status'
+       let rating = streakDays[i].rating ? streakDays[i].rating : 0;
+       let starpath = "../img/black_star.svg"
+       if (rating != 0) {
+         if (rating >= 4.5) {
+           ratingClass += ' golden-rating-status'
+         } else if (rating >= 3.5) {
+           ratingClass += ' skyblue-rating-status'
+         } else if (rating >= 2.5) {
+           ratingClass += ' orange-rating-status'
+         } else {
+           starpath = '../img/white_star.svg'
+           ratingClass += ' red-rating-status'
+         }
+       }
+       let taskStatus = streakDays[i].taskStatus;
+       let taskStatusSrc = '';
+       let taskDivClass = '';
+
+       if (streakDays[i].date < today.date) {
+         taskDivClass = 'perv_day';
+         for (let j = 1; j < 4; j++) {
+           if (!taskStatus[j] || taskStatus.length <= j) {
+             if (j === 1) {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sunrise_perv.svg';
+               break;
+             } else if (j === 2) {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sun_perv.svg';
+               break;
+             } else {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sunset_perv.svg';
+               break;
+             }
+           }
+         }
+         let tasksubmmitedcount = 0;
+         for (let i = 1; i < taskStatus.length; i++) {
+           if (taskStatus[i])
+             tasksubmmitedcount++;
+         }
+
+         if (taskStatusSrc == '' && (taskStatus.length == 4 || streakDays[i].rating > 0)) {
+           if (streakDays[i].rating > 0 && streakDays[i].rating >= 2.5 && streakDays[i].rating <= 3.5) {
+             taskDivClass = 'current_day';
+             taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_yellow.svg';
+           } else if (streakDays[i].rating > 0 && streakDays[i].rating < 2.5) {
+             taskDivClass = 'perv_day';
+             taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_red.svg';
+           } else {
+             taskDivClass = 'complete_day';
+             taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_green.svg';
+           }
+         } else if (taskStatusSrc == '' || tasksubmmitedcount <= 1) {
+           taskDivClass = 'perv_day';
+           taskStatusSrc = '../img/icons performance mgmt/desktop/Cross_red.svg';
+         }
+       } else if (streakDays[i].date === today.date) {
+         taskDivClass = 'current_day';
+         for (let j = 0; j < 4; j++) {
+           if (!taskStatus[j] || taskStatus.length <= j) {
+             if (j === 1) {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sunrise.svg';
+             } else if (j === 2) {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sun.svg';
+             } else {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sunset.svg';
+             }
+           }
+         }
+         if (taskStatusSrc == '' && taskStatus.length == 4) {
+           taskDivClass = 'complete_day';
+           taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_green.svg';
+         }
+       }
+
+       if (streakDays[i].onLeave) {
+         taskDivClass = 'perv_day';
+         taskStatusSrc = '../img/icons performance mgmt/desktop/Cross_red.svg';
+       }
+
+       if (!ClassAdded && id == 'streak-count') {
+         streakCountHTML += `<div class="streak-dates-box" style="margin-right:${dayToStartNextWeek < 3 ? '50vw' : ''}; width:${dayToStartNextWeek >= 3 ? 'max(31vw,465px)' : ''};">`
+         if (dayToStartNextWeek > 3) {
+           weekNo++;
+           streakCountHTML += `<div style="color: var(--gray-400, #98A2B3);
+  font-size: 11.077px;
+  display:flex;
+  width:100px;
+  position:absolute;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1.662px;">Week ${weekNo}</div>`
+         }
+         ClassAdded = true;
+       }
+
+       streakCountHTML += ` <div>
+    <div style="display: flex; gap: 5px; justify-content: center; align-items: center; margin-bottom: 10px; width: 60px; height: 30px;">
+      ${streakDays[i].ratingReviewStatus !== '' ?
+            `<div style="
+          display: flex;
+          width: 24px;
+          height: 24px;
+          padding: 4px 0px;
+          justify-content: center;
+          align-items: center;
+          gap: 4px;
+          border-radius: 4px;
+          background: var(--indigo-50, #EEF4FF);  
+          mix-blend-mode: ${styleblendmode};
+        "
+        data-dismiss='modal'
+        data-target='#Rating-Reviewed-modal-step1'
+        data-toggle='modal'
+        onclick="SetRatingReviwedModal(
+          '<%=streakDays[i].badges%>',
+          '<%=streakDays[i].rating%>',
+          '<%=streakDays[i].managerFeedback%>',
+          '${streakDays[i].date}',
+          '<%=employee._id%>'
+        )"> 
+          <img src="../img/icons performance mgmt/desktop/ratingReviewPerformance.svg">
+        </div>` : ''}
+      ${streakDays[i].onLeave && streakDays[i].date < today.date ?
+            `<div class="dropdown">
+          ${streakDays[i].countTaskStatus > 0 ?
+              `<div 
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                color: #FF6565;
+                font-size: 14px;
+                font-weight: 500;
+                width:90px;
+              "
+              onclick="ChangeVisibility('dropdownRaiseIssue-${streakDays[i].date}')">
+              ${streakDays[i].leaveType ? streakDays[i].leaveType + ' Leave' : ''}  
+            </div>
+            <div class="dropdown-menu" id="dropdownRaiseIssue-${streakDays[i].date}" style="display: none; width: 330px; padding: 16px; flex-direction: column; justify-content: center; align-items: flex-start; gap: 16px; border-radius: 8px; background: #FFF7F7; box-shadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.10);">
+            <div class="text-red-14-700">No Loom Update - Leave Deducted</div>
+            <div class="text-red-14-700">
+              You haven't uploaded ${streakDays[i].countTaskStatus < 3 ? 'any' : ''} Loom video updates for this day.
+              Your leave quota will be deducted as per company policy.
+            </div>
+            <div style="display: flex; height: 40px; padding: 11px 16px; align-items: center; gap: 8px; cursor: pointer; border-radius: 12px; border: 1px solid #FF6565; background: #FFF;" class="text-red-14-700" data-toggle="modal" data-target="#RaiseIssueOnLeave" onclick="SetRaiseIssueOnLeaveDate('${streakDays[i].date}'); ChangeVisibility('dropdownRaiseIssue-${streakDays[i].date}')"> 
+              Raise an Issue
+            </div>
+          </div> ` :
+              `<div 
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                color: #FF6565;
+                font-size: 14px;
+                font-weight: 500;
+                width:90px;
+              ">
+              ${streakDays[i].leaveType ? streakDays[i].leaveType + ' Leave' : ''}  
+            </div>`
+            }
+         </div>` :
+            `<div 
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                color: #FF6565;
+                font-size: 14px;
+                font-weight: 500;
+                width:90px;
+              "
+              onclick="ChangeVisibility('dropdownRaiseIssue-${streakDays[i].date}')">
+              ${streakDays[i].leaveType ? streakDays[i].leaveType + ' Leave' : ''}  
+            </div>`}
+    </div>
+  
+  `
+
+       if (days == 3 || days == 5 || days == 10 || days == 15 || days == 23) {
+         if (streakDays[i].date > today.date) {
+           streakCountHTML += `
+            <div data-dismiss='modal' onclick="getPerformanceByDate('${streakDays[i].date}')" data-toggle='modal' data-target='#RatingInfoModal' style="align-items: center;
+              display: flex;
+              flex-direction: column;">
+              <div style="font-size: 14px; padding: 0px 4px" class="circle small">
+                <div>+${days == 3 ? 3 : days == 5 ? 7 : days == 10 ? 15 : days == 15 ? 22 : days == 23 ? 32 : 0}<img src='../img/gem.svg'/></div>
+                <img src='../img/icons performance mgmt/desktop/Streak states_notDone.svg' />
+                <div>${streakDays[i].date.slice(-2)}</div>
+              </div>
+              <div class=" ${ratingClass}" >${rating != 0 ? rating + `<img style="width:15px;margin-bottom:4px"  src=${starpath}>` : ''}</div>
+            </div>
+            </div>
+          `;
+         } else {
+           streakCountHTML += `
+            <div data-dismiss='modal'  onclick="getPerformanceByDate('${streakDays[i].date}')" data-toggle='modal' data-target='#RatingInfoModal' style="align-items: center;
+              display: flex;
+              flex-direction: column;">
+              <div style="font-size: 14px; padding: 0px 4px" class="circle big ${streakDays[i].isdone ? 'green' : 'text-green'}">
+                <div>+${days == 3 ? 3 : days == 5 ? 7 : days == 10 ? 15 : days == 15 ? 22 : days == 23 ? 32 : 0}<img src='../img/gem.svg'/></div>
+                <img src='../img/icons performance mgmt/desktop/Streak states.svg' />
+                <div>${streakDays[i].date.slice(-2)}</div>
+              </div>
+              <div class=" ${ratingClass}" >${rating != 0 ? rating + `<img style="width:15px;margin-bottom:4px"  src=${starpath}>` : ''}</div>
+            </div>
+          </div>
+          `;
+         }
+
+         if (i + 1 != streakDays.length) {
+           streakCountHTML += `<div class="streakcount-line" style="border: 1px dashed #48BF84"></div>`;
+         }
+       } else {
+         streakCountHTML += `
+          <div  data-dismiss='modal'  onclick="getPerformanceByDate('${streakDays[i].date}')" data-toggle='modal' data-target='#RatingInfoModal' style="align-items: center;
+            display: flex;
+            flex-direction: column;" class="streakcount-box" >
+            <div class="circle small ${streakDays[i].isdone ? 'green' : taskDivClass}">
+              <img src="${streakDays[i].isdone ? '../img/icons performance mgmt/desktop/Streak states.svg' : streakDays[i].date > today.date ? '../img/icons performance mgmt/desktop/Streak states_notDone.svg' : taskStatusSrc}" />
+              <div>${streakDays[i].date.slice(-2)}</div>
+            </div>
+            <div class=" ${ratingClass}" >${rating != 0 ? rating + `<img style="width:15px;margin-bottom:4px" src=${starpath}>` : ''}</div>
+          </div>
+        </div>
+        `;
+
+         if (i + 1 != streakDays.length) {
+           if (streakDays[i].isdone) {
+             streakCountHTML += `<div class="streakcount-line" style="border: 1px dashed #48bf84"></div>`;
+           } else {
+             streakCountHTML += `<div class="streakcount-line" style="border: 1px dashed #999"></div>`;
+           }
+         }
+       }
+       if (id == 'streak-count') {
+         if (dayToStartNextWeek == 1 || i + 1 == streakDays.length) {
+           streakCountHTML += `</div>`;
+           dayToStartNextWeek = 5;
+           ClassAdded = false;
+         } else
+           dayToStartNextWeek--;
+
+       }
+     }
+
+     container.innerHTML = streakCountHTML;
+
+   }
+
+
+   var datePicker = document.getElementById('datepicker');
+   datePicker.value = '<%=currentday.date%>'
+   datePicker.addEventListener('change', function() {
+     var selectedDate = datePicker.value;
+     const performanceBoard = `/performanceBoardemployee/${selectedDate}`;
+     window.location.href = performanceBoard;
+   });
+   const getPerformance = (date) => {
+     var selectedDate = date;
+     const performanceBoard = `/performanceBoardemployee/${selectedDate}`;
+     window.location.href = performanceBoard;
+   }
+
+   function ViewEditProject(id) {
+     const href = document.getElementById(id);
+     href.click();
+   };
+
+   function togglestreakbox() {
+     const container = document.getElementById('streak-count')
+     const months = document.getElementById('months');
+     const monthlyOverview = document.getElementById('monthly-overview')
+     var icon = document.getElementById("streakboxicon");
+     icon.classList.toggle("fa-angle-down");
+     icon.classList.toggle("fa-angle-up");
+
+     if (container.style.display === "flex") {
+       container.style.display = "none"; // Show the container
+       months.style.display = "none";
+       monthlyOverview.style.display = "none";
+     } else {
+       container.style.display = "flex"; // Hide the container
+       months.style.display = "flex";
+       monthlyOverview.style.display = "flex";
+     }
+   }
+   let streakDays = '<%-JSON.stringify(streakDays)%>';
+   streakDays = JSON.parse(streakDays);
+
+   SetStreakDates('streak-count', streakDays);
+   let month = new Date().getMonth();
+   modalstreakchange(month + 1);
+
+   let RaiseIssueOnLeaveReason = '',
+     RaiseIssueOnLeaveDate = '';
+
+   function SetRaiseIssueOnLeaveDate(date) {
+
+     RaiseIssueOnLeaveDate = date;
+   }
+
+   function ChangeIssueRaiseReason(value, id) {
+     let button = document.getElementById(id);
+     RaiseIssueOnLeaveReason = value;
+     if (value.length > 0) {
+       button.disabled = false
+     } else {
+       button.disabled = true;
+     }
+   }
+   async function SubmitRaiseIssueonLeave() {
+     try {
+       let data = {
+         employeeId: '<%=employee._id%>',
+         reason: RaiseIssueOnLeaveReason,
+         date: RaiseIssueOnLeaveDate
+       }
+       let response = await fetch('/raiseIssueOnLeave', {
+         method: 'post',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(data)
+       })
+     } catch (error) {
+       console.log(error);
+     }
+
+   }
+
+   function ChangeVisibility(id) {
+     const box = document.getElementById(id);
+     if (box.style.display == 'none') {
+       box.style.display = 'flex';
+     } else {
+       box.style.display = 'none';
+     }
+   }
+
+  
+ </script>
+  <!-- Scripts -->
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <script src="../js/purpose.core.js"></script>
+  <!-- Page JS -->
+  <script src="../libs/autosize/dist/autosize.min.js"></script>
+
+  <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+  <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+  <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="../libs/moment/min/moment.min.js"></script>
+
+  <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+  <!-- Purpose JS -->
+  <script src="../js/purpose.js"></script>
+  <!-- Demo JS - remove it when starting your project -->
+  <script src="../js/demo.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+
+
+
+</body>
+
+</html>

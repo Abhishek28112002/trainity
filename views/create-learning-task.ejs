@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Purpose Application UI is the following chapter we've finished in order to create a complete and robust solution next to the already known Purpose Website UI."
+    />
+    <meta name="author" content="Webpixels" />
+    <title>Trainity Dashboard</title>
+    <!-- Favicon -->
+    <!-- Favicon -->
+    <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+    <!-- Font Awesome 5 -->
+    <link
+      rel="stylesheet"
+      href="../../libs/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+    <!-- Page CSS -->
+    <!-- <link
+      rel="stylesheet"
+      href="../../libs/quill/dist/quill.core.css"
+      type="text/css"
+    /> -->
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+    <link rel="stylesheet" href="../../libs/select2/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="../../libs/flatpickr/dist/flatpickr.min.css" />
+    <!-- Purpose CSS -->
+    <link rel="stylesheet" href="../../css/purpose.css" id="stylesheet" />
+    <!-- Hotjar Tracking Code for Admin Website -->
+<script>
+  (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:3534926,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+  </head>
+
+  <body class="application application-offset">
+    <div
+      class="modal fade fixed-right"
+      id="modal-products"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-vertical" role="document">
+        <div class="modal-content">
+          <div class="scrollbar-inner">
+            <div class="modal-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Application container -->
+    <div class="container-fluid container-application">
+      <!-- Sidenav -->
+      <%- include('partials/sidepanel'); -%>
+      <!-- Content -->
+      <div class="main-content footer-margin-mobile position-relative">
+        <!-- Main nav -->
+        <%- include('partials/navbar'); -%>
+
+        <!-- Page content -->
+        <div class="page-content">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <!-- Page title -->
+              <div class="page-title">
+                <div class="row justify-content-between align-items-center">
+                  <div
+                    class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0"
+                  >
+                    <!-- Page title + Go Back button -->
+                    <div class="d-inline-block">
+                      <h5
+                        class="h4 d-inline-block font-weight-400 mb-0 text-white"
+                      >
+                        Create Learning Task
+                      </h5>
+                    </div>
+                    <!-- Additional info -->
+                  </div>
+                </div>
+              </div>
+              <form class="mt-4">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label class="form-control-label"> Course ID </label>
+                      <select
+                        class="custom-select"
+                        required
+                        name="courseID"
+                        id="courseID"
+                      >
+                        <!-- <option selected>Open this select menu</option> -->
+                        <option value="102">Data</option>
+                        <option value="103">Software</option>
+                        <option value="101">Marketing</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label"> Type </label>
+                      <select
+                        class="custom-select"
+                        required
+                        name="type"
+                        id="type"
+                      >
+                        <!-- <option selected>Open this select menu</option> -->
+                        <option value="0">Text + Image</option>
+                        <option value="1">Vimeo + Text + Image</option>
+                        <option value="2">Youtube + Text + Image</option>
+                        <option value="3">VdoCipher + Text + Image</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label">Title</label>
+                      <input
+                        type="text"
+                        name="title"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label">Module</label>
+                      <input
+                        type="text"
+                        name="module"
+                        class="form-control"
+                        required
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label"> Days After </label>
+                      <input
+                        type="number"
+                        name="daysAfter"
+                        required
+                        class="form-control"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">Vimeo ID</label>
+                      <input type="text" name="vimeoID" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">Youtube ID</label>
+                      <input
+                        type="text"
+                        name="youtubeID"
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label">Vdo Cipher ID</label>
+                      <input type="text" name="videoID" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">Handbook URI</label>
+                      <input
+                        type="text"
+                        name="handbookURI"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label mb-0">
+                        Description
+                      </label>
+
+                      <div id="quillEditor"></div>
+                    </div>
+
+                    <!-- Task date -->
+                    <!-- Button trigger modal -->
+                    <button type="submit" class="btn btn-primary">
+                      Create
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <!-- Scripts -->
+    <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+    <script src="../../js/purpose.core.js"></script>
+    <!-- Page JS -->
+    <script src="../../libs/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="../../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <!-- <script src="../../libs/quill/dist/quill.min.js"></script> -->
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="../../libs/select2/dist/js/select2.min.js"></script>
+    <script src="../../libs/flatpickr/dist/flatpickr.min.js"></script>
+    <!-- Purpose JS -->
+    <script src="../../js/purpose.js"></script>
+    <!-- Demo JS - remove it when starting your project -->
+    <script src="../../js/demo.js"></script>
+
+    <script>
+      const form = document.querySelector("form");
+      console.log(form);
+      var options = {
+        placeholder: "Enter the task content",
+        theme: "snow",
+      };
+
+      const editor = new Quill("#quillEditor", options);
+      console.log(editor);
+
+      const svg = document.querySelector(".ql-picker-label");
+      svg.remove();
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const courseID = form.courseID.value;
+        const type = form.type.value;
+        const title = form.title.value;
+        const module = form.module.value;
+        const innerHTML = editor.root.innerHTML;
+        const daysAfter = form.daysAfter.value;
+        const vimeoID = form.vimeoID.value;
+        const youtubeID = form.youtubeID.value;
+        const handbookURI = form.handbookURI.value;
+        const videoID = form.videoID.value;
+
+        try {
+          const res = await fetch("/create/task/learning", {
+            method: "POST",
+            body: JSON.stringify({
+              courseID,
+              type,
+              title,
+              module,
+              innerHTML,
+              daysAfter,
+              vimeoID,
+              youtubeID,
+              videoID,
+              handbookURI,
+            }),
+            headers: { "Content-Type": "application/json" },
+          });
+
+          const data = await res.json();
+
+          console.log(data);
+
+          if (data.id) {
+            alert("Task Created Successfully!");
+          }
+
+          // alert(data.status);
+        } catch (error) {
+          alert("Oops! Something went Wrong! Try again later.");
+        }
+      });
+    </script>
+  </body>
+</html>

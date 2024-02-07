@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <meta name="author" content="Webpixels" />
+    <title>Trainity - Admin Panel</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+    <!-- Purpose CSS -->
+    <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+    <!-- Font Awesome 5 -->
+    <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+
+    <!-- <link rel="stylesheet" href="../libs/fullcalendar/dist/fullcalendar.min.css" />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../assets/libs/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+    <style>
+          body{
+            font-family: 'Manrope', sans-serif;
+        }
+        div {
+            color: var(--gray-800, #1D2939);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.21px;
+
+        }
+
+        .textarea {
+
+            display: flex;
+            height: 48px;
+            width: 100%;
+            padding: 14px 20px;
+            justify-content: space-between;
+            align-items: center;
+            align-self: stretch;
+            border-radius: 12px;
+            border: 1px solid var(--gray-400, #98A2B3);
+            background: var(--White, #FFF);
+
+        }
+
+        .teamBox {
+            display: flex;
+            padding: 4px;
+            align-items: center;
+            gap: 4px;
+            border-radius: 4px;
+            background: var(--gray-200, #eaecf0);
+            color: var(--gray-700, #344054);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        textarea {
+            border: none;
+        }
+
+        tbody {
+            display: flex;
+            gap: 16px;
+            flex-direction: column;
+        }
+
+        input,
+        select {
+            border: none;
+            border-radius: 6px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+
+        th {
+            color: var(--gray-800, #1D2939);
+
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 18px;
+            /* 150% */
+        }
+
+        .select_box {
+            white-space: nowrap;
+            display: flex;
+            min-height: 48px;
+            padding: 14px 20px;
+            align-items: center;
+            align-self: stretch;
+            border-radius: 12px;
+            border: 1px solid var(--gray-400, #98a2b3);
+            background: var(--gray-50, #f9fafb);
+            color: var(--gray-500, #667085);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.21px;
+        }
+
+        .selected {
+            border-radius: 4px;
+            background: var(--success-50, #ECFDF3);
+        }
+
+        th,
+        td {
+            display: flex;
+            height: 44px;
+            padding: 12px 24px;
+            align-items: center;
+            gap: 12px;
+            align-self: stretch;
+            background-attachment: white;
+            flex: 1;
+        }
+
+        tr {
+            display: flex;
+        }
+
+        thead {
+            background: var(--gray-100, #f2f4f7);
+        }
+
+        .progressTask {
+            height: 8px;
+            flex-shrink: 0;
+            width: 100%;
+            border-radius: 4px;
+            background: var(--success-100, #D1FADF);
+        }
+
+        .ProgressKeyResult {
+            height: 8px;
+            flex-shrink: 0;
+            width: 150px;
+            border-radius: 4px;
+            background: var(--success-100, #D1FADF);
+        }
+
+        .progressTask.progress__fill {
+
+            height: 100%;
+            background: #48bf84;
+            transition: all 0.2s;
+            border-radius: 4px;
+        }
+
+        .progress__bar {
+            height: 100%;
+            background: #48bf84;
+            transition: all 0.2s;
+            border-radius: 4px;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+</head>
+
+<body class="application application-offset" style="background: #fafafa;display: flex;
+padding: 32px;
+flex-direction: column;
+align-items: flex-start;
+gap: 24px;
+padding-top:10px;
+flex: 1 0 0;" id="MainPageContent">
+    <%function formateDate(inputDate) { const months=[ 'Jan' , 'Feb' , 'Mar' , 'Apr' , 'May' , 'Jun' , 'Jul' , 'Aug'
+        , 'Sep' , 'Oct' , 'Nov' , 'Dec' ]; const dateParts=inputDate.split('-'); const year=dateParts[0]; const
+        month=months[parseInt(dateParts[1], 10) - 1]; const day=dateParts[2]; return `${day} ${month} ${year}`; }%>
+        <div style="
+    display: flex;
+    padding: 16px 4px 16px 32px;
+    align-items: center;
+    color: var(--gray-500, #667085);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+    gap: 4px;
+    cursor: pointer;
+  ">
+            <div onclick="Goback()">Project & Tasks</div>
+            <% let TaskData=task.data%>
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <div style="display: flex;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+  color: var(--gray-700, #344054);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */
+  background: var(--gray-100, #F2F4F7);">
+                    <%=TaskData.Tasks%>
+                </div>
+        </div>
+
+        <div style="
+    display: flex;
+    padding: 16px 32px 32px 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+  ">
+            <div style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      flex: 1 0 0;
+      align-self: stretch;
+    ">
+                <div type="text" style="
+        color: var(--gray-900, #101828);
+        font-size: 32px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 4px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 135%;
+        width: 100%;
+        background-color: transparent;
+        border: none;
+      ">
+                    <%=TaskData.Tasks%>
+                </div>
+                <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;
+      ">
+                    <div style="display: flex; gap: 16px; align-items: center">
+                        <div style="
+            color: var(--gray-500, #667085);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+          ">
+                            Status
+                        </div>
+                       <% let header= { srNo: 5, title: "Status",category: "ProjectTaskPageTasks",type: "label",usedName: "Status",labels:[{label:"Completed",color:"#12B76A",bgcolor:'#ECFDF3'},{label:"In Progress",color:"#F79009",bgcolor:'#FFFAEB'},{label:"Upcoming",color:"#0BA5EC",bgcolor:'#F0F9FF'},{label:"Not Started",color:"#667085",bgcolor:'#F9FAFB'},{label:"On Hold",color:"#F04438",bgcolor:'#FEF3F2'}],style:"width: 110px; display:flex;justify-content: center;"}%>
+                        <div style="
+            display: flex;
+            padding: 10px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            border-radius: var(--radius-medium, 8px);
+            border: 1px solid var(--gray-300, #d0d5dd);
+            background: var(--White, #fff);
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+          ">
+                          <div style="padding: 5px 12px; border-radius: 16px;" id="initiative<%= header.usedName %>" data-toggle="dropdown" aria-expanded="false">
+                            <% let style = '' %>
+                            <% style +=TaskData &&TaskData[header.usedName]?.color?.length > 0 ? 'color:' +TaskData[header.usedName]?.color + ';' : '' %>
+                            <% let title =TaskData &&TaskData[header.usedName]?.label %>
+                            <% style +=TaskData &&TaskData[header.usedName]?.bgcolor?.length > 0 ? 'background:' +TaskData[header.usedName]?.bgcolor : '' %>
+                            <div class="Status_hold" style="<%= style %>"><%= title %></div>
+                          </div>
+                          <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="initiative<%= header.usedName %>" id="initiative<%=header.usedName%>dropdown">
+                            <% let dropdownindex=0%>
+                            <% for (let label of header.labels) { %>
+            
+                              <div class="StatusBox" onclick="setStatusToTask('<%=label.label%>', '<%= header.usedName %>','<%=dropdownindex%>')">
+                                <% let color = label?.color %>
+                                <% let title = label?.label %>
+                                <% let bgcolor = label?.bgcolor %>
+                                 <div class="Status_hold" style="color:<%= color %>; background:<%= bgcolor %>"><%= title %></div>
+                               
+                              </div>
+                              <% dropdownindex+=1%>
+                            <% } %>
+                          
+                          </div>
+                        </div>
+
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 16px">
+                        <div style="
+            color: var(--gray-800, #1d2939);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          ">
+                            P-Impact
+                        </div>
+                        <div style=" display: flex;
+          padding: 10px 16px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          border-radius: 8px;
+          border: 1px solid var(--gray-300, #d0d5dd);
+          background: var(--White, #fff);
+          /* Shadow/xs */
+          box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+  <%  header= { srNo: 5, title: "PImpact",category: "ProjectTaskPageTasks",type: "label",usedName: "PImpact",labels:[{label:"Completed",color:"#12B76A",bgcolor:'#ECFDF3'},{label:"In Progress",color:"#F79009",bgcolor:'#FFFAEB'},{label:"Upcoming",color:"#0BA5EC",bgcolor:'#F0F9FF'},{label:"Not Started",color:"#667085",bgcolor:'#F9FAFB'},{label:"On Hold",color:"#F04438",bgcolor:'#FEF3F2'}],style:"width: 110px; display:flex;justify-content: center;"}%>
+      
+<div style="padding: 5px 12px; border-radius: 16px;" id="initiative<%= header.usedName %>" >
+    <%  style = '' %>
+    <% style +=TaskData &&TaskData[header.usedName]?.color?.length > 0 ? 'color:' +TaskData[header.usedName]?.color + ';' : '' %>
+    <%  title =TaskData &&TaskData[header.usedName]?.label %>
+    <% style +=TaskData &&TaskData[header.usedName]?.bgcolor?.length > 0 ? 'background:' +TaskData[header.usedName]?.bgcolor : '' %>
+    <div class="Status_hold" style="<%= style %>"><%= title %></div>
+  </div>
+
+
+
+                        </div>
+
+
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 8px">
+                        <div style="
+            color: var(--gray-500, #667085);
+
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+          ">
+                            Efforts
+                        </div>
+                        <div type="text" style="
+            display: flex;
+            width: 80.539px;
+            padding: 10px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border-radius: 8px;
+            border: 1px solid var(--gray-300, #d0d5dd);
+            background: var(--White, #fff);
+            /* Shadow/xs */
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+          ">
+                            <%=TaskData.Effort%>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px">
+                        <div style="
+            color: var(--gray-500, #667085);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+          ">
+                            Owner
+                        </div>
+
+                        <div style="
+            display: flex;
+            padding: 0px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border-radius: var(--radius-medium, 8px);
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+            align-self: stretch;
+          ">
+                            <img src="<%=TaskData.Owner?.image%>" id="OwnerImage" style="display: flex;
+        width: 40px;
+        height: 40px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 200px;
+        border: 1.5px solid var(--White, #FFF)">
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div style="display: flex;
+        padding: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch; 
+        border-radius: var(--radius-medium, 8px);
+      
+        border: 1px solid var(--gray-300, #D0D5DD);
+        background: #FFF;">
+                <div style="
+                 display: flex;
+                 justify-content: space-between;
+                 align-items: flex-start;
+                 align-self: stretch;
+               ">
+                    <div style="
+                   color: var(--gray-800, #1d2939);
+                   font-size: 20px;
+                   font-style: normal;
+                   font-weight: 700;
+                   line-height: 24px; /* 120% */
+                 ">
+                        Project
+                    </div>
+                    <i class="fa fa-angle-down" aria-hidden="true" id="ProjectIcon"
+                        onclick="ToogleIcon('ProjectIcon','ProjectBox')"></i>
+                </div>
+                <div style="display: flex;width: 100%;" id="ProjectBox">
+                    <div style="display: flex;
+          height: 48px;
+          width: 100%;
+          padding: 14px 20px;
+          justify-content: space-between;
+          align-items: center;
+          align-self: stretch;
+          border-radius: 12px;
+          border: 1px solid var(--gray-400, #98A2B3);
+          background: var(--White, #FFF);">
+                        <% for(let Project of Projects) { %>
+                            <% if(Project._id==TaskData.projectId){%>
+                                <%= Project.title%>
+                                    <% var krsdata=Project.krs%>
+
+                                        <%}%>
+                                            <%}%>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div style="display: flex;
+        padding: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch; 
+        border-radius: var(--radius-medium, 8px);
+      
+        border: 1px solid var(--gray-300, #D0D5DD);
+        background: #FFF;">
+
+                <div style="
+                 display: flex;
+                 justify-content: space-between;
+                 align-items: flex-start;
+                 align-self: stretch;
+               ">
+                    <div style="
+                   color: var(--gray-800, #1d2939);
+                   font-size: 20px;
+                   font-style: normal;
+                   font-weight: 700;
+                   line-height: 24px; /* 120% */
+                 ">Key Results</div>
+                </div>
+                <div style="display: flex;width: 100%;">
+                    <div style="display: flex;
+                       height: 48px;
+                       width: 100%;
+                       padding: 14px 20px;
+                       gap:12px;
+                       align-items: center;
+                       align-self: stretch;
+                       border-radius: 12px;
+                       border: 1px solid var(--gray-400, #98A2B3);
+                       background: var(--White, #FFF);" id="KRSBody" data-toggle="dropdown" aria-expanded="false">
+                    </div>
+
+                </div>
+
+                <div style="
+                     display: flex;
+                     justify-content: space-between;
+                     align-items: flex-start;
+                     align-self: stretch;
+                   ">
+                    <div style="
+                       color: var(--gray-800, #1d2939);
+                       font-size: 20px;
+                       font-style: normal;
+                       font-weight: 700;
+                       line-height: 24px; /* 120% */
+                     ">Sub-Key Results</div>
+                </div>
+                <div style="display: flex;width: 100%;">
+                    <div style="display: flex;
+                           height: 48px;
+                           width: 100%;
+                           padding: 14px 20px;
+                           gap:12px;
+                           align-items: center;
+                           align-self: stretch;
+                           border-radius: 12px;
+                           border: 1px solid var(--gray-400, #98A2B3);
+                           background: var(--White, #FFF);" id="subKRSBody"></div>
+
+                </div>
+            </div>
+
+            <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      align-self: stretch;
+      border-radius: var(--radius-medium, 8px);
+
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+                <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+      ">
+                    <div style="
+          color: var(--gray-800, #1d2939);
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px; /* 120% */
+        ">
+                        PRD
+                    </div>
+                    <i class="fa fa-angle-down" aria-hidden="true" id="PRDIcon"
+                        onclick="ToogleIcon('PRDIcon','PRDBox')"></i>
+                </div>
+                <div style="
+        display: flex;
+        padding: 4px;
+        min-height: 30px;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        border-radius: 8px;
+        background: #fff;
+        color: var(--gray-700, #344054);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px; /* 150% */
+        border: none;
+      " id="PRDBox" placeholder="Describe your objectives...">
+                    <%=TaskData.PRD%>
+                </div>
+            </div>
+
+            <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      align-self: stretch;
+      border-radius: var(--radius-medium, 8px);
+
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+                <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+      ">
+                    <div style="
+          color: var(--gray-800, #1d2939);
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px; /* 120% */
+        ">
+                        Roadmap
+                    </div>
+                    <i class="fa fa-angle-down" aria-hidden="true" id="RoadmapIcon"
+                        onclick="ToogleIcon('RoadmapIcon','RoadmapBox')"></i>
+                </div>
+                <div style="display: flex;flex-direction: column; gap: 8px; align-items: flex-start" id="RoadmapBox">
+                    <% for(let i=0;i<TaskData.roadmap?.length;i++){%>
+                        <div style="display: flex;align-items: center;gap:8px">
+                            <input type="checkbox" style="width:25px;height: 25px;" <%=TaskData.roadmap[i].status
+                                ? 'checked' : '' %> disabled/>
+                                <div type="text" 
+                                    style="border:none;border-radius:6px;padding:4px;color: var(--gray-800, #1D2939);
+    width:100%;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 150% */"> <%=TaskData.roadmap[i].title%></div>
+                        </div>
+                        <%}%>
+
+
+                </div>
+            </div>
+
+            <div style="
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+    border-radius: var(--radius-medium, 8px);
+
+    border: 1px solid var(--gray-300, #d0d5dd);
+    background: #fff;
+  ">
+                <div style="
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      align-self: stretch;
+    ">
+                    <div style="
+        color: var(--gray-800, #1d2939);
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px; /* 120% */
+      ">
+                        Parameters
+                    </div>
+                    <i class="fa fa-angle-down" aria-hidden="true" id="ParametersIcon"
+                        onclick="ToogleIcon('ParametersIcon','ParametersBox')"></i>
+                </div>
+                <div style="
+      display: flex;
+      padding: 4px;
+      min-height: 30px;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      border-radius: 4px;
+      background: #fff;
+      color: var(--gray-700, #344054);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px; /* 150% */
+    " placeholder="Feature: Employee Productivity Improvement Module Description: This module aims to enhance employee productivity by streamlining work processes and providing tools to monitor and measure performance.">
+                    <%=TaskData.parameters%>
+                </div>
+            </div>
+            <div style="display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    align-self: stretch;
+    border-radius: var(--radius-medium, 8px);
+    border: 1px solid var(--gray-300, #D0D5DD);
+    background: #FFF;
+    ">
+                <div style="color: var(--gray-800, #1D2939);
+            
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 24px; /* 120% */">Attached files and links</div>
+                <div style="display: flex;align-items: center;gap:8px;flex-wrap: wrap;" id="Project_LinkFileBody">
+
+                </div>
+
+            </div>
+            <div style="
+        display: flex;
+        padding: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        align-self: stretch;
+        border-radius: var(--radius-medium, 8px);
+  
+        border: 1px solid var(--gray-300, #d0d5dd);
+        background: #fff;
+      ">
+                <div style="
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          align-self: stretch;
+        ">
+                    <div style="
+            color: var(--gray-800, #1d2939);
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 24px; /* 120% */
+          ">
+                        Final Result
+                    </div>
+                    <i class="fa fa-angle-down" aria-hidden="true" id="FinalResultIcon"
+                        onclick="ToogleIcon('FinalResultIcon','FinalResultBox')"></i>
+                </div>
+                <div style="
+          display: flex;
+          padding: 4px;
+          min-height: 30px;
+          justify-content: center;
+          align-items: center;
+          gap: 4px;
+          border-radius: 4px;
+          background: #fff;
+          color: var(--gray-700, #344054);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 24px; /* 150% */
+        " id="FinalResultBox"
+                    placeholder="Final Result: Employee Productivity Improvement Module Description: This module aims to enhance employee productivity by streamlining work processes and providing tools to monitor and measure performance.">
+                    <%=TaskData.finalResult%>
+                </div>
+            </div>
+            <div style="display: flex;
+                        padding: 16px;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 20px;
+                        align-self: stretch;
+                        border-radius: var(--radius-medium, 8px);
+                        border: 1px solid var(--gray-300, #D0D5DD);
+                        background: #FFF;">
+                        <div style="color: var(--gray-800, #1D2939);
+                        font-size: 20px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: 24px; /* 120% */">Comments</div>
+                        <div style="display: flex;
+                        align-items: flex-start;
+                        gap: 8px;
+                        align-self: stretch;">
+                      <img src="<%=user?.image%>" style="display: flex;
+                      width: 32px;
+                      height: 32px;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      border-radius: 200px;">
+                      <div style="width: 100%;">
+                      <textarea style="display: flex;
+                      padding: 14px 20px;
+                      align-items: flex-start;
+                      gap: 10px;
+                      width: 100%;
+                      height: 100px;
+                      flex: 1 0 0;
+                      align-self: stretch;
+                      border-radius: 12px;
+                      border: 1px solid #ECECEC;
+                      color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+                      background: #FFF;" placeholder="Leave a comment" id="CommentBox"></textarea>
+                       <button class="btn btn-outline-primary" style="display: flex;
+                      margin-top: 12px;
+                       justify-content: center;
+                       align-items: center;
+                       gap: 8px;
+                       align-self: stretch;
+                       border-radius: 12px;" onclick="SaveComment()"> Comment</button>
+                      </div>
+                    </div>
+                      <div style="display: flex;flex-direction: column;gap:12px;align-items: flex-start;" id="CommentBody">
+                      <%for(let comment of TaskData.comments||[]){%>
+                        <div style="display: flex;
+                        align-items: flex-start;
+                        gap: 8px;
+                        align-self: stretch;">
+                      <img src="<%=comment.image%>" style="display: flex;
+                      width: 32px;
+                      height: 32px;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      border-radius: 200px;">
+                      <div style="display: flex;
+                      padding: 14px 20px;
+                      align-items: flex-start;
+                      gap: 10px;
+                      width: 100%;
+                      flex: 1 0 0;
+                      align-self: stretch;
+                      border-radius: 12px;
+                      border: 1px solid #ECECEC;
+                      color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+                      background: #FFF;" placeholder="Leave a comment"><%=comment.content%></div>
+                      </div>
+                        <%}%>
+                      </div>
+                        </div>
+        </div>
+
+
+
+
+
+
+
+
+
+        <script type="text/javascript">
+            let task = `<%-JSON.stringify(task)%>`;
+            task = JSON.parse(task);
+
+
+            for (let kr of task.data?.krs||[]) {
+                let id = kr.id;
+                let title = kr.title
+                document.getElementById(
+                    "KRSBody"
+                ).innerHTML += `<div class="teamBox" id='TaskKR${id}'>${title} </div>`;
+
+            }
+            for (let subkr of task.data?.subkrs||[]) {
+                let id = subkr.id;
+                let title = subkr.title
+                document.getElementById(
+                    "subKRSBody"
+                ).innerHTML += `<div class="teamBox" id='TasksubKR${id}'>${title}</div>`;
+
+            }
+
+
+
+            //comment 
+
+            function SaveComment(){
+  // i is for identify comment should insert only one time
+  let value=document.getElementById('CommentBox').value;
+  task.data.comments.push({image:'<%=user?.image%>',employeeId:'<%=user?.id%>',content:value,date:new Date()});
+  SaveTaskDataApi()
+  document.getElementById('CommentBox').value='';
+  document.getElementById('CommentBody').innerHTML=` <div style="display: flex;
+                          align-items: flex-start;
+                          gap: 8px;
+                          align-self: stretch;">
+                        <img src="<%=user?.image%>" style="display: flex;
+                        width: 32px;
+                        height: 32px;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 200px;">
+                        <div style="display: flex;
+                        padding: 14px 20px;
+                        align-items: flex-start;
+                        gap: 10px;
+                        width: 100%;
+                        flex: 1 0 0;
+                        align-self: stretch;
+                        border-radius: 12px;
+                        border: 1px solid #ECECEC;
+                        color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+                        background: #FFF;" placeholder="Leave a comment">${value}</div>
+                        </div>` +document.getElementById('CommentBody').innerHTML
+}
+
+
+
+
+function setStatusToTask(status, type, index) {
+        let statusbody = document.getElementById('initiative' + type )
+        type = type.trim()
+
+        let statusbodydropdown = document.getElementById('initiative' + type  + 'dropdown')
+        let selectedChild = statusbodydropdown.children[index];
+        statusbody.innerHTML = selectedChild.innerHTML;
+        if (type == 'Status' && task.data[type].label != status && (task.data[type].label == 'In Progress' || status == 'In Progress')) {
+            if (status == 'In Progress') {
+                task.InProgressStartedTime = new Date();
+            }
+            else {
+
+                task.PervInProgressTime += new Date() - (task.InProgressStartedTime ? new Date(task.InProgressStartedTime) : new Date());
+                task.InProgressStartedTime = null;
+            }
+        }
+        let mainitem = selectedChild.querySelector('.Status_hold').style;
+        task.data[type] = { label: status, color: mainitem?.color, bgcolor: mainitem?.background };
+        SaveTask()
+    }
+
+            
+            async function SaveTask() {
+                let response = await fetch('/create/task', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(task)
+                })
+            }
+
+            function Goback() {
+                window.history.back()
+            }
+
+        </script>
+
+        <!-- Include JavaScript files -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+        <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+        <script src="../js/purpose.core.js"></script>
+        <!-- Page JS -->
+        <script src="../libs/autosize/dist/autosize.min.js"></script>
+
+        <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+        <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+        <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+        <script src="../libs/moment/min/moment.min.js"></script>
+
+        <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+        <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+        <!-- Purpose JS -->
+        <script src="../js/purpose.js"></script>
+        <!-- Demo JS - remove it when starting your project -->
+        <script src="../js/demo.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+
+
+
+</body>
+
+</html>

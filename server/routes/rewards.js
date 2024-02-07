@@ -88,7 +88,7 @@ router.get("/rewards/:employeeId", ensureAuth, async (req, res) => {
         (reward) => reward[0] === employee._id.toString()
       );
     res.locals.managerVisiting = req.query.manager === "True";
-    console.log(req.params);
+   
     res.locals.rewardsdata = rewardsdata;
     res.locals.employee = employee;
     res.locals.user = employee;

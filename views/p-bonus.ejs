@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <meta name="author" content="Webpixels" />
+    <title>Trainity - Admin Panel</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+    <!-- Purpose CSS -->
+
+    <!-- Font Awesome 5 -->
+    <link
+      rel="stylesheet"
+      href="../libs/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../libs/fullcalendar/dist/fullcalendar.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="path/to/font-awesome/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../assets/libs/flatpickr/dist/flatpickr.min.css"
+    />
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+    <link rel="stylesheet" href="../css/styling1.css" id="stylesheet" />
+    <link rel="stylesheet" href="../css/bonus.css" id="stylesheet" />
+  </head>
+
+  <body
+    class="application application-offset"
+    style="
+      margin-left: 300px;
+      width: calc(100vw - 300px);
+      background: #fafafa;
+      display: flex;
+      padding: 10px 32px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+      flex: 1 0 0;
+      padding-top: 0px;
+    "
+    id="MainPageContent"
+  >
+    <!-- Sidenav -->
+    <%- include('partials/sidepanel'); -%>
+    <!-- Content -->
+    <div
+      class="main-content position-relative"
+      style="
+        margin-top: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-right: 20px;
+        gap: 24px;
+      "
+    >
+      <div class="row mt-4">
+        <div
+          style="
+            padding-left: 20px;
+            display: grid;
+            grid-template-columns: auto auto;
+          "
+        >
+          <button class="btn"
+            onclick="window.location.href='/rewards/<%= employeeId %>'"
+          >
+            <i class="fas fa-award"></i>
+            Rewards
+          </button>
+          <button
+            class="btn"
+            style="
+              background: #d1fadf;
+              border-bottom: 2px solid #48bf84;
+              color: #48bf84;
+            "
+          >
+            <i class="fas fa-gift"></i>
+            Bonuses and ESOPs
+          </button>
+        </div>
+      </div>
+      <% function ChangeDate(date) {
+              
+        if(!date)
+        date=new Date()
+        const options = { day: "numeric", month: "long", year: "numeric" };
+        const formattedDate = new Date(date).toLocaleDateString(undefined, options);
+        return formattedDate;
+      } %>
+      <% if (user.employmentType !== "Full Time") {%>
+      <div style="width: 100%; padding-right: 24px; flex-direction: column; justify-content: flex-start; align-items: center; gap: 4px; display: inline-flex">
+        <div style="align-self: stretch; padding-left: 24px; padding-right: 24px; padding-top: 16px; padding-bottom: 16px; background: white; border-radius: 12px; border: 1px #F79009 solid; justify-content: flex-start; align-items: flex-start; gap: 16px; display: inline-flex">
+          <img src="../img/icons/Warning.svg" >
+          <div style="flex: 1 1 0; flex-direction: column; justify-content: center; align-items: flex-start; gap: 12px; display: inline-flex">
+            <div style="align-self: stretch; height: 44px; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 4px; display: flex">
+              <div style="color: #344054; font-size: 14px; font-family: Manrope; font-weight: 700; line-height: 20px; word-wrap: break-word">Bonuses and ESOPs are for full-time employees only.</div>
+              <div style="align-self: stretch; color: #667085; font-size: 14px; font-family: Manrope; font-weight: 400; line-height: 20px; word-wrap: break-word">Sorry, bonuses and ESOPs are offered exclusively to our full-time employees, so you won't be eligible for the bonus as an intern.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } %>
+      <div class="row" style="width: 100%; margin-top: 1rem">
+        <div class="col-sm-12 col-lg-7">
+          <div class="card card-fluid">
+            <div
+              class="card-header d-flex justify-content-between align-items-center border-0"
+              style="padding-bottom: 0"
+            >
+              <div>
+                <h5
+                  class="mb-0"
+                  style="
+                    color: #181818;
+                    font-family: Manrope;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                  "
+                >
+                  Your Bonuses
+                </h5>
+              </div>
+            </div>
+            <div class="card-body">
+
+              <% if(!bonusInfo) { %>
+              <div
+                style="min-height: 800px; display: grid; place-items: center"
+              >
+                <div class="content">
+                  <div style="text-align: center; font-size: 50px">
+                    <img src="../img/icons/gift.svg">
+                  </div>
+                  <div class="mt-2">
+                    <h2
+                      style="
+                        text-align: center;
+                        color: var(--gray-800, #1d2939);
+                        text-align: center;
+                        font-family: Manrope;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 24px; /* 150% */
+                        letter-spacing: 0.24px;
+                      "
+                    >
+                      No Bonus Alloted yet
+                    </h2>
+                  </div>
+                </div>
+              </div>
+              <% } else { %>
+                <p style="color: var(--gray-600, #475467);
+                font-family: Manrope;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 24px; /* 150% */
+                letter-spacing: 0.24px;">
+                  Explore your bonuses in detail and take control of your financial growth.
+                  Here's a breakdown of your Joining and Retention Bonuses:
+                </p>
+                <div>
+                  <div class="content-2">
+                    <div>
+                      <h2>Total Bonus Amount</h2>
+                    </div>
+                    <div>
+                      <h1>₹<%= totalBonusAmount %></h1>
+                    </div>
+                  </div>
+                  <div class="content-2">
+                    <div>
+                      <h2>Current Bonus Balance</h2>
+                    </div>
+                    <div>
+                      <h2 style="font-weight: 700;">₹<%= currBonusValue %></h2>
+                    </div>
+                  </div>
+                  <div class="bonus-progress">
+                    <div
+                      class="progress"
+                      style="background-color: #d1fadf; margin-top: 1rem"
+                    >
+                      <div
+                        class="progress-bar w-<%= bonusPercentageTime %>"
+                        role="progressbar"
+                        style="width:<%= bonusPercentageTime %>%"
+                        aria-valuenow="<%= bonusPercentageTime %>"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <div
+                    class="labels"
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                    "
+                  > 
+                  <span style="width: 2em; text-wrap: nowrap;">Joined</span>
+                  <% let monthNo=1%>
+                      <% for(let monthInfo of bonusInfo.monthlyDistribution||[]) {%>
+                       <% for(let i=monthNo;i<=monthInfo.monthNo-1;i++){%>
+                        <span style="visibility: hidden;">M<%= i %></span>
+                        <%}%>
+                        <span >M<%= monthInfo.monthNo %></span>
+                        <% monthNo=monthInfo.monthNo+1%>
+                        <%}%>
+                        <% for(let i=monthNo;i<=12;i++){%>
+                          <span style="visibility: hidden;">M<%= i %></span>
+                          <%}%>
+                     
+                  </div>
+                </div>
+
+                <div class="breakdown" style="margin-top: 2rem">
+                  <div>
+                    <h2 style="margin-bottom: 1rem">Bonus Breakdown</h2>
+                  </div>
+                  <table class="table">
+                    <thead style="background: #f2f4f7">
+                      <tr style="display: flex;width: 100%;">
+                        <th scope="col">Vesting Period</th>
+                        <th scope="col" style="text-align: center">Status</th>
+                        <th scope="col" style="text-align: center">
+                          Bonus Amount
+                        </th>
+                        <th scope="col" style="text-align: center">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let monthsInfo of bonusInfo?.monthlyDistribution||[]) { %>
+                        <tr>
+                        <th  scope="row" class="time-label">M<%= monthsInfo.monthNo %></th>
+                        <td style="text-align: center">
+                          <% if(monthsInfo.status === 'Withdrawn') { %>
+                            <span class="badge badge-info badge-pill">
+                              Withdrawn
+                            </span>
+                          <% } else if (monthsInfo.status=='Available') { %>
+                            <span class="badge badge-success badge-pill">
+                              Available
+                            </span>
+                          <% } else { %>
+                            <span class="badge badge-secondary badge-pill">
+                              Locked
+                            </span>
+                          <% } %>
+                        </td>
+                        <td style="text-align: center" class="money-label">
+                          ₹<%= monthsInfo.amount %>
+                        </td>
+                        <td style="text-align: center" class="date-label">
+                          <%=ChangeDate(monthsInfo.date) %>
+                        </td>
+                      </tr>
+                      <% } %>
+                      
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <div class="withdraw">
+                  <h2>Withdrawing Your Bonus</h2>
+                  <p>
+                    When your bonus is ripe and ready, you can transfer it to
+                    your bank account after completing the required vesting
+                    period.
+                  </p>
+                  <% if(currBonusValue> 0) { %>
+                    <button class="btn btn-primary" style="color: white;"  data-toggle="modal" data-target=".set-employee-esop-unit">Send to Account</button>
+                  <% } else if (currBonusValue != "0") { %>
+                    <button class="btn btn-secondary">Send to 2 Account</button>
+                    <p style="font-size: 12px; margin-top: 0.5rem">
+                      <i class="fas fa-info-circle mr-2"></i>You haven’t met the
+                      minimum required vesting period yet.
+                    </p>
+                  <% } else { %>
+                    <button class="btn btn-secondary">Send to Account</button>
+                  <% } %>
+
+                </div>
+
+                <div class="faq">
+                  <div class="heading">
+                    <h1>FAQs</h1>
+                  </div>
+
+                  <div class="questions-container">
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >How do I become eligible for the joining and retention bonuses?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        To be eligible for these bonuses, you need to serve a minimum duration with the company, as specified in your employment agreement.
+                      </p>
+                    </div>
+
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >What happens if I leave the company before completing the vesting period?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        If you leave the company before completing the vesting period, you may forfeit some or all of your bonus, as outlined in the company's policy. It's best to check with Manager for the exact details.
+                      </p>
+                    </div>
+
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >How do I know when I've completed a vesting period?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        Your Manager will track your vesting progress, and you can typically find this information on your dashboard or by contacting manager. They'll let you know when you've met the conditions for each vesting period.
+                      </p>
+                    </div>
+
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >Can I withdraw my bonus at any time?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        No, you can't withdraw your bonus immediately. You need to meet specific vesting periods, 
+                        which are typically 3 months, 6 months, 9 months, or 1 year, depending on the terms.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >What is the process for withdrawing my bonus once I'm eligible?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        When you're eligible to withdraw your bonus, you can simply click the "Send to Account" button on your dashboard. The bonus will then be transferred to your designated bank account.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >Is the bonus taxed when I withdraw it?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        Taxation policies may vary by location, but generally, bonuses are subject to taxation. 
+                        Consult with your local tax authorities or a tax advisor to understand the tax implications of your bonus.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >Can I choose to reinvest my bonus into company stock or other investments instead of withdrawing it?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        The ability to reinvest your bonus may depend on company policies. 
+                        It's advisable to check with Manager or your benefits team to explore investment options for your bonus.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >What happens if the company's valuation changes during my vesting period?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        Changes in the company's valuation can affect the value of your bonuses. 
+                        Typically, the value of bonuses is tied to the company's performance. 
+                        Any fluctuations will be reflected in the value of your vested bonuses.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-lg-5">
+          <div class="card card-fluid">
+            <div
+              class="card-header d-flex justify-content-between align-items-center border-0"
+              style="padding-bottom: 0"
+            >
+              <div>
+                <h5
+                  class="mb-0"
+                  style="
+                    color: #181818;
+                    font-family: Manrope;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                  "
+                >
+                  Your ESOP Holdings
+                </h5>
+              </div>
+            </div>
+            <div class="card-body">
+
+              <% if(!esopInfo) { %>
+              <div
+                style="min-height: 800px; display: grid; place-items: center"
+              >
+                <div class="content">
+                  <div style="text-align: center; font-size: 50px">
+                    <img src="../img/icons/gift.svg">
+                  </div>
+                  <div class="mt-2">
+                    <h2
+                      style="
+                        text-align: center;
+                        color: var(--gray-800, #1d2939);
+                        text-align: center;
+                        font-family: Manrope;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 24px; /* 150% */
+                        letter-spacing: 0.24px;
+                      "
+                    >
+                      No ESOPs Alloted
+                    </h2>
+                  </div>
+                </div>
+              </div>
+
+              <% } else { %>
+                <div>
+                  <p style="color: var(--gray-600, #475467);
+                  font-family: Manrope;
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 500;
+                  line-height: 24px; /* 150% */
+                  letter-spacing: 0.24px;">Your ESOP Holdings show your piece of the company's growth. As the company does well, your ESOP units become more valuable.
+                     Keep track of your progress and discover ways to make the most of your investment</p>    
+                  <div>
+                  <div class="mt-1">
+                    <div class="content-2 mb-0">
+                      <div>
+                        <p>Total Units Granted</p>
+                      </div>
+                      <div>
+                        <h1><%= esopInfo.units %> units</h1>
+                      </div>
+                    </div>
+                  </div>
+                    <div style="text-align: right; margin-top: -1rem">
+                      <span
+                        style="
+                          color: var(--gray-500, #667085);
+                          text-align: right;
+                          font-family: Manrope;
+                          font-size: 12px;
+                          font-style: normal;
+                          font-weight: 500;
+                          line-height: 24px; /* 171.429% */
+                          letter-spacing: 0.21px;
+                        "
+                        >Over <%= esopInfo?.vestingPeriod %> years</span
+                      >
+                    </div>
+                  </div>
+                  <div>
+                    <div class="content-2 mb-0">
+                      <div>
+                        <p>Current Value</p>
+                      </div>
+                      <div>
+                        <h1 style="font-size: 16px">₹<%= currTotalValue %></h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-top: 0.75rem;">
+                    <div class="content-2 mb-0">
+                      <div>
+                        <p>Total ESOPs Currently Held</p>
+                      </div>
+                      <div>
+                        <h1><%= unitsAlloted %> units</h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="content-2 mb-0">
+                      <div>
+                        <p>Current value of ESOPs Held </p>
+                      </div>
+                      <div>
+                        <h1 style="font-size: 16px">₹<%= currValue %></h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-bottom: 2rem !important; margin-top: 0.75rem;" class="content-2 mb-0">
+                    <div>
+                      <p>Current Unit Value</p>
+                    </div>
+                    <div>
+                      <h1 style="font-size: 16px">₹<%= unitValue %></h1>
+                    </div>
+                  </div>
+                  <div class="content-2">
+                    <div>
+                      <p
+                        style="
+                          color: var(--gray-800, #1d2939);
+                          font-family: Manrope;
+                          font-size: 16px;
+                          font-style: normal;
+                          font-weight: 600;
+                          line-height: 24px; /* 150% */
+                        "
+                      >
+                        Vesting Progress
+                      </p>
+                    </div>
+                  </div>
+                  <div class="bonus-progress">
+                    <div
+                      class="progress"
+                      style="background-color: #d1fadf; margin-top: 1rem"
+                    >
+                      <div
+                        class="progress-bar w-<%=esopsPercentageTime%>"
+                        role="progressbar"
+                        style="width:<%=esopsPercentageTime%>%"
+                        aria-valuenow="<%=esopsPercentageTime%>"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <div
+                      class="labels"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                      "
+                    >
+                      <% for(let i=-1; i<esopRows.length; i++) { %>
+                        <% if(i == -1) { %>
+                          <span style="width: 1rem; text-wrap: nowrap;">Joined</span>
+                        <% } else { %>
+                            <% if(esopRows[i].timePeriod.includes("Y")) { %>
+                              <span><%= esopRows[i].timePeriod.split(" ")[0] %>Y</span>
+                            <% } %>
+                        <% } %>
+                      <% } %>
+                    </div>
+                  </div>
+  
+                  <div class="breakdown" style="margin-top: 2rem">
+                    <table class="table">
+                      <thead style="background: #f2f4f7">
+                        <tr>
+                          <th scope="col">Vesting Period</th>
+                          <th scope="col" style="text-align: center">
+                            Value (Units)
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <% for(let i=0; i<esopRows.length; i++) { %>
+                          <tr>
+                            <th scope="row" class="time-label"><%= esopRows[i].timePeriod %></th>
+                            <td style="text-align: center" class="money-label">
+                              <%= esopRows[i].units %>
+                            </td>
+                          </tr>
+                        <% } %>
+                      
+                      </tbody>
+                    </table>
+                  </div>
+
+                <div class="faq">
+                  <div class="heading">
+                    <h1>FAQs</h1>
+                  </div>
+
+                  <div class="questions-container">
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >What is an ESOP?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        An ESOP, or Employee Stock Ownership Plan, lets you become a part-owner of the company you work for.
+                         It's like having a share in the business!
+                      </p>
+                    </div>
+
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >What should I do with my ESOPs?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        It's up to you! Some people hold onto them for a long time, 
+                        while others sell them when they need the money. It's like deciding when to use your savings.
+                      </p>
+                    </div>
+
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >How do I get ESOPs?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        You usually get ESOPs as part of your job benefits. It's like a special bonus for being part of the team.
+                      </p>
+                    </div>
+
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >Can I sell my ESOPs right away?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        No, ESOPs often have a waiting period. You can't sell them immediately, 
+                        kind of like a savings account you can't touch right away.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >What happens if the stock price changes?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        The value of your ESOPs can go up or down with the company's stock price. 
+                        It's a bit like a roller coaster ride!
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >How long is the vesting period?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        The vesting period 4 years. During this time, you gradually(25%/yr) gain full ownership of your ESOPs.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >How do I track my ESOPs?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        You will always have access to the above section so you can keep an eye on your ESOPs and see how they're doing.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >What if I leave before vesting is complete?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        If you leave before your ESOPs fully vest, you may not get all of them. 
+                        It's like getting only part of your savings if you switch banks before your account matures.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >Can I leave my ESOPs to my family?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        In many cases, yes! You might be able to pass your ESOPs on to your family if you wish.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >Are there tax implications for ESOPs?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        Yes, there can be tax rules for ESOPs. It's a good idea to talk to a financial advisor or tax expert to understand them better. Read more 
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >How do ESOPs work?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        ESOPs work by giving you shares of the company gradually. The longer you work, the more shares you get.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- send to account Modal -->
+    <div
+      class="modal fade set-employee-esop-unit"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myLargeModalLabel"
+      aria-hidden="true"
+    >
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+          <div class="modal-header" style="align-items: center">
+            <h5 class="modal-title h6" id="myLargeModalLabel">
+              Confirm Bonus Withdrawal
+            </h5>
+        
+            <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+            
+          </div>
+          <form id="send-to-account-conformation">
+            <div class="modal-body">
+              <p style="margin-bottom: 1rem;">Are you sure you want to withdraw the bonus amount and send a request to your manager?</p>
+              
+              <p style="margin-bottom: 0;">This will notify your manager about your withdrawal request for the bonus amount Once confirmed, the request cannot be undone.</p>
+            </div>
+            <div
+              class="modal-footer"
+              style="
+                display: grid;
+                grid-template-columns: auto auto;
+                justify-content: space-between;
+              "
+            >
+              <button type="button" class="btn" data-dismiss="modal">
+                Cancel
+              </button>
+              <button type="submit" id="set-employee-esop-unit-submit" class="btn btn-primary">
+                Withdraw Bonus
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+      <%- include('partials/utility-modals'); -%>
+    </div>
+
+    <!-- Include JavaScript files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+    <script src="../js/purpose.core.js"></script>
+    <!-- Page JS -->
+    <script src="../libs/autosize/dist/autosize.min.js"></script>
+
+    <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+    <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="../libs/moment/min/moment.min.js"></script>
+
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+    <!-- Purpose JS -->
+    <script src="../js/purpose.js"></script>
+    <!-- Demo JS - remove it when starting your project -->
+    <script src="../js/demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script>
+      const faqButtons = document.querySelectorAll(".faq-button");
+
+      faqButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const faq = button.nextElementSibling;
+          const icon = button.children[1];
+
+          faq.classList.toggle("show");
+          icon.classList.toggle("rotate");
+        });
+      });
+
+
+      const sendToAccountForm = document.querySelector("#send-to-account-conformation");
+
+      sendToAccountForm.addEventListener("submit", async(e) => {
+        e.preventDefault();
+        try {
+          $(".set-employee-esop-unit").modal("hide");
+          $("#loadingModal").modal("show");
+          const response = await fetch("/bonus/withdraw", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const data = await response.json();
+          if(data.status == "success") {
+            $("#loadingModal").modal("hide");
+            $("#successModal").modal("show");
+          } else {
+            $("#loadingModal").modal("hide");
+            $("#errorModal").modal("show");
+          }
+        } catch (error) {
+          console.log(error);
+          $("#loadingModal").modal("hide");
+          $("#errorModal").modal("show");
+        }
+      });
+
+    </script>
+  </body>
+</html>

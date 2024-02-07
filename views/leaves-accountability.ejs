@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <meta name="author" content="Webpixels" />
+  <title>Trainity - Admin Panel</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+  <!-- Purpose CSS -->
+  <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="../libs/fullcalendar/dist/fullcalendar.min.css" />
+
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
+
+  <style>
+    body {
+      font-family: "Manrope", sans-serif !important;
+    }
+
+    .medium-text {
+      color: var(--gray-900, #101828);
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 24px;
+      /* 120% */
+    }
+
+    .light-text {
+      color: var(--gray-500, #667085);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 18px;
+      /* 150% */
+    }
+
+    .heading-text {
+      color: var(--gray-900, #101828);
+
+      font-size: 36px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 44px;
+      /* 122.222% */
+      letter-spacing: -0.72px;
+    }
+
+    .blue-text {
+      color: var(--pill-text-blue, #3b82f6);
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+    }
+
+    .flatpickr {
+      width: 250px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      font-size: 14px;
+      display: flex;
+      gap:10px;
+    }
+
+    .text-20-600 {
+      color: var(--text-content-primary, #181818);
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 130%;
+      /* 26px */
+    }
+
+    .text-16-700 {
+      color: var(--ref-neutral-neutral-0, #000);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 135%;
+      /* 21.6px */
+      letter-spacing: 0.16px;
+    }
+
+    .text-16-500 {
+      color: var(--content-on-light-secondary, #898989);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 135%;
+      /* 21.6px */
+      letter-spacing: 0.16px;
+    }
+
+    .text-14-500 {
+      color: var(--content-on-light-secondary, #898989);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 135%;
+      /* 18.9px */
+      letter-spacing: 0.14px;
+    }
+
+    /* Styling for selected dates */
+    .flatpickr-day.selected,
+    .flatpickr-day.startRange,
+    .flatpickr-day.endRange {
+      background-color: #3b82f6;
+      color: #fff;
+    }
+
+    /* Container for the date range picker */
+    .date-range-container {
+      display: flex;
+      flex-direction: column;
+      gap:10px;
+    }
+
+
+   
+    .pending{
+      color: var(--pill-text-orange, #FB923C);
+background: var(--pill-surface-orange, #FFFBEB);
+    }
+    .rejected{
+     background: var(--error-50, #FEF3F2);
+     color: var(--pill-text-red, #FF6565);
+         }
+    .accepted{
+      background: #D1FFE6;
+      color: #48BF84;
+    }
+    .danger{
+      color: #FF6565;
+    }
+    .success{
+       color: #48BF84;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+  <script>
+    (function(h, o, t, j, a, r) {
+      h.hj =
+        h.hj ||
+        function() {
+          (h.hj.q = h.hj.q || []).push(arguments);
+        };
+      h._hjSettings = {
+        hjid: 3534926,
+        hjsv: 6,
+      };
+      a = o.getElementsByTagName("head")[0];
+      r = o.createElement("script");
+      r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.3/dist/flatpickr.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+</head>
+
+
+<body class="application application-offset" style="background:#F7F7F7;margin-left:300px;width: calc(100vw - 300px);padding:0 32px;display: flex;justify-content: center;" id="MainPageContent">
+  <!-- Chat modal -->
+
+
+  <!-- Application container -->
+  <div >
+  
+    <!-- Sidenav -->
+    <div class="navbar-sidebar"><%- include('partials/sidepanel'); -%></div>
+    <!-- Content -->
+    <div class="main-content position-relative" >
+      <!-- Main nav -->
+
+      <div class="page-content">
+        <%- include('partials/utility-modals'); -%>
+        <!-- Page title -->
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="text col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0">
+              <!-- Page title + Go Back button -->
+              <% const currentDate = new Date();%>
+
+              <% const currentMonth = currentDate.toLocaleString('default', { month: 'long' }); %>
+              <% const currentYear = currentDate.getFullYear();%>
+            </div>
+            <div style="
+                  display: flex;
+                  align-items: center;
+                  align-items: flex-start;
+                  gap: 32px;
+                ">
+              <div class="card" style="
+                    display: flex;
+                    padding: 24px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 24px;
+                    height: 222px;
+                    width: 320px;
+                    border-radius: 8px;
+                  ">
+                <div class="medium-text" style="display: flex;align-items: center;gap:8px"> <img src="../img/calendar-add.svg">Available Leaves</div>
+                <div style="
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: flex-end;
+                      align-items: flex-start;
+                      align-self: stretch;
+                    ">
+                  <div class="light-text" style="font-size: 12px">In <%=currentMonth%></div>
+                  <div class="heading-text"><%=Math.max(employee.leaves.paid.total-employee.leaves.paid.used) + Math.max(employee.leaves.unpaid.total-employee.leaves.unpaid.used,0)%></div>
+                </div>
+                <div style="width: 100%">
+                  <div style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        align-self: stretch;
+                      ">
+                    <div class="light-text">Paid</div>
+                    <div class="light-text <%=employee.leaves.paid.total-employee.leaves.paid.used<=0?'danger':'success'%>"><%=Math.max(0,employee.leaves.paid.total-employee.leaves.paid.used)%>/<%=employee.leaves.paid.total%> remaining</div>
+                  </div>
+                  <div style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        align-self: stretch;
+                      ">
+                    <div class="light-text">Unpaid</div>
+                    <div class="light-text <%=employee.leaves.unpaid.total-employee.leaves.unpaid.used<=0?'danger':'success'%>"><%=Math.max(0,employee.leaves.unpaid.total-employee.leaves.unpaid.used)%>/<%=employee.leaves.unpaid.total%> remaining</div>
+                  </div>
+                </div>
+              </div>
+              <div class="card" style="
+                    display: flex;
+                    padding: 24px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 24px;
+                    height: 222px;
+                    width: 320px;
+                    border-radius: 8px;
+                  ">
+                <div class="medium-text" style="display: flex;align-items: center;gap:8px"> <img src="../img/calendar-tick.svg">Leaves Taken</div>
+                <div style="
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: flex-end;
+                      align-items: flex-start;
+                      align-self: stretch;
+                    ">
+                  <div class="light-text" style="font-size: 12px">In <%=currentMonth%></div>
+                  <div class="heading-text"><%=leaveInThisMonth%></div>
+                </div>
+                <div style="width: 100%; font-size: 14px" class="light-text">
+                  <div>Total leaves taken <%=totalLeave%></div>
+                  <div style="color: #48bf84; margin-top: 16px; float: right;cursor: pointer;" data-target="#LeaveHistoryModal" data-toggle="modal">
+                    <u>View History</u>
+                  </div>
+                </div>
+              </div>
+              <div class="card" style="
+                    display: flex;
+                    padding: 24px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 24px;
+                    width: 320px;
+                    height: 222px;
+                    border-radius: 8px;
+                  ">
+                <div class="medium-text" style="display: flex;align-items: center;gap:8px"> <img src="../img/calendar.svg">Working Days</div>
+                <div style="
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: flex-end;
+                      align-items: flex-start;
+                      align-self: stretch;
+                    ">
+                  <div class="light-text" style="font-size: 12px">
+                    In <%=currentMonth%>
+                  </div>
+                  <div class="heading-text"><%=workingdayInMonth%></div>
+                </div>
+                <div style="width: 100%; font-size: 14px" class="light-text">
+                  <%=workingdayInYear%> Days annually (<%=currentYear%>)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="
+            margin-top: 32px;
+            display: flex;
+            padding: 24px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 24px;
+            border-radius: 14px;
+          ">
+        <div style="
+              font-size: 24px;
+              color: #000;
+              font-size: 24px;
+              font-style: normal;
+              font-weight: 700;
+              line-height: normal;
+            " data-target="#LeavetypeExceedModal" data-toggle="modal">
+          Apply For Leave
+        </div>
+        <div style="
+              display: flex;
+              align-items: flex-start;
+              gap: 24px;
+              align-self: stretch;
+            ">
+          <div class="card" style="
+                display: flex;
+                width: 347px;
+                height: 200px;
+                padding: 16px 24px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 32px;
+                border-radius: 8px;
+                border: 1px solid #dcdcdc;
+              " data-target="#LongLeaveModal" data-toggle="modal" onclick="ChangeTypeOfDurationLeave('Long Leave')">
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <div class="medium-text" style="
+                    color: var(--gray-900, #101828);
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 32px;
+                  ">
+                Long Leave
+              </div>
+              <div class="light-text" style="font-size: 16px">
+                3 Days and above
+              </div>
+              <div class="light-text" style="font-size: 16px">
+                <span style="color: var(--error-500, #f04438)">*</span>Required reason for the leave
+              </div>
+            </div>
+            <button class="btn btn-primary" style="
+                  padding: 8px 24px;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 8px;
+                  width: 100px;
+                  border-radius: 12px;
+                  align-self: stretch;
+                ">
+              Apply
+            </button>
+          </div>
+          <div class="card" style="
+                display: flex;
+                width: 347px;
+                height: 200px;
+                padding: 16px 24px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 32px;
+                border-radius: 8px;
+                border: 1px solid #dcdcdc;
+              " onclick="ChangeTypeOfDurationLeave('Short Leave')" data-target="#ShortLeaveModal" data-toggle="modal">
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <div class="medium-text">Short Leave</div>
+              <div class="light-text" style="font-size: 16px">1-2 Days</div>
+            </div>
+            <button class="btn btn-primary" style="
+                  padding: 8px 24px;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 8px;
+                  width: 100px;
+                  margin-top: 30px;
+                  border-radius: 12px;
+                  align-self: stretch;
+                ">
+              Apply
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <% const leaveHistoryArray = LeaveHistory %>
+
+      <% function totalUnPaidLeaveInCurrentMonth() { %>
+      <% const currentDate = new Date(); %>
+      <% const currentMonth = currentDate.getMonth() + 1; // Months are zero-indexed %>
+      <% const currentYear = currentDate.getFullYear(); %>
+      <% const totalPaidLeave = leaveHistoryArray.reduce((total, leaves) => { %>
+      <% const dateRange = leaves.dates.split(' - '); // Split date range into start and end dates %>
+      <% const startDate = new Date(dateRange[0]); %>
+      <% const endDate = new Date(dateRange[1]); %>
+      <% const startMonth = startDate.getMonth() + 1; %>
+      <% const startYear = startDate.getFullYear(); %>
+      <% const endMonth = endDate.getMonth() + 1; %>
+      <% const endYear = endDate.getFullYear(); %>
+      <% let startdateofunpaidleave=startDate.getDate(); %>
+      <% const lastDayOfMonth = new Date(currentYear, currentMonth, 0).getDate(); %>
+   
+      <% for (let i = 0; i < leaves.leaveType.length; i++) { %>
+        <% if(leaves.status=='Accepted'&& leaves.leaveType[i].type!='unpaid'){%>
+        <%  startdateofunpaidleave+=leaves.leaveType[i].day; %>
+          <%}%>
+          <%}%>
+      <% for (let i = 0; i < leaves.leaveType.length; i++) { %>
+        <% if(leaves.status=='Accepted'){%>
+      <% if (leaves.leaveType[i].type == "unpaid" && startMonth === currentMonth && startYear === currentYear && startdateofunpaidleave<=lastDayOfMonth) { %>
+      <% return total + Math.min(leaves.leaveType[i].day,lastDayOfMonth-startdateofunpaidleave +1); %>
+      <% } %>
+      <% } %>
+      <% } %>
+      <% return total; %>
+      <% }, 0); %>
+      <% return totalPaidLeave; %>
+      <% } %>
+      <% function ChangeDate(date) {
+        const options = { day: "numeric", month: "long", year: "numeric" };
+        const formattedDate = new Date(date).toLocaleDateString(undefined, options);
+        return formattedDate;
+      } %>
+      <% let unpaidleaves = totalUnPaidLeaveInCurrentMonth() %>
+      <% let WithdrawedMoney=[]%>
+                <% let totalWithdraw=0 %>
+                  <% for(let withdraw of WithdrawHistory){%>
+                    <% let withdrawDate = new Date(withdraw.dateofWithdrawal) %>
+                    <% let currentMonth= currentDate.getMonth()+1 %>
+                      <% if(withdraw.status=='Accepted' && withdrawDate.getMonth()+1==currentMonth) {%>
+                       <% WithdrawedMoney.push({amount: withdraw.amount,dateofWithdrawal:ChangeDate(withdraw.dateofWithdrawal)})%>
+                       <% totalWithdraw+=withdraw.amount %>
+                        <%}%>
+                    <%}%>
+      <% if(unpaidleaves>0){%>
+      <% let  Deduction=(employee.salary/TotalworkingdayInMonth).toFixed(2) *unpaidleaves %>;
+      <% let netsalary= Math.max(0,(employee.salary - Deduction-totalWithdraw).toFixed(2)) %>
+      <div class="card" style="
+            display: flex;
+            width: 100%;
+            padding: 24px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            border-radius: 14px;
+          ">
+        <div style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              width: 100%;
+            ">
+          <div style="display: flex; gap: 10px; align-items: center">
+            <div class="blue-text">Your Salary</div>
+            <div class="blue-text"><%=currentMonth%></div>
+          </div>
+          <div class="blue-text">&#8377; <%= netsalary%> </div>
+        </div>
+        <div style="
+              width: 100%;
+              height: 1px;
+              align-self: stretch;
+              stroke-width: 1px;
+              background-color: var(--stroke-secondary, #dcdcdc);
+            "></div>
+        <div style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              width: 100%;
+            ">
+          <div style="
+                color: var(--content-on-light-primary, #181818);
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+              ">
+            Original Salary
+          </div>
+          <div style="
+                color: var(--content-on-light-primary, #181818);
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+              ">
+            &#8377; <%= employee.salary %>
+          </div>
+        </div>
+        <div style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              width: 100%;
+            ">
+          <div style="
+                color: var(--pill-text-red, #ff6565);
+
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+              ">
+            <div style="font-size: 20px">Unpaid Leave (Deduction)</div>
+            <div style="font-size: 14px"><%= unpaidleaves%> days</div>
+          </div>
+          <div style="
+                color: var(--pill-text-red, #ff6565);
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+              ">
+           - &#8377; <%= Deduction%>
+          </div>
+        </div>
+        <% for(let withdraw of WithdrawedMoney){%>
+          <div style="display: flex;justify-content: space-between;align-items: center;width:100%">
+            
+               <div style="color: #FF5050;
+               font-size: 20px;
+               font-style: normal;
+               font-weight: 500;
+               line-height: normal;">Total Withdrawn Amount on- <%=withdraw.dateofWithdrawal%></div>
+               <div style="color: #FF5050;
+               font-size: 20px;
+               font-style: normal;
+               font-weight: 500;
+               line-height: normal;">- ₹  <%=withdraw.amount%></div>
+            </div>
+          
+          <%}%>
+      </div>
+      <%}%>
+      
+       
+        <div
+          class="card"
+          style="
+            display: flex;
+            width: 100%;
+            padding: 24px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 24px;
+            border-radius: 14px;
+          "
+        >
+          <div
+            style="
+              color: #000;
+              font-size: 24px;
+              font-style: normal;
+              font-weight: 700;
+              line-height: normal;
+            "
+          >
+            Leave requests
+          </div>
+          <% LeaveHistory.forEach((leaves,index)=>{ %>
+
+      <div style="
+              display: flex;
+              padding: 16px;
+              justify-content: space-between;
+              align-items: center;
+              align-self: stretch;
+              border-radius: 14px;
+              border: 1px solid #dcdcdc;
+            ">
+        <div style="display: flex; flex-direction: column; align-items: center;justify-content: center;gap:5px;
+               
+                line-height: normal;
+                display: flex;
+                align-items: center;
+                gap:5px; width:220px;
+              ">
+              <%let totalbadgesRed=0 %>
+              <div style=" color: var(--ref-neutral-neutral-0, #000); font-size: 16px;
+              font-style: normal;
+              font-weight: 700;">
+          <% for(let i=0;i<leaves.leaveType.length;i++) {%>
+          <%if(leaves.leaveType[i].type&&leaves.leaveType[i].type =='unpaid'){%>
+          Unpaid
+          <%}else if(leaves.leaveType[i].type&&leaves.leaveType[i].type =='paid'){%>
+          Paid
+          <%}else if(leaves.leaveType[i].type&&leaves.leaveType[i].type =='badges'){%>
+          <img src="../img/gem.svg" style="width:24px;height:24px;"></img> Badges
+          <% totalbadgesRed= leaves.leaveType[i].day*10;%>
+          <%}%>
+          <% if(i+1!=leaves.leaveType.length){%>
+            +
+            <%}%>
+                <%}%>
+              </div>
+              <% if(totalbadgesRed>0){%>
+              <div style=" color: var(--content-on-light-secondary, #898989);
+               font-size: 16px;
+              font-style: normal;
+              font-weight: 500;">
+<%=totalbadgesRed%> badges redeemed
+              </div>
+              <%}%>
+        </div>
+        <div style="
+                color: var(--ref-neutral-neutral-0, #000);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+              ">
+          <%=leaves.dates%>
+        </div>
+        <div style="
+                display: flex;
+                padding: 8px 16px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+               
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                border-radius: 6px;
+                
+              " class="<%=leaves.status.toLowerCase()%>">
+          <%=leaves.status%> Approval
+        </div>
+        <% let todaydate=new Date(); %>
+        <% let startdate =new Date((leaves.dates).split(' - ')[0]); %>
+    
+        <% if(( leaves.status.toLowerCase()=='pending'  || (leaves.durationType=='Short Leave' && leaves.takenByEmployee)) && todaydate<startdate ){%>
+        <div style="
+                display: flex;
+                height: 48px;
+                padding: 8px 24px;
+                align-items: center;
+                gap: 8px;
+                color: #ff6565;
+                text-align: center;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                border-radius: 14px;
+                cursor: pointer;
+              " data-target="#CancelLeaveRequestModal" data-toggle="modal" onclick="SaveIdDeleteRequest('<%=leaves._id%>')">
+          Cancel <%=leaves.durationType=='Short Leave'?'Leave':'Request' %>
+        </div>
+        <%}else if( leaves.reasonFromManager.length>0 ){%>
+          <div onclick="changeDropDownstatus('reasonfromManager-<%=index%>','<%=LeaveHistory.length%>')">
+            <img src="../leavesAccountability/feedback.svg"  id="feedbackdropdown-<%=index%>" />
+            <div style="border-radius: 14px;
+            display: none;
+            position: absolute;
+            right: 50px;
+            top:0px;
+            background: white;
+            box-shadow: rgba(16, 24, 40, 0.06) 0px 1px 2px 0px, rgba(16, 24, 40, 0.1) 0px 1px 3px 0px;" id="reasonfromManager-<%=index%>">
+              <div style="
+              display: flex;
+                  width: 480px;
+                  padding: 16px;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  gap: 16px; 
+                " >
+    
+          <div style="display: flex; align-items: center; gap: 10px">
+            <div class="light-text" style="font-size: 12px">By</div>
+            <img src="<%=leaves.managerImage%>" style="width: 24px; height: 24px; border-radius: 24px" />
+            <div class="light-text" style="color: black"><%=leaves.managerName%></div>
+          </div>
+          <div style="
+                  color: var(--content-on-light-primary, #181818);
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: normal;
+                ">
+          <%=leaves.reasonFromManager %>
+          </div>
+        </div>
+        </div>
+        </div>
+       
+        <%}%>
+          </div>
+       <% })%>
+      </div>
+
+    </div>
+  </div>
+  
+  <!-- Cancel Leave Request Modal -->
+
+  <div class="modal docs-example-modal-sm" tabindex="-1" id="CancelLeaveRequestModal" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content" id="myModalsm" style="width: 350px; border-radius: 12px">
+        <div class="modal-header">
+          <div style="
+                color: var(--text-content-primary, #181818);
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 130%;
+              ">
+            Cancel Leave Request
+          </div>
+        </div>
+        <div class="modal-body">
+          <div style="
+                align-self: stretch;
+                color: var(--content-on-light-secondary, #898989);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 135%; /* 18.9px */
+                letter-spacing: 0.14px;
+              ">
+            Are you sure you want to cancel your leave request? This action
+            cannot be undone.
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: row; gap: 10px" class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary heading" style="width: 140px; border-radius: 14px; color: black" data-dismiss="modal">
+            Keep
+          </button>
+          <button type="button" class="btn btn-success heading" style="
+                width: 300px;
+                border-radius: 14px;
+                background: var(--pill-text-red, #ff6565);
+                color: white;
+                border: none;
+              " data-dismiss="modal" onclick="DeleteLeaveRequest()">
+            Cancel Request
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Long Leave -->
+  <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="LongLeaveModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="border-radius: 14px">
+        <div class="modal-header">
+          <h5 class="modal-title h6" id="myLargeModalLabel">
+            Apply For Leave (Long)
+          </h5>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal" />
+        </div>
+        <div class="modal-body" style="
+              border: 1px solid var(--stroke-primary, #ececec);
+              display: flex;
+              background: var(--surface-primary, #fff);
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 32px;
+            ">
+          <div style="
+                width: 100%;
+                display: flex;
+                gap: 10px;
+                flex-direction: column;
+              ">
+            <div class="light-text" style="font-size: 16px">
+              What is your reason for taking this leave.
+            </div>
+            <textarea style="
+                  display: flex;
+                  height: 92px;
+                  padding: 16px;
+                  align-items: flex-start;
+                  gap: 10px;
+                  width: 100%;
+                  align-self: stretch;
+                  border-radius: 14px;
+                  color:black;
+                  background: var(--surface-secondary, #fafafa);
+                " class="light-text" placeholder="Ex: Emergency at my homeplace." oninput="ChangeReasonFromEmployee(event.target.value)"></textarea>
+          </div>
+          <div style="
+                width: 100%;
+                display: flex;
+                gap: 10px;
+                flex-direction: column;
+              ">
+            <div class="light-text">Type of Leave</div>
+            <div id="longleaveTypeSelect" style="
+                  display: flex;
+                  height: 40px;
+                  padding: 8px 16px;
+                  align-items: center;
+                  gap: 16px;
+                  align-self: stretch;
+                  width: 100%;
+                  border-radius: 8px;
+                  border: 1px solid var(--stroke-secondary, #dcdcdc);
+                  color:black;
+                  cursor: pointer;
+                  background: var(--surface-primary, #fff);
+                " class="light-text"  onclick="changeDropDownstatusofoptions('dropdownOptionsLongLeave')">
+                 Paid Leave or Unpaid Leave or Leave for badges earned
+            </div>
+            <div id="dropdownOptionsLongLeave" style=" display:none;
+            flex-direction: column;
+            position: absolute;
+            left: 50px;
+            bottom: -50px;
+            border-radius: 12px;
+            width: 300px;
+            background: var(--surface-primary, #FFF);">
+              <div value="paid" class="light-text" style="display: flex;
+              padding: 16px;
+              cursor: pointer;
+              justify-content: space-between;
+              align-items: center;
+              align-self: stretch;
+             " onclick="ChangeTypeOfLeave('paid','dropdownOptionsLongLeave')">
+                <div style="color: black;display: flex;align-items: center;gap:10px"> <img src="../leavesAccountability/paid.svg" >Paid Leave</div>
+                <div><%=Math.max(0,employee.leaves.paid.total-employee.leaves.paid.used)%>/<%=employee.leaves.paid.total%> Leaves Left</div>
+              </div>
+              <div value="unpaid" class="light-text" style="display: flex;
+              padding: 16px;
+              justify-content: space-between;
+              align-items: center;
+              align-self: stretch;
+              cursor: pointer;
+             "  onclick="ChangeTypeOfLeave('unpaid','dropdownOptionsLongLeave')">
+                <div style="color: black;display: flex;align-items: center;gap:10px"> <img src="../leavesAccountability/unpaid.svg" >UnPaid Leave</div>
+                <div><%=Math.max(0,employee.leaves.unpaid.total-employee.leaves.unpaid.used)%>/<%=employee.leaves.unpaid.total%> Leaves Left</div>
+              </div>
+              <div value="badges" class="light-text"style="display: flex;
+              padding: 16px;
+              justify-content: space-between;
+              align-items: center;
+              align-self: stretch;
+              cursor: pointer;
+             "  onclick="ChangeTypeOfLeave('badges','dropdownOptionsLongLeave')"> 
+                <div style="color: black">
+                  <img src="../img/gem.svg" style="width:24px;height:24px;"></img> 10 Badges/Day
+                </div>
+                <div>Up to <%= parseInt((user.badges - user.usedBadges) / 10) %> Leave</div>
+              </div>
+            </div>
+          </div>
+           
+            <div class="date-range-container " >
+              <div  class="flatpickr">
+              <img src="../img/icons performance mgmt/desktop/d_calendar_black_big.svg">
+              <input type="text" id="longleavedaterange" placeholder="Select date range" data-flatpickr-mode="range" onchange="ChangeDates(this.value);" style="border:none;width:100%" />
+              </div>
+            
+            </div>
+      
+        </div>
+        <div class="modal-footer" style="padding: 1rem">
+          <button class="btn btn-outline-primary" style="
+                display: flex;
+                height: 48px;
+                padding: 8px 16px;
+                align-items: center;
+                gap: 8px;
+                border-radius: 14px;
+              " data-dismiss="modal">
+            Cancel
+          </button>
+          <button class="btn btn-primary" disabled style="
+                display: flex;
+                height: 48px;
+                padding: 8px 16px;
+                align-items: center;
+                gap: 8px;
+                border-radius: 14px;
+              " id="LongLeaveSubmitButton" data-dismiss="modal" onclick="SubmitLeaveRequest()">
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Short Leave -->
+  <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="ShortLeaveModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="border-radius: 14px">
+        <div class="modal-header">
+          <h5 class="modal-title h6" id="myLargeModalLabel">
+            Apply For Leave (Short)
+          </h5>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal" />
+        </div>
+        <div class="modal-body" style="
+              border: 1px solid var(--stroke-primary, #ececec);
+              display: flex;
+              background: var(--surface-primary, #fff);
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 32px;
+            ">
+         
+         
+              
+
+          <div style="
+          width: 100%;
+          display: flex;
+          gap: 10px;
+          flex-direction: column;
+        ">
+      <div class="light-text">Type of Leave</div>
+      <div id="shortleaveTypeSelect" style="
+            display: flex;
+            height: 40px;
+            padding: 8px 16px;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            align-self: stretch;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--stroke-secondary, #dcdcdc);
+            color:black;
+            background: var(--surface-primary, #fff);
+          " class="light-text"  onclick="changeDropDownstatusofoptions('dropdownOptionsShortLeave')">
+           Paid Leave or Unpaid Leave or Leave for badges earned
+      </div>
+      <div id="dropdownOptionsShortLeave" style=" display:none;
+      flex-direction: column;
+      position: absolute;
+      left: 50px;
+      bottom: -50px;
+      
+      border-radius: 12px;
+      width: 300px;
+      background: var(--surface-primary, #FFF);">
+        <div value="paid" class="light-text" style="display: flex;
+        padding: 16px;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        align-self: stretch;
+       " onclick="ChangeTypeOfLeave('paid','dropdownOptionsShortLeave')">
+          <div style="color: black;display: flex;align-items: center;gap:10px"> <img src="../leavesAccountability/paid.svg" >Paid Leave</div>
+          <div><%=Math.max(0,employee.leaves.paid.total-employee.leaves.paid.used)%>/<%=employee.leaves.paid.total%> Leaves Left</div>
+        </div>
+        <div value="unpaid" class="light-text" style="display: flex;
+        padding: 16px;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        align-self: stretch;
+       "  onclick="ChangeTypeOfLeave('unpaid','dropdownOptionsShortLeave')">
+          <div style="color: black;display: flex;align-items: center;gap:10px"> <img src="../leavesAccountability/unpaid.svg" >UnPaid Leave</div>
+          <div><%=Math.max(0,employee.leaves.unpaid.total-employee.leaves.unpaid.used)%>/<%=employee.leaves.unpaid.total%> Leaves Left</div>
+        </div>
+        <div value="badges" class="light-text"style="display: flex;
+        padding: 16px;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        align-self: stretch;
+       "  onclick="ChangeTypeOfLeave('badges','dropdownOptionsShortLeave')"> 
+          <div style="color: black">
+            <img src="../img/gem.svg" style="width:24px;height:24px;"></img> 10 Badges/Day
+          </div>
+          <div>Up to <%= parseInt((user.badges - user.usedBadges) / 10) %> Leave </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="date-range-container " >
+      <div  class="flatpickr">
+      <img src="../img/icons performance mgmt/desktop/d_calendar_black_big.svg">
+      <input type="text" id="shortleavedaterange" placeholder="Select date range" data-flatpickr-mode="range" onchange="ChangeDates(this.value);" style="border:none;width:100%" />
+      </div>
+    
+    </div>
+          
+        </div>
+        <div class="modal-footer" style="padding: 1rem">
+          <button class="btn btn-outline-primary" style="
+                display: flex;
+                height: 48px;
+                padding: 8px 16px;
+                align-items: center;
+                gap: 8px;
+                border-radius: 14px;
+              " data-dismiss="modal">
+            Cancel
+          </button>
+          <button class="btn btn-primary" disabled id="ShortLeaveSubmitButton" style="
+                display: flex;
+                height: 48px;
+                padding: 8px 16px;
+                align-items: center;
+                gap: 8px;
+                border-radius: 14px;
+              " data-dismiss="modal" onclick="SubmitLeaveRequest()">
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Leavetype exceed   -->
+  <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="LeavetypeExceedModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered">
+      <div class="modal-content" style="border-radius: 14px;width:550px">
+
+        <div class="modal-body" style="
+        display: inline-flex;
+padding: 16px 24px;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;
+border-radius: 14px;
+       ">
+          <div class="text-20-600"> Leave Request Exceeds Quota</div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="480" height="2" viewBox="0 0 480 2" fill="none">
+            <path d="M0.953125 0.953125H478.953" stroke="#ECECEC" stroke-linecap="round" />
+          </svg>
+          <div class="text-16-700">Oops! You're requesting more leave than your allotted quota.</div>
+          <div class="text-16-500">It seems like the dates you've selected for your leave request exceed the available quota. Your current quota includes
+            <span style="color:black"> <%=Math.max(0,employee.leaves.paid.total-employee.leaves.paid.used)%> paid leaves and <%=Math.max(0,employee.leaves.unpaid.total-employee.leaves.unpaid.used)%> unpaid leaves. </span>
+          </div>
+          <div class="text-14-500">You can choose to</div>
+          <div class="text-14-500" style="color:black;display: flex;gap:8px;align-items: center;">
+            <input type="checkbox" id="unpaidleavecheckbox" onclick="ModalChangeTypeOfLeave('unpaid','unpaidleavecheckbox')" style="width:24px;height:24px">
+            <div>Convert to Unpaid Leave</div>
+          </div>
+          <div class="text-14-500" style="color:black;display: flex;gap:8px;align-items: center;">
+            <input type="checkbox" id="badgesleavecheckbox" onclick="ModalChangeTypeOfLeave('badges','badgesleavecheckbox')" style="width:24px;height:24px;">
+            <div style="display: flex;align-items: center;gap:8px;"><img src="../img/gem.svg" style="width: 24px;height: 24px;">Redeem Badges (10 Badges / day) <span style="color:#898989">Current Badges : <%= user.badges-user.usedBadges %></span></div>
+          </div>
+          
+          <div id="WarningBox" style="display: none;justify-content: flex-start;align-items: center;gap:8px;color: #FF6565;" class="text-14-500">
+            <img src="../leavesAccountability/warning_icon.svg"> Oops! Not Enough Badges. Consider Unpaid Leave + Badges or Unpaid Leave Only.
+          </div>
+        </div>
+
+
+        <div class="modal-footer" style="padding: 1rem">
+          <button class="btn btn-outline-primary text-16-700" style="
+           display: flex;
+           height: 48px;
+           padding: 8px 16px;
+           align-items: center;
+           gap: 8px;
+           border-radius: 14px;
+         " data-dismiss="modal">
+            Cancel
+          </button>
+          <button class="btn btn-primary text-16-700" disabled id="LeaveExceedButton" style="
+           display: flex;
+           height: 48px;
+           padding: 8px 16px;
+           align-items: center;
+           gap: 8px;
+           color:white;
+           border-radius: 14px;
+         " data-dismiss="modal">
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--History of Leave Request Modal -->
+  <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="LeaveHistoryModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content" style="border-radius: 14px">
+        <div class="modal-header" style="
+                display: flex;
+                padding: 16px 24px;
+                justify-content: space-between;
+                align-items: center;
+                align-self: stretch;
+              ">
+          <div class="modal-title h6" id="myLargeModalLabel" style="
+                  color: #000;
+                  font-size: 24px;
+                  font-style: normal;
+                  font-weight: 700;
+                  line-height: normal;
+                ">
+            Leave History
+          </div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal" />
+        </div>
+        <div class="modal-body">
+          <table style="width: 100%">
+            <tr style="
+                    display: flex;
+                    height: 44px;
+                    padding: 12px 24px;
+                    align-items: center;
+                    gap: 12px;
+                    justify-content: space-between;
+                    align-self: stretch;
+                    border-top: 1px solid
+                      var(--content-on-light-secondary, #898989);
+                    border-bottom: 1px solid
+                      var(--content-on-light-secondary, #898989);
+                    background: #f9fafb;
+                  ">
+              <th style="
+                      color: var(--content-on-light-primary, #181818);
+                      font-size: 12px;
+                      font-style: normal;
+                      font-weight: 500;
+                      line-height: 18px; /* 150% */
+                    ">
+                Types of Leave
+              </th>
+              <th style="
+                      color: var(--content-on-light-primary, #181818);
+                      font-size: 12px;
+                      font-style: normal;
+                      font-weight: 500;
+                      line-height: 18px; /* 150% */
+                    ">
+                Date
+              </th>
+              <th style="
+                      color: var(--content-on-light-primary, #181818);
+                      font-size: 12px;
+                      font-style: normal;
+                      font-weight: 500;
+                      line-height: 18px; /* 150% */
+                    ">
+                Reason
+              </th>
+            </tr>
+            <% LeaveHistory.forEach(leave => { %>
+<% if(leave.status=='Accepted') {%>
+            <tr style="
+                    display: flex;
+                    height: 44px;
+                    padding: 12px 24px;
+                    align-items: center;
+                    gap: 12px;
+                    justify-content: space-between;
+                    align-self: stretch;
+                  ">
+              <td style="
+                      color: var(--content-on-light-primary, #181818);
+                      font-size: 12px;
+                      font-style: normal;
+                      font-weight: 500;
+                      line-height: 18px;
+                    ">
+                <%= leave.durationType %>
+              </td>
+              <td style="
+                      color: var(--content-on-light-primary, #181818);
+                      font-size: 12px;
+                      font-style: normal;
+                      font-weight: 500;
+                      line-height: 18px;
+                    ">
+                <%= leave.dates %>
+              </td>
+              <td style="
+                      color: var(--content-on-light-primary, #181818);
+                      font-size: 12px;
+                      font-style: normal;
+                      font-weight: 500;
+                      line-height: 18px;
+                    ">
+                <%= leave.reasonFromEmployee %>
+              </td>
+            </tr>
+            <%}%>
+            <% }); %>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedStartDate = null;
+
+    flatpickr("#shortleavedaterange", {
+      mode: "range",
+      dateFormat: "d M Y",
+      minDate: "today", // Prevents selection of past dates
+      onClose: function(selectedDates, dateStr, instance) {
+        if (selectedDates.length === 2) {
+          const startDate = selectedDates[0];
+          const endDate = selectedDates[1];
+          const dayDifference = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+          let adjustedDayDifference = dayDifference;
+            for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+              if (d.getDay() === 0 || d.getDay() === 6) {
+                adjustedDayDifference--;
+              }
+            }
+
+           if (adjustedDayDifference <= 2) {
+            selectedStartDate = startDate;
+
+            // Check for Saturdays and Sundays and subtract them
+            
+            selectedStartDate = startDate;
+
+            // Format and update the input value with the selected date range
+            const formattedStartDate = instance.formatDate(startDate, "d M Y");
+            const formattedEndDate = instance.formatDate(endDate, "d M Y");
+            const formattedDateRange = `${formattedStartDate} - ${formattedEndDate}`;
+            instance.input.value = formattedDateRange;
+          } else {
+            alert("You can take up to 2 days of leave");
+            instance.clear();
+          }
+        }
+      },
+      onDayCreate: function(dObj, dStr, fp, dayElem) {
+        if (selectedStartDate) {
+          const maxSelectableDate = selectedStartDate.fp_incr(4);
+
+          if (dObj > maxSelectableDate) {
+            dayElem.classList.add("disabled");
+          }
+        }
+      },
+    });
+  </script>
+
+
+
+  <script>
+    flatpickr("#longleavedaterange", {
+      mode: "range",
+      dateFormat: "d M Y",
+      minDate: "today", // Prevents selection of past dates
+      onClose: function(selectedDates, dateStr, instance) {
+        if (selectedDates.length === 2) {
+          const startDate = selectedDates[0];
+          const endDate = selectedDates[1];
+          const formattedStartDate = startDate.toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          });
+          const formattedEndDate = endDate.toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          });
+          const formattedDateRange = `${formattedStartDate} - ${formattedEndDate}`;
+          instance.input.value = formattedDateRange;
+
+         
+        }
+      },
+    });
+  </script>
+
+  <script>
+  
+    let leavesData = {
+      employeeId: '<%=employee._id%>',
+      leaveType: [],
+      reasonFromEmployee: '',
+      durationType: '',
+      dates: '',
+      totalDayLeaves: 0,
+    };
+    let totalbadges = '<%=user.badges-user.usedBadges %>'
+    let paidleaves = '<%=Math.max(employee.leaves.paid.total-employee.leaves.paid.used,0)%>';
+    let deleteId;
+
+    function ChangeTypeOfDurationLeave(type) {
+      leavesData = {
+        employeeId: '<%=employee._id%>',
+        leaveType: [],
+        reasonFromEmployee: '',
+        durationType: '',
+        dates: '',
+        totalDayLeaves: 0,
+      };
+      leavesData.durationType = type;
+
+    }
+
+    function ChangeReasonFromEmployee(reason) {
+      leavesData.reasonFromEmployee = reason;
+      checkSubmitButtonAble();
+    }
+
+    function SelectTypeofLeave(type) {
+      let id = leavesData.durationType == 'Long Leave' ? 'longleaveTypeSelect' : 'shortleaveTypeSelect';
+      const selectElement = document.getElementById(id);
+     selectElement.innerHTML = `${type} Leave`
+    }
+    function ChangeTypeOfLeave(type,id) {
+      document.getElementById(id).style.display='none';
+leavesData.leaveType = [];
+leavesData.leaveType.push({
+  type: type,
+  day: 0
+});
+ id=leavesData.durationType == 'Long Leave' ? 'longleaveTypeSelect' : 'shortleaveTypeSelect';
+document.getElementById(id).innerHTML = `${type} Leave`
+
+CheckLeaveExceed();
+checkSubmitButtonAble();
+}
+
+    function ModalChangeTypeOfLeave(type, id) {
+  const box = document.getElementById(id);
+  if (box.checked) {
+    leavesData.leaveType.push({ type: type, day: 0 });
+    SelectTypeofLeave(type);
+  } else {
+    const index = leavesData.leaveType.findIndex(item => item.type === type);
+    if (index !== -1) {
+      leavesData.leaveType.splice(index, 1);
+    }
+    if(leavesData.leaveType.length>0)
+    SelectTypeofLeave(leavesData.leaveType[0].type);
+  }
+  
+  CheckLeaveExceed();
+  checkSubmitButtonAble();
+}
+function changeDropDownstatus(id,length)
+{
+  let box=document.getElementById(id);
+  
+ 
+  if(box.style.display=='none')
+ {
+  box.style.display='flex';
+ 
+}
+  else
+  box.style.display='none';
+}
+function changeDropDownstatusofoptions(id)
+{
+  let box=document.getElementById(id);
+  
+ 
+  if(box.style.display=='none')
+ { 
+  box.style.display='flex';
+ 
+}
+  else
+  box.style.display='none';
+}
+
+    function ChangeDates(dates) {
+     
+
+      leavesData.dates = dates;
+
+      CheckLeaveExceed();
+    }
+
+    function chnagevisbilaityOfSubmitButton(id, status) {
+    
+      document.getElementById(id).disabled = status;
+    }
+
+    function finddateDiffrence(dateRange) {
+      const [startDateStr, endDateStr] = dateRange.split(' - ');
+
+      const startDate = new Date(startDateStr);
+      const endDate = new Date(endDateStr);
+
+      const daysDifference = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+
+      let workingDays = 0;
+      for (let i = 0; i < daysDifference; i++) {
+        const currentDate = new Date(startDate);
+        currentDate.setDate(startDate.getDate() + i);
+
+        const dayOfWeek = currentDate.getDay();
+        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+          workingDays++;
+        }
+      }
+
+      return workingDays;
+    }
+    function isDateRangeSpanningMonths(dates) {
+     let startDateStr=dates.split('-')[0], endDateStr=dates.split('-')[1];
+  const startDate = new Date(startDateStr);
+  const date=new Date();
+  const endDate = new Date(endDateStr);
+  if(startDate.getMonth() ==date.getMonth() )
+  return 0;
+  if(endDate.getDate()==1)
+  return 1;
+  else
+  return 2;
+}
+
+    function CheckLeaveExceed() {
+      let totalleave = 0;
+let badgesselected=false;
+      for (let i = 0; i < leavesData.leaveType.length; i++) {
+        if (leavesData.leaveType[i].type == 'paid')
+        { if(leavesData.dates!='') 
+       { let  res=isDateRangeSpanningMonths(leavesData.dates);
+        totalleave += res;
+       }
+          totalleave += paidleaves;
+        }
+        else if (leavesData.leaveType[i].type == 'badges')
+        badgesselected=true,  totalleave += Math.floor(totalbadges / 10);
+        else
+          totalleave += 1000000;
+      }
+      if (leavesData.dates == '')
+        return;
+       
+
+      let leavetaking = finddateDiffrence(leavesData.dates);
+      if (leavesData.leaveType.length == 0)
+        return;
+     
+
+     
+      leavesData.totalDayLeaves = leavetaking;
+      if (totalleave < leavetaking) {
+        $('#LeavetypeExceedModal').modal('show');
+        chnagevisbilaityOfSubmitButton('LeaveExceedButton', true);
+        let id = leavesData.durationType == 'Long Leave' ? 'LongLeaveSubmitButton' : 'ShortLeaveSubmitButton'
+        chnagevisbilaityOfSubmitButton(id, true);
+        if(badgesselected)
+        NotEnoughBadges('flex');
+        else
+        NotEnoughBadges('none')
+      } else {
+        NotEnoughBadges('none')
+        chnagevisbilaityOfSubmitButton('LeaveExceedButton', false);
+        checkSubmitButtonAble();
+       
+      }
+    }
+    async function checkSubmitButtonAble()
+    {
+      let id = leavesData.durationType == 'Long Leave' ? 'LongLeaveSubmitButton' : 'ShortLeaveSubmitButton'
+        if((leavesData.durationType=='Short Leave' || (leavesData.durationType=='Long Leave' && leavesData.reasonFromEmployee && leavesData.reasonFromEmployee.length > 0) ) &&leavesData.dates.length>0 && leavesData.leaveType.length>0 )
+        chnagevisbilaityOfSubmitButton(id, false);
+        else
+        chnagevisbilaityOfSubmitButton(id, true);
+    }
+
+    async function NotEnoughBadges(style)
+    {
+      const box = document.getElementById('WarningBox');
+        box.style.display =style;
+    }
+    async function SubmitLeaveRequest() {
+      try {
+      
+        FormateTypesofLeave();
+        if(leavesData.durationType=='Short Leave') {
+          leavesData.status='Accepted';
+        }
+        let response = await fetch('/leave/employee', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(leavesData)
+        });
+        location.reload();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    function FormateTypesofLeave() {
+      let leavedata = leavesData.leaveType;
+      let totalleave = leavesData.totalDayLeaves;
+      for (let i = 0; i < leavedata.length; i++) {
+        if (leavedata[i].type == 'paid') {
+          leavedata[i].day = Math.min(paidleaves, totalleave);
+          totalleave -= leavedata[i].day;
+        } else if (leavedata[i].type == 'badges') {
+
+          leavedata[i].day = Math.min(Math.floor(totalbadges / 10), totalleave);
+          totalleave -= leavedata[i].day;
+        } else if (leavedata[i].type == 'unpaid') {
+          leavedata[i].day = totalleave;
+          totalleave -= leavedata[i].day;
+        }
+      }
+      leavedata.leaveType = leavedata;
+    }
+
+    function SaveIdDeleteRequest(id) {
+      deleteId = id;
+    }
+   
+    async function DeleteLeaveRequest() {
+      let response = await fetch(`/leavesAccountability/${deleteId}`, {
+        method: 'DELETE',
+        headers: {
+          accept: 'application/json'
+        },
+
+      })
+      location.reload();
+    }
+  
+  </script>
+
+
+
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <script src="../js/purpose.core.js"></script>
+  <!-- Page JS -->
+  <script src="../libs/autosize/dist/autosize.min.js"></script>
+ 
+  <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+  <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+  <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="../libs/moment/min/moment.min.js"></script>
+
+  <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+  <!-- Purpose JS -->
+  <script src="../js/purpose.js"></script>
+  <!-- Demo JS - remove it when starting your project -->
+  <script src="../js/demo.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+</body>
+
+</html>

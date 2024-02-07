@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <meta name="author" content="Webpixels" />
+    <title>Trainity - Admin Panel</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/custom/favicon-32x32.jpg" type="image/png" />
+    <!-- Purpose CSS -->
+
+    <!-- Font Awesome 5 -->
+    <link
+      rel="stylesheet"
+      href="../../libs/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../libs/fullcalendar/dist/fullcalendar.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="path/to/font-awesome/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../assets/libs/flatpickr/dist/flatpickr.min.css"
+    />
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/purpose.css" id="stylesheet" />
+    <link rel="stylesheet" href="../../css/styling1.css" id="stylesheet" />
+    <link rel="stylesheet" href="../../css/bonus.css" id="stylesheet" />
+  </head>
+
+  <body
+    class="application application-offset"
+    style="
+      margin-left: 300px;
+      width: calc(100vw - 300px);
+      background: #fafafa;
+      display: flex;
+      padding: 10px 32px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+      flex: 1 0 0;
+      padding-top: 0px;
+    "
+    id="MainPageContent"
+  >
+    <!-- Sidenav -->
+    <%- include('partials/sidepanel'); -%>
+    <!-- Content -->
+    <div
+      class="main-content position-relative"
+      style="
+        margin-top: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-right: 20px;
+        gap: 24px;
+      "
+    >
+      <div class="row mt-4">
+        <div
+          style="
+            padding-left: 20px;
+            display: grid;
+            grid-template-columns: auto auto;
+          "
+        >
+        <button class="btn"
+        onclick="window.location.href='/rewards/<%= employeeId %>?manager=True'"
+        >
+            <i class="fas fa-award"></i>
+            Rewards
+          </button>
+          <button
+            class="btn"
+            style="
+              background: #d1fadf;
+              border-bottom: 2px solid #48bf84;
+              color: #48bf84;
+            "
+          >
+            <i class="fas fa-gift"></i>
+            Bonuses and ESOPs
+          </button>
+        </div>
+      </div>
+      <div class="row" style="width: 100%; margin-top: 1rem">
+        <div class="col-sm-12 col-lg-7">
+          <div class="card card-fluid">
+            <div
+              class="card-header d-flex justify-content-between align-items-center border-0"
+              style="padding-bottom: 0"
+            >
+              <div>
+                <h5
+                  class="mb-0"
+                  style="
+                    color: #181818;
+                   
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                  "
+                >
+                  <!-- Your Bonuses -->
+                  <%=firstName%>'s Bonuses
+                </h5>
+              </div>
+            </div>
+            <% function ChangeDate(date) {
+              
+              if(!date)
+              date=new Date()
+              const options = { day: "numeric", month: "long", year: "numeric" };
+              const formattedDate = new Date(date).toLocaleDateString(undefined, options);
+              return formattedDate;
+            } %>
+            <div class="card-body">
+              <% if(!bonusInfo) { %>
+              <div
+                style="min-height: 800px; display: grid; place-items: center"
+              >
+                <div class="content">
+                  <div style="text-align: center; font-size: 50px">
+                    <img src="../img/icons/gift.svg">
+                  </div>
+                  <div class="mt-2">
+                    <h2
+                      style="
+                        text-align: center;
+                        color: var(--gray-800, #1d2939);
+                        text-align: center;
+                       
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 24px; /* 150% */
+                        letter-spacing: 0.24px;
+                      "
+                    >
+                      You haven't set up bonuses for <%= firstName %> yet.
+                    </h2>
+                  </div>
+                  <div style="text-align: center" class="mt-4">
+                    <button
+                      class="btn btn-success"
+                      data-toggle="modal"
+                      data-target=".set-employee-bonus"
+                      style="border-radius: 12px;
+                display: flex;
+                position: relative;
+                padding: 16px 40px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;"
+                    >
+                      Set Up Bonuses
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <% } else { %>
+                <p style="font-weight: 500; font-size: 16px;">
+                  Explore your bonuses in detail and take control of your financial growth.
+                  Here's a breakdown of your Joining and Retention Bonuses:
+                </p>
+              <div>
+                <div class="content-2">
+                  <div>
+                    <h2>Total Bonus Amount</h2>
+                  </div>
+                  <div>
+                    <h1 id="totalBonusAmount">₹<%= totalBonusAmount %></h1>
+                  </div>
+                </div>
+                <div class="content-2">
+                  <div>
+                    <h2>Current Bonus Balance</h2>
+                  </div>
+                  <div>
+                    <h2 style="font-weight: 700;" id="currBonusValue">₹<%= currBonusValue %></h2>
+                  </div>
+                </div>
+                <div class="bonus-progress">
+                  <div
+                    class="progress"
+                    style="background-color: #d1fadf; margin-top: 1rem"
+                  >
+                    <div
+                      class="progress-bar w-<%= bonusPercentageTime %>"
+                      role="progressbar"
+                      style="width:<%= bonusPercentageTime %>%"
+                      aria-valuenow="<%= bonusPercentageTime %>"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                  <div
+                    class="labels"
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                    "
+                  > 
+                  <span style="width: 2em; text-wrap: nowrap;">Joined</span>
+                  <% let monthNo=1%>
+                      <% for(let monthInfo of bonusInfo.monthlyDistribution||[]) {%>
+                       <% for(let i=monthNo;i<=monthInfo.monthNo-1;i++){%>
+                        <span style="visibility: hidden;">M<%= i %></span>
+                        <%}%>
+                        <span >M<%= monthInfo.monthNo %></span>
+                        <% monthNo=monthInfo.monthNo+1%>
+                        <%}%>
+                        <% for(let i=monthNo;i<=12;i++){%>
+                          <span style="visibility: hidden;">M<%= i %></span>
+                          <%}%>
+                     
+                  </div>
+                </div>
+
+                <div class="breakdown" style="margin-top: 2rem">
+                  <div>
+                    <h2 style="margin-bottom: 1rem">Bonus Breakdown</h2>
+                  </div>
+                  <table class="table">
+                    <thead style="background: #f2f4f7">
+                      <tr style="display: flex;width: 100%;">
+                        <th scope="col">Vesting Period</th>
+                        <th scope="col" style="text-align: center">Status</th>
+                        <th scope="col" style="text-align: center">
+                          Bonus Amount
+                        </th>
+                        <th scope="col" style="text-align: center">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for(let monthsInfo of bonusInfo?.monthlyDistribution||[]) { %>
+                        <tr>
+                        <th  scope="row" class="time-label">M<%= monthsInfo.monthNo %></th>
+                        <td style="text-align: center">
+                          <% if(monthsInfo.status === 'Withdrawn') { %>
+                            <span class="badge badge-info badge-pill">
+                              Withdrawn
+                            </span>
+                          <% } else if (monthsInfo.status=='Available') { %>
+                            <span class="badge badge-success badge-pill">
+                              Available
+                            </span>
+                          <% } else { %>
+                            <span class="badge badge-secondary badge-pill">
+                              Locked
+                            </span>
+                          <% } %>
+                        </td>
+                        <td style="text-align: center" class="money-label">
+                          ₹<%= monthsInfo.amount %>
+                        </td>
+                        <td style="text-align: center" class="date-label">
+                          <%=ChangeDate(monthsInfo.date) %>
+                        </td>
+                      </tr>
+                      <% } %>
+                      
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="mt-4">
+                  <button
+                    class="btn btn-success"
+                    data-toggle="modal"
+                    style="border-radius: 12px;
+                display: flex;
+                position: relative;
+                padding: 16px 40px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;"
+                    data-target=".set-employee-bonus"
+                  >
+                    Configure Bonuses
+                  </button>
+                </div>
+
+                <div class="faq">
+                  <div class="heading">
+                    <h1>FAQs</h1>
+                  </div>
+
+                  <div class="questions-container">
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >How do I become eligible for the joining and retention bonuses?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        To be eligible for these bonuses, you need to serve a minimum duration with the company, as specified in your employment agreement.
+                      </p>
+                    </div>
+
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >What happens if I leave the company before completing the vesting period?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        If you leave the company before completing the vesting period, you may forfeit some or all of your bonus, as outlined in the company's policy. It's best to check with Manager for the exact details.
+                      </p>
+                    </div>
+
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >How do I know when I've completed a vesting period?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        Your Manager will track your vesting progress, and you can typically find this information on your dashboard or by contacting manager. They'll let you know when you've met the conditions for each vesting period.
+                      </p>
+                    </div>
+
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >Can I withdraw my bonus at any time?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        No, you can't withdraw your bonus immediately. You need to meet specific vesting periods, 
+                        which are typically 3 months, 6 months, 9 months, or 1 year, depending on the terms.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >What is the process for withdrawing my bonus once I'm eligible?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        When you're eligible to withdraw your bonus, you can simply click the "Send to Account" button on your dashboard. The bonus will then be transferred to your designated bank account.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >Is the bonus taxed when I withdraw it?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        Taxation policies may vary by location, but generally, bonuses are subject to taxation. 
+                        Consult with your local tax authorities or a tax advisor to understand the tax implications of your bonus.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >Can I choose to reinvest my bonus into company stock or other investments instead of withdrawing it?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        The ability to reinvest your bonus may depend on company policies. 
+                        It's advisable to check with Manager or your benefits team to explore investment options for your bonus.
+                      </p>
+                    </div>
+                    <div class="question">
+                      <button class="faq-button">
+                        <span
+                          >What happens if the company's valuation changes during my vesting period?</span
+                        >
+                        <i class="fas fa-chevron-down d-arrow"></i>
+                      </button>
+                      <p>
+                        Changes in the company's valuation can affect the value of your bonuses. 
+                        Typically, the value of bonuses is tied to the company's performance. 
+                        Any fluctuations will be reflected in the value of your vested bonuses.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-lg-5">
+          <div class="card card-fluid">
+            <div
+              class="card-header d-flex justify-content-between align-items-center border-0"
+              style="padding-bottom: 0"
+            >
+              <div>
+                <h5
+                  class="mb-0"
+                  style="
+                    color: #181818;
+                   
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                  "
+                >
+                  <%=firstName%>'s ESOP Holdings
+                </h5>
+              </div>
+            </div>
+            <div class="card-body">
+
+              <!-- <% if(esopConfig) { %>
+                <div class="content-1 mb-4">
+                  <div>
+                    <div class="content-2 mb-0">
+                      <div>
+                        <p>Company Valuation</p>
+                      </div>
+                      <div>
+                        <h1 style="font-size: 16px">₹<%= esopConfig.valuation %></h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="content-2 mb-0">
+                      <div>
+                        <p>Current Unit Value</p>
+                      </div>
+                      <div>
+                        <h1 style="font-size: 16px">₹<%= Math.round(esopConfig.valuation / esopConfig.unitValue) %> per unit</h1>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-success"
+                    data-toggle="modal"
+                    data-target=".update-valuation"
+                  >
+                    Update Valuation
+                  </button>
+                  <div>
+                    <span
+                      style="
+                        color: var(--gray-500, #667085);
+                       
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 24px; /* 171.429% */
+                        letter-spacing: 0.21px;
+                      "
+                    >
+                      Last Updated on <%= esopLastUpdatedDate %></span
+                    >
+                  </div>
+                </div>
+              <% } else { %>
+                <div class="content-1 mb-4">
+                  <p
+                    style="
+                      color: #475467;
+                     
+                      font-size: 14px;
+                      font-style: normal;
+                      font-weight: 400;
+                      line-height: 24px;
+                      letter-spacing: 0.24px;
+                    "
+                  >
+                    Set the initial company valuation to determine the ESOP unit
+                    values
+                  </p>
+                  <button class="btn btn-success" data-toggle="modal"
+                    data-target=".update-valuation">Update Valuation</button>
+                </div>
+              <% } %> -->
+              
+
+              
+
+              
+
+              <% if(!esopInfo) { %>
+                <div
+                style="min-height: 800px; display: grid; place-items: center"
+              >
+                <div class="content">
+                  <div style="text-align: center; font-size: 50px">
+                    <img src="../img/icons/gift.svg">
+                  </div>
+                  <div class="mt-2">
+                    <h2
+                      style="
+                        text-align: center;
+                        color: var(--gray-800, #1d2939);
+                        text-align: center;
+                       
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 24px; /* 150% */
+                        letter-spacing: 0.24px;
+                      "
+                    >
+                      ESOPs are not configured for <%= firstName %> yet.
+                    </h2>
+                  </div>
+                  <div style="text-align: center" class="mt-4">
+                    <button
+                      class="btn btn-success"
+                      data-toggle="modal"
+                      data-target=".set-employee-esop-unit"
+                    style="border-radius: 12px;
+                display: flex;
+                position: relative;
+                padding: 16px 40px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;">
+                      Configure ESOPs
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <% } else { %>
+                <div>
+                  <p style="color: var(--gray-600, #475467);
+                 
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 500;
+                  line-height: 24px; /* 150% */
+                  letter-spacing: 0.24px;">Your ESOP Holdings show your piece of the company's growth. As the company does well, your ESOP units become more valuable.
+                     Keep track of your progress and discover ways to make the most of your investment</p>    
+                  <div>
+                  <div class="mt-1">
+                    <div class="content-2 mb-0">
+                      <div>
+                        <p>Total Units Granted</p>
+                      </div>
+                      <div>
+                        <h1><%= esopInfo.units %> units</h1>
+                      </div>
+                    </div>
+                  </div>
+                    <div style="text-align: right; margin-top: -1rem">
+                      <span
+                        style="
+                          color: var(--gray-500, #667085);
+                          text-align: right;
+                         
+                          font-size: 12px;
+                          font-style: normal;
+                          font-weight: 500;
+                          line-height: 24px; /* 171.429% */
+                          letter-spacing: 0.21px;
+                        "
+                        >Over <%= esopInfo?.vestingPeriod %> years</span
+                      >
+                    </div>
+                  </div>
+                  <div>
+                    <div class="content-2 mb-0">
+                      <div>
+                        <p>Current Value</p>
+                      </div>
+                      <div>
+                        <h1 style="font-size: 16px">₹<%= currTotalValue %></h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-top: 0.75rem;">
+                    <div class="content-2 mb-0">
+                      <div>
+                        <p>Total ESOPs Currently Held</p>
+                      </div>
+                      <div>
+                        <h1><%= unitsAlloted %> units</h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="content-2 mb-0">
+                      <div>
+                        <p>Current value of ESOPs Held </p>
+                      </div>
+                      <div>
+                        <h1 style="font-size: 16px">₹<%= currValue %></h1>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-bottom: 2rem !important; margin-top: 0.75rem;" class="content-2 mb-0">
+                    <div>
+                      <p>Current Unit Value</p>
+                    </div>
+                    <div>
+                      <h1 style="font-size: 16px">₹<%= unitValue %></h1>
+                    </div>
+                  </div>
+                  <div class="content-2">
+                    <div>
+                      <p
+                        style="
+                          color: var(--gray-800, #1d2939);
+                         
+                          font-size: 16px;
+                          font-style: normal;
+                          font-weight: 600;
+                          line-height: 24px; /* 150% */
+                        "
+                      >
+                        Vesting Progress
+                      </p>
+                    </div>
+                  </div>
+                  <div class="bonus-progress">
+                    <div
+                      class="progress"
+                      style="background-color: #d1fadf; margin-top: 1rem"
+                    >
+                      <div
+                        class="progress-bar w-<%=esopsPercentageTime%>"
+                        role="progressbar"
+                        style="width:<%=esopsPercentageTime%>%"
+                        aria-valuenow="<%=esopsPercentageTime%>"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <div
+                      class="labels"
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                      "
+                    >
+                      <% for(let i=-1; i<esopRows.length; i++) { %>
+                        <% if(i == -1) { %>
+                          <span style="width: 1rem; text-wrap: nowrap;">Joined</span>
+                        <% } else { %>
+                            <% if(esopRows[i].timePeriod.includes("Y")) { %>
+                              <span><%= esopRows[i].timePeriod.split(" ")[0] %>Y</span>
+                            <% } %>
+                        <% } %>
+                      <% } %>
+                    </div>
+                  </div>
+  
+                  <div class="breakdown" style="margin-top: 2rem">
+                    <div>
+                      <h2 style="margin-bottom: 1rem">ESOP Table</h2>
+                    </div>
+                    <table class="table">
+                      <thead style="background: #f2f4f7">
+                        <tr>
+                          <th scope="col">Vesting Period</th>
+                          <th scope="col" style="text-align: center">
+                            Value (Units)
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <% for(let i=0; i<esopRows.length; i++) { %>
+                          <tr>
+                            <th scope="row" class="time-label"><%= esopRows[i].timePeriod %></th>
+                            <td style="text-align: center" class="money-label">
+                              <%= esopRows[i].units %>
+                            </td>
+                          </tr>
+                        <% } %>
+                      
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="mt-4">
+                    <button
+                      class="btn btn-success"
+                      data-toggle="modal"
+                      data-target=".set-employee-esop-unit"
+                      style="border-radius: 12px;
+                display: flex;
+                position: relative;
+                padding: 16px 40px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;"
+                    >
+                      Update ESOPs
+                    </button>
+                  </div>
+  
+                  <div class="faq">
+                    <div class="heading">
+                      <h1>FAQs</h1>
+                    </div>
+  
+                    <div class="questions-container">
+                      <div class="question">
+                        <button class="faq-button">
+                          <span
+                            >What is an ESOP?</span
+                          >
+                          <i class="fas fa-chevron-down d-arrow"></i>
+                        </button>
+                        <p>
+                          An ESOP, or Employee Stock Ownership Plan, lets you become a part-owner of the company you work for.
+                           It's like having a share in the business!
+                        </p>
+                      </div>
+  
+                      <div class="question">
+                        <button class="faq-button">
+                          <span
+                            >What should I do with my ESOPs?</span
+                          >
+                          <i class="fas fa-chevron-down d-arrow"></i>
+                        </button>
+                        <p>
+                          It's up to you! Some people hold onto them for a long time, 
+                          while others sell them when they need the money. It's like deciding when to use your savings.
+                        </p>
+                      </div>
+  
+                      <div class="question">
+                        <button class="faq-button">
+                          <span
+                            >How do I get ESOPs?</span
+                          >
+                          <i class="fas fa-chevron-down d-arrow"></i>
+                        </button>
+                        <p>
+                          You usually get ESOPs as part of your job benefits. It's like a special bonus for being part of the team.
+                        </p>
+                      </div>
+  
+                      <div class="question">
+                        <button class="faq-button">
+                          <span
+                            >Can I sell my ESOPs right away?</span
+                          >
+                          <i class="fas fa-chevron-down d-arrow"></i>
+                        </button>
+                        <p>
+                          No, ESOPs often have a waiting period. You can't sell them immediately, 
+                          kind of like a savings account you can't touch right away.
+                        </p>
+                      </div>
+                      <div class="question">
+                        <button class="faq-button">
+                          <span
+                            >What happens if the stock price changes?</span
+                          >
+                          <i class="fas fa-chevron-down d-arrow"></i>
+                        </button>
+                        <p>
+                          The value of your ESOPs can go up or down with the company's stock price. 
+                          It's a bit like a roller coaster ride!
+                        </p>
+                      </div>
+                      <div class="question">
+                        <button class="faq-button">
+                          <span
+                            >How long is the vesting period?</span
+                          >
+                          <i class="fas fa-chevron-down d-arrow"></i>
+                        </button>
+                        <p>
+                          The vesting period 4 years. During this time, you gradually(25%/yr) gain full ownership of your ESOPs.
+                        </p>
+                      </div>
+                      <div class="question">
+                        <button class="faq-button">
+                          <span
+                            >How do I track my ESOPs?</span
+                          >
+                          <i class="fas fa-chevron-down d-arrow"></i>
+                        </button>
+                        <p>
+                          You will always have access to the above section so you can keep an eye on your ESOPs and see how they're doing.
+                        </p>
+                      </div>
+                      <div class="question">
+                        <button class="faq-button">
+                          <span
+                            >What if I leave before vesting is complete?</span
+                          >
+                          <i class="fas fa-chevron-down d-arrow"></i>
+                        </button>
+                        <p>
+                          If you leave before your ESOPs fully vest, you may not get all of them. 
+                          It's like getting only part of your savings if you switch banks before your account matures.
+                        </p>
+                      </div>
+                      <div class="question">
+                        <button class="faq-button">
+                          <span
+                            >Can I leave my ESOPs to my family?</span
+                          >
+                          <i class="fas fa-chevron-down d-arrow"></i>
+                        </button>
+                        <p>
+                          In many cases, yes! You might be able to pass your ESOPs on to your family if you wish.
+                        </p>
+                      </div>
+                      <div class="question">
+                        <button class="faq-button">
+                          <span
+                            >Are there tax implications for ESOPs?</span
+                          >
+                          <i class="fas fa-chevron-down d-arrow"></i>
+                        </button>
+                        <p>
+                          Yes, there can be tax rules for ESOPs. It's a good idea to talk to a financial advisor or tax expert to understand them better. Read more 
+                        </p>
+                      </div>
+                      <div class="question">
+                        <button class="faq-button">
+                          <span
+                            >How do ESOPs work?</span
+                          >
+                          <i class="fas fa-chevron-down d-arrow"></i>
+                        </button>
+                        <p>
+                          ESOPs work by giving you shares of the company gradually. The longer you work, the more shares you get.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% } %>
+            
+            
+            
+            
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modals -->
+
+      <!-- Set Employee Bonus -->
+
+      <div
+        class="modal fade set-employee-bonus"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="align-items: center">
+              <h5 style="color: #344054;" class="modal-title h6" id="myLargeModalLabel">
+                Set Employee Bonus
+              </h5>
+              <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+            
+             
+            </div>
+            <form id="set-employee-bonus-form">
+              <div class="modal-body" style="display: flex;
+              gap: 32px;
+              padding: 24px 32px;
+              flex-direction: column;
+          ">
+                <div >
+                  <h2
+                    style="
+                      color: var(--gray-800, #1d2939);
+                     
+                      font-size: 15px;
+                      font-style: normal;
+                      font-weight: 600;
+                      line-height: normal;
+                    "
+                    class="mb-2"
+                  >
+                    Retention Bonus Amount
+                  </h2>
+                  <div style="position: relative;
+                    color: var(--Gray-800, #1D2939);
+                   width: 100%;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    letter-spacing: 0.21px;
+                  ">
+                  <i class="fas fa-rupee-sign" style="position: absolute; left: 20px; top: 38%;"></i>
+                  <input
+                    type="number"
+                    name="bonus"
+                    class="form-control"
+                    placeholder="Enter the amount"
+                    style="
+                      border-radius: 12px;
+                      border: 1px solid var(--gray-400, #98a2b3);
+                      background: var(--gray-50, #f9fafb);
+                      padding-inline: 30px;
+                    "
+                    onchange="ChangBonusInfo('amount',event.target.value)"
+                    id = "RetBonusInput"
+                    value="<%= bonusInfo?.amount||0 %>"
+                  />
+                  </div>
+                </div>
+               
+                <div
+                  style="
+                    display: flex;
+                    gap: 10px;
+                    flex-direction: column;
+                   
+                  "
+                >
+                  <h2
+                    style="
+                      color: var(--gray-800, #1d2939);
+                      font-size: 15px;
+                      font-style: normal;
+                      font-weight: 600;
+                      line-height: normal;
+                    "
+                  >
+                  Configure Vesting Start Date
+                  </h2>
+                  <input type="date" style="display: flex;
+                  height: 48px;
+                  width: 200px;
+                  padding: 14px 20px;
+                  align-items: center;
+                  gap: 10px;
+                  border-radius: 12px;
+                  border: 1px solid var(--Gray-300, #D0D5DD);
+                  background: var(--Gray-50, #F9FAFB);                  
+"  onchange="ChangBonusInfo('vestingStartDate',event.target.value)"  value="<%= new Date(bonusInfo?.vestingStartDate||new Date()).toISOString().slice(0, 10) %>">
+                </div>
+                <div style="display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                gap: 16px;">
+                <div style="display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                gap: 2px;">
+                <div style="color: var(--Gray-800, #1D2939);
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;">Distribution Type</div>
+                <div style="color: var(--Gray-500, #667085);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.21px;">Choose how the bonus amount will be distributed over time</div>
+              </div>
+              <div style="display: flex; gap: 12px; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <input type="radio" name="distributionType" onclick="ChangeDistributionType('equal')" id="equalRadio">
+                    <div style="color: var(--Gray-800, #1D2939); font-size: 14px; font-weight: 600;">Equal Distribution</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <input type="radio" name="distributionType" onclick="ChangeDistributionType('unequal')" id="unequalRadio">
+                    <div style="color: var(--Gray-800, #1D2939); font-size: 14px; font-weight: 600;">Unequal Distribution</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <input type="radio" name="distributionType" onclick="ChangeDistributionType('custom')" id="customRadio">
+                    <div style="color: var(--Gray-800, #1D2939); font-size: 14px; font-weight: 600;">Custom Interval Distribution</div>
+                </div>
+            </div>
+            
+              </div>
+              <div style="display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 12px;
+              align-self: stretch;">
+            <div style="color: var(--Gray-800, #1D2939);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;">Bonus Allocation</div> 
+            <div style="display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px 100px;
+            flex-wrap: wrap;
+            align-self: stretch;" id="MonthlyBonusBodym">
+            <div style="display: flex;
+            align-items: center;
+            gap: 8px;">
+            <div style="display: -webkit-box;
+            width: 30px;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            color: var(--Gray-700, #344054);
+            text-overflow: ellipsis;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+            ">M1</div>
+            <input  type="number" 
+            style="display: flex;
+            height: 48px;
+            width: 100px;
+            padding: 14px 20px;
+            align-items: center;
+            gap: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--Gray-400, #98A2B3);
+            background: var(--Gray-50, #F9FAFB);" value="0">
+
+
+          </div>
+          </div>
+            <div style="display: flex;
+            padding: 16px 8px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            color:#48bf84;
+            border-radius: 12px;" class="text-16-600" onclick="AddMonths()" id="AddMonthsButton">
+            <i class="fa fa-plus" style="font-size:24px;"></i>
+            Add
+          </div>
+            <div style="color: var(--Gray-500, #667085);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.21px;" id="RemainingAmount">
+          Remaining Bonus Amount : <span style=" font-weight: 700;">₹</span>0  
+          </div>
+            </div>
+              </div>
+              <div
+                class="modal-footer"
+                style="
+                  display: grid;
+                  grid-template-columns: auto auto;
+                  justify-content: space-between;
+                "
+              >
+                <div style="color: #1D2939; font-weight: 600; cursor: pointer;" data-dismiss="modal">
+                  Cancel
+                </div>
+                <button  id = "set-employee-bonus-submit" class="btn btn-primary" data-dismiss="modal" onclick="SubmitBonus()"style="border-radius: 12px;
+                display: flex;
+                position: relative;
+                padding: 16px 40px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;">
+                  Save changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Update Valuation -->
+
+      <div
+        class="modal update-valuation"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="align-items: center">
+              <h5 class="modal-title h6" id="myLargeModalLabel">
+                Update Current Valuation
+              </h5>
+
+              <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+            
+            </div>
+            <form id="update-valuation-form">
+              <div class="modal-body">
+                <div class="form-group">
+                  <h2
+                    style="
+                      color: var(--gray-800, #1d2939);
+                     
+                      font-size: 15px;
+                      font-style: normal;
+                      font-weight: 400;
+                      line-height: normal;
+                    "
+                    class="mb-2"
+                  >
+                    Current Valuation
+                  </h2>
+                  <input
+                    id="currValuationInput"
+                    type="number"
+                    name="valuation"
+                    class="form-control"
+                    placeholder="Enter the Current Valuation"
+                    style="
+                      border-radius: 12px;
+                      border: 1px solid var(--gray-400, #98a2b3);
+                      background: var(--gray-50, #f9fafb);
+                    "
+                    value="<%= esopConfig?.valuation %>"
+                  />
+                </div>
+                <div class="form-group">
+                  <h2
+                    style="
+                      color: var(--gray-800, #1d2939);
+                     
+                      font-size: 15px;
+                      font-style: normal;
+                      font-weight: 400;
+                      line-height: normal;
+                    "
+                    class="mb-2"
+                  >
+                    Total ESOP Units
+                  </h2>
+                  <input
+                    id="totalUnitsInput"
+                    type="number"
+                    name="units"
+                    class="form-control"
+                    placeholder="Enter the total number of ESOP Units"
+                    style="
+                      border-radius: 12px;
+                      border: 1px solid var(--gray-400, #98a2b3);
+                      background: var(--gray-50, #f9fafb);
+                    "
+                    value="<%= esopConfig?.unitValue %>"
+                  />
+                </div>
+
+                <div>
+                  <div class="content-2 mb-0">
+                    <div>
+                      <p>Current Unit Value</p>
+                    </div>
+                    <div>
+                      <h1 id="perUnitValue" style="font-size: 16px"> <% if(esopConfig) { %> ₹<%= Math.round(esopConfig.valuation / esopConfig.unitValue) %> per unit <% } else { %> ₹ -- per unit <% } %> </h1>
+                    </div>
+                  </div>
+                </div>
+                <div></div>
+              </div>
+              <div
+                class="modal-footer"
+                style="
+                  display: grid;
+                  grid-template-columns: auto auto;
+                  justify-content: space-between;
+                "
+              >
+                <button type="button" class="btn" data-dismiss="modal">
+                  Cancel
+                </button>
+                <button type="submit" class="btn btn-primary"style="border-radius: 12px;
+                display: flex;
+                position: relative;
+                padding: 16px 40px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;">
+                  Save changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Configure ESOP -->
+      <div
+        class="modal fade set-employee-esop-unit"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered modal-lg"
+          style="color: var(--Gray-800, #1D2939);
+         
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;"
+        >
+          <div class="modal-content">
+            <div class="modal-header" style="align-items: center">
+              <h5 class="modal-title h6" id="myLargeModalLabel">
+                Set Employee ESOPs
+              </h5>
+
+              <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+            </div>
+            <form id="set-employee-esop-unit-form">
+              <div class="modal-body">
+                <div class="form-group">
+                  <h2
+                    style="
+                      color: var(--Gray-800, #1D2939);
+                     
+                      font-size: 16px;
+                      font-style: normal;
+                      font-weight: 600;
+                      line-height: normal;
+                    "
+                    class="mb-2"
+                  >
+                    Current Value/unit
+                  </h2>
+                  <input
+                    type="number"
+                    name="unitValue"
+                    class="form-control"
+                    placeholder="Enter the Current Value"
+                    style="
+                      border-radius: 12px;
+                      border: 1px solid var(--gray-400, #98a2b3);
+                      background: var(--gray-50, #f9fafb);
+                    "
+                    id = "currEsopsUnitValue"
+                    value="<%= esopConfig?.unitValue %>"
+                  />
+                </div>
+                <div class="form-group">
+                  <h2
+                    style="
+                      color: var(--Gray-800, #1D2939);
+                     
+                      font-size: 16px;
+                      font-style: normal;
+                      font-weight: 600;
+                      line-height: normal;
+                    "
+                    class="mb-2"
+                  >
+                    Allocate ESOP Units
+                  </h2>
+                  <input
+                    type="number"
+                    name="units"
+                    class="form-control"
+                    placeholder="Enter the Total Number of ESOP Units to be granted"
+                    style="
+                      border-radius: 12px;
+                      border: 1px solid var(--gray-400, #98a2b3);
+                      background: var(--gray-50, #f9fafb);
+                    "
+                    id = "currUnitsAllocated"
+                    value="<%= esopInfo?.units %>"
+                  />
+                </div>
+                <!-- <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 130px 200px;
+                    gap: 10px;
+                    align-items: center;
+                  "
+                  class="mt-4"
+                >
+                  <h2
+                    style="
+                      color: var(--gray-800, #1d2939);
+                     
+                      font-size: 15px;
+                      font-style: normal;
+                      font-weight: 400;
+                      line-height: normal;
+                    "
+                  >
+                    Vesting Periods
+                  </h2>
+                  <select name="vestingPeriod" class="custom-select">
+                    <option value="1">1 Year</option>
+                    <option value="2">2 Year</option>
+                    <option value="3">3 Year</option>
+                    <option value="4" selected>4 Year</option>
+                  </select>
+                </div> -->
+                <div class="form-group">
+                  <h2
+                    style="
+                      color: var(--Gray-800, #1D2939);
+                     
+                      font-size: 16px;
+                      font-style: normal;
+                      font-weight: 600;
+                      line-height: normal;
+                    "
+                    class="mb-2"
+                  >
+                    Current Value of Units Granted:  <span style="color: var(--gray-800, #1D2939);
+                   
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 800;
+                    line-height: 38px;" id="currEsopsValue">
+                    <% if(esopInfo) { %>
+                      ₹<%= currTotalValue %>
+                    <% } else { %>
+                      ₹-
+                    <% } %>
+                  </span>
+                  </h2>
+                </div>
+              </div>
+              <div
+                class="modal-footer"
+                style="
+                  display: grid;
+                  grid-template-columns: auto auto;
+                  justify-content: space-between;
+                "
+              >
+              <div style="color: #1D2939; font-weight: 600; cursor: pointer;" data-dismiss="modal">
+                Cancel
+              </div>
+                <button type="submit" id="set-employee-esop-unit-submit" class="btn btn-primary" style="border-radius: 12px;
+                display: flex;
+                position: relative;
+                padding: 16px 40px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;">
+                  Save changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <%- include('partials/utility-modals'); -%>
+    </div>
+
+    <!-- Include JavaScript files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+    <script src="../../js/purpose.core.js"></script>
+    <!-- Page JS -->
+    <script src="../../libs/autosize/dist/autosize.min.js"></script>
+
+    <script src="../../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="../../libs/progressbar.js/dist/progressbar.min.js"></script>
+    <script src="../../libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="../../libs/moment/min/moment.min.js"></script>
+
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="../../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+    <!-- Purpose JS -->
+    <script src="../../js/purpose.js"></script>
+    <!-- Demo JS - remove it when starting your project -->
+    <script src="../../js/demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script>
+      const faqButtons = document.querySelectorAll(".faq-button");
+
+      faqButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const faq = button.nextElementSibling;
+          const icon = button.children[1];
+
+          faq.classList.toggle("show");
+          icon.classList.toggle("rotate");
+        });
+      });
+    </script>
+
+    <script>
+      function commafy( num ) {
+        var x = num.toString();
+        var afterPoint = '';
+        if (x.indexOf('.') > 0)
+            afterPoint = x.substring(x.indexOf('.'), x.length);
+        x = Math.floor(x);
+        x = x.toString();
+        var lastThree = x.substring(x.length - 3);
+        var otherNumbers = x.substring(0, x.length - 3);
+        if (otherNumbers != '')
+            lastThree = ',' + lastThree;
+        var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
+        return res;
+      }
+      function ChangeButtonState(id, intInputs) {
+        let submitButton = document.getElementById(id);
+        for (let i = 0; i < intInputs.length; i++) {
+          console.log(intInputs[i].value)
+          if (isNaN(intInputs[i].value) || intInputs[i].value == "" || intInputs[i].value <= 0) {
+            submitButton.disabled = true;
+            return;
+          }
+        }
+        submitButton.disabled = false;
+      }
+
+      const searchParams = new URLSearchParams(window.location.search);
+      const employeeId = searchParams.get("employeeId");
+      
+      const currValuationInput = document.querySelector("#currValuationInput");
+      const totalUnitsInput = document.querySelector("#totalUnitsInput");
+      const perUnitValue = document.querySelector("#perUnitValue");
+
+      const calculateUnitValue = () => {
+        const currValuation = Number(currValuationInput.value);
+        const totalUnits = Number(totalUnitsInput.value);
+        let unitValue = currValuation / totalUnits;
+        if (isNaN(unitValue) || unitValue == Infinity || unitValue == 0) {
+          unitValue = ' --'
+        }
+        perUnitValue.innerHTML = `₹${unitValue} per unit`;
+      };
+
+      currValuationInput.addEventListener("input", () => {
+        calculateUnitValue();
+      });
+
+      totalUnitsInput.addEventListener("input", () => {
+        calculateUnitValue();
+      });
+
+      const employeeBonusForm = document.querySelector(
+        "#set-employee-bonus-form"
+      );
+      const employeeESOPForm = document.querySelector(
+        "#set-employee-esop-unit-form"
+      );
+      const updateValuationForm = document.querySelector(
+        "#update-valuation-form"
+      );
+      const currEsopsValue = document.querySelector("#currEsopsValue");
+
+      const currESOPsUnitValue = document.querySelector("#currEsopsUnitValue");
+      const currUnitsAllocated = document.querySelector("#currUnitsAllocated");
+      const RetBonusInput = document.querySelector("#RetBonusInput");
+
+      employeeESOPForm.addEventListener("input", () => {
+        ChangeButtonState("set-employee-esop-unit-submit", [
+        currESOPsUnitValue,
+        currUnitsAllocated,
+        ]);
+        const unitValue = Number(employeeESOPForm.unitValue.value);
+        const units = Number(employeeESOPForm.units.value);
+        let currValue = unitValue * units;
+        if (isNaN(currValue) || currValue == Infinity || currValue == 0) {
+          currEsopsValue.innerHTML = '-'
+        } else{
+          currEsopsValue.innerHTML = commafy(currValue);
+        }
+      });
+
+      updateValuationForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        try {
+          $(".update-valuation").modal("hide");
+          $("#loadingModal").modal("show");
+          const response = await fetch("/admin/bonus/esop", {
+            method: "PATCH",
+            body: JSON.stringify({
+              valuation: Number(updateValuationForm.valuation.value),
+              unitValue: Number(updateValuationForm.units.value),
+            }),
+            headers: { "Content-Type": "application/json" },
+          });
+          const data = await response.json();
+          console.log(data);
+
+          if (data.id) {
+            $("#successModal").modal("show");
+            $("#loadingModal").modal("hide");
+          } else {
+            $("#loadingModal").modal("hide");
+            $("#errorModal").modal("show");
+          }
+        } catch (error) {
+          console.log(error);
+          $("#loadingModal").modal("hide");
+          $("#errorModal").modal("show");
+        }
+      });
+
+     
+
+    
+      employeeESOPForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        try {
+          $(".set-employee-esop-unit").modal("hide");
+          $("#loadingModal").modal("show");
+          const response = await fetch("/admin/bonus/esop/allot", {
+            method: "PATCH",
+            body: JSON.stringify({
+              unitValue: Number(employeeESOPForm.unitValue.value),
+              units: Number(employeeESOPForm.units.value),
+              vestingPeriod: 4,
+              employeeId: employeeId,
+            }),
+            headers: { "Content-Type": "application/json" },
+          });
+          const data = await response.json();
+          if (data.id) {
+            $("#successModal").modal("show");
+            $("#loadingModal").modal("hide");
+          } else {
+            $("#loadingModal").modal("hide");
+            $("#errorModal").modal("show");
+          }
+        } catch (error) {
+          console.log(error);
+          $("#loadingModal").modal("hide");
+          $("#errorModal").modal("show");
+        }
+      });
+    </script>
+    <script>
+   let ='';
+   let EmployeeBonus = {
+  distributionType: 'equal',
+  monthlyDistribution: Array.from({ length: 12 }, (_, index) => ({
+      monthNo: index + 1,
+      amount: 0,
+      status: 'Locked',
+      date: new Date()
+    })),
+  employeeId: '<%=employeeId%>',
+  amount: 0,
+  vestingStartDate: new Date(),
+  vestingPeriod: 1
+};
+function setRadioStatus() {
+        const equalRadio = document.getElementById('equalRadio');
+        const unequalRadio = document.getElementById('unequalRadio');
+        const customRadio = document.getElementById('customRadio');
+        equalRadio.checked = true;
+        switch (EmployeeBonus.distributionType) {
+            case 'equal':
+                equalRadio.checked = true;
+                break;
+            case 'unequal':
+                unequalRadio.checked = true;
+                break;
+            case 'custom':
+                customRadio.checked = true;
+                break;
+            default:
+                // Handle other cases or set a default radio button status
+                break;
+        }
+    }
+async function getData()
+{
+  try {
+    const response = await fetch("/bonus/<%=employeeId%>", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    let data = await response.json();
+    data=data.bonusInfo;
+    console.log(data)
+    if(data?.distributionType)
+    EmployeeBonus=data;
+    SetMonthlyBonusData()
+    setRadioStatus()
+    MakeButtonActive('set-employee-bonus-submit');
+  } catch (error) {
+    console.log(error);
+    $("#loadingModal").modal("hide");
+    $("#errorModal").modal("show");
+  }
+}
+getData()
+
+function ChangBonusInfo(type,value)
+{
+EmployeeBonus[type]=value;
+if(type=='amount' && EmployeeBonus.distributionType=='equal')
+{
+  let amt = (EmployeeBonus.amount / 12).toFixed(0);
+  EmployeeBonus.monthlyDistribution.forEach((months)=>{
+    months.amount=amt;
+  })
+}
+SetMonthlyBonusData();
+
+}
+function ChangeDistributionType(type) {
+  EmployeeBonus.distributionType = type;
+ 
+  if (type === 'equal') {
+    let amt = (EmployeeBonus.amount / 12).toFixed(0);
+    EmployeeBonus.monthlyDistribution = Array.from({ length: 12 }, (_, index) => ({
+      monthNo: index + 1,
+      amount: amt,
+      status: 'Locked',
+      date: new Date()
+    }));
+  } else if (type === 'unequal') {
+    EmployeeBonus.monthlyDistribution = Array.from({ length: 12 }, (_, index) => ({
+      monthNo: index + 1,
+      amount: 0,
+      status: 'Locked',
+      date: new Date()
+    }));
+  } else {
+    // Handle other cases or leave it empty based on your requirements
+    EmployeeBonus.monthlyDistribution = Array.from({ length: 4 }, (_, index) => ({
+      monthNo: index +1,
+      amount: 0,
+      status: 'Locked',
+      date: new Date()
+    }));
+   
+  }
+  SetMonthlyBonusData();
+}
+function AddMonths()
+{ if(EmployeeBonus.distributionType=='custom')
+ { EmployeeBonus.monthlyDistribution.push({
+    monthNo: EmployeeBonus.monthlyDistribution.length+1,
+    amount: 0,
+    status: 'Locked',
+    date: new Date()
+  });
+  SetMonthlyBonusData();
+  MakeButtonActive('set-employee-bonus-submit');}
+}
+
+MakeButtonActive('set-employee-bonus-submit');
+
+function MakeButtonActive(id) {
+  let submitButton = document.getElementById(id);
+  submitButton.disabled = false;
+  let totlaAmt=0;
+  for( let bonus of  EmployeeBonus.monthlyDistribution)
+  if(!isNaN(bonus.amount))
+  totlaAmt+=parseFloat(bonus.amount);
+  if (EmployeeBonus.distributionType === '' || EmployeeBonus.amount === 0 || EmployeeBonus.monthlyDistribution.length === 0 || totlaAmt!=EmployeeBonus.amount) {
+    submitButton.disabled = true;
+  }
+  document.getElementById('RemainingAmount').innerHTML=`Remaining Bonus Amount : <span style=" font-weight: 700;">₹</span>${EmployeeBonus.amount-totlaAmt} `
+}
+function ChangeMonthlyBonusInfo(index,type,value)
+{ index=parseFloat(index);
+EmployeeBonus.monthlyDistribution[index][type]=value;
+document.getElementById(`MonthlyInfomonthNo${index}`).innerHTML=`M${EmployeeBonus.monthlyDistribution[index]['monthNo']}`;
+MakeButtonActive('set-employee-bonus-submit');
+
+}
+function DeleteMonthInfo(index)
+{ index=parseFloat(index);
+  EmployeeBonus.monthlyDistribution.splice(index,1);
+  SetMonthlyBonusData();
+  MakeButtonActive('set-employee-bonus-submit');
+}
+function SetMonthlyBonusData() {
+    let MonthlyBonusBody = document.getElementById('MonthlyBonusBodym');
+    let innerHTML = '';
+    document.getElementById('AddMonthsButton').style.display='none'
+    for (let index = 0; index < EmployeeBonus.monthlyDistribution.length; index++) {
+        let monthlyInfo = EmployeeBonus.monthlyDistribution[index];
+
+        if (EmployeeBonus.distributionType === 'custom') {
+          document.getElementById('AddMonthsButton').style.display='flex'
+            innerHTML += `
+                <div style="display: flex;
+                    align-items: center;
+                    gap: 8px;">
+                    <div class="dropdown">
+                        <div class="dropdown-toggle text-16-600 container_Style" type="button" id="dropdownMenuLink" data-toggle="dropdown"  style="display: flex;align-items: center;
+                        gap:10px;   
+                        display: flex;
+padding: 10px 16px;
+justify-content: center;
+align-items: center;
+gap: 4px;
+                                     -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        overflow: hidden;
+                        color: var(--Gray-700, #344054);
+                        text-overflow: ellipsis;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 24px; /* 150% */
+                        " >
+                          <span id="MonthlyInfomonthNo${index}" class="text-16-600">  M${monthlyInfo.monthNo} </span> <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="background: #FFF;flex-direction:column;        ">
+                            ${Array.from({ length: 12 }, (_, i) => `
+                                <div style="display: flex;
+                                    height: 52px;
+                                    padding: 16px 24px 16px 16px;
+                                    align-items: center;
+                                    align-self: stretch;" class="text-16-600" onclick="ChangeMonthlyBonusInfo('${index}','monthNo','${i+1}')">M${i + 1}</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    <input type="number" 
+                        style="display: flex;
+                        height: 48px;
+                        width: 100px;
+                        padding: 14px 20px;
+                        align-items: center;
+                        gap: 10px;
+                        border-radius: 12px;
+                        border: 1px solid var(--Gray-400, #98A2B3);
+                        background: var(--Gray-50, #F9FAFB);" value="${monthlyInfo.amount}" onchange="ChangeMonthlyBonusInfo('${index}','amount',event.target.value)">
+                        <i style="color: #D0D5DD; cursor: pointer;"  class="fas fa-solid fa-trash delete-button"  onclick="DeleteMonthInfo('${index}')"></i>
+                </div>`;
+        } else {
+            innerHTML += `
+                <div style="display: flex;
+                    align-items: center;
+                    gap: 8px;">
+                    <div style="display: -webkit-box;
+                        width: 30px;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        overflow: hidden;
+                        color: var(--Gray-700, #344054);
+                        text-overflow: ellipsis;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 24px; /* 150% */
+                        " id="MonthlyInfomonthNo${index}">M${monthlyInfo.monthNo}</div>
+                    <input type="number" 
+                        style="display: flex;
+                        height: 48px;
+                        width: 100px;
+                        padding: 14px 20px;
+                        align-items: center;
+                        gap: 10px;
+                        border-radius: 12px;
+                        border: 1px solid var(--Gray-400, #98A2B3);
+                        background: var(--Gray-50, #F9FAFB);" value="${monthlyInfo.amount}" onchange="ChangeMonthlyBonusInfo('${index}','amount',event.target.value)">
+                </div>`;
+        }
+    }
+    MonthlyBonusBody.innerHTML = innerHTML;
+    MakeButtonActive('set-employee-bonus-submit');
+}
+function FilterEmployeeBonusData() {
+    let startDate = new Date(EmployeeBonus.vestingStartDate);
+
+    EmployeeBonus.monthlyDistribution = EmployeeBonus.monthlyDistribution.filter(bonus => {
+        if (bonus.amount === 0 || isNaN(bonus.amount)) {
+            // Remove bonus with zero amount
+            return false;
+        }
+
+        let newDate = new Date(startDate);
+        newDate.setMonth(newDate.getMonth() + bonus.monthNo);
+
+        bonus.date = newDate.toISOString().slice(0, 10);
+        return true;
+    });
+}
+
+
+async function SubmitBonus()
+{
+  try{
+  FilterEmployeeBonusData();
+  let res=await fetch('/admin/bonus/allot',{
+    method:'POST',
+    body:JSON.stringify(EmployeeBonus),
+    headers: { "Content-Type": "application/json" },
+  })
+  location.reload();
+}
+catch(error)
+{
+  console.log(error)
+}
+
+}
+  </script>
+  </body>
+</html>

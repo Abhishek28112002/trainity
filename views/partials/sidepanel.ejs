@@ -1,0 +1,320 @@
+<style>
+  .navbar-box {
+    display: flex;
+    width: 252px;
+    padding: 12px 16px;
+    align-items: center;
+    gap: 12px;
+    border-radius: 12px;
+    transition-delay: 0.1s;
+    transition-timing-function: ease;
+  }
+
+  .navbar-active {
+    background-color: #48BF84 !important;
+  }
+
+  .text-navbar {
+    color: white;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    /* 150% */
+  }
+
+  .SidePanalBox:hover {
+    background-color: rgba(72, 191, 132, 0.20);
+  }
+
+  .SidePanalBox:hover .SidePanalImage {
+    border-radius: 32px;
+    border: 4px solid #48BF84;
+  }
+
+  .changeview {
+    display: flex;
+  }
+</style>
+<div id="sidenav-main" style="display: flex;
+width: 300px;
+padding: 36px 24px;
+flex-direction: column;
+overflow:hidden;
+align-items: flex-start;
+justify-content: space-between;
+margin:0px;
+height: 100%;
+position: fixed;
+width: 300px;
+top: 0px;
+left: 0px;
+transition:.5s ease;
+z-index: 99;
+flex-shrink: 0;
+background: var(--Black, #000);" onmouseover="ShowSidePanalonHover()" onmouseout="HideSidePanalonHover()">
+  <div style="display: flex;flex-direction:column ;gap:32px;width: 100%;">
+    <!-- Sidenav header -->
+   <div style="display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;">
+      <a style="display: flex;gap:12px;align-items: center;">
+        <img src="../SIde bar Icons/Traintity_logo.png" src="width: 56px;
+        border-radius: 3.684px;
+        height: 56px;">
+        <div style="color: var(--White, #FFF);
+    font-size: 25.313px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;" class="changeview">trainity</div>
+
+      </a>
+      <div style="padding: 8px;" class="changeview SidePanalBox" id="sidenav-toggle" onclick="ChangeSidePanalHoverState()">
+        <img src="../SIde bar Icons/sidebar_front.svg">
+      </div>
+    </div>
+
+    <!-- Application nav -->
+    <div style="display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  align-self: stretch;" class="navbar-body">
+      <a href="/dashboard" id="getHome" class="navbar-box SidePanalBox">
+        <img src="../SIde bar Icons/home.svg">
+        <div class="text-navbar changeview">Home</div>
+      </a>
+      <% function ChangeDate() { const today=new Date(); const year=today.getFullYear(); const
+        month=String(today.getMonth() + 1).padStart(2, '0' ); const day=String(today.getDate()).padStart(2, '0' ); const
+        date=`${year}-${month}-${day}`; return date; } %>
+      <% let formattedDate=ChangeDate(); %>
+      <% const managementUrl=`/performanceBoard/?date=${formattedDate}`; %>
+      <% const performanceUrl=`/performanceBoardemployee/${formattedDate}`; %>
+      <a href="<%=performanceUrl%>" id="getPerformance" class="navbar-box SidePanalBox">
+        <img src="../SIde bar Icons/Performance.svg">
+        <div class="text-navbar changeview">Performance</div>
+      </a>
+
+      <% if(user.position===0) { %>
+
+      <a href="<%= managementUrl %>" id="getManagement" class="navbar-box SidePanalBox">
+        <img src="../SIde bar Icons/Management.svg">
+        <div class="text-navbar changeview">Management</div>
+      </a>
+
+      <% } %>
+
+
+      <% if(user.position===0) { %>
+
+      <a href="/project" id="getManagement" class="navbar-box SidePanalBox">
+                    <img src="../SIde bar Icons/Project.svg">
+                    <div class="text-navbar changeview">Projects & Tasks</div>
+                  </a>
+
+      <a href="/leavesAccountabilityManager" id="getrewards" class="navbar-box SidePanalBox">
+        <img src="../SIde bar Icons/Leaves Management.svg">
+        <div class="text-navbar changeview">Leaves Management</div>
+      </a>
+
+      <% } %>
+      <% if(locals.managerVisiting) { %>
+        <a href="/salaryManager/?id=<%=user._id%>" id="getrewards" class="navbar-box SidePanalBox">
+          <img src="../SIde bar Icons/Salary withdrawal.svg">
+          <div class="text-navbar changeview">Salary Withdrawal</div>
+        </a>
+        <% } else { %>
+      <a href="/salary/?id=<%=user._id%>" id="getrewards" class="navbar-box SidePanalBox">
+        <img src="../SIde bar Icons/Salary withdrawal.svg">
+        <div class="text-navbar changeview">Salary Withdrawal</div>
+      </a>
+      <%}%>
+
+      <% if(locals.managerVisiting) { %>
+        <a href="/rewards/<%=user._id%>?manager=True" id="getrewards" class="navbar-box SidePanalBox">
+      <% } else { %>
+      <a href="/rewards/<%=user._id%>" id="getrewards" class="navbar-box SidePanalBox">
+      <% } %>
+        <img src="../SIde bar Icons/Rewards.svg">
+        <div class="text-navbar changeview">Rewards</div>
+      </a>
+      <a href="/leavesAccountability/<%=user._id%>" id="getrewards" class="navbar-box SidePanalBox">
+        <img src="../SIde bar Icons/My Leaves.svg">
+        <div class="text-navbar changeview">My Leaves</div>
+      </a>
+
+      <!-- <a href="/achievementWall/<%=user._id%>" id="getrewards" class="navbar-box SidePanalBox" data-toggle="tooltip"
+                        data-placement="right" title="Achievement Wall">
+                        <img src="../SIde bar Icons/Achievements wall.svg">
+                        <div class="text-navbar changeview">Achievement Wall</div>
+                      </a> -->
+
+    </div>
+  </div>
+  <div class="sidenav-footer" style="width: 100%;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="268" height="1" viewBox="0 0 268 1" fill="none">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M268 1H0V0H268V1Z" fill="#475467" />
+    </svg>
+    <a href="<%=performanceUrl%>" style="display: flex;
+    padding: 4px 8px;
+    align-items: flex-start;
+    gap: 15px;
+    align-self: stretch;" class="SidePanalBox">
+      <img src="<%=user.image%>" style="display: flex;
+  width: 52px;
+  height: 52px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 200px;" class="SidePanalImage">
+      <div style="display: flex;
+  flex-direction: column;
+  align-items: flex-start;" class="changeview">
+        <div class="text-navbar">
+          <%=user.displayName%>
+        </div>
+        <div class="text-navbar" style="font-size: 14px;font-weight: 400;">
+          <%=user.team%>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<script src="../../js/purpose.core.js"></script>
+
+<script>
+  $(function() {
+    var current = location.pathname;
+    $(".navbar-body a").each(function() {
+      var $this = $(this);
+
+      if ($this.attr("href").indexOf(current) !== -1) {
+        $this.addClass("navbar-active");
+      }
+    });
+  });
+  let Sidepanal_hover_state_apply = true;
+  let sidepanel = document.getElementById('sidenav-main');
+  let sidepanal_toggle = document.getElementById('sidenav-toggle');
+
+  function ChangeSidePanalHoverState() {
+    Sidepanal_hover_state_apply = !Sidepanal_hover_state_apply;
+    if (!Sidepanal_hover_state_apply) {
+      document.getElementById('MainPageContent').style.marginLeft = "300px";
+      document.getElementById('MainPageContent').style.width = "calc(100% - 300px)";
+      let windowWidth = window.innerWidth;
+      let streakbox = document.getElementById('streakHeaderStreak');
+      if (streakbox || windowWidth < 1000)
+        streakbox.style.display = "none";
+      sidepanal_toggle.innerHTML = `<img src="../SIde bar Icons/sidebar_back.svg" >`
+    } else {
+      sidepanal_toggle.innerHTML = `<img src="../SIde bar Icons/sidebar_front.svg" >`
+      ChangeVisbilitySidePanal();
+    }
+  }
+
+  function ChangeVisbilitySidePanal() {
+    //  sidepanal_toggle.src('../SIde bar Icons/sidebar_back.svg');
+    //  sidepanal_toggle.src('../SIde bar Icons/sidebar_front.svg');
+
+    if (sidepanel.style.width == "300px") {
+      sidepanel.style.width = "95px";
+      let elements = document.querySelectorAll('.changeview');
+      elements.forEach(element => {
+        element.style.display = "none";
+      });
+      elements = document.querySelectorAll('.navbar-box');
+
+      elements.forEach(element => {
+        element.style.padding = "12px";
+        element.style.justifyContent = "flex-start";
+        element.style.width = 'fit-content';
+      });
+      document.getElementById('MainPageContent').style.marginLeft = "95px";
+      document.getElementById('MainPageContent').style.width = "calc(100% - 95px)";
+      let streakbox = document.getElementById('streakHeaderStreak');
+      if (streakbox)
+        streakbox.style.display = "flex";
+    } else {
+      sidepanel.style.width = "300px";
+
+      let elements = document.querySelectorAll('.changeview');
+      elements.forEach(element => {
+        element.style.display = "flex";
+      });
+      elements = document.querySelectorAll('.navbar-box');
+
+      elements.forEach(element => {
+        element.style.padding = "12px 16px";
+        element.style.justifyContent = "flex-start";
+        element.style.width = '252px';
+      });
+      document.getElementById('MainPageContent').style.marginLeft = "300px";
+      document.getElementById('MainPageContent').style.width = "calc(100% - 300px)";
+      let windowWidth = window.innerWidth;
+      let streakbox = document.getElementById('streakHeaderStreak');
+      if (streakbox || windowWidth < 1000)
+        streakbox.style.display = "none";
+    }
+  }
+
+
+  function ShowSidePanalonHover() {
+    if (Sidepanal_hover_state_apply) {
+
+      sidepanel.style.width = "300px";
+      let elements = document.querySelectorAll('.changeview');
+      elements.forEach(element => {
+        element.style.display = "flex";
+      });
+      elements = document.querySelectorAll('.navbar-box');
+
+      elements.forEach(element => {
+        element.style.padding = "12px 16px";
+        element.style.justifyContent = "flex-start";
+        element.style.width = '252px';
+      });
+
+    }
+  }
+
+  function HideSidePanalonHover() {
+    if (Sidepanal_hover_state_apply) {
+      sidepanel.style.width = "95px";
+      let elements = document.querySelectorAll('.changeview');
+      elements.forEach(element => {
+        element.style.display = "none";
+      });
+      elements = document.querySelectorAll('.navbar-box');
+
+      elements.forEach(element => {
+        element.style.padding = "12px";
+        element.style.justifyContent = "flex-start";
+        element.style.width = 'fit-content';
+      });
+
+    }
+  }
+
+  ChangeVisbilitySidePanal()
+
+  function reloadPage() {
+    location.reload();
+  }
+
+  let reloadTimer;
+
+  // Listen for the visibility change event
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') {
+      // Clear the existing timer
+      clearTimeout(reloadTimer);
+
+      // Set a new timer to reload the page after 5 minutes (300,000 milliseconds)
+      reloadTimer = setTimeout(reloadPage, 600000);
+    }
+  });
+</script>

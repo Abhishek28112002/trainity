@@ -1,0 +1,2699 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+ <style>
+  
+  .SubmitTaskButtonTSE {
+  display: flex;
+  padding: 16px 24px; /* Only include padding once */
+  width: 167px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+  color: var(--Brand-Primary, #48BF84);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  background: #FFF;
+}
+
+.SubmitTaskButtonTSE:hover {
+  color: white;
+  background: #48BF84;
+}
+
+/* Apply styles conditionally based on the label */
+.SubmitTaskButtonTSE:not([data-label="Approved"]) {
+  color: var(--Gray-300, #D0D5DD);
+}
+
+
+.TextAreaStyleSubmissionModal{
+  display: flex;
+       padding: 14px 20px;
+       align-items: center;
+       gap: 10px;
+       align-self: stretch;
+       color: var(--gray-500, #667085);
+       
+       font-size: 14px;
+       font-style: normal;
+       height: 48px;
+       
+       font-weight: 500;
+       line-height: normal;
+       letter-spacing: 0.21px;
+       border-radius: 12px;
+border: 1px solid var(--Gray-400, #98A2B3);
+background: var(--Gray-50, #F9FAFB);
+}
+
+ </style>
+
+<%function formateDate(inputDate) { const months=[ 'Jan' , 'Feb' , 'Mar' , 'Apr' , 'May' , 'Jun' , 'Jul' , 'Aug' , 'Sep'
+  , 'Oct' , 'Nov' , 'Dec' ]; const dateParts=inputDate.split('-'); const year=dateParts[0]; const
+  month=months[parseInt(dateParts[1], 10) - 1]; const day=dateParts[2]; return `${day} ${month} ${year}`; }%>
+
+  <div id="InitiativesBody" style="display: flex;
+padding: 32px;
+flex-direction: column;
+align-items: flex-start;
+gap: 20px;
+align-self: stretch;
+border-radius: 14px;
+" class="container_Style">
+    <div style="display: flex;
+justify-content: space-between;
+align-items: center;
+align-self: stretch;">
+      <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 2px;">
+        <div style="color: var(--content-on-light-primary, #181818);
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+">Initiatives</div>
+        <div style="color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 171.429% */" class="TasklessHeaderinfo">Your Tasks for this month <u style="font-weight: 700;margin-left: 4px;cursor: pointer;" onclick="ExpendBlock('.TasklessHeaderinfo','.TaskmoreHeaderinfo')" 
+            >Read More</u>
+          
+          
+    </div>
+    <div class="TaskmoreHeaderinfo" style="
+          color: var(--gray-500, #667085);
+          font-size: 14px;
+          display: none;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 24px; /* 171.429% */">
+          <span>
+            Your Tasks for this month. Mark them completed as you progress and submit t upon completion from <span style="font-weight: 700;">“Submit Live Initiatives” </span> to receive badges from your manager!
+          <u  onclick="ExpendBlock('.TasklessHeaderinfo','.TaskmoreHeaderinfo')" style="font-size: 14px;
+  font-style: normal;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 24px; ">Read Less</u>
+        </span>
+      </div>
+      </div>
+      <i class="fa fa-angle-up" id="Taskicons" onclick="CloseBox('.Tasks','Taskicons','flex')" style="width: 40px;
+                height: 40px;border-radius: 40px;background: var(--surface-fourth, #EBEBEB);    display: flex;
+align-items: center;
+justify-content: center;"></i>
+    </div>
+
+    <%if(initiative.length>0){%>
+      <div class="Tasks" style="width:100%;display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 20px;">
+        <div  style="width: 100%;overflow: auto;" id="InitiativesBox">
+          <table class="table align-items-center"  >
+            <thead> 
+              <tr class="TasksHeader">
+               
+                
+                <% for (let i = 0; i < TaskTableHeaders?.length; i++) { %>
+                  <% let header = TaskTableHeaders[i] %>
+                  <th style="<%= header.style %>;">
+                       <%= header.title %>
+                       </th>
+                 
+              <% } %>
+              <th style="width: 167px;">
+              Submission approval
+            </th>
+                <!-- <th scope="col" style="width: auto;display: flex;gap:4px;align-items: center;"><i class="fa fa-plus" aria-hidden="true"></i>Add column</th> -->
+              </tr>
+            </thead>
+            <tbody  class="list" id="InitiativesBodyEmployee">
+              
+          <% for(let i=0;i<initiative.length;i++){%>
+            <% let index=0 %>
+            <% let nudges=initiative[i]?.data?.Nudge?.length||0%>
+            <tr onclick="changeinitiativeIndex('<%=i%>')" class="Tasks" id="Tasks<%=i%>">
+              <% for(let header of TaskTableHeaders) {%>
+                <% if(header.usedName=='Nudge'){%>
+                  <td style='<%= TaskTableHeaders[index].style %>'>
+                    <% if (nudges === 0) { %>
+                      <img src="../img/NoNudgeEmployee.svg" data-toggle="dropdown">
+                    <% } else if (nudges === 1) { %>
+                      <img src="../img/OneNudge.svg" data-toggle="dropdown">
+                    <% } else { %>
+                      <div style="display: flex; position: relative;" data-toggle="dropdown">
+                        <div style="color: var(--White, #FFF);
+                          font-size: 10px;
+                          top: -3px;
+                          right: 1px;
+                          width: 11.615px;
+                          height: 11.615px;
+                          position: absolute;
+                          font-style: normal;
+                          font-weight: 700;
+                          line-height: 20px;">
+                          <%= nudges %>
+                        </div>
+                        <img src="../img/NudgeMore.svg">
+                      </div>
+                    <% } %>
+                  
+                    <div class="dropdown-menu" style="
+                      color: var(--gray-700, #344054);
+                      font-size: 14px;
+                      flex-direction: column;
+                      font-style: normal;
+                      font-weight: 500;
+                      line-height: 20px;
+                      width: min(100%,400px);
+                      padding: 8px;
+                      gap:8px;
+                      overflow: hidden;
+                      border-radius: var(--radius-medium, 8px);
+                      border: 1px solid var(--gray-300, #D0D5DD);
+                      background: var(--White, #FFF);
+                    ">
+                      <% for (let nudge of initiative[i]?.data?.Nudge || []) { %>
+                        <div style="display: flex;
+                          padding: 12px;
+                          width: 100%;
+                          border-radius: var(--Radius-medium, 8px);
+                          border: 1px solid var(--Gray-200, #EAECF0);
+                          background: var(--White, #FFF);
+                          gap: 10px;
+                          align-self: stretch;">
+                  
+                          <div style="display: flex;
+                            width: 32px;
+                            height: 32px;
+                            padding: 8px;
+                            justify-content: center;
+                            align-items: center;
+                            flex-shrink: 0;
+                            border-radius: 28px;
+                            <%= nudge.style %>">
+                            <img src="<%= nudge.img %>" style="<%= nudge.Id === '' ? '' : 'width:40px;height:40px;border-radius:40px;' %>">
+                          </div>
+                  
+                          <div style="display: flex;flex-direction: column;gap: 0px;width: 100%">
+                            <div style="display: flex;justify-content: space-between;align-items: center;gap: 10px;width: 100%">
+                              <div style="color: var(--Gray-700, #344054);
+                                font-size: 14px;
+                                font-style: normal;
+                                text-wrap: wrap;
+                                font-weight: 600;
+                                line-height: 20px;">
+                                <%= nudge.title %>
+                              </div>
+                            </div>
+                  
+                            <div style="color: var(--Gray-700, #667085);
+                              font-size: 14px;
+                              text-wrap: wrap;
+                              font-style: normal;
+                              font-weight: 500;
+                              letter-spacing: 0.14px;
+                              line-height: 20px;">
+                              <%= nudge.description %>
+                            </div>
+                          </div>
+                        </div>
+                      <% } %>
+                    </div>
+                  </td>
+                  
+                 <%}else if(header.title=='Tasks'){%>
+              <td onmouseover="showIcons('.OpenIcons<%=initiative[i]?._id%>')" onmouseout="removeIcons('.OpenIcons<%=initiative[i]?._id%>')" style="<%=TaskTableHeaders[index].style%>">
+                <div style="display: flex;align-items: center;gap:40px;width: 100%;">
+                  <div style="width:95%;display: flex;gap:8px;align-items: center;" data-toggle="tooltip" data-placement="top" title="<%=initiative[i]?.data?.Tasks%>">
+                    <i class="fa fa-angle-right" style="font-size: 25px;color:<%=subTasks[i].length==0?'#98A2B3':'#1D2939'%> "  onclick="ShowsEmployeeubTasks('<%=i%>')"  id="ToogleIcon<%=i%>"></i>
+                    <input disabled type="text" class="TaskTitle" value="<%=initiative[i]?.data?.Tasks%>" placeholder="Enter task title "  style="width:80%;border:none;border-radius:6px;height: 30px;
+                    background: transparent;" onchange="changeinitiativedata('<%=i%>','Tasks',event.target.value)">  
+                     <%if(subTasks[i].length){%>
+                      <%=subTasks[i].length%> <img src="../Performance dashboard Icons/Tasks/corner_down_right.svg"> 
+                      <%}%>  
+              </div>
+              <div  onclick="OpenTaskSideBar('<%=i%>')" onmouseover="showIcons('.OpenIcons<%= initiative[i]._id %>')" onmouseout="removeIcons('.OpenIcons<%= initiative[i]._id %>')" class="OpenIcons<%= initiative[i]._id %>" style="display: none; align-items: center; gap: 8px; color: var(--gray-500, #667085); font-size: 14px; cursor: pointer; font-style: normal; font-weight: 600; line-height: 20px;">
+                <img src="../Project icons/maximize.svg">
+                Open
+              </div>
+              <% let postcount=initiative[i].posts?.length ||0%>
+              <% let src=postcount==0?'../img/message-square-gray.svg':'../img/message-square-green.svg'%>      
+              <div style="display: flex;align-items: center;position: relative;" onclick="OpenTaskSideBar('<%=i%>')">
+              <img src="<%=src%>">
+             <% if(postcount>0){%>
+              <div style="color: var(--White, #FFF);
+              display: flex;
+              font-size: 12px;
+              position: absolute;
+              font-style: normal;
+              font-weight: 700;
+              line-height: 20px;
+              width: 14.926px;
+              height: 14.926px;
+              background: #48bf84;
+              border-radius: 14.926px;
+              bottom: 0;
+              right: -5px;
+              justify-content: center;
+              align-items: center;"><%=postcount%></div>
+              <%}%>
+            </div>
+                </div>
+                </td>
+         <%}else if(header.title=='Objective'){%>    
+              <td  style="<%=TaskTableHeaders[index].style%>">
+                <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+               width:150px;
+                overflow: hidden;
+                text-overflow: ellipsis;" id="initiativeObjective<%=i%>" data-toggle="dropdown" aria-expanded="false">
+                  <% if (! initiative[i]?.data?.ObjectiveTitle||initiative[i]?.data?.ObjectiveTitle.length === 0) { %>
+                    Not set
+                <% } else { %>
+                  <%= initiative[i]?.data.ObjectiveTitle  %>
+                <% } %>
+                </div>
+            
+               </td>
+                <%}else if(header.title=='Project'){%>
+               <td  style="<%=TaskTableHeaders[index].style%>">
+                <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                
+                overflow: hidden;
+                width:150px;
+                overflow: hidden;
+                text-overflow: ellipsis;" id="initiativeProject<%=i%>" data-toggle="dropdown" aria-expanded="false" >
+                  <% if (!initiative[i]?.data?.projectTitle||initiative[i]?.data?.projectTitle.length === 0) { %>
+                    Not set
+                <% } else { %>
+                 <%= initiative[i]?.data?.projectTitle%>
+                <% } %>
+                </div>
+              
+               </td>
+                <%}else if(header.title=='Key Result'){%>
+              <td  style="<%=TaskTableHeaders[index].style%>">
+                <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                
+                overflow: hidden;
+                width:150px;
+                overflow: hidden;
+                text-overflow: ellipsis;" id="initiativeKR<%=i%>" data-toggle="dropdown" aria-expanded="false" onclick="CheckAllkrsBox('<%=i%>')">
+                  <% if (initiative[i]?.data?.krs?.length === 0) { %>
+                    Not set
+                <% } else { %>
+                    <% for (let j = 0; j < initiative[i]?.data?.krs?.length; j++) { %>
+                        <%= initiative[i]?.data.krs[j].title %><%= j < initiative[i]?.data?.krs?.length - 1 ? ',' : '' %>
+                    <% } %>
+                <% } %>
+                </div>
+            
+               </td>
+                <%}else if(header.title=='Sub Key Result'){%>
+               <td  style="<%=TaskTableHeaders[index].style%>">
+                <div  style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 1;
+                            
+                            overflow: hidden;
+                            width:150px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;" id="initiativeSubKR<%=i%>" data-toggle="dropdown" aria-expanded="false" onclick="CheckAllSubkrsBox('<%=i%>')">
+                  <% if (!initiative[i]?.data?.subkrs||initiative[i]?.data?.subkrs?.length === 0) { %>
+                    Not set
+                <% } else { %>
+                    <% for (let j = 0; j < initiative[i]?.data?.subkrs?.length; j++) { %>
+                        <%= initiative[i]?.data.subkrs[j].title %><%= j < initiative[i]?.data?.subkrs?.length - 1 ? ',' : '' %>
+                    <% } %>
+                <% } %>
+                
+                  
+                  
+              </div>
+               
+               </td>
+               <% } else if (header.title === 'Status') { %>
+                <td style="<%= TaskTableHeaders[index].style %>">
+                  <div style="padding: 5px 12px; border-radius: 16px;" id="initiative<%= header.usedName %><%= i %>" data-toggle="dropdown" aria-expanded="false">
+                    <% let style = '' %>
+                    <% style += initiative[i]?.data && initiative[i]?.data[header.usedName]?.color?.length > 0 ? 'color:' + initiative[i]?.data[header.usedName]?.color + ';' : '' %>
+                    <% let title = initiative[i]?.data && initiative[i]?.data[header.usedName]?.label %>
+                    <% style += initiative[i]?.data && initiative[i]?.data[header.usedName]?.bgcolor?.length > 0 ? 'background:' + initiative[i]?.data[header.usedName]?.bgcolor : '' %>
+                    <div class="Status_hold" style="<%= style %>"><%= title %></div>
+                  </div>
+                  <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="initiative<%= header.usedName %><%= i %>" id="initiative<%=header.usedName%><%=i%>dropdown">
+                    <% let dropdownindex=0%>
+                    <% for (let label of header.labels) { %>
+    
+                      <div class="StatusBox" onclick="changeinitiativeIndex('<%=i%>');setStatusToTask('<%=label.label%>', '<%= header.usedName %>','<%=dropdownindex%>')">
+                        <% let color = label?.color %>
+                        <% let title = label?.label %>
+                        <% let bgcolor = label?.bgcolor %>
+                         <div class="Status_hold" style="color:<%= color %>; background:<%= bgcolor %>"><%= title %></div>
+                       
+                      </div>
+                      <% dropdownindex+=1%>
+                    <% } %>
+                  </div>
+                </td>
+                <%}else if(header.type=='label'){%>
+              <td style="<%=TaskTableHeaders[index].style%>">
+                <div style="padding: 5px 12px; border-radius: 16px;" id="initiative<%= header.usedName %><%= i %>" data-toggle="dropdown" aria-expanded="false">
+                  <% let style = '' %>
+                  <% style += initiative[i]?.data && initiative[i]?.data[header.usedName]?.color?.length > 0 ? 'color:' + initiative[i]?.data[header.usedName]?.color + ';' : '' %>
+                  <% let title = initiative[i]?.data && initiative[i]?.data[header.usedName]?.label %>
+                  <% style += initiative[i]?.data && initiative[i]?.data[header.usedName]?.bgcolor?.length > 0 ? 'background:' + initiative[i]?.data[header.usedName]?.bgcolor : '' %>
+                  <div class="Status_hold" style="<%= style %>"><%= title %></div>
+                </div>
+              
+               </td>
+               <%}else if(header.title=='Badges'){%>
+                <td style="gap:0px;<%=TaskTableHeaders[index].style%>" ><input type="number"  disabled style="width: 38px;border:none;text-align: right;" value="<%=initiative[i]?.data?.Badges%>" >
+                 
+                    <img src="../img/gem.svg" style="width:24px;height:24px">
+                    
+                </td>   
+               <% } else if (header.usedName === 'Effort' || header.type === 'number') { %>
+                <td style="gap:4px;<%= TaskTableHeaders[index].style %>">
+                  <input disabled type="number" style="width: 38px; border: none;text-align: right;" value="<%= initiative[i]?.data && initiative[i]?.data[header.usedName] %>" >
+                 
+              <% if(header.usedName=='Effort'){%>
+                  <div style="font-size: 18px;">D</div>
+               <%}%>
+                </td>
+                <% } else if (header.type === 'text') { %>
+                  <td style="<%= TaskTableHeaders[index].style %>">
+                    <input disabled type="text" style="width:100%; border: none" placeholder="Enter text" value="<%= initiative[i]?.data && initiative[i]?.data[header.usedName] %>">
+                  </td>
+               <%} else if(header.title=='Time elapsed'){%>
+              <td style="<%=TaskTableHeaders[index].style%>">
+                <div class="progresscircle-bar progresstask" style="background: 
+                  radial-gradient(closest-side, white 79%, transparent 80% 100%),
+                  conic-gradient(#48bf84 calc(0 * 1%), #F2F4F7 0);
+                animation: html-progresscircle 2s 1 forwards;" data-toggle="tooltip" data-placement="top" title="">
+                <div class="EffortsDays" style="color: var(--gray-500, #667085);
+                font-size: 12px;
+                font-style: normal;
+                margin-top: 8px;
+   
+                font-weight: 500;
+                line-height: 20px;">
+                  <progress id="progresstask" min="0" max="100" value="9"></progress>
+                </div>
+                </div>
+           </td>
+             <%}else if(header.title=='Owner'){%>
+             <td id="Owner<%=i%>" style="<%=TaskTableHeaders[index].style%>">
+              <div  style="display: flex;align-items: center;gap:12px;width: 150px;overflow: hidden;" id="initiativeOwner<%=i%>" data-toggle="dropdown" aria-expanded="false">
+            <img src="<%=initiative[i]?.data?.Owner?.image?.length>0?initiative[i]?.data?.Owner?.image:'../Performance dashboard Icons/Empty_User.svg'%>" style="width: 24px;height: 24px;border-radius:200px ;"> <%=initiative[i]?.data?.Owner?.name?.length>0?initiative[i]?.data?.Owner?.name:'Not set'%>
+            </div>
+            </td>
+            <%}else if(header.title=='Allotment Date' || header.type == 'date'){%>
+              <td style="color: var(--gray-800, #1D2939);
+              line-height: 20px; <%=TaskTableHeaders[index].style%>;" >
+               <%=formateDate(initiative[i]?.data['AllotmentDate'])%>
+               <img src="../img/NewCalendar.svg">
+             <%}else if(header.title=='Files'){%>
+             <td class="d-flex align-items-center gap-3" style="<%=TaskTableHeaders[index].style%>">
+              <div id="initiativeStatus<%=i%>" data-toggle="dropdown" aria-expanded="false">
+                  <span id='Task-FileBody-<%=i%>'><%= initiative[i]?.data?.files?.length%></span>
+                  <img src="../Performance dashboard Icons/File.svg" style="width: 24px; height: 24px;">
+              </div>
+             
+              <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativeTaskFile<%=i%>dropdown">
+               <% for (let file of initiative[i]?.data?.files||[]) { %>
+           <div style="display: flex;
+                       padding: 12px 16px;
+                       align-items: center;
+                       gap: 12px;" >
+               <img src="../Performance dashboard Icons/Document Added.svg">
+               <a href="<%=file.url%>" target="_blank" download style="display: flex;
+                         flex-direction: column;
+                         align-items: flex-start;
+                         gap: 4px;
+                         flex: 1 0 0;">
+                 <div style="
+                           color: var(--content-on-light-primary, #181818);
+                           font-size: 16px;
+                           max-width:150px;
+                           overflow: hidden;
+                           text-overflow: ellipsis;
+                           font-style: normal;
+                           font-weight: 600;
+                           line-height: 17.352px;">
+                   <%=file.title%>
+                 </div>
+                 <div style="display: -webkit-box;
+                           -webkit-box-orient: vertical;
+                           -webkit-line-clamp: 1;
+                           
+                           overflow: hidden;
+                           max-width:150px;
+                           overflow: hidden;
+                           text-overflow: ellipsis;
+                           color: var(--content-on-light-secondary, #898989);
+                           text-overflow: ellipsis;
+                           font-size: 12px;
+                           font-style: normal;
+                           font-weight: 500;
+                           line-height: 17.352px;">
+                   <%=file.url%>
+                 </div>
+               </a>
+                 </div>
+  
+              <%}%>
+         
+              </div>
+          </td>
+          <%}else if(header.title=='Links'){%>
+          <td class="d-flex align-items-center gap-3" style="<%=TaskTableHeaders[index].style%>">
+            <div style="padding: 5px 12px; border-radius: 16px; display: flex; gap: 8px; align-items: center;" data-toggle="dropdown" aria-expanded="false">
+              <span id='Task-LinkBody-<%=i%>'><%= initiative[i]?.data && initiative[i]?.data.links ? initiative[i]?.data.links.length : 0 %></span>
+              <img src="../Performance dashboard Icons/Link.svg" style="width: 24px; height: 24px;">
+              
+            </div>
+            
+            <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativeTaskLink<%=i%>dropdown">
+              <% for (let link of initiative[i]?.data?.links||[]) { %>
+                <div style="display: flex;
+                            padding: 12px 16px;
+                            align-items: center;
+                            gap: 12px;" >
+                   <img src="../Performance dashboard Icons/Link Added.svg">
+                    <a href="<%=link.url%>" target="_blank"  style="display: flex;
+                              flex-direction: column;
+                              align-items: flex-start;
+                              gap: 4px;
+                              flex: 1 0 0;">
+                      <div style="
+                                color: var(--content-on-light-primary, #181818);
+                                font-size: 16px;
+                                max-width:150px;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                font-style: normal;
+                                font-weight: 600;
+                                line-height: 17.352px;">
+                        <%=link.title%>
+                      </div>
+                      <div style="display: -webkit-box;
+                                -webkit-box-orient: vertical;
+                                -webkit-line-clamp: 1;
+                                
+                                overflow: hidden;
+                                max-width:150px;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                color: var(--content-on-light-secondary, #898989);
+                                text-overflow: ellipsis;
+                                font-size: 12px;
+                                font-style: normal;
+                                font-weight: 500;
+                                line-height: 17.352px;">
+                        <%=link.url%>
+                      </div>
+                    </a>
+                      </div>
+                   <%}%>
+            </div>
+        </td>
+        <%}%>
+        <% index+=1%>
+             <%}%>
+             <% if( initiative[i].data?.SubmissionApproval?.label == 'Approved'){%>
+             <td class="SubmitTaskButtonTSE"  onclick="setTasktoSubmitModal('<%=i%>')" data-target="#SubmitTask" data-toggle="modal"  data-label="Approved">
+              Submit
+            </td>
+            <%}else{%>
+              <td class="SubmitTaskButtonTSE"  data-label="">
+                Submit
+              </td>
+              <%}%>
+            
+            
+             </tr>
+            <%}%>
+            </tbody>
+        </table>
+        </div>
+      </div>
+      <!-- <a href='/projectTask/task' style="display: flex;
+padding: 10px 16px;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+gap: 8px;
+color: var(--brand-primary, #48BF84);
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 150% */
+border-radius: var(--radius-medium, 8px);">View All Tasks</a> -->
+      <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;
+align-self: stretch">
+        <div style="display: flex;
+align-items: center;
+gap: 24px;
+color: var(--gray-900, #101828);
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 100% */
+flex: 1 0 0;">
+          Submit Live Initiatives</div>
+        <div style="align-self: stretch;
+color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 171.429% */
+letter-spacing: 0.21px;">Submit initiatives that are live or in production for review and recognition by your manager
+          to contribute to your ongoing Tasks.<span style="color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 24px; "><u onclick="ExpendBlock('.Tasklessinfo','.Taskmoreinfo')" class="Tasklessinfo"
+              style="cursor: pointer;"> Read More</u></span></div>
+        <div class="Taskmoreinfo" style="display: none;gap:5px"><img src="../Performance dashboard Icons/Tasks/pin.svg">
+          <div style="color: var(--gray-800, #1D2939);
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */
+letter-spacing: 0.24px;">Remember, the initiatives you submit each week become part of your <span
+              style="font-weight: 800;">profile's Tasks</span>
+          </div>
+        </div>
+
+        <div class="Taskmoreinfo" style="display: none;gap:5px"><img src="../img/gem.svg" style="width: 24px;
+height: 24px;
+flex-shrink: 0;">
+          <div style="color: var(--gray-800, #1D2939);
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */
+letter-spacing: 0.24px;"><span style="font-weight: 800;">Earn More Badges:</span> The more tasks you submit weekly, the
+            more badges you can earn and showcase your skills.
+          </div>
+        </div>
+        <div class="Taskmoreinfo" style="display: none;gap:5px"> <img
+            src="../Performance dashboard Icons/Tasks/evaluation.svg">
+          <div style="color: var(--gray-800, #1D2939);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.24px;"><span style="font-weight: 800;">Monthly Evaluation:</span> Your submissions are essential
+            for your monthly evaluation, so each task counts.
+          </div>
+        </div>
+        <u onclick="ExpendBlock('.Tasklessinfo','.Taskmoreinfo')" class="Taskmoreinfo" style="font-size: 14px;
+  font-style: normal;
+  display: none;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 24px; ">Read Less</u>
+      </div>
+      <!-- <div style="display: flex;
+align-items: center;
+gap: 12px;
+align-self: stretch;">
+        <div class="progressTask">
+          <div class="progress__fill" id="completedTaskProgressFill"></div>
+        </div>
+        <div style="color: var(--gray-700, #344054);
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 28px; /* 200% */"><sapn id="completedTask"></sapn>/<%=initiative.length%> Tasks submitted</div>
+
+      </div> -->
+      <div data-target="#ShowAllTask" onclick="SetCompletedTask()"  data-toggle="modal" id="SubmitTaskButtonPB" class="btn btn-primary" style="
+      height: 46px;
+      padding: 10px 24px 10px 16px;
+      border-radius: var(--radius-medium, 8px);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 20px; /* 142.857% */
+      letter-spacing: 0.1px;">Submit Tasks 
+<!-- <img src="../img/gem.svg">  -->
+      </div>
+      <% if(TaskSubmissions.length>0){%>
+      <div style="width: 100%;">
+        <div style="color: var(--content-on-light-primary, #181818);
+              font-size: 20px;
+              font-style: normal;
+              font-weight: 700;
+              line-height: normal;">Your Weekly Submissions</div>
+
+      </div>
+      <div class="table-responsive" style="width: 100%;overflow: auto;" id="InitiativesBox">
+        <table class="table align-items-center">
+          <thead style="background: var(--gray-100, #F2F4F7);">
+            <tr>
+              
+<th style="width: 250px;">Initiative Name</th>
+<th style="width: 90px;">Metric Moved</th>
+<th style="width: 50px;">Badges</th>
+<th style="width: 50px;">Quality</th>
+<th style="width: 50px;">Speed</th>
+<th style="width: 120px;">Review</th>
+<th style="width: 50px;">Comment</th>
+<th style="width: 120px;">Live Status</th>
+<th style="width: 120px;">In-Usage</th>
+<th style="width: 120px;">Value Generated</th>
+<th style="width: 120px;">B-Impact</th>
+<th style="width: 120px;">User Adoption</th>
+<th style="width: 150px;">Customer Satisfaction</th>
+</tr>
+          </thead>
+          <tbody class="list">
+
+          
+              <% for(let i=0;i<TaskSubmissions.length;i++){%>
+                <tr>
+                <td onmouseover="showIcons('.OpenIcon<%=TaskSubmissions[i]._id%>')"
+                  onmouseout="removeIcons('.OpenIcon<%=TaskSubmissions[i]._id%>')" style="width: 250px;">
+                  <div style="display: flex;align-items: center;gap:40px;width: 100%;">
+                 <input style="border: none;
+                            border-radius: 6px;
+                            height: 30px;
+                            width: 90%;
+                            background: transparent;display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 1;
+                            overflow: hidden;
+                            color: var(--gray-900, #101828);
+                            text-overflow: ellipsis;
+                            font-size: 14px;
+                            font-style: normal;
+                            font-weight: 600;
+                            line-height: 20px; /* 142.857% */
+                            " value="<%=TaskSubmissions[i].tasktitle%>" disabled >
+                      
+                      
+
+
+            
+                    <div onclick="ChangeTsIndex('<%=i%>');" data-target="#SubmitTask" data-toggle="modal" id="OpenIcon<%=TaskSubmissions[i]._id%>" class="OpenIcon<%=TaskSubmissions[i]._id%>" style="display: none;align-items: center;gap:8px;color: var(--gray-500, #667085);
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 20px;">
+                      <img src="../Project icons/maximize.svg">
+                      Open
+                    </div>
+                  </div>
+                </td>
+                <td style="width: 90px;">
+                  <% if(TaskSubmissions[i].metricMoved){%>
+                  <div style="display: flex; padding: 2px 10px; justify-content: center; align-items: center; border-radius: 16px;">Yes </div>
+        <%}else{%>
+          <div style="display: flex; padding: 2px 10px; justify-content: center; align-items: center; border-radius: 16px;">No</div>
+          <%}%>
+                <td style="width: 50px;">
+                  <span style="display:flex;align-items: center;"><input type="number"
+                      style="width:50px;text-align:right;height:30px;border:none;"
+                      value="<%=TaskSubmissions[i].badges%>"
+                      disabled> <img src="../img/gem.svg" style="width:24px;height:24px;"></span>
+                </td>
+
+                <td style="width: 50px;">
+                <%=TaskSubmissions[i].quality>0?TaskSubmissions[i].quality:'-'%>
+                </td>
+                <td style="width: 50px;">
+                   <%=TaskSubmissions[i].speed>0?TaskSubmissions[i].speed:'-'%>
+                </td>
+                <td style="width: 120px;"> 
+                  <div style="justify-content: center;border-radius:16px;" id="TSstatus<%=i%>" >
+
+
+                    <%if(TaskSubmissions[i].status=='Completed'){%>
+                      <div class="Status_completed">Completed</div>
+                      <%}%>
+                        <%if(TaskSubmissions[i].status=='Pending'){%>
+                          <div class="Status_progress">Pending</div>
+                          <%}%>
+
+
+
+                  </div>
+                  <!-- <div class="dropdown-menu" style="
+             flex-direction: column;
+           " aria-labelledby="TSstatus<%=i%>" id="TSstatus<%=i%>dropdown">
+
+                    <div class="StatusBox" onclick="setStatusTS('<%=i%>','Completed','status',0)">
+                      <div class="Status_completed">Completed</div>
+                    </div>
+                    <div class="StatusBox" onclick="setStatusTS('<%=i%>','Pending','status',1)">
+                      <div class="Status_progress">Pending</div>
+                    </div>
+                  </div> -->
+                </td>
+                  <% if(TaskSubmissions[i].feedback?.length==0){%>
+                    <td  style="width: 50px;"> 
+                  -
+                  </td>
+                <%}else{%>
+                  <td data-target="#AddTSFeedback" data-toggle="modal" onclick="ChangeTsIndex('<%=i%>');SetFeedback('CommentBody')" style="width: 50px;position: relative;"> 
+                
+                  <div style="display: flex;position: relative;">
+                    <div style="position: absolute;
+                    color: #3B82F6;
+                    z-index: 99;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-top: 3px;
+                    margin-left: 10px;"><%= TaskSubmissions[i].feedback.length%> </div>
+                    <img src="../img/feedback_active.svg"></div>
+                  <%}%>
+                </td>
+                <% let StatusArrUsedNames = [
+                { usedName: 'liveStatus' },
+                { usedName: 'inUsageStatus' },
+                { usedName: 'valueGenerated' },
+                { usedName: 'bImpact' },
+                { usedName: 'userAdoption' },
+                { usedName: 'customerSatisfaction' }
+            ]; %>
+            
+            <% for (let option of StatusArrUsedNames) { %>
+              <td style="justify-content: center;width: <%= option.usedName === 'customerSatisfaction' ? '150px' : '120px' %>;">
+
+                    <% if (TaskSubmissions[i][option.usedName] && TaskSubmissions[i][option.usedName].style && TaskSubmissions[i][option.usedName].title) { %>
+                        <div style="display: flex; padding: 2px 10px; justify-content: center; align-items: center; border-radius: 16px;<%= TaskSubmissions[i][option.usedName].style %>">
+                            <%= TaskSubmissions[i][option.usedName].title %>
+                        </div>
+                    <% } else { %>
+                        -
+                    <% } %>
+                </td>
+            <% } %>
+            
+              </tr>
+                <%}%>
+
+          </tbody>
+        </table>
+      </div>
+      <%}%>
+
+      <%}else{%>
+        <div style="display: flex;
+  height: 106px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+  " class="Tasks">
+          <div style="color: var(--gray-600, #475467);
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: 22px; /* 137.5% */
+">No tasks assigned yet
+          </div>
+          <div style="color: var(--gray-500, #667085);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 22px; /* 157.143% */
+">Here, you'll find the tasks assigned by manager
+          </div>
+        </div>
+        <%}%>
+
+  </div>
+  <!-- Show All Complete Task Modal -->
+
+  <div class="modal fade docs-example-modal-xl" tabindex="-1" role="dialog" id="ShowAllTask"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header" style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+          <div style="color: var(--gray-900, #101828);
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Submit Live Initiatives</div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+        </div>
+
+        <div class="modal-body" style="gap: 20px;
+        background-color: #FAFAFA;
+        display: flex;
+        flex-direction: column;">
+          <div style="color: var(--gray-500, #667085);
+          
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+          ">Select task which you wish to submit</div>
+          <div class="table-responsive" id="KeyResultsBox">
+            <table class="table align-items-center">
+              <thead>
+                <tr style="background: var(--gray-100, #F2F4F7);">
+                  <th scope="col" style="width:45%;">Tasks</th>
+                  <th scope="col"  style="width:20%;"> Status</th>
+                  <th scope="col"  style="width:15%;">Time elapsed</th>
+                  <th scope="col"  style="width:20%;">Badges</th>
+                </tr>
+              <tbody class="list" id="SubmitTaskBody">
+
+              </tbody>
+
+            </table>
+          </div>
+          <div style="display: flex;
+          padding: 0px 24px;
+          justify-content: space-between;
+          align-items: center;
+          align-self: stretch;">
+          <div style="display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          gap: 2px;">
+          <div style="color: var(--Gray-800, #1D2939);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;">Submit Completed Tasks</div>
+          <div style="color: var(--Gray-600, #475467);
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;">Unlogged tasks? No worries! Click 'Next’ to document your completed work.</div>
+        </div>
+        <div style="display: flex;
+        padding: 16px 40px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        color: var(--White, #FFF);
+text-align: center;
+font-size: 16px;
+font-style: normal;
+cursor: pointer;
+font-weight: 600;
+line-height: normal;
+        align-self: stretch;
+        border-radius: 12px;
+        background: var(--Brand-Primary, #48BF84);" data-dismiss="modal" data-target="#SubmitTask" data-toggle="modal" onclick="SubmitNewTask()">
+        Next <i class="fa fa-angle-right" aria-hidden="true" ></i>
+        </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="AddTSFeedback" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="width: 100vw;">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="max-height: 70vh;overflow: auto;">
+        <div class="modal-header" style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+          <div style="color: var(--gray-900, #101828);
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Comments</div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+        </div>
+
+        <div class="modal-body" style="background-color: #FAFAFA;padding: 24px 32px;max-height: 80vh;overflow: auto;">
+                      <div style="display: flex;margin:32px 0px;flex-direction: column;gap:12px;align-items: flex-start;" id="CommentBody">
+                     
+                      </div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+
+<!-- Submit Task Modal -->
+  <div class="modal fade docs-example-modal-xl" tabindex="-1" role="dialog" id="SubmitTask"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header" style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+          <div style="color: var(--gray-900, #101828);
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Initiatives</div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+        </div>
+
+       
+<div class="modal-body" style="display: flex;
+        padding: 20px 32px;
+        flex-direction: column;
+        overflow: auto;
+        max-height: 70vh;
+        align-items: flex-start;
+        gap: 32px;">
+         <div style="display: flex;
+         flex-direction: column;
+         width: 100%;
+         align-items: flex-start;
+         gap: 8px;">
+                   <div style="color: var(--gray-800, #1D2939);
+       
+       font-size: 16px;
+       font-style: normal;
+       font-weight: 600;
+       line-height: normal;">Initiative Name<span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+                   <textarea class="TextAreaStyleSubmissionModal"
+                     placeholder="Enter the name of the initiative"
+                     onchange="ChangeTSEData('tasktitle',event.target.value)" id="Task_Tasks"></textarea>
+                 </div>
+                 <div style="display: flex;
+                 flex-direction: column;
+                 width: 100%;
+                 align-items: flex-start;
+                 gap: 8px;">
+                           <div style="color: var(--gray-800, #1D2939);
+               
+               font-size: 16px;
+               font-style: normal;
+               font-weight: 600;
+               line-height: normal;">Initial Info Provided<span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+                           <textarea class="TextAreaStyleSubmissionModal"
+                             placeholder="Enter the Initial Info provided for the initiative"
+                             onchange="ChangeTSEData('initialInfo',event.target.value)" id="Task_InitialInfo"></textarea>
+                         </div>
+          <div style="display: flex;
+       flex-direction: column;
+       align-items: flex-start;
+       gap: 8px;">
+            <div style="color: var(--gray-800, #1D2939);
+       
+       font-size: 16px;
+       font-style: normal;
+       font-weight: 600;
+       line-height: normal;">Timeline <span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+            <div style="display: flex;
+       align-items: center;
+       gap: 8px;
+       flex-wrap: wrap;
+       align-self: stretch;">
+              <img src="../Performance dashboard Icons/calander.svg">
+              <div style="color: var(--gray-600, #475467);
+      
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;" >
+                Start Date
+              </div>
+              <input class="TextAreaStyleSubmissionModal" type="date" id="Task_StartDate" onchange="ChangeTSEData('startDate',event.target.value)">
+              <div style="color: var(--gray-600, #475467);
+      
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;">
+                endDate
+              </div>
+              <input class="TextAreaStyleSubmissionModal" type="date" onchange="ChangeTSEData('endDate',event.target.value)" id="Task_EndDate">
+              <!-- <div class="progresscircle-bar progresstask" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#48bf84 calc(5 * 1%), #F2F4F7 0); animation: html-progresscircle 2s 1 forwards;" data-toggle="tooltip" data-placement="top" title="">
+                <div class="EffortsDays" style="color: var(--gray-500, #667085); font-size: 12px; font-style: normal; margin-top: 7px; font-weight: 500; line-height: 20px;">
+                  <progress id="progresstask" min="0" max="100" value="9"></progress>
+                </div>
+              </div> -->
+              <div id="TimeElapsedModal">
+
+              </div>
+            </div>
+            
+          </div>
+         
+         
+         
+          <div style="display: flex; flex-wrap: wrap; gap: 32px;" id="TSEStatusMatrix">
+           
+          </div>
+       
+        <div style="display: flex;flex-direction: column;gap:8px;width: 100%;">
+        <div style="display: flex;
+         align-items: center;
+         gap: 12px;color: var(--Gray-800, #1D2939);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;">
+        <div >
+          Metric Moved  <span style="color: var(--Red, #FF6565);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;">*</span>
+      </div> 
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <input type="radio" name="metricMoved" value="yes" id="yesRadio" checked onclick="ChangeTSEData('metricMoved',true)"> Yes
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <input type="radio" name="metricMoved" value="No" id="noRadio"  onclick="ChangeTSEData('metricMoved',false)"> No
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <input type="radio" name="metricMoved" value="Not Measured" id="notMeasuredRadio"  onclick="ChangeTSEData('metricMoved','Not Measured')"> Not Measured
+      </div>
+      
+        </div>
+        <textarea class="TextAreaStyleSubmissionModal"  placeholder="Describe Metrics Moved and Impact"
+              onchange="ChangeTSEData('metricMovedDescription',event.target.value)" id="Task_MetricMovedDescription"></textarea>
+        
+      </div>
+        <div style="display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 8px;">
+      <div style="display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2px;">
+    <div style="color: var(--Gray-800, #1D2939);
+    
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;">
+    Badges
+  </div> 
+  <div style="color: var(--Gray-600, #475467);
+  
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;">
+  Enter the number of badges you believe best reflects your contribution to this task.
+  </div> 
+    </div> 
+    <div style="display: flex;
+    width: 158px;
+    height: 52px;
+    padding: 16px 24px;
+    justify-content: center;
+    align-items: center;">
+    <img
+      onclick="UpdateTSEBadges(-0.5)"
+      src="../img/icons performance mgmt/desktop/d_substract_green.svg"
+    />
+    <div
+      style="
+        display: flex;
+        font-size: 21px;
+        font-weight: 600;
+        color: black;
+      "
+    >
+      <div >
+        <input
+          type="number"
+          id="Task_ExpectedBadges"
+          value=0
+          onchange="ChangeTSEData('expectedBadges',event.target.value)"
+          style="width: 50px;
+          text-align: right;"
+        />
+      </div>
+      <img
+        src="../img/icons performance mgmt/desktop/d_badge.svg"
+      />
+    </div>
+    <img
+      onclick="UpdateTSEBadges(0.5)"
+      src="../img/icons performance mgmt/desktop/d_add_green.svg"
+    />
+  </div> 
+      </div>
+          <div style="display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          align-self: stretch;
+          ">
+                      <div style="color: var(--gray-800, #1D2939);
+          
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;">Attach files and links <span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+                      <div style="display: flex;align-items: center;gap:8px;flex-wrap: wrap;" id="Task_LinkFileBody">
+          
+                      </div>
+                      <div style="display: flex;
+          align-items: flex-start;
+          gap: 8px;" id="Attachfilesandlinks">
+                        <div style="display: flex;
+          width: 103px;
+          height: 52px;
+          padding: 16px 24px;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          background: #FFF;" onclick="OpenTSFileInput('FileInputField')">
+                          <input type="file" id="FileInputField" style="width: 0px;" onchange="handleTSFileSelect(event)">
+                          <img src="../Performance dashboard Icons/File.svg">
+                          <img src="../Performance dashboard Icons/AddMedia.svg">
+                        </div>
+                        <div style="display: flex;
+          width: 103px;
+          height: 52px;
+          padding: 16px 24px;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          background: #FFF;" data-target="#AddTSLink" data-toggle="modal">
+                          <img src="../Performance dashboard Icons/Link.svg">
+                          <img src="../Performance dashboard Icons/AddMedia.svg">
+                        </div>
+                      </div>
+                    </div>
+          <div style="display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    gap: 8px;">
+            <div style="color: var(--gray-800, #1D2939);
+  
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;">Business Outcome <span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+            <textarea class="TextAreaStyleSubmissionModal" placeholder="Describe the specific business outcome you achieved through this task."
+              onchange="ChangeTSEData('businessOutcome',event.target.value)" id="Task_BusinessOutcome"></textarea>
+          </div>
+          <div style="display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  gap: 8px;">
+            <div style="color: var(--gray-800, #1D2939);
+
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Next steps <span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+            <textarea class="TextAreaStyleSubmissionModal"
+              placeholder="Describe the next steps for the initiative in keywords"
+              onchange="ChangeTSEData('nextStep',event.target.value)" id="Task_NextStep"></textarea>
+          </div>
+          <div style="display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  gap: 8px;">
+            <div style="color: var(--gray-800, #1D2939);
+
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Improvement Area and Learnings <span style="color: var(--Red, #FF6565);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">*</span></div>
+            <textarea class="TextAreaStyleSubmissionModal"
+              placeholder="Reflect on the learnings or insights gained from this task. What did you discover, understand, or gain as knowledge during the process? Please summarize them here."
+              onchange="ChangeTSEData('learning',event.target.value)" id="Task_Learning"></textarea>
+          </div>
+          <div style="display:flex;flex-direction: column;gap:12px;align-items: flex-start;width: 100%;" id="CommentBodySubmitTaskModal">
+                  
+                     
+                   
+          </div>
+        </div>
+
+        
+   <!-- <div style="
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+      align-self: stretch;
+    ">
+            <div style="
+        display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 4px;
+align-self: stretch;
+      ">
+              <div style="
+         color: var(--gray-800, #1D2939);
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+        ">
+                Key Results and KPI Data
+              </div>
+              <div style="
+     color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+     ">
+                For each selected Key Result, provide the following KPI details:
+              </div>
+
+            </div>
+            <div class="table-responsive" id="KeyResultsBox" style="width: 100%;">
+              <table class="table align-items-center">
+                <thead>
+                  <tr>
+                    <th scope="col" style="width: 300px;">Key Results</th>
+                    <th scope="col">Starting Value</th>
+                    <th scope="col">Current Value</th>
+                    <th scope="col">Target Value</th>
+                    <th scope="col">
+                      Progress
+                    </th>
+                  </tr>
+                <tbody id="KeyResultsBody" class="list">
+
+                  <tr id="ClicktoaddnewKR" data-target="#ConnectKeyResults" style="cursor: pointer;"
+                    data-toggle="modal">
+                    <td>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+                        <path
+                          d="M15.2031 17.6953C16.5838 17.6953 17.7031 16.576 17.7031 15.1953C17.7031 13.8146 16.5838 12.6953 15.2031 12.6953C13.8224 12.6953 12.7031 13.8146 12.7031 15.1953C12.7031 16.576 13.8224 17.6953 15.2031 17.6953Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                          d="M5.20312 7.69531C6.58384 7.69531 7.70312 6.57602 7.70312 5.19531C7.70312 3.8146 6.58384 2.69531 5.20312 2.69531C3.82241 2.69531 2.70312 3.8146 2.70312 5.19531C2.70312 6.57602 3.82241 7.69531 5.20312 7.69531Z"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                          d="M5.20312 17.6953V7.69531C5.20313 9.68444 5.9933 11.5921 7.39982 12.9986C8.80635 14.4051 10.714 15.1953 12.7031 15.1953"
+                          stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      Click to Connect more KRs
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div> -->
+        <div class="modal-footer" style="padding: 0.5rem;display: flex;justify-content: space-between;align-items: center;">
+          <div style="display: flex;
+          padding: 10px 16px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          border-radius: var(--radius-medium, 8px);color: #48BF84;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 150% */
+"  data-dismiss="modal">
+         
+            Back
+          </div>
+          <div style="display: flex;justify-content: space-between;align-items: center;gap:16px;">
+          <button class="btn btn-outline-primary" style="display: flex;
+width: 189px;
+padding: 16px 40px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+align-self: stretch;
+border-radius: 12px;" data-dismiss="modal"> Cancel</button>
+          <button class="btn btn-primary" disabled style="display: flex;
+width: 189px;
+padding: 16px 40px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+align-self: stretch;
+border-radius: 12px;" data-target="#TaskSubmissioncompleteModal" data-toggle="modal" data-dismiss="modal" onclick="SubmitTask()" id="SubmitTaskButton">Submit</button>
+
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--  Connect Key Results -->
+  <div class="modal fade docs-example-modal-xl" tabindex="-1" role="dialog" id="ConnectKeyResults"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header" style="
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+      ">
+          <div style="
+          color: var(--gray-900, #101828);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+        ">
+            Connect Key Results
+          </div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal" />
+        </div>
+
+        <div class="modal-body" style="
+        display: flex;
+        padding: 20px 32px;
+        flex-direction: column;
+        overflow: auto;
+        max-height: 70vh;
+        align-items: flex-start;
+        gap: 32px;
+      ">
+          <div style="color: var(--gray-600, #475467);
+font-size: 16px;
+font-style: normal;
+flex: 1 0 0;
+font-weight: 500;
+line-height: normal;">Select Key Results which you wish to connect with <span style="font-weight: 700;"
+              id="ObjectiveTitleModal">P - management: Internal team productivity enhancement tool</span></div>
+          <div class="table-responsive">
+            <table class="table align-items-center">
+              <thead>
+                <tr id="KrsModalHeader">
+                  <th scope="col"><input type="checkbox" style="width:25px;height: 25px;" id="checkall"
+                      onclick="CheckAllKrs()"></th>
+                  <th scope="col">Key Results</th>
+                  <th scope="col">Owner</th>
+
+                  <th scope="col">DueDate</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">
+                    Progress
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="list" id="KeyResultsBodyModal">
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="modal-footer" style="padding: 0.5rem">
+          <button class="btn btn-outline-primary" style="
+          display: flex;
+          width: 189px;
+          padding: 16px 40px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          align-self: stretch;
+          border-radius: 12px;
+        " data-dismiss="modal">
+            Cancel
+          </button>
+          <button class="btn btn-primary" style="
+          display: flex;
+          padding: 16px 40px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          align-self: stretch;
+          border-radius: 12px;
+        " data-dismiss="modal" onclick="AddKrToTaskSubmission()" id="Objective_Submit">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add Task Link -->
+  <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="AddTSLink"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" >
+        <div class="modal-header" style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+          <div style="color: var(--gray-900, #101828);
+font-size: 24pxpx;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Add Link</div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+        </div>
+        <div class="modal-body" style="display: inline-flex;
+padding-top: 24px;
+flex-direction: column;
+align-items: flex-start;
+gap: 22px;
+border-radius: 12px;">
+          <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+            <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link Title</div>
+            <input type="text" id="Tasklink-title" placeholder="Design_draft1" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+ border: 1px solid var(--stroke-secondary, #DCDCDC);
+ background: var(--surface-primary, #FFF);">
+          </div>
+          <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+            <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link </div>
+            <input type="link" id="Tasklink-link" placeholder="www.figma.com/file/4E5bk36Ib1giid=4861%3A134681&m" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+ border: 1px solid var(--stroke-secondary, #DCDCDC);
+ background: var(--surface-primary, #FFF);" required>
+          </div>
+        </div>
+        <div class="modal-footer" style="padding:1rem">
+
+          <button type="button" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" class="btn btn-outline-primary" data-dismiss="modal">
+            Cancel
+          </button>
+
+          <button type="button" data-dismiss="modal" class="btn btn-primary" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" onclick="AddTSLink()" id="AddTaskLinkButton">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Task Submission complete  Modal -->
+    <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="TaskSubmissioncompleteModal" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="width: 600px;">
+  
+          <div class="modal-body" style="display: flex;
+          width: 600px;
+          padding: 40px 64px;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 33px;
+          border-radius: 12px;
+          background: #FFF;
+          ">
+           <div style="display: flex;
+           width: 148px;
+           height: 148px;
+           padding: 38px;
+           justify-content: center;
+           align-items: center;
+           border-radius: 86.333px;
+           border: 24.667px solid var(--success-50, #ECFDF3);
+           background: var(--success-100, #D1FADF);"><img src="../img/check-circle.svg"></div> 
+            <div style="display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+          align-self: stretch;">
+              <div style="color: var(--ref-primary-primary-12, #002614);
+          text-align: center;
+          font-size: 34px;
+          font-style: normal;
+          font-weight: 800;
+          line-height: normal;">
+               Great job!
+              </div>
+              <div style="align-self: stretch;
+          color: var(--ref-primary-primary-12, #002614);
+          text-align: center;
+          font-size: 20px;
+          display: flex;
+      flex-direction: column;
+      gap: 8px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+          letter-spacing: 0.2px;">Another task completed. Remember, tasks like these contribute to your ongoing project.  </div>
+              
+            </div>
+            <div style="display: flex;
+        width: 223px;
+        height: 56px;
+        padding: 16px 40px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        color: #FFF;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  cursor: pointer;
+        border-radius: 12px;
+        background: #48BF84;" data-dismiss="modal" data-target="#SubmitTask" data-toggle="modal">
+              Submit Next Task </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+    <%- include('TaskOpen.ejs') %>
+    <%- include('./TasksScript')%>
+
+  <script>
+    
+    function TSEChangeStatus(matrix,title,style)
+    {
+      let status = document.getElementById('TSEStatus'+matrix);
+      status.innerHTML =`<div style="display: flex; padding: 2px 10px; justify-content: center; align-items: center; border-radius: 16px;${style}">  ${title} </div>
+                    <i class="fa fa-chevron-down" style="color: #344054"></i>`;
+                    ChangeTSEData(matrix,{title,style});
+    }
+
+    function TSEStatusMatrix(editallow) {
+  let TSEStatusMatrix = document.getElementById('TSEStatusMatrix');
+  let StatusArr = [
+    { usedName: 'liveStatus', title: 'Live Status', options: [{ title: 'Released', style: "background: var(--Success-50, #ECFDF3);color:#48bf84" }, { title: 'Beta Testing', style: "background: #FFFAEB;color:#F79009" }, { title: 'Internal Testing', style: "background: #FEF3F2;color:#FB6514" }, { title: 'Not LIVE', style: "background:#F9FAFB;color:#667085" }], placeholder: 'Select the LIVE Status' },
+    { usedName: 'inUsageStatus', title: 'In-Usage status', options: [{ title: 'By Team', style: "background: var(--Success-50, #ECFDF3);color:#48bf84" }, { title: 'By Customer', style: "background: #F0F9FF;color:#0BA5EC" }, { title: 'Pilot Phase', style: "background: #FEF3F2;color:#FB6514" }, { title: 'Not In-Usage', style: "background:#F9FAFB;color:#667085" }], placeholder: 'Select the In-Usage status' },
+    { usedName: 'valueGenerated', title: 'Value Generated', options: [{ title: 'High', style: "background: var(--Success-50, #ECFDF3);color:#48bf84" }, { title: 'Medium', style: "background: #FFFAEB;color:#F79009" }, { title: 'Low', style: "background: #FEF3F2;color:#FB6514" }, { title: 'No Value Gen.', style: "background:#F9FAFB;color:#667085" }], placeholder: 'Select Value Impact' },
+    { usedName: 'bImpact', title: 'B-Impact', options: [{ title: 'High', style: "background: var(--Success-50, #ECFDF3);color:#48bf84" }, { title: 'Medium', style: "background: #FFFAEB;color:#F79009" }, { title: 'Low', style: "background: #FEF3F2;color:#FB6514" }, { title: 'Not Measured', style: "background:#F9FAFB;color:#667085" }], placeholder: 'Select Business Impact' },
+    { usedName: 'userAdoption', title: 'User Adoption', options: [{ title: 'High', style: "background: var(--Success-50, #ECFDF3);color:#48bf84" }, { title: 'Moderate', style: "background: #FFFAEB;color:#F79009" }, { title: 'Low', style: "background: #FEF3F2;color:#FB6514" }, { title: 'Not Measured', style: "background:#F9FAFB;color:#667085" }], placeholder: 'Choose Adoption Level' },
+    { usedName: 'customerSatisfaction', title: 'Customer Satisfaction', options: [{ title: 'High', style: "background: var(--Success-50, #ECFDF3);color:#48bf84" }, { title: 'Moderate', style: "background: #FFFAEB;color:#F79009" }, { title: 'Low', style: "background: #FEF3F2;color:#FB6514" }, { title: 'Not Measured', style: "background:#F9FAFB;color:#667085" }], placeholder: 'Choose Satisfaction Level' }
+  ];
+
+  let innerhtml = '';
+
+  StatusArr.forEach((statusBox) => {
+    innerhtml += `
+      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; align-self: stretch;">
+        <div style="color: var(--Gray-800, #1D2939); gap: 4px; align-items: center; display: flex; font-size: 14px; font-style: normal; font-weight: 600; line-height: normal;">
+          ${statusBox.title}
+          <span style="color: var(--Red, #FF6565); font-size: 16px; font-style: normal; font-weight: 600; line-height: normal;">*</span>
+        </div>
+        <div style="display: flex; width: 272.333px; height: 48px; padding: 14px 20px; justify-content: space-between; align-items: center; border-radius: 12px; border: 1px solid var(--Gray-400, #98A2B3); background: var(--Gray-50, #F9FAFB);">
+          <div style="align-items: center;color: var(--Gray-500, #667085); width: 100%; display: flex; justify-content: space-between; font-size: 14px; font-style: normal; font-weight: 500; line-height: normal;cursor: pointer;" ${editallow ? 'data-toggle="dropdown"' : ''} id="TSEStatus${statusBox.usedName}" aria-expanded="false">
+            ${statusBox.placeholder}
+            ${editallow ?`<i class="fa fa-chevron-down" style="color: #344054"></i>`:''}
+          </div>
+          ${editallow?
+            `<div class="dropdown-menu" style="flex-direction: column;">
+              ${statusBox.options.map((option) => `
+                <div style="display: flex; padding: 10px 16px; justify-content: center; align-items: center; gap: 8px; align-self: stretch; border-radius: var(--Radius-medium, 8px) var(--Radius-medium, 8px) 0px 0px; border-bottom: 1px solid var(--Gray-300, #D0D5DD); background: var(--White, #FFF); box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);cursor: pointer;">
+                  <div style="display: flex; padding: 2px 10px; justify-content: center; align-items: center; border-radius: 16px;${option.style}" onclick="TSEChangeStatus('${statusBox.usedName}','${option.title}','${option.style}')">
+                    ${option.title}
+                  </div>
+                </div>`
+              ).join('')}
+            </div>`:''
+          }
+        </div>
+      </div>`;
+  });
+
+  TSEStatusMatrix.innerHTML = innerhtml;
+  StatusArr.map((statusBox) => {
+    let status = document.getElementById('TSEStatus' + statusBox.usedName);
+   let option= submissionData[statusBox.usedName] 
+   console.log(option=={});
+   if(option &&typeof(option)=='object' &&option?.title&&option?.style)
+    status.innerHTML =`<div style="display: flex; padding: 2px 10px; justify-content: center; align-items: center; border-radius: 16px;${option?.style}">  ${option?.title} </div>
+    ${editallow ?`<i class="fa fa-chevron-down" style="color: #344054"></i>`:""}`;
+  })
+  
+}
+
+    function ShowsEmployeeubTasks(i)
+    { 
+document.querySelectorAll('.subTask').forEach(element => element.remove());
+i = parseFloat(i);
+initiativeindex = i
+let ToogleIcon = document.getElementById('ToogleIcon' + i);
+let subTaskContainer = document.getElementById('subTaskContainer' + i);
+let tasks = document.getElementById('Tasks' + i);
+if (ToogleIcon.classList.contains('fa-angle-right')) {
+    ToogleIcon.classList.remove('fa-angle-right');
+    ToogleIcon.classList.add('fa-angle-down');
+
+
+    let innerHTML = `
+    <div style="background-color: white;">
+                <tr class="subTasks${i} subTask" style="margin-top: 20px; justify-content: flex-start;">
+                    ${subTaskHeader.map((header, index) => `<th style="padding:0px;${tablesubtaskcolstyles[index]}"  ">
+                         ${header.title}  
+                       
+                         </th>`).join('')}
+                </tr>`;
+
+    for (let j = 0; j < subTasks[i].length; j++) {
+      if(j+1 == subTasks[i].length)
+        innerHTML += `<tr onclick="changeSubTaskIndex('${j}')" style="margin-bottom:20px" class="subTasks${i} subTask">`;
+     else 
+innerHTML += `<tr onclick="changeSubTaskIndex('${j}')" class="subTasks${i} subTask">`;
+
+        for (let index = 0; index < subTaskHeader.length; index++) {
+            let header = subTaskHeader[index];
+            if (header.type === 'text') {
+                innerHTML += `
+                <td  style='${tablesubtaskcolstyles[index]}' data-toggle="tooltip" data-placement="top" title="${subTasks[i][j].data.SubTask}">
+                    <div style="display: flex; align-items: center; gap: 40px; width: 240px;"  class="AddRow">
+                        <input type="text" disabled value="${subTasks[i][j].data.SubTask}" placeholder="Enter ${header.title} title" style="border: none; border-radius: 6px; height: 30px; width: 100%; background: transparent;" >
+                    </div>
+                </td>`;
+              }else if (header.usedName === 'Status') {
+        let style = '';
+        style += subTasks[i][j].data && subTasks[i][j].data[header.usedName]?.color?.length > 0 ? 'color:' + subTasks[i][j].data[header.usedName]?.color + ';' : '';
+        let title = subTasks[i][j].data && subTasks[i][j].data[header.usedName]?.label;
+        style += subTasks[i][j].data && subTasks[i][j].data[header.usedName]?.bgcolor?.length > 0 ? 'background:' + subTasks[i][j].data[header.usedName]?.bgcolor : '';
+
+        innerHTML += `<td style='${tablesubtaskcolstyles[index]}'>
+        <div style="padding:5px 12px;border-radius:16px;" id="subTask${header.usedName}${i}-${j}" data-toggle="dropdown" aria-expanded="false">
+            
+             <div class="Status_hold" style="${style}">${title}</div>
+        </div>
+        <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="subTask${header.usedName}${i}-${j}" id="subTask${header.usedName}${i}-${j}dropdown">`
+        let dropdownindex = 0;
+        for (let label of header.labels) {
+            let color = label?.color;
+            let title = label?.label;
+            let bgcolor = label?.bgcolor;
+            innerHTML += `  <div class="StatusBox" onclick="changeSubTaskIndex('${j}');setStatusToSubTask('${label.label}', '${header.usedName}','${dropdownindex}')">
+                    <div class="Status_hold" style="color:${color}; background:${bgcolor}">${title}</div>
+                </div>`
+            dropdownindex += 1;
+        }
+        innerHTML += `  </div>
+    </td>`;
+            } else if (header.type === 'label') {
+                let style = '';
+                style += subTasks[i][j].data && subTasks[i][j].data[header.usedName]?.color?.length > 0 ? 'color:' + subTasks[i][j].data[header.usedName]?.color + ';' : '';
+                let title = subTasks[i][j].data && subTasks[i][j].data[header.usedName]?.label;
+                style += subTasks[i][j].data && subTasks[i][j].data[header.usedName]?.bgcolor?.length > 0 ? 'background:' + subTasks[i][j].data[header.usedName]?.bgcolor : '';
+
+                innerHTML += `<td style='${tablesubtaskcolstyles[index]}'>
+                <div style="padding:5px 12px;border-radius:16px;" id="subTask${header.usedName}${i}-${j}" >
+                     <div class="Status_hold" style="${style}">${title}</div>
+                </div>
+               
+            </td>`;
+            } else if (header.type === 'number') {
+                let values = subTasks[i][j].data
+                innerHTML += `<td style='${tablesubtaskcolstyles[index]}' >
+                  <div class="InputTypeNumber" style="width:100%">
+                <input type="number" disabled style="width:38px;border:none;text-align:right" value="${values?.[header.usedName]}">
+                </div>
+                `
+                if(header.usedName=='Badges')
+                innerHTML += `<img src="../img/gem.svg" style="width:24px;height:24px">
+            </td>`;
+            else if(header.usedName=='Effort')
+                innerHTML += `D
+            </td>`;
+            } else if (header.type === 'progressbar') {
+                innerHTML += `<td style='${tablesubtaskcolstyles[index]}'>
+                <div class="progresscircle-bar progresssubtask${i}" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#48bf84 calc(0 * 1%), #F2F4F7 0); animation: html-progresscircle 2s 1 forwards;" data-toggle="tooltip" data-placement="top" title="">
+                    <div class="EffortsDays" style="color: var(--gray-500, #667085); font-size: 12px; font-style: normal; margin-top: 8px;
+     font-weight: 500; line-height: 20px;">
+                        <progress id="progresstask" min="0" max="100" value="9"></progress>
+                    </div>
+                </div>
+            </td>`;
+            } else if (header.usedName === 'Owner') {
+                innerHTML += `<td id="Owner${i}-${j}" style='${tablesubtaskcolstyles[index]}'>
+                <div style="display: flex;align-items: center;gap:12px;width: 150px;overflow: hidden;" id="initiativeOwner${i}-${j}" >
+                    <img src="${subTasks[i][j].data?.Owner?.image?.length > 0 ? subTasks[i][j].data?.Owner?.image : '../Performance dashboard Icons/Empty_User.svg'}" style="width: 24px;height: 24px;border-radius:200px ;"> ${subTasks[i][j].data?.Owner?.name?.length > 0 ? subTasks[i][j].data?.Owner?.name : 'Select Owner'}
+                </div>
+            </td>`;
+            } else if (header.type === 'date') {
+                innerHTML += `<td style="${header.style};color: var(--gray-800, #1D2939); line-height: 20px;" >
+                <span id="${header.usedName}SubTask${i}-${j}">${formatDate(subTasks[i][j].data[header.usedName])}</span>
+                <img src="../img/NewCalendar.svg">
+                   </td>`;
+            } else if (header.type === 'files') {
+                innerHTML += `<td class="d-flex align-items-center gap-3" style='${tablesubtaskcolstyles[index]}'>
+                 <div id="initiativeStatus${i}-${j}" data-toggle="dropdown" aria-expanded="false">
+                    <span id='subTask-FileBody-${i}-${j}'>${subTasks[i][j].data && subTasks[i][j].data.files ? subTasks[i][j].data.files.length : 0}</span>
+                    <img src="../Performance dashboard Icons/File.svg" style="width: 24px; height: 24px;">
+                </div>
+                 <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativesubTaskFile${i}-${j}dropdown">
+                  
+                  </div>
+            </td>`;
+            } else if (header.type === "links") {
+                innerHTML += `<td class="d-flex align-items-center gap-3" style='${tablesubtaskcolstyles[index]}'>
+                <div style="padding: 5px 12px; border-radius: 16px; display: flex; gap: 8px; align-items: center;" data-toggle="dropdown" aria-expanded="false">
+                    <span id='subTask-LinkBody-${i}-${j}'>${subTasks[i][j].data && subTasks[i][j].data.links ? subTasks[i][j].data.links.length : 0}</span>
+                    <img src="../Performance dashboard Icons/Link.svg" style="width: 24px; height: 24px;">
+                </div>
+                 <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativesubTaskLink${i}-${j}dropdown">
+                  
+                  </div>
+            </td>`;
+            }
+            else {
+                innerHTML += `<td class="d-flex align-items-center gap-3" style='${tablesubtaskcolstyles[index]}'>
+                 </td>`;
+            }
+        }
+
+        innerHTML += `</tr>`;
+    }
+
+    innerHTML += ` </div>`;
+    tasks.insertAdjacentHTML('afterend', innerHTML);
+    for (let i = 0; i < subTaskHeader.length; i++) {
+        makeColumnResizable(`subTaskcol${subTaskHeader[i]._id}`, MakeSubTaskDragggable);
+    }
+    initiativeindex = i;
+    SetProgressSubTask()
+
+
+    for (let j = 0; j < subTasks[i].length; j++) {
+        subTaskindex = j;
+        UpdatesubTaskFilebody('employee')
+        UpdatesubTaskLinkbody('employee')
+    }
+
+    AddDragDropResizeSubTask(initiativeindex);
+} else {
+    ToogleIcon.classList.remove('fa-angle-down');
+    ToogleIcon.classList.add('fa-angle-right');
+    document.querySelectorAll('.subTask').forEach(element => element.remove());
+}
+}
+
+     function UpdateTSEBadges(extra)
+     {  let badge=document.getElementById('Task_ExpectedBadges');
+      let badges = parseFloat(badge.value);
+    if (eval(badges + extra) >= 0) badge.value = eval(badges + extra);
+      submissionData.expectedBadges=eval(badges + extra);
+     }
+     function SetFeedback(id)
+{
+  let CommentBody=document.getElementById(id);
+  CommentBody.innerHTML='';
+ 
+  let comments=TaskSubmissions[tsIndex]?TaskSubmissions[tsIndex].feedback:submissionData.feedback?submissionData.feedback:[];
+  let innerhtml='';
+  
+  for(let comment of comments)
+  {
+ innerhtml+=` <div style="display:flex;
+padding:16px;
+align-items: flex-start;
+gap: 16px;
+align-self: stretch;
+border-radius: var(--Radius-medium, 8px);
+border: 1px solid var(--Gray-200, #EAECF0);
+background: var(--White, #FFF);" >
+                      <img src="${comment.image}" style="display: flex;
+                      width: 32px;
+                      height: 32px;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      border-radius: 200px;">
+                      <div style="display: flex;align-items: flex-start;flex-direction: column;width:100%;gap:12px;">
+                        <div style="display: flex;justify-content: space-between;align-items: center;width:100%">
+                        <div class="text-16-600" style="font-size: 14px;">${comment.name}</div>
+                        </div>
+                      <div class="TextAreaStyleSubmissionModal" style="background-color: white;" placeholder="Leave a comment">${comment.content}</div>
+                    </div>
+                      </div>`
+  }
+  CommentBody.innerHTML=innerhtml;
+}
+
+     let TaskLink = {},
+      Taskfile = {};
+    let submissionData = {
+      initialInfo:'',
+      tasktitle:'',
+      from: {name:'<%=employee.name%>',id:'<%=employee.id%>',image:'<%=employee.image%>'},
+      expectedBadges:0,
+      links:[],
+      files:[],
+      businessOutcome:'',
+      nextStep:'',
+      learning:'',
+      startDate:'',
+      endDate:'',
+      metricMoved:true,
+      liveStatus:{},
+      inUsageStatus:{},
+      valueGenerated:{},
+      bImpact:{},
+      userAdoption:{},
+      customerSatisfaction:{},
+      metricMovedDescription:""
+    };
+    let status_box_id;
+     
+     let tsIndex='';
+    let TaskSubmissions = [];
+ function ChangeTsIndex(i)
+ {
+  ResetSubmissionData()
+    tsIndex=parseFloat(i);
+    initiativeindex=''
+    submissionData=TaskSubmissions[tsIndex];
+    SetSubmitTaskModal();
+ }
+  
+ function ResetSubmissionData()
+ {
+  submissionData={
+      initialInfo:'',
+      tasktitle:'',
+      from: {name:'<%=employee.name%>',id:'<%=employee.id%>',image:'<%=employee.image%>'},
+      expectedBadges:0,
+      links:[],
+      files:[],
+      businessOutcome:'',
+      nextStep:'',
+      learning:'',
+      startDate:'',
+      endDate:'',
+      metricMoved:true,
+      liveStatus:{},
+      inUsageStatus:{},
+      valueGenerated:{},
+      bImpact:{},
+      userAdoption:{},
+      customerSatisfaction:{},
+      metricMovedDescription:""
+    };
+ }
+ async function setTasktoSubmitModal(i)
+ {
+  ResetSubmissionData()
+  initiativeindex=parseFloat(i);
+  let res=await fetch(`/TaskSubmission/${initiative[initiativeindex]._id}`);
+  res=await res.json();
+
+let {data}=res
+if(data)
+submissionData=data;
+   submissionData.taskId=initiative[initiativeindex]._id;
+    submissionData.tasktitle=initiative[initiativeindex].data.Tasks;
+    submissionData.startDate=initiative[initiativeindex].data.AllotmentDate;
+    submissionData.endDate=new Date().toISOString().split('T')[0];
+    submissionData.effortStatus= GetProgressTask(initiative[initiativeindex].data['Effort'],initiative[initiativeindex].data['AllotmentDate'],initiative[initiativeindex].submitted,initiative[initiativeindex].submittedAt)
+    SetSubmitTaskModal()
+ }
+
+  
+    // var krs = `<%-JSON.stringify(krs)%>`;
+    // krs = JSON.parse(krs);
+    // let krsmap = new Map();
+    // for (let i = 0; i < krs.length; i++) {
+    //   if (krsmap.has(krs[i].objectiveId)) {
+    //     krsmap.get(krs[i].objectiveId).push(krs[i])
+    //   }
+    //   else {
+    //     krsmap.set(krs[i].objectiveId, [krs[i]])
+    //   }
+    // }
+    // krs = krsmap;
+
+
+    function SetCompletedTask() {
+      let submittaskbody = document.getElementById('SubmitTaskBody')
+      let count=0;
+      let submittedTasks=0;
+      submittaskbody.innerHTML = ''
+      for (let i = 0; i < initiative.length; i++) {
+        if (initiative[i]?.data?.Status?.label == 'Completed' && initiative[i]?.data?.SubmissionApproval?.label == 'Approved') {
+         let {effortDays,color,percentage} =GetProgressTask(initiative[i].data['Effort'],initiative[i].data['AllotmentDate'],initiative[i].submitted,initiative[i].submittedAt)
+          submittaskbody.innerHTML += `<tr style="cursor:pointer;
+            background: #FFF;" data-target="#SubmitTask" data-toggle="modal" data-dismiss="modal" onclick="setTasktoSubmitModal('${i}')">
+        <td style="width:45%;"> 
+          <div style="display: flex;width:100%;
+overflow: hidden;
+color: var(--gray-700, #344054);
+text-overflow: ellipsis;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 150% */">${initiative[i]?.data?.Tasks}</div> 
+<!-- <img src="../Performance dashboard Icons/Tasks/corner_down_right.svg">2 -->
+        </td>
+        <td style="width:20%;">
+          <div  style="padding:5px 12px;border-radius:16px;" >
+                <div class="Status_completed">Completed</div>
+                  </div>
+         </td>
+        <td style="color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+width:15%;
+font-weight: 400;
+line-height: 20px;"> 
+<div class="progresscircle-bar" style="background:radial-gradient(closest-side, white 79%, transparent 80% 100%),
+            conic-gradient(${color} ${percentage}%, #F2F4F7 0); animation: html-progresscircle 2s 1 forwards;" data-toggle="tooltip" data-placement="top" title="">
+            <div class="EffortsDays" style="color: var(--gray-500, #667085); font-size: 12px; font-style: normal; margin-top: 8px;
+     font-weight: 500; line-height: 20px;">
+              ${Math.round(effortDays)}D
+                <progress id="progresstask" min="0" max="100" value="9"></progress>
+            </div>
+        </div></td>
+        <td style="color: var(--content-on-light-primary, #181818);
+font-size: 16px;
+width:20%;
+font-style: normal;
+font-weight: 600;
+line-height: 16px; /* 100% */">${initiative[i]?.data?.Badges} <img src="../img/gem.svg" style="width:24px;height:24px;"> </td>
+          </tr>`
+    
+      }
+    }
+    //   if(count>0)
+    //   {
+    //     document.getElementById('SubmitTaskButtonPB').className='btn btn-primary';
+    //     document.getElementById('SubmitTaskButtonPB').disabled=false;
+    //   }
+    //   else{
+    //     document.getElementById('SubmitTaskButtonPB').className='btn btn-secondary';
+    //     document.getElementById('SubmitTaskButtonPB').disabled=true;
+    //   }
+    //   if(document.getElementById('completedTask'))
+    //  { document.getElementById('completedTask').innerText=submittedTasks;
+    //  document.getElementById('completedTaskProgressFill').style.width=submittedTasks*100/initiative.length+'%';
+    // }
+  }
+    //SetCompletedTask()
+    function SetSubmitTaskModal() {
+     
+
+    document.getElementById('Task_Tasks').value = submissionData.tasktitle;
+    document.getElementById('Task_InitialInfo').value = submissionData.initialInfo;
+    document.getElementById('Task_ExpectedBadges').value = parseFloat(submissionData.expectedBadges);
+    if(submissionData.effortStatus?.color)
+    { 
+      let {effortDays,color,percentage} =submissionData.effortStatus;
+      document.getElementById('TimeElapsedModal').style.display='flex'
+document.getElementById('TimeElapsedModal').innerHTML=`<div class="progresscircle-bar" style="background:radial-gradient(closest-side, white 79%, transparent 80% 100%),
+            conic-gradient(${color} ${percentage}%, #F2F4F7 0); animation: html-progresscircle 2s 1 forwards;" data-toggle="tooltip" data-placement="top" title="">
+            <div class="EffortsDays" style="color: var(--gray-500, #667085); font-size: 12px; font-style: normal; margin-top: 8px;
+     font-weight: 500;    text-align: center; line-height: 20px;">
+              ${Math.round(effortDays)}D
+                <progress id="progresstask" min="0" max="100" value="9"></progress>
+            </div>
+        </div>`
+    }
+    else{
+      document.getElementById('TimeElapsedModal').style.display='none'
+    }
+    // Corrected element IDs for radio buttons
+    document.getElementById('yesRadio').checked = submissionData.metricMoved==true;
+    document.getElementById('noRadio').checked = submissionData.metricMoved==false;
+    document.getElementById('notMeasuredRadio').checked =submissionData.metricMoved=='Not Measured';
+    document.getElementById('Task_LinkFileBody').innerHTML=''
+    document.getElementById('Task_StartDate').value = submissionData.startDate || '';
+    document.getElementById('Task_EndDate').value = submissionData.endDate || '';
+    document.getElementById('Task_BusinessOutcome').value = submissionData.businessOutcome;
+    document.getElementById('Task_Learning').value = submissionData.learning;
+    document.getElementById('Task_NextStep').value = submissionData.nextStep;
+    document.getElementById('Task_MetricMovedDescription').value=submissionData.metricMovedDescription;
+    if(submissionData.metricMoved==true)
+    {
+      document.getElementById('Task_MetricMovedDescription').style.display='flex';
+    }
+    else{
+      document.getElementById('Task_MetricMovedDescription').style.display='none';
+    }
+   
+    for(let file of submissionData.files)
+    {
+      Taskfile=file;
+      UpdateTSFilebody()
+    }
+    for(let link of submissionData.links)
+    {
+      TaskLink=link;
+      UpdateTSLinkbody()
+    }
+    if(submissionData.status && submissionData.status=='Completed')
+    {
+      changeSubmitTaskFieldsOnly(true);
+    }
+    else
+    changeSubmitTaskFieldsOnly(false)
+    
+    SetFeedback('CommentBodySubmitTaskModal')
+    CheckButtonAbility()
+      // SetKrs()
+      // let krbodyModal = document.getElementById('KeyResultsBodyModal');
+      // krbodyModal.innerHTML = ''
+
+
+      // let allkrs = krs.get(initiative[initiativeindex].data?.ObjectiveId);
+
+      // for (let i = 0; i < allkrs.length; i++) {
+      //   let kr = allkrs[i];
+      //   let checkbox = false;
+      //   if (initiative[initiativeindex].data.krs?.some((kr_) => kr_.id == kr._id))
+      //     checkbox = true;
+      //   krbodyModal.innerHTML += `
+      //       <tr >
+      //           <td ><input type="checkbox"  id='checkboxkr${kr._id}' style="width:24px;height:24px" ${checkbox && 'checked'}></td>
+      //           <td><div >${kr.title}</div></td>
+      //           <td id="AssignedTo${kr._id}${i}" style="max-width: 200px;overflow: hidden;display: flex;align-items: center;gap:8px;white-space:nowrap;">
+      //               ${kr.teams.length === 0 ? `<div style="display: flex;width: 32px;height: 32px;padding: 6px;justify-content: center;align-items: center;flex-shrink: 0;border-radius: 200px;background: var(--primary-50, #F9F5FF);"><img src="../Performance dashboard Icons/Empty_User.svg"></div>Not Assigned yet` : ''}
+      //           </td>
+      //           <td><div >${kr.timePeriod.endDate}</div></td>
+      //           <td>
+      //               <div  style="padding:5px 12px;border-radius:16px;" id="KRStatus${i}" >
+      //                   ${kr.status === 'On Track' ? `<div class="Status_completed">On Track</div>` : ''}
+      //                   ${kr.status === 'At risk' ? `<div class="Status_progress">At risk</div>` : ''}
+      //                   ${kr.status === 'Off Track' ? `<div class="Status_hold">Off Track</div>` : ''}
+      //                   ${kr.status === 'Achieved' ? `<div class="Status_completed">Achieved</div>` : ''}
+      //                   ${kr.status === 'Partial' ? `<div class="Status_progress">Partial</div>` : ''}
+      //                   ${kr.status === 'Missed' ? `<div class="Status_hold">Missed</div>` : ''}
+      //                   ${kr.status === 'Dropped' ? `<div class="Status_notStarted">Dropped</div>` : ''}
+      //               </div>
+      //           </td>
+      //           <td>
+      //               <div style="display: flex;flex-direction: column;">
+      //                   <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarCV${i}">
+      //                       ${kr.matrix.currentValue}${kr.matrix.type}
+      //                   </div>
+      //                   <div class="ProgressKeyResult">
+      //                       <div class="progress__bar" style="width: ${kr.matrix.currentValue}%;" id="ProgressBar${i}"></div>
+      //                   </div>
+      //                   <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+      //                       <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarIV${i}">
+      //                           ${kr.matrix.startingValue}${kr.matrix.type}
+      //                       </div>
+      //                       <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarTV${i}">
+      //                           ${kr.matrix.targetValue}${kr.matrix.type}
+      //                       </div>
+      //                   </div>
+      //               </div>
+      //           </td>
+      //       </tr>`;
+      //   SetkrTeamImages(`AssignedTo${kr._id}${i}`, kr.teams);
+      //   // for (let files of submissionData.files) {
+      //   //   Taskfile = files;
+      //   //   UpdateTSFilebody();
+      //   // }
+      //   // for (let links of submissionData.links) {
+      //   //   TaskLink = links;
+      //   //   UpdateTSLinkbody();
+      //   // }
+      // }
+
+    }
+    function SubmitNewTask()
+    {
+      ResetSubmissionData()
+    tsIndex='';
+    initiativeindex=''
+    SetSubmitTaskModal()
+    }
+    function changeSubmitTaskFieldsOnly(status)
+{
+  document.getElementById('Task_Tasks').disabled = status;
+    document.getElementById('Task_InitialInfo').disabled = status;
+    document.getElementById('Task_ExpectedBadges').disabled = status;
+   document.getElementById('Attachfilesandlinks').display=status?'none':'flex';
+    // Corrected element IDs for radio buttons
+    document.getElementById('yesRadio').disabled = status;
+    document.getElementById('noRadio').disabled = status;
+    document.getElementById('notMeasuredRadio').disabled = status;
+    document.getElementById('Task_StartDate').disabled = status;
+    document.getElementById('Task_EndDate').disabled = status;
+    document.getElementById('Task_BusinessOutcome').disabled = status;
+    document.getElementById('Task_Learning').disabled = status;
+    document.getElementById('Task_NextStep').disabled = status;
+    document.getElementById('Task_MetricMovedDescription').disabled = status;
+    TSEStatusMatrix(!status)
+}
+    function SetKrs() {
+      let krbody = document.getElementById('KeyResultsBody');
+      let allkrs = krs.get(initiative[initiativeindex].data?.ObjectiveId);
+
+      submissionData.krs = initiative[initiativeindex].data.krs;
+      submissionData.subkrs = initiative[initiativeindex].data.subkrs;
+       submissionData.pervKpiProgress=[]
+      for (let [i, kr] of initiative[initiativeindex].data?.krs.entries()) {
+        let index = allkrs.findIndex((kr_) => kr_._id == kr.id);
+        if (index == -1) continue;
+        let data = allkrs[index];
+     
+        submissionData.pervKpiProgress.push({
+          id: allkrs[index]._id.toString(),
+          startingValue: parseFloat(data.matrix.startingValue),
+          targetValue: parseFloat(data.matrix.targetValue),
+          currentValue: parseFloat(data.matrix.currentValue),
+          type: data.matrix.type,
+        });
+        // If pervKpiProgress doesn't have data at index i, push a new object
+        if (!submissionData.KpiProgress[i]) {
+          submissionData.KpiProgress.push({
+            id: allkrs[index]._id.toString(),
+            startingValue: 0,
+            targetValue: parseFloat(data.matrix.targetValue),
+            currentValue: 0,
+            type: data.matrix.type,
+          });
+        } else {
+          // If pervKpiProgress already has data at index i, update it
+          submissionData.KpiProgress[i] = {
+            id: allkrs[index]._id.toString(),
+            startingValue: 0,
+            targetValue: parseFloat(data.matrix.targetValue),
+            currentValue: 0,
+            type: data.matrix.type,
+          };
+        }
+
+      }
+      krbody.innerHTML = '';
+      for (let i = 0; i < submissionData.krs.length; i++) {
+        let krid = submissionData.krs[i].id;
+        let kr = allkrs.find(kr_ => kr_._id == krid);
+        let perc = ((submissionData.KpiProgress[i].currentValue - submissionData.KpiProgress[i].startingValue) / (submissionData.KpiProgress[i].targetValue - submissionData.KpiProgress[i].startingValue)) * 100;
+        perc = Math.min(100, perc);
+        krbody.innerHTML += `
+            <tr>
+                <td  style="width: 300px;"><div style="border:none;border-radius:6px;">${kr.title} </div></td>
+               <td>  <input onchange="ChangeTaskSubmissionKpiData('${i}','startingValue',event.target.value)"  value="${submissionData.KpiProgress[i].startingValue}"style="display: flex;width: 60px;text-align:center;border: none;background: transparent;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" >
+                           
+                       
+                        </td>
+                        <td>  <input  onchange="ChangeTaskSubmissionKpiData('${i}','currentValue',event.target.value)" value="${submissionData.KpiProgress[i].currentValue}" style="display: flex;width: 60px;text-align:center;border: none;background: transparent;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" >
+                          
+                       </td>
+                        <td>  <input onchange="ChangeTaskSubmissionKpiData('${i}','targetValue',event.target.value)" value="${submissionData.KpiProgress[i].targetValue}" style="display: flex;width: 60px;text-align:center;border: none;background: transparent;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" >
+                           
+                        </td>
+                <td>
+                    <div style="display: flex;flex-direction: column;">
+                        <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;margin-left:${perc}%" id="ProgressBarcurrentValue${i}">
+                            ${submissionData.KpiProgress[i].currentValue}${submissionData.KpiProgress[i].type}
+                        </div>
+                        <div class="ProgressKeyResult">
+                            <div class="progress__bar" style="width: ${perc}%;" id="ProgressBar${i}"></div>
+                        </div>
+                        <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                            <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarstartingValue${i}">
+                                ${submissionData.KpiProgress[i].startingValue}${submissionData.KpiProgress[i].type}
+                            </div>
+                            <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBartargetValue${i}">
+                                ${submissionData.KpiProgress[i].targetValue}${submissionData.KpiProgress[i].type}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>`;
+      }
+
+      krbody.innerHTML += `<tr id="ClicktoaddnewKR">
+            <td  data-target="#ConnectKeyResults" style="cursor:pointer" data-toggle="modal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+    <path d="M15.2031 17.6953C16.5838 17.6953 17.7031 16.576 17.7031 15.1953C17.7031 13.8146 16.5838 12.6953 15.2031 12.6953C13.8224 12.6953 12.7031 13.8146 12.7031 15.1953C12.7031 16.576 13.8224 17.6953 15.2031 17.6953Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M5.20312 7.69531C6.58384 7.69531 7.70312 6.57602 7.70312 5.19531C7.70312 3.8146 6.58384 2.69531 5.20312 2.69531C3.82241 2.69531 2.70312 3.8146 2.70312 5.19531C2.70312 6.57602 3.82241 7.69531 5.20312 7.69531Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M5.20312 17.6953V7.69531C5.20313 9.68444 5.9933 11.5921 7.39982 12.9986C8.80635 14.4051 10.714 15.1953 12.7031 15.1953" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+              Click to Connect more KRs
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>`
+
+    }
+
+    function ChangeTaskSubmissionKpiData(i, type, value) {
+      submissionData.KpiProgress[i][type] = parseFloat(value)
+      submissionData.KpiProgress[i][type] = Math.min(submissionData.KpiProgress[i][type], submissionData.KpiProgress[i].targetValue);
+      let perc = ((submissionData.KpiProgress[i].currentValue - submissionData.KpiProgress[i].startingValue) / (submissionData.KpiProgress[i].targetValue - submissionData.KpiProgress[i].startingValue)) * 100;
+      perc = Math.min(100, perc);
+      document.getElementById('ProgressBarcurrentValue' + i).innerText = submissionData.KpiProgress[i].currentValue;
+      document.getElementById('ProgressBar' + i).style.width = perc + '%';
+      document.getElementById('ProgressBarcurrentValue' + i).style.marginLeft = perc + '%';
+      document.getElementById('ProgressBarstartingValue' + i).innerText = submissionData.KpiProgress[i].startingValue;
+      document.getElementById('ProgressBartargetValue' + i).innerText = submissionData.KpiProgress[i].targetValue;
+    }
+    function CheckAllKrs() {
+      let all_krs = krs.get(initiative[initiativeindex].data?.ObjectiveId);
+      let checkall = document.getElementById('checkall');
+      for (let kr of all_krs) {
+        let checkbox = document.getElementById('checkboxkr' + kr._id.toString())
+
+        checkbox.checked = checkall.checked;
+      }
+    }
+    function AddKrToTaskSubmission() {
+      let all_krs = krs.get(initiative[initiativeindex].data?.ObjectiveId);
+      for (let krs of all_krs) {
+        let checkbox = document.getElementById('checkboxkr' + krs._id.toString())
+
+        if (checkbox.checked) {
+
+          if (!initiative[initiativeindex].data?.krs?.some((kr) => kr.id === krs._id.toString())) {
+            initiative[initiativeindex].data.krs.push({ id: krs._id.toString(), title: krs.title });
+          }
+        } else {
+
+          const krIndex = initiative[initiativeindex].data.krs.findIndex((kr) => kr.id === krs._id.toString());
+          if (krIndex !== -1) {
+            initiative[initiativeindex].data.krs.splice(krIndex, 1);
+          }
+        }
+      }
+      SetKrs()
+    }
+
+    function GetProgressTask(effort,AllotmentDate,submitted,submittedAt) {
+    
+
+        let totaldays = parseFloat(effort) || 0;
+        let actualefforts = AllotmentDate;
+
+        if (submitted) {
+            actualefforts = CountEffectiveEffortsDays(actualefforts,submittedAt);
+        }
+        else{
+            actualefforts = CountEffectiveEffortsDays(actualefforts,new Date());
+        }
+  
+        let effortDays = actualefforts;
+        let percentage = (effortDays * 100) / totaldays;
+        let color = '#48bf84';
+       
+        if (percentage < 5) {
+            percentage = 5;
+        }
+
+        if (effortDays > totaldays) {
+                if (effortDays > totaldays) {
+            if (effortDays <= totaldays + 2) {
+                color = '#FDB022';
+            } else if (effortDays <= totaldays + 3) {
+                color = '#FD853A';
+            } else if (effortDays <= totaldays + 4) {
+                color = '#F97066';
+            } else {
+                color = '#B42318';
+            }
+        }
+
+        }
+        return {effortDays:Math.round(effortDays),color,percentage}
+
+}
+
+
+    function SetkrTeamImages(Id, teams) {
+      teams = GiveUniqueEmployees(teams)
+      let teamsImage = document.getElementById(Id)
+      let innerhtml = '';
+      for (let employeeId of teams) {
+        innerhtml += `<img style="display: flex;
+        width: 32px;
+        height: 32px;
+        margin-left: -10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 200px;
+        border: 1.5px solid var(--White, #FFF)" src="${EmployeeMap.get(employeeId).image}">`
+      }
+      if (teams.length == 0)
+        innerhtml = `<div style="display: flex;
+width: 32px;
+height: 32px;
+padding: 6px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+border-radius: 200px;
+background: var(--primary-50, #F9F5FF);"><img src="../Performance dashboard Icons/Empty_User.svg"></div>Not Assigned yet`
+      teamsImage.innerHTML = innerhtml;
+    }
+
+
+    function OpenTSFileInput(id) {
+      document.getElementById(id).click();
+    }
+
+
+    function AddTSLink() {
+      let id = generateRandomId();
+      let title=document.getElementById('Tasklink-title').value;
+      let url=document.getElementById('Tasklink-link').value;
+      submissionData.links.push({id, title: title, url: url});
+      TaskLink = {id, title: title, url: url};
+      UpdateTSLinkbody();
+      CheckButtonAbility()
+    }
+
+    function AddTSFile() {
+      let id = generateRandomId();
+      Taskfile.id = id;
+      submissionData.files.push(Taskfile);
+      UpdateTSFilebody();
+      CheckButtonAbility()
+    }
+
+    function UpdateTSLinkbody() {
+      let id = TaskLink.id;
+      let body = document.getElementById('Task_LinkFileBody');
+      let innerhtmlfile = `
+          <div style="display: flex;
+                    padding: 12px 16px;
+                    align-items: center;
+                    gap: 12px;
+                    flex: 1 0 0;
+                    border-radius: 12px;
+                    border: 1px solid #ECECEC;
+                    background: #FFF;" onmouseover="showTSIcons('.Icons-${id}')" onmouseout="removeTSIcons('.Icons-${id}')" id='link-${id}'>
+            <img src="../Performance dashboard Icons/Link Added.svg">
+            <div style="display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      gap: 4px;
+                      flex: 1 0 0;">
+              <div style="align-self: stretch;
+                        color: var(--content-on-light-primary, #181818);
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 17.352px;">
+                ${TaskLink.title}
+              </div>
+              <div style="display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        align-self: stretch;
+                        overflow: hidden;
+                        color: var(--content-on-light-secondary, #898989);
+                        text-overflow: ellipsis;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 17.352px;">
+                ${TaskLink.url}
+              </div>
+            </div>
+            <img src='../Project icons/Edit.svg' style="display:none" class='Icons-${id}' onclick='EditTSLink("${id}")' data-target='#AddTSLink' data-toggle='modal'>
+            <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveTSLink("${id}")'>
+          </div>`;
+
+      body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+    }
+
+    function UpdateTSFilebody() {
+      let id = Taskfile.id;
+      let body = document.getElementById('Task_LinkFileBody');
+      let innerhtmlfile = `
+          <div style="display: flex;
+                    padding: 12px 16px;
+                    align-items: center;
+                    gap: 12px;
+                    flex: 1 0 0;
+                    border-radius: 12px;
+                    border: 1px solid #ECECEC;
+                    background: #FFF;" onmouseover="showTSIcons('.Icons-${id}')" onmouseout="removeTSIcons('.Icons-${id}')" id='file-${id}'>
+            <img src="../Performance dashboard Icons/Document Added.svg">
+            <div style="display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      gap: 4px;
+                      flex: 1 0 0;">
+              <div style="align-self: stretch;
+                        color: var(--content-on-light-primary, #181818);
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 17.352px;">
+                ${Taskfile.title}
+              </div>
+              <div style="display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        align-self: stretch;
+                        overflow: hidden;
+                        color: var(--content-on-light-secondary, #898989);
+                        text-overflow: ellipsis;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 17.352px;">
+                ${Taskfile.url}
+              </div>
+            </div>
+            <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveTSFile("${id}")'>
+          </div>`;
+
+      body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+    }
+
+
+
+
+    function RemoveTSFile(fileid) {
+      let id = `file-${fileid}`
+      const body = document.getElementById(id);
+      body.remove();
+      const index = submissionData.files.findIndex((file) => file.id === fileid);
+      if (index != -1)
+      submissionData.files.splice(index, 1);
+      CheckButtonAbility()
+    }
+
+    function RemoveTSLink(linkid) {
+      let id = `link-${linkid}`
+      const body = document.getElementById(id);
+      body.remove();
+      const index = submissionData.links.findIndex((link) => link.id === linkid);
+      if (index != -1)
+      submissionData.links.splice(index, 1);
+      CheckButtonAbility()
+    }
+
+    function EditTSLink(linkid) {
+      const index = submissionData.links.findIndex((link) => link.id === linkid);
+      TaskLink = submissionData.links[index];
+      RemoveTSLink(linkid);
+      document.getElementById('link-title').value = TaskLink.title;
+      document.getElementById('link-link').value = TaskLink.url;
+    }
+
+    function showTSIcons(classname) {
+      const box = document.querySelectorAll(classname);
+      box.forEach((element) => {
+        element.style.display = 'flex';
+      });
+    }
+
+    function removeTSIcons(classname) {
+      const box = document.querySelectorAll(classname);
+      box.forEach((element) => {
+        element.style.display = 'none';
+      });
+    }
+
+    async function handleTSFileSelect(event) {
+      try {
+        let data = event.target.files[0];
+        let filelink = await handleFileUpload(data);
+        Taskfile.title = data.name;
+        Taskfile.url = filelink;
+        AddTSFile();
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+  function ChangeTSEData(type,value)
+  {
+    submissionData[type]=value;
+    if(submissionData['metricMoved']==true)
+    document.getElementById('Task_MetricMovedDescription').style.display='flex';
+    else
+    document.getElementById('Task_MetricMovedDescription').style.display='none';
+    CheckButtonAbility();
+  }
+  function CheckButtonAbility() {
+  let button = document.getElementById('SubmitTaskButton');
+  
+  if (submissionData.status && submissionData.status === 'Completed') {
+    button.disabled = true;
+    button.className = 'btn btn-secondary';
+    return;
+  }
+
+  const requiredKeys = [
+    'initialInfo',
+    'tasktitle',
+    'from',
+    'expectedBadges',
+    'links',
+    'files',
+    'businessOutcome',
+    'nextStep',
+    'learning',
+    'startDate',
+    'endDate',
+    'metricMoved',
+    'liveStatus',
+    'inUsageStatus',
+    'valueGenerated',
+    'bImpact',
+    'userAdoption',
+    'customerSatisfaction'
+  ];
+
+  for (let key of requiredKeys) {
+    const value = submissionData[key];
+
+    if (value === undefined || value === null || (typeof value === 'object' && Object.keys(value).length === 0) || value === '') {
+      button.disabled = true;
+      button.className = 'btn btn-secondary';
+      return;
+    }
+  }
+
+  // Enable the button if all required keys are filled
+  button.disabled = false;
+  button.className = 'btn btn-primary';
+}
+
+
+    async function handleFileUpload(Taskfile) {
+      const formData = new FormData();
+      formData.append('file', Taskfile);
+      try {
+        const uploadType = "EmployeeTask";
+        const urlRes = await fetch(
+          `/aws/get/preSignedUrl?fileName=${Taskfile.name}t&contentType=${Taskfile.type}&uploadType=${uploadType}`, {
+          method: "GET",
+        }
+        );
+        const urlData = await urlRes.json();
+        const response = await fetch(urlData.url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": Taskfile.type,
+          },
+          body: Taskfile,
+        });
+        let url = `https://dvfkpf9qxfl09.cloudfront.net/${urlData.key}`;
+
+        return url;
+      } catch (error) {
+        console.error('Error during file upload:', error);
+      }
+    }
+
+async function SubmitTask()
+{
+  try{
+  let response=await fetch('/submit/task', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submissionData)
+      })
+      if(initiativeindex!='')
+      {
+        initiative[initiativeindex].submitted=true;
+        initiative[initiativeindex].submittedAt=new Date();
+        initiativeindex='';
+      }
+      SubmitNewTask();
+    }
+    catch(error)
+    {
+      console.log(error)
+    }
+
+}
+
+ 
+  </script>
+ 

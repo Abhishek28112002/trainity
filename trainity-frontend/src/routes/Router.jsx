@@ -5,17 +5,17 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Home from "../pages/Home";
+
 import Inner2 from "../pages/Inner2";
 import Inner from "../pages/Inner";
 import About from "../pages/About";
 import Layout from "../Layout";
 import Error from "../pages/Error";
-
+import DashBoard from "../pages/DashBoard";
 const Router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <DashBoard />,
     errorElement: <Error />,
   },
   {

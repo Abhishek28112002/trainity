@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <meta name="author" content="Webpixels" />
+    <title>Trainity - Admin Panel</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+    <!-- Purpose CSS -->
+    <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+    <!-- Font Awesome 5 -->
+    <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+
+    <!-- <link rel="stylesheet" href="../libs/fullcalendar/dist/fullcalendar.min.css" />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../assets/libs/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+    <style>
+        body{
+            font-family: 'Manrope', sans-serif;
+        }
+         div{
+            color: var(--gray-800, #1D2939);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+
+        }
+        .textarea{
+           
+        display: flex;
+          height: 48px;
+          width: 100%;
+          padding: 14px 20px;
+          justify-content: space-between;
+          align-items: center;
+          align-self: stretch;
+          border-radius: 12px;
+          border: 1px solid var(--gray-400, #98A2B3);
+          background: var(--White, #FFF);
+          
+        }
+         .teamBox {
+    display: flex;
+    padding: 4px;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    background: var(--gray-200, #eaecf0);
+    color: var(--gray-700, #344054);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+        textarea {
+            border: none;
+        }
+
+        tbody {
+            display: flex;
+            gap: 16px;
+            flex-direction: column;
+        }
+
+        input,
+        select {
+            border: none;
+            border-radius: 6px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+
+        th {
+            color: var(--gray-800, #1D2939);
+
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 18px;
+            /* 150% */
+        }
+
+        .select_box {
+            white-space: nowrap;
+            display: flex;
+            min-height: 48px;
+            padding: 14px 20px;
+            align-items: center;
+            align-self: stretch;
+            border-radius: 12px;
+            border: 1px solid var(--gray-400, #98a2b3);
+            background: var(--gray-50, #f9fafb);
+            color: var(--gray-500, #667085);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.21px;
+        }
+
+        .selected {
+            border-radius: 4px;
+            background: var(--success-50, #ECFDF3);
+        }
+
+        th,
+        td {
+            display: flex;
+            height: 44px;
+            padding: 12px 24px;
+            align-items: center;
+            gap: 12px;
+            align-self: stretch;
+            background-attachment: white;
+            flex: 1;
+        }
+
+        tr {
+            display: flex;
+        }
+
+        thead {
+            background: var(--gray-100, #f2f4f7);
+        }
+
+        .progressTask {
+            height: 8px;
+            flex-shrink: 0;
+            width: 100%;
+            border-radius: 4px;
+            background: var(--success-100, #D1FADF);
+        }
+
+        .ProgressKeyResult {
+            height: 8px;
+            flex-shrink: 0;
+            width: 150px;
+            border-radius: 4px;
+            background: var(--success-100, #D1FADF);
+        }
+
+        .progressTask.progress__fill {
+
+            height: 100%;
+            background: #48bf84;
+            transition: all 0.2s;
+            border-radius: 4px;
+        }
+
+        .progress__bar {
+            height: 100%;
+            background: #48bf84;
+            transition: all 0.2s;
+            border-radius: 4px;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+</head>
+
+<body class="application application-offset" style="background: #fafafa;display: flex;
+padding: 32px;
+flex-direction: column;
+align-items: flex-start;
+gap: 24px;
+padding-top:10px;
+flex: 1 0 0;" id="MainPageContent">
+    <div style="
+    display: flex;
+    padding: 16px 4px 16px 32px;
+    align-items: center;
+    color: var(--gray-500, #667085);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+    gap: 4px;
+    cursor: pointer;
+  ">
+        <div onclick="Goback()">Project & Tasks</div>
+        <% let TaskData=task.data%>
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <div style="display: flex;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+  color: var(--gray-700, #344054);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */
+  background: var(--gray-100, #F2F4F7);">
+                <%=TaskData.Tasks%>
+            </div>
+    </div>
+
+    <div style="
+    display: flex;
+    padding: 16px 32px 32px 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+  ">
+        <div style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      flex: 1 0 0;
+      align-self: stretch;
+    ">
+            <input type="text" value=" <%=TaskData.Tasks%>" style="
+        color: var(--gray-900, #101828);
+        font-size: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 135%;
+        width: 100%;
+        background-color: transparent;
+        border: none;
+      " onchange="ChangeTaskData('Tasks',event.target.value)" />
+            <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;
+      ">
+                <div style="display: flex; gap: 16px; align-items: center">
+                    <div style="
+        color: var(--gray-500, #667085);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px; /* 150% */
+      ">
+                        Status
+                    </div>
+                   <% let header= { srNo: 5, title: "Status",category: "ProjectTaskPageTasks",type: "label",usedName: "Status",labels:[{label:"Completed",color:"#12B76A",bgcolor:'#ECFDF3'},{label:"In Progress",color:"#F79009",bgcolor:'#FFFAEB'},{label:"Upcoming",color:"#0BA5EC",bgcolor:'#F0F9FF'},{label:"Not Started",color:"#667085",bgcolor:'#F9FAFB'},{label:"On Hold",color:"#F04438",bgcolor:'#FEF3F2'}],style:"width: 110px; display:flex;justify-content: center;"}%>
+                    <div style="
+        display: flex;
+        padding: 10px 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        border-radius: var(--radius-medium, 8px);
+        border: 1px solid var(--gray-300, #d0d5dd);
+        background: var(--White, #fff);
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+      ">
+                      <div style="padding: 5px 12px; border-radius: 16px;" id="initiative<%= header.usedName %>" data-toggle="dropdown" aria-expanded="false">
+                        <% let style = '' %>
+                        <% style +=TaskData &&TaskData[header.usedName]?.color?.length > 0 ? 'color:' +TaskData[header.usedName]?.color + ';' : '' %>
+                        <% let title =TaskData &&TaskData[header.usedName]?.label %>
+                        <% style +=TaskData &&TaskData[header.usedName]?.bgcolor?.length > 0 ? 'background:' +TaskData[header.usedName]?.bgcolor : '' %>
+                        <div class="Status_hold" style="<%= style %>"><%= title %></div>
+                      </div>
+                      <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="initiative<%= header.usedName %>" id="initiative<%=header.usedName%>dropdown">
+                        <% let dropdownindex=0%>
+                        <% for (let label of header.labels) { %>
+        
+                          <div class="StatusBox" onclick="setStatusToTask('<%=label.label%>', '<%= header.usedName %>','<%=dropdownindex%>')">
+                            <% let color = label?.color %>
+                            <% let title = label?.label %>
+                            <% let bgcolor = label?.bgcolor %>
+                             <div class="Status_hold" style="color:<%= color %>; background:<%= bgcolor %>"><%= title %></div>
+                           
+                          </div>
+                          <% dropdownindex+=1%>
+                        <% } %>
+                      
+                      </div>
+                    </div>
+
+                </div>
+               
+               
+                <div style="display: flex; align-items: center; gap: 8px">
+                    <div style="
+            color: var(--gray-500, #667085);
+
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+          ">
+                        Efforts
+                    </div>
+                    <input type="text" style="
+            display: flex;
+            width: 80.539px;
+            padding: 10px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border-radius: 8px;
+            border: 1px solid var(--gray-300, #d0d5dd);
+            background: var(--White, #fff);
+            /* Shadow/xs */
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+          " value="<%=TaskData.Effort%>" onchange="ChangeTaskData('Effort',event.target.value)" />
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px">
+                    <div style="
+            color: var(--gray-500, #667085);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+          ">
+                        Owner
+                    </div>
+                    <% let EmployeeMap=new Map();%>
+                        <div style="
+            display: flex;
+            padding: 0px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border-radius: var(--radius-medium, 8px);
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+            align-self: stretch;
+          ">
+                            <img src="<%=TaskData.Owner?.image%>" id="OwnerImage" style="display: flex;
+        width: 40px;
+        height: 40px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 200px;
+        border: 1.5px solid var(--White, #FFF)">
+                            <i class="fa fa-angle-down" aria-hidden="true" data-toggle="dropdown" aria-expanded="false"
+                                id="Owners"></i>
+                            <div class="dropdown-menu" style="
+            max-height: 300px;
+            min-width:250px;
+            max-width: max(300px, 50%);
+            overflow: auto;
+            flex-direction: column;
+          " aria-labelledby="Owners" id="DropDownOwners">
+                                <%for(let employee of employeeList){%>
+                                    <% EmployeeMap.set(employee._id.toString(),employee.displayName);%>
+                                        <div style="
+              display: flex;
+              padding: 8px;
+              cursor: pointer;
+              align-items: center;
+              gap: 10px;
+              align-self: stretch;
+            " onclick="SelectOwner('<%=employee._id.toString()%>','<%=employee.image%>','<%=employee.displayName%>')">
+                                            <img style="
+                display: flex;
+                width: 32px;
+                height: 32px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border-radius: 200px;
+              " src="<%=employee.image%>" />
+                                            <div style="
+                display: flex;
+                flex-direction: column;
+                white-space: nowrap;
+                align-items: flex-start;
+              ">
+                                                <div style="
+                  color: var(--gray-700, #344054);
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 20px; /* 142.857% */
+                ">
+                                                    <%=employee.displayName%>
+                                                </div>
+                                                <div style="
+                  color: var(--gray-500, #667085);
+                  
+                  font-size: 12px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: 18px; /* 150% */
+                ">
+                                                    <%=employee.team%>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style="
+              height: 1px;
+              align-self: stretch;
+              background: var(--gray-200, #eaecf0);
+            "></div>
+                                        <%}%>
+                            </div>
+
+                        </div>
+                </div>
+
+            </div>
+        </div>
+        <div style="display: flex;
+        padding: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch; 
+        border-radius: var(--radius-medium, 8px);
+      
+        border: 1px solid var(--gray-300, #D0D5DD);
+        background: #FFF;">
+        <div style="
+                 display: flex;
+                 justify-content: space-between;
+                 align-items: flex-start;
+                 align-self: stretch;
+               ">
+          <div style="
+                   color: var(--gray-800, #1d2939);
+                   font-size: 20px;
+                   font-style: normal;
+                   font-weight: 700;
+                   line-height: 24px; /* 120% */
+                 ">
+            Project
+          </div>
+          <i class="fa fa-angle-down" aria-hidden="true" id="ProjectIcon"
+            onclick="ToogleIcon('ProjectIcon','ProjectBox')"></i>
+        </div>
+        <div style="display: flex;width: 100%;" id="ProjectBox">
+          <div style="display: flex;
+          height: 48px;
+          width: 100%;
+          padding: 14px 20px;
+          justify-content: space-between;
+          align-items: center;
+          align-self: stretch;
+          border-radius: 12px;
+          border: 1px solid var(--gray-400, #98A2B3);
+          background: var(--White, #FFF);" id="ProjectBody" data-toggle="dropdown" aria-expanded="false">
+           <% for(let Project of Projects) { %>
+     <% if(Project._id==TaskData.projectId){%>
+        <%= Project.title%>
+        <% var krsdata= Project.krs%>
+           
+     
+      <%}%>
+            <%}%>
+            
+        </div>
+
+          <div class="dropdown-menu" style="
+    max-height: 300px;
+    width: 90%;
+    overflow: auto;
+    flex-direction: column;
+    
+    " aria-labelledby="ProjectBody" id="DropDownProjectBody">
+          <% for(let Project of Projects) { %>
+            <%  let krsdatan= JSON.stringify(Project.krs).replace(/\\/g, '\\\\').replace(/"/g, '\\"') %>
+           
+            <% if(!krsdatan) {%>
+    <%krsdatan="[]"%>
+    <%}%>
+              <div style="
+    display: flex;
+    width: 100%;
+    padding: 12px 16px;
+    flex-direction:column;
+    border-bottom: 1px solid var(--gray-300, #D0D5DD);
+    background: #FFF;
+    " onclick="SetProjectDetails('<%=Project._id%>','<%= Project.title%>','<%=krsdatan%>')" >
+                <div style="color: var(--gray-900, #101828);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px; /* 112.5% */
+    letter-spacing: 0.24px;">
+                  <%= Project.title%>
+                </div>
+                <div style="display: flex;align-items: center;gap:8px;">
+                  <div style="color: var(--gray-500, #667085);
+    
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+    letter-spacing: 0.21px;">
+                    From <%=Project.startDate%> to <%=Project.endDate%>
+                  </div>
+                </div>
+              </div>
+              <%}%>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex;
+        padding: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch; 
+        border-radius: var(--radius-medium, 8px);
+      
+        border: 1px solid var(--gray-300, #D0D5DD);
+        background: #FFF;">
+
+          <div style="
+                 display: flex;
+                 justify-content: space-between;
+                 align-items: flex-start;
+                 align-self: stretch;
+               ">
+          <div style="
+                   color: var(--gray-800, #1d2939);
+                   font-size: 20px;
+                   font-style: normal;
+                   font-weight: 700;
+                   line-height: 24px; /* 120% */
+                 ">Key Results</div>
+                 </div>
+                    <div  style="display: flex;width: 100%;">
+                       <div style="display: flex;
+                       height: 48px;
+                       width: 100%;
+                       padding: 14px 20px;
+                       gap:12px;
+                       align-items: center;
+                       align-self: stretch;
+                       border-radius: 12px;
+                       border: 1px solid var(--gray-400, #98A2B3);
+                       background: var(--White, #FFF);" id="KRSBody" 
+                         data-toggle="dropdown" aria-expanded="false"></div>
+                       <div class="dropdown-menu" style="
+                       max-height: 300px;
+                       width: 90%;
+                       overflow: auto;
+                       flex-direction: column;
+                      
+                       "  aria-labelledby="KRSBody" id="DropDownKrs">
+                       <%if (typeof krsdata === 'object' && krsdata !== null) {%>
+                       <% for(let kr of krsdata){%>
+<div style="
+display: flex;
+width: 100%;
+padding: 12px 16px;
+flex-direction:column;
+border-bottom: 1px solid var(--gray-300, #D0D5DD);
+background: #FFF;
+" onclick="SetKr('<%=kr.id%>','<%=kr.title%>')" >
+            <div style="color: var(--gray-900, #101828);
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 18px; /* 112.5% */
+letter-spacing: 0.24px;">
+<%=kr.title%>
+            </div>
+          </div>
+          <%}%>
+          <%}%>
+                       </div>
+                     </div>
+
+                     <div style="
+                     display: flex;
+                     justify-content: space-between;
+                     align-items: flex-start;
+                     align-self: stretch;
+                   ">
+              <div style="
+                       color: var(--gray-800, #1d2939);
+                       font-size: 20px;
+                       font-style: normal;
+                       font-weight: 700;
+                       line-height: 24px; /* 120% */
+                     ">Sub-Key Results</div>
+                     </div>
+                        <div  style="display: flex;width: 100%;">
+                           <div style="display: flex;
+                           height: 48px;
+                           width: 100%;
+                           padding: 14px 20px;
+                           gap:12px;
+                           align-items: center;
+                           align-self: stretch;
+                           border-radius: 12px;
+                           border: 1px solid var(--gray-400, #98A2B3);
+                           background: var(--White, #FFF);"id="subKRSBody" 
+                             data-toggle="dropdown" aria-expanded="false"></div>
+                           <div class="dropdown-menu" style="
+                           max-height: 300px;
+                           width: 90%;
+                           overflow: auto;
+                           flex-direction: column;
+                           
+                           "  aria-labelledby="subKRSBody" id="DropDownsubKrs">
+    
+                           </div>
+                         </div>
+      </div>
+
+        <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      align-self: stretch;
+      border-radius: var(--radius-medium, 8px);
+
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+            <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+      ">
+                <div style="
+          color: var(--gray-800, #1d2939);
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px; /* 120% */
+        ">
+                    PRD
+                </div>
+                <i class="fa fa-angle-down" aria-hidden="true" id="PRDIcon"
+                    onclick="ToogleIcon('PRDIcon','PRDBox')"></i>
+            </div>
+            <textarea style="
+        display: flex;
+        padding: 4px;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        border-radius: 8px;
+        background: #fff;
+        color: var(--gray-700, #344054);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px; /* 150% */
+        border: none;
+      " id="PRDBox" onchange="ChangeTaskData('PRD',event.target.value)"
+                placeholder="Describe your objectives..."><%=TaskData.PRD%></textarea>
+        </div>
+
+        <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      align-self: stretch;
+      border-radius: var(--radius-medium, 8px);
+
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+            <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+      ">
+                <div style="
+          color: var(--gray-800, #1d2939);
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px; /* 120% */
+        ">
+                    Roadmap
+                </div>
+                <i class="fa fa-angle-down" aria-hidden="true" id="RoadmapIcon"
+                    onclick="ToogleIcon('RoadmapIcon','RoadmapBox')"></i>
+            </div>
+            <div style="display: flex;flex-direction: column; gap: 8px; align-items: flex-start" id="RoadmapBox">
+                <% for(let i=0;i<TaskData.roadmap?.length;i++){%>
+                    <div style="display: flex;align-items: center;gap:8px">
+                        <input type="checkbox" style="width:25px;height: 25px;" <%=TaskData.roadmap[i].status
+                            ? 'checked' : '' %> onclick="ChangeStatusRoadMapPoint('<%=i%>')"/>
+                            <input type="text" onchange="ChangeTitleRoadMapPoint('<%=i%>',event.target.value)"
+                                placeholder="Click to add new Checkpoint" style="border:none;border-radius:6px;padding:4px;color: var(--gray-800, #1D2939);
+    width:100%;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 150% */" value="<%=TaskData.roadmap[i].title%>">
+                    </div>
+                    <%}%>
+
+                        <div style="display: flex;align-items: center;gap:8px" id="AddRoadMapPoint"
+                            onclick="AddRoadMapPoint()">
+                            <!-- <input type="checkbox" style="width: 20px;height: 20px;"/>
+            -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"
+                                fill="none">
+                                <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div style="display: flex;
+            padding: 4px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            border-radius: 4px;
+            border: 1px solid var(--gray-600, #475467);">
+                                Click to add new Checkpoint
+                            </div>
+                        </div>
+            </div>
+        </div>
+       
+        <div style="
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+    border-radius: var(--radius-medium, 8px);
+
+    border: 1px solid var(--gray-300, #d0d5dd);
+    background: #fff;
+  ">
+            <div style="
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      align-self: stretch;
+    ">
+                <div style="
+        color: var(--gray-800, #1d2939);
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px; /* 120% */
+      ">
+                    Parameters
+                </div>
+                <i class="fa fa-angle-down" aria-hidden="true" id="ParametersIcon"
+                    onclick="ToogleIcon('ParametersIcon','ParametersBox')"></i>
+            </div>
+            <textarea style="
+      display: flex;
+      padding: 4px;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      border-radius: 4px;
+      background: #fff;
+      color: var(--gray-700, #344054);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px; /* 150% */
+    " id="ParametersBox" onchange="ChangeTaskData('parameters',event.target.value)"
+                placeholder="Feature: Employee Productivity Improvement Module Description: This module aims to enhance employee productivity by streamlining work processes and providing tools to monitor and measure performance."><%=TaskData.parameters%></textarea>
+        </div>
+        <div style="display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    align-self: stretch;
+    border-radius: var(--radius-medium, 8px);
+    border: 1px solid var(--gray-300, #D0D5DD);
+    background: #FFF;
+    ">
+            <div style="color: var(--gray-800, #1D2939);
+    
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;">Attach files and links</div>
+            <div style="display: flex;align-items: center;gap:8px;flex-wrap: wrap;" id="Project_LinkFileBody">
+
+            </div>
+            <div style="display: flex;
+    align-items: flex-start;
+    gap: 8px;">
+                <div style="display: flex;
+    width: 103px;
+    height: 52px;
+    padding: 16px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #FFF;" onclick="OpenFileInput('FileInputFild')">
+                    <input type="file" id="FileInputFild" style="width: 0px;" onchange="handleProjectFileSelect(event)"
+                        accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                    text/plain, application/pdf, image/*">
+                    <img src="../Performance dashboard Icons/File.svg">
+                    <img src="../Performance dashboard Icons/AddMedia.svg">
+                </div>
+                <div style="display: flex;
+    width: 103px;
+    height: 52px;
+    padding: 16px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #FFF;" data-target="#AddProjectLink" data-toggle="modal">
+                    <img src="../Performance dashboard Icons/Link.svg">
+                    <img src="../Performance dashboard Icons/AddMedia.svg">
+                </div>
+            </div>
+        </div>
+        <div style="
+        display: flex;
+        padding: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        align-self: stretch;
+        border-radius: var(--radius-medium, 8px);
+  
+        border: 1px solid var(--gray-300, #d0d5dd);
+        background: #fff;
+      ">
+              <div style="
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          align-self: stretch;
+        ">
+                  <div style="
+            color: var(--gray-800, #1d2939);
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 24px; /* 120% */
+          ">
+                      Final Result
+                  </div>
+                  <i class="fa fa-angle-down" aria-hidden="true" id="FinalResultIcon"
+                      onclick="ToogleIcon('FinalResultIcon','FinalResultBox')"></i>
+              </div>
+              <textarea style="
+          display: flex;
+          padding: 4px;
+          justify-content: center;
+          align-items: center;
+          gap: 4px;
+          border-radius: 4px;
+          background: #fff;
+          color: var(--gray-700, #344054);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 24px; /* 150% */
+        " id="FinalResultBox"
+                  placeholder="Final Result: Employee Productivity Improvement Module Description: This module aims to enhance employee productivity by streamlining work processes and providing tools to monitor and measure performance."
+                  onchange="ChangeTaskData('finalResult',event.target.value)"><%=TaskData.finalResult%></textarea>
+          </div>
+          <div style="display: flex;
+          padding: 16px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 20px;
+          align-self: stretch;
+          border-radius: var(--radius-medium, 8px);
+          border: 1px solid var(--gray-300, #D0D5DD);
+          background: #FFF;">
+          <div style="color: var(--gray-800, #1D2939);
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px; /* 120% */">Comments</div>
+          <div style="display: flex;
+          align-items: flex-start;
+          gap: 8px;
+          align-self: stretch;">
+        <img src="<%=user?.image%>" style="display: flex;
+        width: 32px;
+        height: 32px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 200px;">
+        <div style="width: 100%;">
+        <textarea style="display: flex;
+        padding: 14px 20px;
+        align-items: flex-start;
+        gap: 10px;
+        width: 100%;
+        height: 100px;
+        flex: 1 0 0;
+        align-self: stretch;
+        border-radius: 12px;
+        border: 1px solid #ECECEC;
+        color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+        background: #FFF;" placeholder="Leave a comment" id="CommentBox"></textarea>
+         <button class="btn btn-outline-primary" style="display: flex;
+        margin-top: 12px;
+         justify-content: center;
+         align-items: center;
+         gap: 8px;
+         align-self: stretch;
+         border-radius: 12px;" onclick="SaveComment()"> Comment</button>
+        </div>
+      </div>
+        <div style="display: flex;flex-direction: column;gap:12px;align-items: flex-start;" id="CommentBody">
+        <%for(let comment of TaskData.comments||[]){%>
+          <div style="display: flex;
+          align-items: flex-start;
+          gap: 8px;
+          align-self: stretch;">
+        <img src="<%=comment.image%>" style="display: flex;
+        width: 32px;
+        height: 32px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 200px;">
+        <div style="display: flex;
+        padding: 14px 20px;
+        align-items: flex-start;
+        gap: 10px;
+        width: 100%;
+        flex: 1 0 0;
+        align-self: stretch;
+        border-radius: 12px;
+        border: 1px solid #ECECEC;
+        color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+        background: #FFF;" placeholder="Leave a comment"><%=comment.content%></div>
+        </div>
+          <%}%>
+        </div>
+          </div>
+    </div>
+
+  
+
+
+
+
+    <!-- Add Project Link -->
+    <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="AddProjectLink"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="background-color: #FAFAFA;">
+                <div class="modal-header"
+                    style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+                    <div style="color: var(--gray-900, #101828);
+font-size: 24pxpx;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Add Link</div>
+                    <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+                </div>
+                <div class="modal-body" style="display: inline-flex;
+padding-top: 24px;
+flex-direction: column;
+align-items: flex-start;
+gap: 22px;
+border-radius: 12px;">
+                    <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+                        <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link Title</div>
+                        <input type="text" id="link-title" placeholder="Design_draft1" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+  border: 1px solid var(--stroke-secondary, #DCDCDC);
+  background: var(--surface-primary, #FFF);" onchange="ChangeLinkContent('title',event.target.value)">
+                    </div>
+                    <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+                        <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link </div>
+                        <input type="link" id="link-link"
+                            placeholder="www.figma.com/file/4E5bk36Ib1giid=4861%3A134681&m" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+  border: 1px solid var(--stroke-secondary, #DCDCDC);
+  background: var(--surface-primary, #FFF);" onchange="ChangeLinkContent('url',event.target.value)" required>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding:0.5rem">
+
+                    <button type="button" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" class="btn btn-outline-primary" data-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button type="button" data-dismiss="modal" class="btn btn-primary" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" onclick="AddProjectLink()" id="AddLinkButton" disabled>
+                        Add
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script type="text/javascript">
+        let task = `<%-JSON.stringify(task)%>`;
+        task = JSON.parse(task);
+       
+        
+         for(let kr of task.data.krs)
+         { let id=kr.id;
+            let title=kr.title
+            document.getElementById(
+                    "KRSBody"
+                  ).innerHTML += `<div class="teamBox" id='TaskKR${id}'>${title} <img src="../Performance dashboard Icons/TeamCross.svg" onclick="RemoveFromTaskKR('${id}')"></div>`;
+                
+         }
+         for(let subkr of task.data.subkrs)
+         {
+            let id=subkr.id;
+            let title=subkr.title
+            document.getElementById(
+                    "subKRSBody"
+                  ).innerHTML += `<div class="teamBox" id='TasksubKR${id}'>${title} <img src="../Performance dashboard Icons/TeamCross.svg" onclick="RemoveFromTasksubKR('${id}')"></div>`;
+              
+         }
+        task.data.roadmap = task.data.roadmap || [];
+        task.data.comments = task.data.comments || [];
+        let objective_owner = "";
+        let objective_teams = [];
+        
+    let subkrs = `<%-JSON.stringify(subkrsmap)%>`;
+    subkrs = JSON.parse(subkrs);
+    subkrs=new Map(subkrs);
+
+        let currentemployeeList = `<%-JSON.stringify(employeeList)%>`
+        currentemployeeList = JSON.parse(currentemployeeList)
+        let EmployeeMap = new Map();
+       
+
+
+        
+        let employeeList_OKR = task.data.teams;
+        for (let employee of currentemployeeList)
+            EmployeeMap.set(employee._id.toString(), employee);
+        
+        function ChangeTaskData(type, value) {
+            task.data[type] = value;
+            SaveTaskDataApi();
+        }
+        //comment 
+
+        function SaveComment(){
+  // i is for identify comment should insert only one time
+  let value=document.getElementById('CommentBox').value;
+  task.data.comments.push({image:'<%=user?.image%>',employeeId:'<%=user?.id%>',content:value,date:new Date()});
+  SaveTaskDataApi()
+  document.getElementById('CommentBox').value='';
+  document.getElementById('CommentBody').innerHTML=` <div style="display: flex;
+                          align-items: flex-start;
+                          gap: 8px;
+                          align-self: stretch;">
+                        <img src="<%=user?.image%>" style="display: flex;
+                        width: 32px;
+                        height: 32px;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 200px;">
+                        <div style="display: flex;
+                        padding: 14px 20px;
+                        align-items: flex-start;
+                        gap: 10px;
+                        width: 100%;
+                        flex: 1 0 0;
+                        align-self: stretch;
+                        border-radius: 12px;
+                        border: 1px solid #ECECEC;
+                        color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+                        background: #FFF;" placeholder="Leave a comment">${value}</div>
+                        </div>` +document.getElementById('CommentBody').innerHTML
+}
+
+
+
+        //roadmap
+
+        function AddRoadMapPoint() {
+
+            task.data.roadmap.push({ title: '', status: false });
+            let roadmapBody = document.getElementById('RoadmapBox')
+            roadmapBody.innerHTML = ''
+            for (let i = 0; i < task.data.roadmap.length; i++) {
+                roadmapBody.innerHTML += `<div style="display: flex;align-items: center;gap:8px" >
+        <input type="checkbox" ${task.data.roadmap[i].status ? 'checked' : ''} style="width: 20px;height: 20px;" onclick="ChangeStatusRoadMapPoint(${i})"/>
+       <input type="text" onchange="ChangeTitleRoadMapPoint(${i},event.target.value)"
+       value='${task.data.roadmap[i].title}'
+          placeholder="Click to add new Checkpoint" style="border:none;border-radius:6px;padding:4px;color: var(--gray-800, #1D2939);
+width:100%;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */">
+      </div>`
+            }
+            roadmapBody.innerHTML += `<div style="display: flex;align-items: center;gap:8px" id="AddRoadMapPoint" onclick="AddRoadMapPoint()">
+       
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+            <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <div style="display: flex;
+            padding: 4px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            border-radius: 4px;
+            border: 1px solid var(--gray-600, #475467);">
+          Click to add new Checkpoint
+          </div>
+      </div>`
+            SaveTaskDataApi();
+        }
+
+        function ChangeStatusRoadMapPoint(i) {
+            task.data.roadmap[i].status = !task.data.roadmap[i].status;
+            SaveTaskDataApi();
+        }
+        function ChangeTitleRoadMapPoint(i, value) {
+            task.data.roadmap[i].title = value
+            SaveTaskDataApi();
+        }
+
+
+        function SelectOwner(id, image,name) {
+            document.getElementById('OwnerImage').src = image;
+            task.data.Owner = {id,image,name};
+            SaveTaskDataApi();
+        }
+
+        function Goback() {
+            window.history.back()
+        }
+
+function SetProjectDetails(id,title,krs){
+   
+task.data.projectId=id;
+document.getElementById('ProjectBody').innerHTML=title;
+ krs=JSON.parse(krs);
+
+setKrsToDropDown(krs);
+SaveTaskDataApi()
+}
+
+function setKrsToDropDown(krs) {
+                
+                  let krbody = document.getElementById('DropDownKrs');
+                  krbody.innerHTML = '';
+                  for(let kr of task.data.krs)
+                  { let index=krs.findIndex(k=>k.id==kr.id)
+                    if(index==-1)
+                   {
+                    document.getElementById(`TaskKR${kr.id}`).remove();
+                    task.data.krs.splice(index, 1);
+                   }
+                  }
+                  let krs_all=krs;
+                  for (let kr of krs_all) {
+                    
+                      krbody.innerHTML +=  ` 
+                    <div style="
+    display: flex;
+    width: 100%;
+    padding: 12px 16px;
+    flex-direction:column;
+    border-bottom: 1px solid var(--gray-300, #D0D5DD);
+    background: #FFF;
+    " onclick="SetKr('${kr.id}','${kr.title}')" >
+                <div style="color: var(--gray-900, #101828);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px; /* 112.5% */
+    letter-spacing: 0.24px;">
+    ${kr.title}
+                </div>
+              </div>`
+                  }
+                  if(krs_all.length==0)
+                  {
+                    krbody.innerHTML += ` 
+                    <div style="
+    display: flex;
+    width: 100%;
+    padding: 12px 16px;
+    flex-direction:column;
+    border-bottom: 1px solid var(--gray-300, #D0D5DD);
+    background: #FFF;
+    "  >
+                <div style="color: var(--gray-900, #101828);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px; /* 112.5% */
+    letter-spacing: 0.24px;">
+   No kr is Associated with this Project 
+                </div>
+              </div>`
+                  }
+                  setsubKrsToDropDown(task.data.krs);
+                  SaveTaskDataApi()
+                }
+
+
+        function SetKr(id, title) {
+                  for (let kr of task.data.krs) {
+                    if (kr.id == id)
+                      return;
+                  }
+
+                  document.getElementById(
+                    "KRSBody"
+                  ).innerHTML += `<div class="teamBox" id='TaskKR${id}'>${title} <img src="../Performance dashboard Icons/TeamCross.svg" onclick="RemoveFromTaskKR('${id}')"></div>`;
+                  task.data.krs.push({id,title});
+                  SaveTaskDataApi()
+                  setsubKrsToDropDown(task.data.krs);
+                }
+               
+                function RemoveFromTaskKR(id) {
+                  document.getElementById(`TaskKR${id}`).remove();
+                  const index = task.data.krs.findIndex((kr) => kr.id === id);
+                  if (index != -1)
+                  task.data.krs.splice(index, 1);
+                  SaveTaskDataApi()
+                }
+
+
+
+
+                function setsubKrsToDropDown(krs) {
+                
+                let subkrbody = document.getElementById('DropDownsubKrs');
+                subkrbody.innerHTML = '';
+                task.data.subkrs = [];
+                let subkrs_all=[]
+                for(let kr of krs){
+                  let subkr=subkrs.get(kr.id)||[]
+                  subkrs_all.push(...subkr);
+                }
+                for(let subkr of task.data.subkrs)
+                  { let index=subkrs_all.findIndex(k=>k.id==subkr.id)
+                    if(index==-1)
+                   {
+                    document.getElementById(`TasksubKR${subkr.id}`).remove();
+                    task.data.subkrs.splice(index, 1);
+                   }
+                  }
+              
+               
+                for (let subkr of subkrs_all) {
+                    subkrbody.innerHTML +=` 
+                    <div style="
+    display: flex;
+    width: 100%;
+    padding: 12px 16px;
+    flex-direction:column;
+    border-bottom: 1px solid var(--gray-300, #D0D5DD);
+    background: #FFF;
+    " onclick="SetsubKr('${subkr.id}','${subkr.title}')" >
+                <div style="color: var(--gray-900, #101828);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px; /* 112.5% */
+    letter-spacing: 0.24px;">
+    ${subkr.title}
+                </div>
+              </div>`
+                }
+                if(subkrs_all.length==0)
+                {
+                
+                    subkrbody.innerHTMLL += ` 
+                    <div style="
+    display: flex;
+    width: 100%;
+    padding: 12px 16px;
+    flex-direction:column;
+    border-bottom: 1px solid var(--gray-300, #D0D5DD);
+    background: #FFF;
+    "  >
+                <div style="color: var(--gray-900, #101828);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px; /* 112.5% */
+    letter-spacing: 0.24px;">
+   No Subkr is Associated with this Kr 
+                </div>
+              </div>`
+                  }
+                  SaveTaskDataApi()
+              }
+
+
+      function SetsubKr(id, title) {
+                for (let subkr of task.data.subkrs) {
+                  if (subkr.id == id)
+                    return;
+                }
+
+                document.getElementById(
+                  "subKRSBody"
+                ).innerHTML += `<div class="teamBox" id='TasksubKR${id}'>${title} <img src="../Performance dashboard Icons/TeamCross.svg" onclick="RemoveFromTasksubKR('${id}')"></div>`;
+                task.data.subkrs.push({id,title});
+                SaveTaskDataApi()
+              }
+             
+              function RemoveFromTasksubKR(id) {
+                document.getElementById(`TasksubKR${id}`).remove();
+                const index = task.data.subkrs.findIndex((subkr) => subkr.id === id);
+                if (index != -1)
+                task.data.subkrs.splice(index, 1);
+                SaveTaskDataApi()
+              }
+
+
+
+
+
+
+
+
+
+
+
+
+        // link and file upload 
+
+        function OpenFileInput(id) {
+            document.getElementById(id).click();
+        }
+
+
+        let Link = {},
+            file = {};
+
+        function ChangeLinkContent(type, value) {
+            Link[type] = value;
+            MakeLinkButtonAble();
+
+        }
+
+        function AddProjectLink() {
+            let id = generateRandomId();
+            Link.id = id;
+            task.data.links.push(Link);
+            UpdateLinkbody();
+            SaveTaskDataApi();
+        }
+
+        function AddProjectFile() {
+            let id = generateRandomId();
+            file.id = id;
+            task.data.files.push(file);
+            UpdateFilebody();
+            SaveTaskDataApi();
+        }
+
+        function MakeLinkButtonAble() {
+            if (Link.title?.length > 0 && Link.url?.length > 0) {
+                document.getElementById('AddLinkButton').disabled = false;
+            } else {
+                document.getElementById('AddLinkButton').disabled = true;
+            }
+        }
+
+
+        function generateRandomId() {
+            return '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function UpdateLinkbody() {
+            let id = Link.id;
+            let body = document.getElementById('Project_LinkFileBody');
+            let innerhtmlfile = `
+      <div style="display: flex;
+                padding: 12px 16px;
+                align-items: center;
+                gap: 12px;
+                flex: 1 0 0;
+                border-radius: 12px;
+                border: 1px solid #ECECEC;
+                background: #FFF;" onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='link-${id}'>
+        <img src="../Performance dashboard Icons/Link Added.svg">
+        <div style="display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  gap: 4px;
+                  flex: 1 0 0;">
+          <div style="align-self: stretch;
+                    color: var(--content-on-light-primary, #181818);
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 17.352px;">
+            ${Link.title}
+          </div>
+          <div style="display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    align-self: stretch;
+                    overflow: hidden;
+                    color: var(--content-on-light-secondary, #898989);
+                    text-overflow: ellipsis;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 17.352px;">
+            ${Link.url}
+          </div>
+        </div>
+        <img src='../Project icons/Edit.svg' style="display:none" class='Icons-${id}' onclick='EditLink("${id}")' data-target='#AddProjectLink' data-toggle='modal'>
+        <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveLink("${id}")'>
+      </div>`;
+
+            body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+        }
+
+        function UpdateFilebody() {
+            let id = file.id;
+            let body = document.getElementById('Project_LinkFileBody');
+            let innerhtmlfile = `
+      <div style="display: flex;
+                padding: 12px 16px;
+                align-items: center;
+                gap: 12px;
+                flex: 1 0 0;
+                border-radius: 12px;
+                border: 1px solid #ECECEC;
+                background: #FFF;" onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='file-${id}'>
+        <img src="../Performance dashboard Icons/Document Added.svg">
+        <div style="display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  gap: 4px;
+                  flex: 1 0 0;">
+          <div style="align-self: stretch;
+                    color: var(--content-on-light-primary, #181818);
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 17.352px;">
+            ${file.title}
+          </div>
+          <div style="display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    align-self: stretch;
+                    overflow: hidden;
+                    color: var(--content-on-light-secondary, #898989);
+                    text-overflow: ellipsis;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 17.352px;">
+            ${file.url}
+          </div>
+        </div>
+        <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveFile("${id}")'>
+      </div>`;
+
+            body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+        }
+
+        for (let i = 0; i < task.data.files.length; i++) {
+            file = task.data.files[i];
+            UpdateFilebody();
+        }
+        for (let i = 0; i < task.data.links.length; i++) {
+            Link = task.data.links[i];
+            UpdateLinkbody();
+        }
+
+
+        function RemoveFile(fileid) {
+            let id = `file-${fileid}`
+            const body = document.getElementById(id);
+            body.remove();
+            const index = task.data.files.findIndex((file) => file.id === fileid);
+            if (index != -1)
+                task.data.files.splice(index, 1);
+            SaveTaskDataApi();
+        }
+
+        function RemoveLink(linkid) {
+            let id = `link-${linkid}`
+            const body = document.getElementById(id);
+            body.remove();
+            const index = task.data.links.findIndex((link) => link.id === linkid);
+            if (index != -1)
+                task.data.links.splice(index, 1);
+            SaveTaskDataApi();
+        }
+
+        function EditLink(linkid) {
+            const index = task.data.links.findIndex((link) => link.id === linkid);
+            Link = task.data.links[index];
+            RemoveLink(linkid);
+            document.getElementById('link-title').value = Link.title;
+            document.getElementById('link-link').value = Link.url;
+        }
+
+        function showIcons(classname) {
+            const box = document.querySelectorAll(classname);
+            box.forEach((element) => {
+                element.style.display = 'flex';
+            });
+        }
+
+        function removeIcons(classname) {
+            const box = document.querySelectorAll(classname);
+            box.forEach((element) => {
+                element.style.display = 'none';
+            });
+        }
+
+
+        async function handleProjectFileSelect(event) {
+            try {
+                let data = event.target.files[0];
+                let filelink = await handleFileUpload(data);
+                file.title = data.name;
+                file.url = filelink;
+                AddProjectFile();
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        async function handleFileUpload(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            try {
+                const uploadType = "EmployeeProject";
+                const urlRes = await fetch(
+                    `/aws/get/preSignedUrl?fileName=${file.name}t&contentType=${file.type}&uploadType=${uploadType}`, {
+                    method: "GET",
+                }
+                );
+                const urlData = await urlRes.json();
+                const response = await fetch(urlData.url, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": file.type,
+                    },
+                    body: file,
+                });
+                let url = `https://dvfkpf9qxfl09.cloudfront.net/${urlData.key}`;
+
+                return url;
+            } catch (error) {
+                console.error('Error during file upload:', error);
+            }
+        }
+
+     
+
+function setStatusToTask(status, type, index) {
+        let statusbody = document.getElementById('initiative' + type )
+        type = type.trim()
+
+        let statusbodydropdown = document.getElementById('initiative' + type  + 'dropdown')
+        let selectedChild = statusbodydropdown.children[index];
+        statusbody.innerHTML = selectedChild.innerHTML;
+        if (type == 'Status' && task.data[type].label != status && (task.data[type].label == 'In Progress' || status == 'In Progress')) {
+            if (status == 'In Progress') {
+                task.InProgressStartedTime = new Date();
+            }
+            else {
+
+                task.PervInProgressTime += new Date() - (task.InProgressStartedTime ? new Date(task.InProgressStartedTime) : new Date());
+                task.InProgressStartedTime = null;
+            }
+        }
+        let mainitem = selectedChild.querySelector('.Status_hold').style;
+        task.data[type] = { label: status, color: mainitem?.color, bgcolor: mainitem?.background };
+        SaveTaskDataApi()
+    }
+
+       
+        function CheckStatus(Status) {
+            var element = '';
+            if (Status == 'On Track') {
+                element = '<div class="Status_completed">On Track</div>';
+            } else if (Status == 'At risk') {
+                element = '<div class="Status_progress">At risk</div>';
+            } else if (Status == 'Off Track') {
+                element = '<div class="Status_hold">Off Track</div>';
+            } else if (Status == 'Achieved') {
+                element = '<div class="Status_completed">Achieved</div>';
+            } else if (Status == 'Partial') {
+                element = '<div class="Status_progress">Partial</div>';
+            } else if (Status == 'Missed') {
+                element = '<div class="Status_hold">Missed</div>';
+            } else if (Status == 'Dropped') {
+                element = '<div class="Status_notStarted">Dropped</div>';
+            }
+            return element;
+        }
+     async function SaveTaskDataApi()
+     {
+        let response=await fetch('/create/task',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(task)
+        })
+     }
+
+
+
+    </script>
+
+    <!-- Include JavaScript files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+    <script src="../js/purpose.core.js"></script>
+    <!-- Page JS -->
+    <script src="../libs/autosize/dist/autosize.min.js"></script>
+
+    <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+    <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="../libs/moment/min/moment.min.js"></script>
+
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+    <!-- Purpose JS -->
+    <script src="../js/purpose.js"></script>
+    <!-- Demo JS - remove it when starting your project -->
+    <script src="../js/demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+
+
+
+</body>
+
+</html>

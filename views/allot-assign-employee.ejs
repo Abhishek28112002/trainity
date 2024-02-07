@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <meta name="author" content="Webpixels" />
+  <title>Trainity - Admin Panel</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+  <!-- Purpose CSS -->
+  <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="../libs/fullcalendar/dist/fullcalendar.min.css" />
+
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+  <style>
+    body {
+      font-family: "Manrope", sans-serif !important;
+    }
+
+    .inputfield {
+      display: flex;
+      height: 40px;
+      padding: 8px 16px;
+      align-items: center;
+      gap: 16px;
+      align-self: stretch;
+      border-radius: 8px;
+      width: 100%;
+      border: 1px solid var(--stroke-secondary, #DCDCDC);
+      background: var(--surface-primary, #FFF);
+     
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px;
+    }
+
+    .display-none {
+      display: none;
+    }
+
+
+    .display-flex {
+      display: flex;
+    }
+  </style>
+  <!-- Hotjar Tracking Code for Admin Website -->
+  <script>
+    (function(h, o, t, j, a, r) {
+      h.hj =
+        h.hj ||
+        function() {
+          (h.hj.q = h.hj.q || []).push(arguments);
+        };
+      h._hjSettings = {
+        hjid: 3534926,
+        hjsv: 6,
+      };
+      a = o.getElementsByTagName("head")[0];
+      r = o.createElement("script");
+      r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+  </script>
+</head>
+
+<body class="application application-offset" style="margin-left:300px;width: calc(100vw - 300px);background-color: white;" id="MainPageContent">
+  <!-- Chat modal -->
+
+  <!-- Application container -->
+  <div >
+    <!-- Sidenav -->
+    <div class="navbar-sidebar"><%- include('partials/sidepanel'); -%></div>
+    <!-- Content -->
+    <div class="main-content position-relative">
+     
+      <div class="page-content" style="margin: 0px;">
+        <%- include('partials/utility-modals'); -%>
+        <!-- Page title -->
+        <div class="page-title">
+          <div class="row justify-content-between align-items-center">
+            <div class="text  d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0" style="width:100%">
+              <div style="
+                    display: flex;
+                    
+                    padding: 24px 32px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-radius: 14px;
+                    width: 100%;
+                  ">
+                <div style="display: flex;justify-content: space-between;width:100%">
+                  <div style="
+                      display: flex;
+                      justify-content: center;
+                    align-items: center;
+                        color: #000;
+                        font-size: 20px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: normal;
+                      ">
+                    Unassigned Employees
+                  </div>
+
+                  <div style="
+                        display: flex;
+                        padding: 8px 16px;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 8px;
+                      " data-toggle="modal" data-target="#addemployeemanager" onclick="AddModalEmployee">
+                    <button type="button" class="btn btn-primary btn-icon" style="
+                         display: flex;
+padding: 8px 16px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+border-radius: 12px;
+background: var(--surface-button-primary, #48BF84);
+                        ">
+                      <span class="btn-inner--icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                          <path d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM16 12.75H12.75V16C12.75 16.41 12.41 16.75 12 16.75C11.59 16.75 11.25 16.41 11.25 16V12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H11.25V8C11.25 7.59 11.59 7.25 12 7.25C12.41 7.25 12.75 7.59 12.75 8V11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z" fill="white" />
+                        </svg>
+                      </span>
+                      <span>Add Employee</span>
+                    </button>
+                  </div>
+                </div>
+                <div style="display:flex;flex-wrap: wrap;gap:0px 16px">
+                  <% for(let i=0;i<unassignedemployee.length;i++){%>
+                  <div class="card" style="display: flex;
+                       width: 112px;
+                       height: 132px;
+                       padding: 16px 8px 8px 8px;
+                       flex-direction: column;
+                       align-items: center;
+                       gap: 8px;" onmouseover="showIcons('unassignedcard<%=i%>')" onmouseout="removeIcons('unassignedcard<%=i%>')">
+                       <div style="display: none;
+                       justify-content: space-between;
+                       align-items: center;" id="unassignedcard<%=i%>">
+                        <div style="position: absolute; top:0px;left:0px;display: flex;
+                        width: 32px;
+                        height: 32px;
+                        padding: 7px;
+                        justify-content: center;
+                        align-items: center;
+                        position: absolute;
+                        border-radius: 0px 0px 8px 0px;
+                        background: var(--pill-surface-blue, #F4F5FB);
+                        " onclick="DeleteEmployee('<%=unassignedemployee[i].email%>','<%=unassignedemployee[i]._id%>')">
+                        <img src="../img/icons performance mgmt/desktop/Delete_icon.svg">
+                      </div>
+                      <div style="position: absolute; top:0px;right:0px;display: flex;
+                      width: 32px;
+                      height: 32px;
+                      padding: 7px;
+                      justify-content: center;
+                      align-items: center;
+                      position: absolute;
+                      right: 0.117px;
+                      border-radius: 0px 0px 8px 0px;
+                      background: var(--pill-surface-blue, #F4F5FB);
+                      " onclick="EditEmployee('<%=unassignedemployee[i].email%>','<%=unassignedemployee[i]._id%>')" data-toggle="modal" data-target="#addemployeemanager">
+                      <img src="../img/icons performance mgmt/desktop/edit_icon.svg">
+                    </div>
+                    </div>
+                    <img src="<%=unassignedemployee[i].image%>" style="width: 64px;
+                    height: 64px;
+                    flex-shrink: 0;border-radius: 64px;">
+                    <div style="display: flex;
+                    height: 36px;
+                    flex-direction: column;
+                    justify-content: center;
+                    flex-shrink: 0;
+                    align-self: stretch;overflow: hidden;">
+                    <div style="
+color: var(--text-content-primary, #181818);
+text-align: center;
+text-overflow: ellipsis;
+whitespace: nowrap;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 130%;"><%= unassignedemployee[i].displayName%>
+</div></div>
+                  </div>
+
+                  <% } %>
+                </div>
+                <a href="/all-employee">
+                  <div style="color: var(--surface-button-primary, #48BF84);
+               
+                  font-size: 20px;
+                  font-style: normal;
+                  font-weight: 700;
+                  line-height: normal;">
+                    View all Employees <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                      <path d="M10 7.5L15 12.5L10 17.5" stroke="#48BF84" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </div>
+                </a>
+
+                <div style="display: flex;justify-content: space-between;width:100%;margin-top:30px">
+                  <div style="
+                          display: flex;
+                          justify-content: center;
+                        align-items: center;
+                            color: #000;
+                            font-size: 20px;
+                            font-style: normal;
+                            font-weight: 700;
+                            line-height: normal;
+                          ">
+                    Manager & Employee Assignment
+                  </div>
+
+                  <div style="
+                            display: flex;
+                            padding: 8px 16px;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 8px;
+                          " data-toggle="modal" data-target="#addemployeemanager" onclick="AddModalEmployee()">
+                    <button type="button" class="btn btn-primary btn-icon" style="
+                             display: flex;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 12px;
+    background: var(--surface-button-primary, #48BF84);
+                            " >
+                      <span class="btn-inner--icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                          <path d="M16.19 2H7.81C4.17 2 2 4.17 2 7.81V16.18C2 19.83 4.17 22 7.81 22H16.18C19.82 22 21.99 19.83 21.99 16.19V7.81C22 4.17 19.83 2 16.19 2ZM16 12.75H12.75V16C12.75 16.41 12.41 16.75 12 16.75C11.59 16.75 11.25 16.41 11.25 16V12.75H8C7.59 12.75 7.25 12.41 7.25 12C7.25 11.59 7.59 11.25 8 11.25H11.25V8C11.25 7.59 11.59 7.25 12 7.25C12.41 7.25 12.75 7.59 12.75 8V11.25H16C16.41 11.25 16.75 11.59 16.75 12C16.75 12.41 16.41 12.75 16 12.75Z" fill="white" />
+                        </svg>
+                      </span>
+                      <span>Add Manager</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="input-group input-group-merge" style="border: none; height: 40px; margin-bottom: 50px">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+                  </div>
+                  <input type="text" class="form-control" id="managersearchInput" placeholder="Search for Manager" aria-describedby="basic-addon1">
+                </div>
+                <div style="width:100%">
+                  <% for(let i=0;i<managerList.length;i++) {%>
+                  <div class="card managercard" onmouseover="showIcons('boxicons<%=i%>')" onmouseout="removeIcons('boxicons<%=i%>')" style="display: flex;
+                padding: 24px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 24px;
+                align-self: stretch;border-radius: 14px;
+border: 1px solid var(--stroke-primary, #ECECEC);
+background: var(--surface-primary, #FFF);">
+
+                    <div style="display:flex;justify-content:space-between;width:100%;align-items: center;">
+                      <div style="display:flex;gap:32px">
+                        <img src="<%= managerList[i].manager.image %>" style="width: 96px;
+       height: 96px;border-radius: 96px;">
+                        <div style="display: flex;flex-direction: column;align-items: center;justify-content: center;gap:10px">
+                          <div class="manager-display-name" style="display: -webkit-box;
+     align-self: stretch;
+     -webkit-box-orient: vertical;
+     -webkit-line-clamp: 2;color: var(--text-content-primary, #181818);
+overflow: hidden;
+text-overflow: ellipsis;
+
+font-size: 20px;
+font-style: normal;
+font-weight: 400;
+line-height: 24.894px;"><%= managerList[i].manager.displayName %></div>
+                          <div style="display: flex;
+     padding: 8px 16px;
+     color: var(--text-button-active, #FFF);
+     align-items: center;
+     gap: 8px;border-radius: 8px;
+background: var(--text-content-secondary, #898989);font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 100%;">Manager</div>
+                        </div>
+                      </div>
+                      <div class="box " style="    width: 500px;
+                    height: 100px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;">
+                        <div style="display: none; gap: 20px" id="boxicons<%=i%>">
+                          <img src="../img/icons performance mgmt/desktop/Delete_icon.svg" onclick="DeleteEmployee('<%=managerList[i].manager.email%>','<%=managerList[i].manager._id%>')">
+                         
+                          <img src="../img/icons performance mgmt/desktop/edit_icon.svg" data-toggle="modal" data-target="#addemployeemanager"  onclick="EditEmployee('<%=managerList[i].manager.email%>','<%=managerList[i].manager._id%>')">
+                        </div>
+                      </div>
+                      <div style="width: 40px;
+height: 40px;
+border-radius: 40px;
+display:flex;
+align-items: center;
+    justify-content: center;
+background-color: var(--surface-fourth, #EBEBEB);" onclick="openemployeebox('<%=i%>')">
+                        <i class="<%=i>0?'fa fa-angle-down':'fa fa-angle-up'%>" id="icons<%=i%>"></i>
+                      </div>
+
+                    </div>
+                    <div style="flex-wrap: wrap;gap:0px 26px;" class="<%=i>0? 'display-none' : 'display-flex' %>" id="employeebox<%=i%>">
+                      <% for(let j=0;j<managerList[i].employees.length;j++){%>
+
+                        <div class="card" style="display: flex;
+                        width: 112px;
+                        height: 132px;
+                        padding: 16px 8px 8px 8px;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;" onmouseover="showIcons('managerassignedcard<%=i%>-<%=j%>')" onmouseout="removeIcons('managerassignedcard<%=i%>-<%=j%>')">
+                        <div style="display: none;
+                        justify-content: space-between;
+                        align-items: center;" id="managerassignedcard<%=i%>-<%=j%>">
+                         <div style="position: absolute; top:0px;right:0px;
+                         display: flex;
+                        width: 32px;
+                        height: 32px;
+                        padding: 9px;
+                        justify-content: center;
+                        align-items: center;
+                        position: absolute;
+                        right: 0px;
+                        border-radius: 0px 0px 0px 8px;
+                        background: var(--pill-surface-red, #FCF4F3);
+                         " onclick="RemoveEmployeeFromManager('<%=managerList[i]._id%>','<%=managerList[i].employees[j]._id%>')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                          <path d="M11.0846 2.91797L2.91797 11.0846M2.91798 2.91797L11.0847 11.0846" stroke="#FF6565" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                       </div>
+  
+                     </div>
+                        <img src="<%=managerList[i].employees[j].image%>" style="width: 64px;
+      height: 64px;
+      flex-shrink: 0;border-radius: 64px;">
+                        <div style="display: flex;
+      height: 36px;
+      flex-direction: column;
+      justify-content: center;
+      flex-shrink: 0;
+      align-self: stretch;overflow: hidden;
+color: var(--text-content-primary, #181818);
+text-align: center;
+text-overflow: ellipsis;
+whitespace: nowrap;
+
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 130%;"><%= managerList[i].employees[j].displayName%></div>
+                      </div>
+                      <% } %>
+                      <div class="card" onclick="setManagerId('<%=managerList[i].manager._id%>')" style="display: flex;
+    width: 112px;
+    height: 132px;
+    padding: 8px;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;" data-target="#addemployeetoManager" data-toggle="modal">
+                        <div style="width: 64px;
+    height: 64px;display: flex;
+    align-items: center;
+    justify-content: center;">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                            <path d="M30.0026 21.6654H21.6693V29.9987C21.6693 30.9154 20.9193 31.6654 20.0026 31.6654C19.0859 31.6654 18.3359 30.9154 18.3359 29.9987V21.6654H10.0026C9.08594 21.6654 8.33594 20.9154 8.33594 19.9987C8.33594 19.082 9.08594 18.332 10.0026 18.332H18.3359V9.9987C18.3359 9.08203 19.0859 8.33203 20.0026 8.33203C20.9193 8.33203 21.6693 9.08203 21.6693 9.9987V18.332H30.0026C30.9193 18.332 31.6693 19.082 31.6693 19.9987C31.6693 20.9154 30.9193 21.6654 30.0026 21.6654Z" fill="#48BF84" />
+                          </svg>
+                        </div>
+                        <div style="display: flex;
+ height: 50px;
+ flex-direction: column;
+ justify-content: center;
+ flex-shrink: 0;
+ align-self: stretch;overflow: hidden;
+color: var(--surface-button-primary, #48BF84);
+text-align: center;
+text-overflow: ellipsis;
+whitespace: nowrap;
+
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 130%;">Assign Employee</div>
+                      </div>
+                    </div>
+
+
+
+
+                  </div>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add intern or manager -->
+
+  <div class="modal fade docs-example-modal-lg" id="addemployeemanager" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-header" style="display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;">
+          <h5 class="modal-title h6" id="myLargeModalLabel">Add a new Manager/Employee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <img src="../img/icons performance mgmt/desktop/close_40x40.svg">
+          </button>
+        </div>
+        <div class="modal-body" style="border-radius: 14px;
+      background: var(--surface-secondary, #FAFAFA);">
+          <form>
+            <div class="form-group">
+              <label class="form-control-label">Name</label>
+              <input type="text" class="inputfield" id="nameinputfield" placeholder="Ex:Rakesh Bepari">
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Email</label>
+              <input type="email" class="inputfield" id="emailinputfield" placeholder="Ex: ravishkumar432@gmail.com">
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Phone</label>
+              <input type="text" class="inputfield" id="phoneinputfield" data-mask="0000 000 000" placeholder="Ex: 7854698724">
+            </div>
+
+            <div class="form-group">
+              <label class="form-control-label">Team</label>
+              <input type="text" class="inputfield" id="teaminputfield" placeholder="Ex: Developer, Product, Curriculum">
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">EmployeeMent Type</label>
+              <select class="inputfield" id="EmployeeMentTypeinputfield">
+                <option value="Full Time">Full Time</option>
+                <option value="Intern" selected>Intern</option>
+                <option value="Part Time" >Part Time</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label">Position</label>
+              <select class="inputfield" id="positioninputfield">
+                <option value="0">Manager</option>
+                <option value="1" selected>Employee</option>
+              </select>
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="createEmployee()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Select single or multiple employees -->
+
+  <div class="modal fade docs-example-modal-lg" id="addemployeetoManager" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 70px;">
+          <h5 class="modal-title h6" id="myLargeModalLabel">Select single or multiple employees</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <img src="../img/icons performance mgmt/desktop/close_40x40.svg">
+          </button>
+        </div>
+        <div class="modal-body" style="border-radius: 14px;
+          background: var(--surface-secondary, #FAFAFA);">
+          <div class="input-group input-group-merge" style="border: none; height: 40px;">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Search for Employee" aria-describedby="basic-addon1" id="searchInput">
+          </div>
+          <div style="color: #000;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;margin: 40px 0px 20px;">Unassigned Employees</div>
+          <div style="display:flex;flex-wrap: wrap;gap:0px 16px" id="unassigned">
+            <% unassignedemployee.forEach((employee, index) => { %>
+            <div class="card" onclick="selectemployee('unassignedemployee<%=index%>','<%=employee._id%>')" style="display: flex;
+              width: 112px;
+              height: 132px;
+              padding: 16px 8px 8px 8px;
+              flex-direction: column;
+              align-items: center;
+              gap: 8px;
+              overflow:hidden;
+              border: 1px solid var(--stroke-primary, #ECECEC);
+              background: var(--surface-primary, #FFF)">
+              <div style="position: absolute; top:0px;left:0px;display: flex;
+                width: 32px;
+                height: 32px;
+                padding: 7px;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                left: 0.117px;
+                border-radius: 0px 0px 8px 0px;
+                background: var(--pill-surface-blue, #F4F5FB);
+                " id="unassignedemployee<%=index%>">
+                <img src="../img/icons performance mgmt/desktop/check-circle.svg">
+              </div>
+              <img src="<%= employee.image %>" style="width: 64px;
+                height: 64px;
+                flex-shrink: 0;border-radius: 64px;">
+              <div style="display: flex;
+                height: 36px;
+                flex-direction: column;
+                justify-content: center;
+                align-self: stretch;
+                overflow: hidden;
+                color: var(--text-content-primary, #181818);
+                text-align: center;
+                text-overflow: ellipsis;
+                whitespace: nowrap;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 130%;
+                <% if (employee.match) { %> border: 1px solid var(--pill-text-blue, #3B82F6);
+                background: var(--pill-surface-blue, #F4F5FB); <% } %>">
+                <%= employee.displayName %>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+          <div style="color: #000;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;margin: 40px 0px 20px;">Assigned Employees</div>
+          <div style="display:flex;flex-wrap: wrap;gap:0px 16px" id="assigned">
+            <% assignedemployee.forEach((employee, index) => { %>
+            <div class="card" onclick="selectemployee('assignedemploy<%=index%>','<%=employee._id%>')" style="display: flex;
+              padding: 8px;
+              flex-direction: column;
+              align-items: center;
+              gap: 8px;
+              border-radius: 12px;
+              border: 1px solid var(--stroke-primary, #ECECEC);
+              background: var(--surface-primary, #FFF)">
+              <div style="position: absolute; top:0px;left:0px;display: flex;
+                width: 32px;
+                height: 32px;
+                padding: 7px;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                left: 0.117px;
+                overflow:hidden;
+                border-radius: 10px 0px 8px 0px;
+                background: var(--pill-surface-blue, #F4F5FB);
+                " id="assignedemploy<%=index%>">
+                <img src="../img/icons performance mgmt/desktop/check-circle.svg">
+              </div>
+              <img src="<%= employee.image %>" style="width: 64px;
+                height: 64px;
+                flex-shrink: 0;border-radius: 64px;">
+              <div style="display: flex;
+                height: 36px;
+                flex-direction: column;
+                justify-content: center;
+                flex-shrink: 0;
+                align-self: stretch;
+                <% if (employee.match) { %> border: 1px solid var(--pill-text-blue, #3B82F6);
+                background: var(--pill-surface-blue, #F4F5FB); <% } %>">
+                <div style="overflow: hidden;
+                color: var(--text-content-primary, #181818);
+                text-align: center;
+                text-overflow: ellipsis;
+                whitespace: nowrap;
+                
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 130%;">
+                  <%= employee.displayName %>
+                </div>
+              </div>
+              <div class="dropdown">
+                <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" style="display: flex;
+                  padding: 5px 14px;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 4px;
+                  text-align: center;
+                  background: white;
+                  color:#48BF84;
+                  align-self: stretch;border-radius: 8px;
+                  border: 1px solid var(--surface-button-primary, #48BF84);">Managers</div>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="border-radius: 14px;">
+                  <div style="display: flex;
+                    padding: 16px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 24px">
+                    <div style="
+                      color: var(--text-content-primary, #181818);
+                      font-size: 16px;
+                      font-style: normal;
+                      font-weight: 700;
+                      line-height: 130%;">Managers</div>
+                    <div style="display: flex;
+                      align-items: flex-start;
+                      align-content: flex-start;
+                      gap: 16px;
+                      width:100%;
+                      flex-direction: row;
+                      align-self: stretch;
+                      width:230px;
+                      flex-wrap: wrap;">
+                      <% const managerMap = new Map(managerList.map(manager => [manager.manager._id.toString(), manager.manager])); %>
+                      <% for(let j = 0; j < employee.managerID.length; j++) { %>
+                      <% const manager = managerMap.get(employee.managerID[j]); %>
+                      <% if (manager) { %>
+                      <div style="display: flex;
+                        width: 98.75px;
+                        height:140px;
+                        padding:10px;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;">
+                        <img src="<%= manager.image %>" style="width: 64px;
+                          height: 64px;
+                          border-radius: 64px;">
+                        <div style="
+                          color: var(--text-content-primary, #181818);
+                          text-align: center;
+                          font-size: 17px;
+                          font-style: normal;
+                          font-weight: 400;
+                          line-height: 130%;">
+                          <%= manager.displayName %>
+                        </div>
+                      </div>
+                      <% } else { %>
+                      <div class="card" style="display: flex;
+                        padding: 8px;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 8px;
+                        flex-shrink: 0;
+                        border-radius: 12px;
+                        border: 1px solid var(--stroke-primary, #ECECEC);
+                        background: var(--surface-primary, #FFF)">
+                        <div>Manager not found</div>
+                      </div>
+                      <% } %>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" disabled id="assignedemployee-btn" onclick="AssignEmployeestoManager()">Assign Employees</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+
+    const unassignedList = document.querySelectorAll('#unassigned .card');
+    const assignedList = document.querySelectorAll('#assigned .card');
+
+    searchInput.addEventListener('input', handleSearchEmployee);
+
+    function handleSearchEmployee() {
+      const searchText = searchInput.value.toLowerCase();
+
+      const unassignedMatches = Array.from(unassignedList).filter((card) =>
+        card.textContent.toLowerCase().includes(searchText)
+      );
+      const assignedMatches = Array.from(assignedList).filter((card) =>
+        card.textContent.toLowerCase().includes(searchText)
+      );
+
+      if (searchText.length === 0) {
+        // Reset background color and border for all cards
+        unassignedList.forEach((card) => {
+          card.style.background = 'var(--surface-primary, #FFF)';
+          card.style.border = '1px solid var(--stroke-primary, #ECECEC)';
+        });
+        assignedList.forEach((card) => {
+          card.style.background = 'var(--surface-primary, #FFF)';
+          card.style.border = '1px solid var(--stroke-primary, #ECECEC)';
+        });
+      } else {
+        // Reset background color and border for all cards
+        unassignedList.forEach((card) => {
+          card.style.background = 'var(--surface-primary, #FFF)';
+          card.style.border = '1px solid var(--stroke-primary, #ECECEC)';
+        });
+        assignedList.forEach((card) => {
+          card.style.background = 'var(--surface-primary, #FFF)';
+          card.style.border = '1px solid var(--stroke-primary, #ECECEC)';
+        });
+
+        // Move matched cards to the beginning and change background color
+        unassignedMatches.forEach((card) => {
+          card.parentElement.prepend(card);
+          card.style.background = 'var(--pill-surface-blue, #F4F5FB)';
+          card.style.border = '1px solid var(--pill-text-blue, #3B82F6)';
+        });
+        assignedMatches.forEach((card) => {
+          card.parentElement.prepend(card);
+          card.style.background = 'var(--pill-surface-blue, #F4F5FB)';
+          card.style.border = '1px solid var(--pill-text-blue, #3B82F6)';
+        });
+      }
+    }
+
+    const managerSearchInput = document.getElementById('managersearchInput');
+    const managerCards = document.querySelectorAll('.managercard');
+
+    managerSearchInput.addEventListener('input', handleManagerSearch);
+
+    function handleManagerSearch() {
+      let searchText = managerSearchInput.value.toLowerCase();
+ if(searchText==''){
+  searchText='<%=user.displayName.toLowerCase()%>'
+ }
+ 
+      const managerMatches = Array.from(managerCards).filter((card) =>
+        card.querySelector('.manager-display-name').textContent.toLowerCase().includes(searchText)
+      );
+
+      // Move matched cards to the beginning
+      managerMatches.forEach((card) => card.parentElement.prepend(card));
+    }
+
+
+
+
+    $('.dropdown-toggle').dropdown()
+
+    function showIcons(id) {
+
+      const box = document.getElementById(id);
+      box.style.display = 'flex';
+    }
+
+    function removeIcons(id) {
+      const box = document.getElementById(id);
+      box.style.display = 'none';
+    }
+    let selectedemployees = [];
+    let managerId = '';
+
+    function setManagerId(managerID) {
+      managerId = managerID;
+    }
+ async function RemoveEmployeeFromManager(managerId,employeeId)
+ {
+  try {
+        let response = await fetch('/remove/manager', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            managerID: managerId,
+            employeeID: employeeId
+          })
+        })
+       
+        response = await response.json();
+        if (response.status == 200)
+         { 
+          $("#successModal").modal('show');
+      }
+        location.reload();
+      } catch (error) {
+        console.log(error)
+        $("#errorModal").modal('show');
+      }
+ }
+    
+ 
+ function selectemployee(divid, employeeID) {
+      const box = document.getElementById(divid);
+      if (box.style.background == 'var(--pill-surface-blue, #F4F5FB)') {
+        selectedemployees.push(employeeID);
+        box.style.background = 'var(--pill-text-blue, #3B82F6)'
+      } else {
+        box.style.background = 'var(--pill-surface-blue, #F4F5FB)'
+        let index = selectedemployees.indexOf(employeeID);
+        if (index > -1)
+          selectedemployees.splice(index, 1)
+      }
+      const assignedemployeebtn = document.getElementById('assignedemployee-btn');
+      if (selectedemployees.length == 0)
+        assignedemployeebtn.disabled = true;
+      else
+        assignedemployeebtn.disabled = false;
+
+    }
+
+    async function AssignEmployeestoManager() {
+      try {
+        let response = await fetch('/allot/manager', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            managerID: managerId,
+            employeeIDs: selectedemployees
+          })
+        })
+        response = await response.json();
+        if (response.status == 200)
+          $("#successModal").modal('show');
+        location.reload();
+      } catch (error) {
+        console.log(error)
+        $("#errorModal").modal('show');
+      }
+    }
+    
+    
+    let editEmployee=false;
+    let editEmployeeId;
+    let pemail;
+   async function EditEmployee(pemail,id)
+    { editEmployee = true;
+ pemail=pemail;
+      let data = await fetch(`/get/manager/${id}`)
+        data = await data.json();
+        data=data.admin;
+
+      editEmployeeId=id;
+       document.getElementById('nameinputfield').value=data.displayName;
+       document.getElementById('emailinputfield').value=data.email;
+      document.getElementById('phoneinputfield').value=data.phone;
+      document.getElementById('teaminputfield').value=data.team?data.team:'';
+      document.getElementById('positioninputfield').value=data.position;
+      document.getElementById('EmployeeMentTypeinputfield').value=data.employmentType;
+    }
+    async function AddModalEmployee(id)
+    { 
+       document.getElementById('nameinputfield').value='';
+       document.getElementById('emailinputfield').value='';
+      document.getElementById('phoneinputfield').value='';
+      document.getElementById('teaminputfield').value='';
+      document.getElementById('positioninputfield').value=0;
+      editEmployee = false;
+    }
+    async function DeleteEmployee(email,employeeId)
+    {
+     
+      try {
+        let response = await fetch('/admin/create', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            employeeId:employeeId,
+            email
+          })
+        })
+        response = await response.json();
+       
+        if (response.status == 200)
+         { $("#successModal").modal('show');
+          location.reload();}
+      } catch (error) {
+        console.log(error)
+        $("#errorModal").modal('show');
+      }
+       
+    }
+
+    async function createEmployee() {
+      const name = document.getElementById('nameinputfield').value;
+      const email = document.getElementById('emailinputfield').value;
+      const phone = document.getElementById('phoneinputfield').value;
+      const team = document.getElementById('teaminputfield').value;
+      const position = document.getElementById('positioninputfield').value;
+      const employmentType=document.getElementById('EmployeeMentTypeinputfield').value;
+      try {
+        let response;
+        if(editEmployee)
+        {
+           response = await fetch('/admin/create', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            EmployeeId:editEmployeeId,
+            pemail,
+            name,
+            email,
+            employmentType,
+            phone,
+            team,
+            position
+          })
+        })
+        }
+        else{
+         response = await fetch('/admin/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            phone,
+            team,
+            position,employmentType
+          })
+        })
+      }
+      editEmployee=false;
+        response = await response.json();
+       
+        if (response.status == 200)
+          $("#successModal").modal('show');
+      } 
+      catch (error) {
+        console.log(error)
+        $("#errorModal").modal('show');
+      }
+    }
+
+    function openemployeebox(i) {
+
+      var icon = document.getElementById("icons" + i);
+
+      var container = document.getElementById("employeebox" + i);
+
+
+      icon.classList.toggle("fa-angle-down");
+      icon.classList.toggle("fa-angle-up");
+
+      if (container.classList.contains("display-flex")) {
+        container.classList.add("display-none");
+        container.classList.remove("display-flex")
+
+      } else {
+        container.classList.remove("display-none");
+        container.classList.add("display-flex")
+      }
+    }
+  </script>
+  <script src="../js/purpose.core.js"></script>
+  <script src="../libs/autosize/dist/autosize.min.js"></script>
+  <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+  <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+  <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="../libs/moment/min/moment.min.js"></script>
+
+  <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+
+  <script src="../js/purpose.js"></script>
+
+  <script src="../js/demo.js"></script>
+</body>
+
+</html>

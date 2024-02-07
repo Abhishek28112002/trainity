@@ -1,0 +1,3910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <meta name="author" content="Webpixels" />
+  <title>Trainity - Admin Panel</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+  <!-- Purpose CSS -->
+  <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+
+  <!-- <link rel="stylesheet" href="../libs/fullcalendar/dist/fullcalendar.min.css" />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../assets/libs/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+  <style>
+      body{
+            font-family: 'Manrope', sans-serif !important;
+        }
+    textarea{
+      border: none;
+    }
+    tbody{
+      display: flex;
+    gap: 16px;
+    flex-direction: column;
+}
+    input,
+    select {
+      border: none;
+      border-radius: 6px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+    }
+
+    .select_box {
+      white-space: nowrap;
+      display: flex;
+      min-height: 48px;
+      padding: 14px 20px;
+      align-items: center;
+      align-self: stretch;
+      border-radius: 12px;
+      border: 1px solid var(--gray-400, #98a2b3);
+      background: var(--gray-50, #f9fafb);
+      color: var(--gray-500, #667085);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      letter-spacing: 0.21px;
+    }
+
+    .selected {
+      border-radius: 4px;
+      background: var(--success-50, #ECFDF3);
+    }
+
+    th,
+    td {
+      display: flex;
+      height: 44px;
+      padding: 12px 24px;
+      align-items: center;
+      gap: 12px;
+      align-self: stretch;
+      background-attachment: white;
+      flex: 1;
+    }
+
+    tr {
+      display: flex;
+    }
+
+    thead {
+      background: var(--gray-100, #f2f4f7);
+    }
+    th{
+      color: var(--gray-800, #1D2939);
+
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 18px; /* 150% */
+    }
+
+    .progressTask {
+      height: 8px;
+      flex-shrink: 0;
+      width: 100%;
+      border-radius: 4px;
+      background: var(--success-100, #D1FADF);
+    }
+
+    .ProgressKeyResult {
+      height: 8px;
+      flex-shrink: 0;
+      width: 150px;
+      border-radius: 4px;
+      background: var(--success-100, #D1FADF);
+    }
+
+    .progress__fill {
+
+      height: 100%;
+      background: #48bf84;
+      transition: all 0.2s;
+      border-radius: 4px;
+    }
+
+  .progress__bar {
+      height: 100%;
+      background: #48bf84;
+      transition: all 0.2s;
+      border-radius: 4px;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+</head>
+
+<body class="application application-offset" style="background: #fafafa;display: flex;
+padding: 32px;
+flex-direction: column;
+align-items: flex-start;
+gap: 24px;
+padding-top:10px;
+flex: 1 0 0;" id="MainPageContent">
+  <div style="
+    display: flex;
+    padding: 16px 4px 16px 32px;
+    align-items: center;
+    color: var(--gray-500, #667085);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+    gap: 4px;
+    cursor: pointer;
+  ">
+    <div onclick="Goback()">OKRs</div>
+    <i class="fa fa-angle-right" aria-hidden="true" onclick="Goback()"></i>
+    <div style="display: flex;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+  color: var(--gray-700, #344054);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */
+  background: var(--gray-100, #F2F4F7);" onclick="Goback()">
+      <%=okrtitle%>
+    </div>
+    <i class="fa fa-angle-right" aria-hidden="true"></i>
+    <div style="display: flex;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+  color: var(--gray-700, #344054);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */
+  background: var(--gray-100, #F2F4F7);">
+      <%=kr.title%>
+    </div>
+  </div>
+
+  <div style="
+    display: flex;
+    padding: 16px 32px 32px 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+  ">
+    <div style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      flex: 1 0 0;
+      align-self: stretch;
+    ">
+      <input type="text" value="<%=kr.title%>" style="
+        color: var(--gray-900, #101828);
+        font-size: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 135%;
+        width: 100%;
+        background-color: transparent;
+        border: none;
+      " onchange="ChangeKRData('title',event.target.value)"/>
+      <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;
+      ">
+        <div style="display: flex; gap: 16px; align-items: center">
+          <div style="
+            color: var(--gray-500, #667085);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+          ">
+            Status
+          </div>
+          <div style="
+            display: flex;
+            padding: 10px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            border-radius: var(--radius-medium, 8px);
+            border: 1px solid var(--gray-300, #d0d5dd);
+            background: var(--White, #fff);
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+          ">
+            <div id="ObjectiveStatus" style="
+          display: flex;
+          gap: 8px;
+          align-items: center;
+          flex-wrap: wrap;
+        " data-toggle="dropdown" aria-expanded="false">
+
+              <%if(kr.status=='On Track'){%>
+                <div class="Status_completed">On Track</div>
+                <%}%>
+                  <%if(kr.status=='At risk'){%>
+                    <div class="Status_progress">At risk</div>
+                    <%}%>
+                      <%if(kr.status=='Off Track'){%>
+                        <div class="Status_hold">Off Track</div>
+                        <%}%>
+                          <%if(kr.status=='Achieved'){%>
+                            <div class="Status_completed">Achieved</div>
+                            <%}%>
+                              <%if(kr.status=='Partial'){%>
+                                <div class="Status_progress">Partial</div>
+                                <%}%>
+                                  <%if(kr.status=='Missed'){%>
+                                    <div class="Status_hold">Missed</div>
+                                    <%}%>
+                                      <%if(kr.status=='Dropped'){%>
+                                        <div class="Status_notStarted">Dropped</div>
+                                        <%}%>
+
+            </div>
+
+            <div class="dropdown-menu" style="
+            flex-direction: column;
+          " aria-labelledby="ObjectiveStatus">
+              <div class="StatusBox">Open</div>
+              <div class="StatusBox" onclick="ChangekrStatus('On Track')">
+                <div class="Status_completed">On Track</div>
+              </div>
+              <div class="StatusBox" onclick="ChangekrStatus('At risk')">
+                <div class="Status_progress">At risk</div>
+              </div>
+              <div class="StatusBox" onclick="ChangekrStatus('Off Track')">
+                <div class="Status_hold">Off Track</div>
+              </div>
+              <div class="StatusBox">Closed</div>
+              <div class="StatusBox" onclick="ChangekrStatus('Achieved')">
+                <div class="Status_completed">Achieved</div>
+              </div>
+              <div class="StatusBox" onclick="ChangekrStatus('Partial')">
+                <div class="Status_progress">Partial</div>
+              </div>
+              <div class="StatusBox" onclick="ChangekrStatus('Missed')">
+                <div class="Status_hold">Missed</div>
+              </div>
+              <div class="StatusBox" onclick="ChangekrStatus('Dropped')">
+                <div class="Status_notStarted">Dropped</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px">
+          <div style="
+            color: var(--gray-800, #1d2939);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          ">
+            Time period
+          </div>
+
+          <div id="reportrange" style="
+            display: flex;
+            padding: 10px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border-radius: var(--radius-medium, 8px);
+            border: 1px solid var(--gray-300, #d0d5dd);
+            background: var(--White, #fff);
+            /* Shadow/xs */
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+            color: var(--gray-700, #344054);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 20px; /* 142.857% */
+          ">
+
+            <img src="../Performance dashboard Icons/calander.svg" style="display: flex;
+          width: 40px;
+          height: 40px;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border-radius: 200px;
+          border: 1.5px solid var(--White, #FFF)" />
+            <span>
+              <%=kr.timePeriod.startDate%>-<%=kr.timePeriod.endDate%>
+            </span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px">
+          <div style="
+            color: var(--gray-500, #667085);
+
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+          ">
+            Efforts
+          </div>
+          <input type="text" style="
+            display: flex;
+            width: 80.539px;
+            padding: 10px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border-radius: 8px;
+            border: 1px solid var(--gray-300, #d0d5dd);
+            background: var(--White, #fff);
+            /* Shadow/xs */
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+          " value="<%=kr.efforts%>" onchange="ChangeKRData('efforts',event.target.value)" />
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px">
+          <div style="
+            color: var(--gray-500, #667085);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+          ">
+            Owner
+          </div>
+          <% let EmployeeMap=new Map();%>
+            <div style="
+            display: flex;
+            padding: 0px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border-radius: var(--radius-medium, 8px);
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+            align-self: stretch;
+          ">
+              <img src="" id="OwnerImage" style="display: flex;
+        width: 40px;
+        height: 40px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 200px;
+        border: 1.5px solid var(--White, #FFF)">
+              <i class="fa fa-angle-down" aria-hidden="true" data-toggle="dropdown" aria-expanded="false"
+                id="Owners"></i>
+              <div class="dropdown-menu" style="
+            max-height: 300px;
+            min-width:250px;
+            max-width: max(300px, 50%);
+            overflow: auto;
+            flex-direction: column;
+          " aria-labelledby="Owners" id="DropDownOwners">
+                <%for(let employee of employeeList){%>
+                  <% EmployeeMap.set(employee._id.toString(),employee.displayName);%>
+                    <div style="
+              display: flex;
+              padding: 8px;
+              cursor: pointer;
+              align-items: center;
+              gap: 10px;
+              align-self: stretch;
+            " onclick="SelectOwner('<%=employee._id.toString()%>','<%=employee.image%>')">
+                      <img style="
+                display: flex;
+                width: 32px;
+                height: 32px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border-radius: 200px;
+              " src="<%=employee.image%>" />
+                      <div style="
+                display: flex;
+                flex-direction: column;
+                white-space: nowrap;
+                align-items: flex-start;
+              ">
+                        <div style="
+                  color: var(--gray-700, #344054);
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 20px; /* 142.857% */
+                ">
+                          <%=employee.displayName%>
+                        </div>
+                        <div style="
+                  color: var(--gray-500, #667085);
+                  
+                  font-size: 12px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: 18px; /* 150% */
+                ">
+                          <%=employee.team%>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="
+              height: 1px;
+              align-self: stretch;
+              background: var(--gray-200, #eaecf0);
+            "></div>
+                    <%}%>
+              </div>
+
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px">
+          <div style="
+            color: var(--gray-500, #667085);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+          ">
+            Sub- Owner
+          </div>
+          <div style="display: flex;max-width:300px ;overflow: hidden;align-items: center;" id="TeamsMembers">
+
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 16px">
+            <div style="
+              display: flex;
+              width: 40px;
+              height: 40px;
+              padding: 8px;
+              justify-content: center;
+              align-items: center;
+              border-radius: 20px;
+              border: 1px dashed var(--gray-300, #d0d5dd);
+              background: var(--White, #fff);
+            " id="Teams" data-toggle="modal" data-target="#selectTeamemployee" onclick="MarkSelectedEmployee()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
+                <path d="M8.80241 3.88416V13.2175M4.13574 8.55082H13.4691" stroke="#98A2B3" stroke-width="1.33333"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      align-self: stretch;
+      border-radius: 8px;
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+      <div style="
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+  ">
+        <div style="
+      color: var(--gray-800, #1d2939);
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px; /* 120% */
+    ">
+          Progress
+        </div>
+        <i class="fa fa-angle-down" aria-hidden="true" id="ProgressIcon"
+          onclick="ToogleIcon('ProgressIcon','ProgressBox')"></i>
+      </div>
+      <div style="
+        display: flex;
+        
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        align-self: stretch;
+      " id="ProgressBox">
+       <% let perc=kr.matrix.targetValue==0?0:(((kr.matrix.currentValue-kr.matrix.startingValue)*100) /(kr.matrix.targetValue-kr.matrix.startingValue))%>
+       <% perc=Math.min(100,perc)%>
+       <div style="   color: var(--gray-700, #344054);
+       font-size: 18px;
+       font-style: normal;
+       font-weight: 600;
+       line-height: 28px; /* 155.556% */;margin-left: <%=perc%>%;"><%=perc%><%=kr.matrix.type%></div>
+      
+        <div class="progressTask">
+          <div class="progress__fill" style="width:<%=perc%>%"></div>
+        </div>
+        <div style="
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          align-self: stretch;
+        ">
+          <div style="
+            color: var(--gray-700, #344054);
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 28px; /* 155.556% */
+          ">
+            0<%=kr.matrix.type%>
+          </div>
+          <div style="
+            color: var(--gray-700, #344054);
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 28px; /* 155.556% */
+          ">
+            100<%=kr.matrix.type%>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      align-self: stretch;
+      border-radius: var(--radius-medium, 8px);
+
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+      <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+      ">
+        <div style="
+          color: var(--gray-800, #1d2939);
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px; /* 120% */
+        ">
+          PRD
+        </div>
+        <i class="fa fa-angle-down" aria-hidden="true" id="PRDIcon" onclick="ToogleIcon('PRDIcon','PRDBox')"></i>
+      </div>
+      <textarea style="
+        display: flex;
+        padding: 4px;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        border-radius: 8px;
+        background: #fff;
+        color: var(--gray-700, #344054);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px; /* 150% */
+        border: none;
+      " id="PRDBox" onchange="ChangeKRData('PRD',event.target.value)" placeholder="Describe your objectives..."><%=kr.PRD%></textarea>
+    </div>
+    <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      align-self: stretch;
+      border-radius: var(--radius-medium, 8px);
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+      <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+      ">
+        <div style="
+          color: var(--gray-800, #1d2939);
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px; /* 120% */
+        ">
+         Sub Key Results
+        </div>
+        <i class="fa fa-angle-down" aria-hidden="true" id="KeyResultsIcon"
+          onclick="ToogleIcon('KeyResultsIcon','KeyResultsBox')"></i>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center" id="KeyResultsBox">
+          <thead>
+        <tr>
+          <th style="width: 45%;">Sub Key Results</th>
+          <th>Owner</th>
+          <th>Status</th>
+          <th>Due Date</th>
+          <th>
+            Progress
+            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+              <path d="M10.8027 4.21875V15.8854" stroke="#475467" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M4.97461 10.0508H16.6413" stroke="#475467" stroke-width="1.66667" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+    <% for(let i=0;i<subkr.length;i++){%>
+      <tr>
+        <td onmouseover="showIcons('.OpenIcon<%=subkr[i]._id%>')" onmouseout="removeIcons('.OpenIcon<%=subkr[i]._id%>')">
+          <div style="display: flex;align-items: center;gap:40px">
+          <div style="display: flex;gap:8px;align-items: center;">
+          <input type="text" value="<%=subkr[i].title%>" placeholder="Enter sub  key result " style="border:none;border-radius:6px;" onchange="changesubkrdata('<%=i%>','title',event.target.value)">
+         
+        </div>
+        <a href="/subkr/?id=<%=subkr[i]._id.toString()%>&krid=<%=kr._id.toString()%>&okrid=<%=okrid%>"
+          class="OpenIcon<%=subkr[i]._id%>" style="display: none;align-items: center;gap:8px;color: var(--gray-500, #667085);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 20px;">
+        <img src="../Project icons/maximize.svg">
+        Open
+        </a>
+      </div>
+        </td>
+       
+       
+        <td id="AssignedTo<%=i%>" style="max-width: 200px;overflow: hidden;display: flex;align-items: center;gap:8px;white-space:nowrap;" data-target='#selectsubKRTeamemployee' data-toggle="modal" onclick="changesubKrIndex('<%=i%>');MarkSelectedsubKREmployee()">
+        <% if(subkr[i].team?.length + subkr[i].owner?.length==0){%>
+          <div style="display: flex;
+          width: 32px;
+          height: 32px;
+          padding: 6px;
+          justify-content: center;
+          align-items: center;
+          flex-shrink: 0;
+          border-radius: 200px;
+          background: var(--primary-50, #F9F5FF);" ><img src="../Performance dashboard Icons/Empty_User.svg"></div>Not Assigned yet
+          <%}%>
+            
+        
+        </td>
+        <td><div onclick="changesubKrIndex('<%=i%>')" style="padding:5px 12px;border-radius:16px;" id="subKRStatus<%=i%>" data-toggle="dropdown" aria-expanded="false">
+        
+          <%if(subkr[i].status=='On Track'){%>
+            <div class="Status_completed">On Track</div>
+            <%}%>
+              <%if(subkr[i].status=='At risk'){%>
+                <div class="Status_progress">At risk</div>
+                <%}%>
+                  <%if(subkr[i].status=='Off Track'){%>
+                    <div class="Status_hold">Off Track</div>
+                    <%}%>
+                      <%if(subkr[i].status=='Achieved'){%>
+                        <div class="Status_completed">Achieved</div>
+                        <%}%>
+                          <%if(subkr[i].status=='Partial'){%>
+                            <div class="Status_progress">Partial</div>
+                            <%}%>
+                              <%if(subkr[i].status=='Missed'){%>
+                                <div class="Status_hold">Missed</div>
+                                <%}%>
+                                  <%if(subkr[i].status=='Dropped'){%>
+                                    <div class="Status_notStarted">Dropped</div>
+                                    <%}%>
+
+        
+        </div>
+         <div class="dropdown-menu" style="
+           flex-direction: column;
+         " aria-labelledby="subKRStatus<%=i%>">
+             <div class="StatusBox">Open</div>
+             <div class="StatusBox" onclick="ChangesubKRStatus('On Track')">
+               <div class="Status_completed">On Track</div>
+             </div>
+             <div class="StatusBox" onclick="ChangesubKRStatus('At risk')">
+               <div class="Status_progress">At risk</div>
+             </div>
+             <div class="StatusBox" onclick="ChangesubKRStatus('Off Track')">
+               <div class="Status_hold">Off Track</div>
+             </div>
+             <div class="StatusBox">Closed</div>
+             <div class="StatusBox" onclick="ChangesubKRStatus('Achieved')">
+               <div class="Status_completed">Achieved</div>
+             </div>
+             <div class="StatusBox" onclick="ChangesubKRStatus('Partial')">
+               <div class="Status_progress">Partial</div>
+             </div>
+             <div class="StatusBox" onclick="ChangesubKRStatus('Missed')">
+               <div class="Status_hold">Missed</div>
+             </div>
+             <div class="StatusBox" onclick="ChangesubKRStatus('Dropped')">
+               <div class="Status_notStarted">Dropped</div>
+             </div>
+           </div>
+         </td>
+        <td><input type="date" onchange="changesubkrdata('<%=i%>','endDate',event.target.value)" value="<%=subkr[i].timePeriod?.endDate%>" style="border-radius:6px;"></td>
+        <% let perc=subkr[i].matrix.targetValue==0?'0%':((subkr[i].matrix.currentValue*100) /(subkr[i].matrix.targetValue-subkr[i].matrix.startingValue))%>
+       
+                
+       <td onmouseover="showIcons('.EditMatrixIocn<%=i%>')" onmouseout="removeIcons('.EditMatrixIocn<%=i%>')"><div style="display: flex;align-items: center;gap:8px;">
+        <div style="display:flex;flex-direction: column;gap:6px;">
+       <div style="display: flex;
+        width: 19px;
+        height: 13px;
+        flex-direction: column;
+        justify-content: center;
+        color: var(--gray-500, #667085);
+        
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px;  margin-left:<%=perc%>%;" id="ProgressBarCV<%=i%>"><%=subkr[i].matrix.currentValue%><%=subkr[i].matrix.type%></div>
+       <div class="ProgressKeyResult">
+         <div class="progress__bar" style="width: <%=perc%>%;" id="ProgressBar<%=i%>"></div>
+       </div>
+       <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+       <div style="display: flex;
+       width: 19px;
+       height: 13px;
+       flex-direction: column;
+       justify-content: center;
+       color: var(--gray-500, #667085);
+       
+       font-size: 12px;
+       font-style: normal;
+       font-weight: 500;
+       line-height: 28px; /* 233.333% */" id="ProgressBarIV<%=i%>"><%=subkr[i].matrix.startingValue%><%=subkr[i].matrix.type%></div>
+        <div style="display: flex;
+        width: 19px;
+        height: 13px;
+        flex-direction: column;
+        justify-content: center;
+        color: var(--gray-500, #667085);
+        
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px; /* 233.333% */" id="ProgressBarTV<%=i%>"><%=subkr[i].matrix.targetValue%><%=subkr[i].matrix.type%> </div>
+       </div>
+      </div>
+      <img src="../Project icons/Edit.svg" style="display: none;"  class="EditMatrixIocn<%=i%>" data-target="#Editprogresssettings" data-toggle="modal" onclick="changesubKrIndex('<%=i%>');setSubKrMatrixModel()">
+
+       </div></td>
+       </tr>
+      <%}%>
+        <tr id="ClicktoaddnewsubKR" onclick="AddsubKeyResult()">
+          <td>
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+              <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <div style="display: flex;
+            padding: 4px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            border-radius: 4px;
+            border: 1px solid var(--gray-600, #475467);">
+            Click to add new subKR
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+      </table>
+      </div>
+    </div>
+    <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      align-self: stretch;
+      border-radius: var(--radius-medium, 8px);
+
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+      <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+      ">
+        <div style="
+          color: var(--gray-800, #1d2939);
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px; /* 120% */
+        ">
+          Roadmap
+        </div>
+        <i class="fa fa-angle-down" aria-hidden="true" id="RoadmapIcon"
+          onclick="ToogleIcon('RoadmapIcon','RoadmapBox')"></i>
+      </div>
+      <div style="display: flex;flex-direction: column; gap: 8px; align-items: flex-start" id="RoadmapBox">
+        <% for(let i=0;i<kr.roadmap.length;i++){%>
+          <div style="display: flex;align-items: center;gap:8px" >
+            <input type="checkbox" style="width:25px;height: 25px;" <%= kr.roadmap[i].status ? 'checked' : '' %> onclick="ChangeStatusRoadMapPoint('<%=i%>')"/>
+           <input type="text" onchange="ChangeTitleRoadMapPoint('<%=i%>',event.target.value)"
+              placeholder="Click to add new Checkpoint" style="border:none;border-radius:6px;padding:4px;color: var(--gray-800, #1D2939);
+    width:100%;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 150% */" value="<%=kr.roadmap[i].title%>">
+          </div>
+          <%}%>
+
+          <div style="display: flex;align-items: center;gap:8px" id="AddRoadMapPoint" onclick="AddRoadMapPoint()">
+            <!-- <input type="checkbox" style="width: 20px;height: 20px;"/>
+            -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <div style="display: flex;
+            padding: 4px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            border-radius: 4px;
+            border: 1px solid var(--gray-600, #475467);">
+              Click to add new Checkpoint
+              </div>
+          </div>
+      </div>
+    </div>
+    <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      align-self: stretch;
+      border-radius: var(--radius-medium, 8px);
+
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+      <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+      ">
+        <div style="
+          color: var(--gray-800, #1d2939);
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px; /* 120% */
+        ">
+          Final Result
+        </div>
+        <i class="fa fa-angle-down" aria-hidden="true" id="FinalResultIcon"
+          onclick="ToogleIcon('FinalResultIcon','FinalResultBox')"></i>
+      </div>
+      <textarea style="
+        display: flex;
+        padding: 4px;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        border-radius: 4px;
+        background: #fff;
+        color: var(--gray-700, #344054);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px; /* 150% */
+      " id="FinalResultBox"
+        placeholder="Final Result: Employee Productivity Improvement Module Description: This module aims to enhance employee productivity by streamlining work processes and providing tools to monitor and measure performance."
+        onchange="ChangeKRData('finalResult',event.target.value)"><%=kr.finalResult%></textarea>
+    </div>
+    <div style="
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+    border-radius: var(--radius-medium, 8px);
+
+    border: 1px solid var(--gray-300, #d0d5dd);
+    background: #fff;
+  ">
+      <div style="
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      align-self: stretch;
+    ">
+        <div style="
+        color: var(--gray-800, #1d2939);
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px; /* 120% */
+      ">
+          Parameters
+        </div>
+        <i class="fa fa-angle-down" aria-hidden="true" id="ParametersIcon"
+          onclick="ToogleIcon('ParametersIcon','ParametersBox')"></i>
+      </div>
+      <textarea style="
+      display: flex;
+      padding: 4px;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      border-radius: 4px;
+      background: #fff;
+      color: var(--gray-700, #344054);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px; /* 150% */
+    " id="ParametersBox" onchange="ChangeKRData('parameters',event.target.value)"
+        placeholder="Feature: Employee Productivity Improvement Module Description: This module aims to enhance employee productivity by streamlining work processes and providing tools to monitor and measure performance."><%=kr.parameters%></textarea>
+    </div>
+    <div style="display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    align-self: stretch;
+    border-radius: var(--radius-medium, 8px);
+    border: 1px solid var(--gray-300, #D0D5DD);
+    background: #FFF;
+    ">
+                            <div style="color: var(--gray-800, #1D2939);
+    
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;">Attach files and links</div>
+                            <div style="display: flex;align-items: center;gap:8px;flex-wrap: wrap;"
+                              id="Project_LinkFileBody">
+    
+                            </div>
+                            <div style="display: flex;
+    align-items: flex-start;
+    gap: 8px;">
+                              <div style="display: flex;
+    width: 103px;
+    height: 52px;
+    padding: 16px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #FFF;" onclick="OpenFileInput('FileInputFild')">
+                                <input type="file" id="FileInputFild" style="width: 0px;"
+                                  onchange="handleProjectFileSelect(event)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                    text/plain, application/pdf, image/*">
+                                <img src="../Performance dashboard Icons/File.svg">
+                                <img src="../Performance dashboard Icons/AddMedia.svg">
+                              </div>
+                              <div style="display: flex;
+    width: 103px;
+    height: 52px;
+    padding: 16px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #FFF;" data-target="#AddProjectLink" data-toggle="modal">
+                                <img src="../Performance dashboard Icons/Link.svg">
+                                <img src="../Performance dashboard Icons/AddMedia.svg">
+                              </div>
+                            </div>
+                          </div>
+
+                          <div style="display: flex;
+                          padding: 16px;
+                          flex-direction: column;
+                          align-items: flex-start;
+                          gap: 20px;
+                          align-self: stretch;
+                          border-radius: var(--radius-medium, 8px);
+                          border: 1px solid var(--gray-300, #D0D5DD);
+                          background: #FFF;">
+                          <div style="color: var(--gray-800, #1D2939);
+                          font-size: 20px;
+                          font-style: normal;
+                          font-weight: 700;
+                          line-height: 24px; /* 120% */">Comments</div>
+                          <div style="display: flex;
+                          align-items: flex-start;
+                          gap: 8px;
+                          align-self: stretch;">
+                        <img src="<%=user?.image%>" style="display: flex;
+                        width: 32px;
+                        height: 32px;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 200px;">
+                        <div style="width: 100%;">
+                        <textarea style="display: flex;
+                        padding: 14px 20px;
+                        align-items: flex-start;
+                        gap: 10px;
+                        width: 100%;
+                        height: 100px;
+                        flex: 1 0 0;
+                        align-self: stretch;
+                        border-radius: 12px;
+                        border: 1px solid #ECECEC;
+                        color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+                        background: #FFF;" placeholder="Leave a comment" id="CommentBox"></textarea>
+                         <button class="btn btn-outline-primary" style="display: flex;
+                        margin-top: 12px;
+                         justify-content: center;
+                         align-items: center;
+                         gap: 8px;
+                         align-self: stretch;
+                         border-radius: 12px;" onclick="SaveComment()"> Comment</button>
+                        </div>
+                      </div>
+                        <div style="display: flex;flex-direction: column;gap:12px;align-items: flex-start;" id="CommentBody">
+                        <%for(let comment of kr.comments){%>
+                          <div style="display: flex;
+                          align-items: flex-start;
+                          gap: 8px;
+                          align-self: stretch;">
+                        <img src="<%=comment.image%>" style="display: flex;
+                        width: 32px;
+                        height: 32px;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 200px;">
+                        <div style="display: flex;
+                        padding: 14px 20px;
+                        align-items: flex-start;
+                        gap: 10px;
+                        width: 100%;
+                        flex: 1 0 0;
+                        align-self: stretch;
+                        border-radius: 12px;
+                        border: 1px solid #ECECEC;
+                        color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+                        background: #FFF;" placeholder="Leave a comment"><%=comment.content%></div>
+                        </div>
+                          <%}%>
+                        </div>
+                          </div>
+  </div>
+
+  <!--  select Employee -->
+
+  <div class="modal fade docs-example-modal-lg" id="selectTeamemployee" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="max-height: 90vh;overflow: auto;">
+        <div class="modal-header" style="display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 70px;">
+          <h5 class="modal-title h6">Add Team member</h5>
+
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+
+        </div>
+        <div class="modal-body" style="border-radius: 14px;
+          background: var(--surface-secondary, #FAFAFA);">
+          <div style="display: flex;
+            padding: 10px 14px;
+            align-items: center;
+            gap: 8px;
+            align-self: stretch;
+            border-radius: var(--radius-medium, 8px);
+            border: 1px solid var(--gray-300, #D0D5DD);
+            background: var(--White, #FFF);
+            /* Shadow/xs */
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+            <img src="../Project icons/Search_icon.svg">
+            <input type="text" style="border: none;width: 100%;" placeholder="Search for Employee" id="searchModalInput"
+              oninput="filterAndSortModalEmployees(event.target.value)">
+          </div>
+
+          <div style="display:flex;flex-wrap: wrap;gap:0px 16px" id="EmployeesModalBody">
+
+            <% for(let team of teams){%>
+
+              <div onclick="MarkSelectedEmployeeinModal('<%=team.title%>','<%=team._id%>','team')" style="display: flex;
+                  padding: 16px 24px;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 8px;
+                  flex: 1 0 0;
+                  align-self: stretch;" id="Employee-<%=team._id%>" class="Employees">
+                <div style="position: relative;display: none;" id="selectIcon-<%=team._id%>" class="EmployeesIcons">
+                  <div>
+                    <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+                      width: 20px;
+                      height: 20px;
+                      padding: 3px;
+                      justify-content: center;
+                      align-items: center;
+                      position: absolute;
+                      right: -70px;
+                      top: -8px;
+                      border-radius: 30.001px;
+                      background: var(--brand-primary, #48BF84);">
+                  </div>
+                </div>
+                <img style="display: flex;
+                 width: 40px;
+                 height: 40px;
+                 flex-direction: column;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 200px;" src="../Performance dashboard Icons/teams_icon.svg">
+                <div style="display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;">
+                  <div style="color: var(--text-content-primary, #181818);
+      font-size: 14px;
+      font-style: normal;
+      white-space: nowrap;
+      font-weight: 600;
+      line-height: normal;">
+                    <%=team.title%>
+                  </div>
+                  <div style="display: -webkit-box;
+                  width: 85px;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 1;
+                  overflow: hidden;
+                  color: var(--text-content-secondary, #898989);
+                  text-overflow: ellipsis;
+                  
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: normal;
+                                      ">
+                    <% for(let employeeId of team.employees) {%>
+                      <%=EmployeeMap.get(employeeId)%> ,
+                        <%}%>
+                  </div>
+                </div>
+
+              </div>
+              <% } %>
+
+
+                <% for (let employee of employeeList) { %>
+                  <% let index=employee._id%>
+                    <% employee=employee;%>
+                      <div
+                        onclick="MarkSelectedEmployeeinModal('<%=employee.displayName%>','<%=employee._id%>',['<%=employee._id%>'])"
+                        style="display: flex;
+              padding: 16px 24px;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              gap: 8px;
+              flex: 1 0 0;
+              align-self: stretch;" id="Employee-<%=employee._id%>" class="Employees">
+                        <div style="position: relative;display: none;" id="selectIcon-<%=employee._id%>"
+                          class="EmployeesIcons">
+                          <div>
+                            <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+                  width: 20px;
+                  height: 20px;
+                  padding: 3px;
+                  justify-content: center;
+                  align-items: center;
+                  position: absolute;
+                  right: -70px;
+                  top: -8px;
+                  border-radius: 30.001px;
+                  background: var(--brand-primary, #48BF84);">
+                          </div>
+                        </div>
+                        <img style="display: flex;
+             width: 40px;
+             height: 40px;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;
+             border-radius: 200px;" src="<%=employee.image%>">
+                        <div style="display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;">
+                          <div style="color: var(--text-content-primary, #181818);
+  font-size: 14px;
+  font-style: normal;
+  white-space: nowrap;
+  font-weight: 600;
+  line-height: normal;">
+                            <%=employee.displayName%>
+                          </div>
+                          <div style="color: var(--text-content-secondary, #898989);
+  font-size: 14px;
+  font-style: normal;
+  white-space: nowrap;
+  font-weight: 600;
+  line-height: normal;">
+                            <%=employee.team%>
+                          </div>
+                        </div>
+
+                      </div>
+                      <% } %>
+          </div>
+        </div>
+        <div class="modal-footer" style="padding: 0.5rem;">
+          <button type="button" class="btn btn-outline-primary" data-dismiss="modal" style="display: flex;
+            padding: 16px 40px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+          
+            border-radius: 12px;">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SaveEmployee()" style="display: flex;
+            padding: 16px 40px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            background-color: #48BF84;
+            border-radius: 12px;">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!--  select initiatives Employee -->
+<div class="modal fade docs-example-modal-lg" id="selectinitiativesTeamemployee" tabindex="-1" role="dialog"
+aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-content" style="max-height: 90vh;overflow: auto;">
+    <div class="modal-header" style="display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;">
+      <h5 class="modal-title h6">Add Team member</h5>
+
+      <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+
+    </div>
+    <div class="modal-body" style="border-radius: 14px;
+      background: var(--surface-secondary, #FAFAFA);">
+      <div style="display: flex;
+        padding: 10px 14px;
+        align-items: center;
+        gap: 8px;
+        align-self: stretch;
+        border-radius: var(--radius-medium, 8px);
+        border: 1px solid var(--gray-300, #D0D5DD);
+        background: var(--White, #FFF);
+        /* Shadow/xs */
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+        <img src="../Project icons/Search_icon.svg">
+        <input type="text" style="border: none;width: 100%;" placeholder="Search for Employee" 
+          oninput="filterAndSortModalinitiativesEmployees(event.target.value)">
+      </div>
+
+      <div style="display:flex;flex-wrap: wrap;gap:0px 16px" id="initiativesEmployeesModalBody">
+
+        <% for(let team of teams){%>
+
+          <div onclick="MarkSelectedinitiativesEmployeeinModal('<%=team.title%>','<%=team._id%>','team')" style="display: flex;
+              padding: 16px 24px;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              gap: 8px;
+              flex: 1 0 0;
+              align-self: stretch;" id="initiativesEmployee-<%=team._id%>" class="initiativesEmployees">
+            <div style="position: relative;display: none;" id="initiativeselectIcon-<%=team._id%>" class="initiativesEmployeesIcons">
+              <div>
+                <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+                  width: 20px;
+                  height: 20px;
+                  padding: 3px;
+                  justify-content: center;
+                  align-items: center;
+                  position: absolute;
+                  right: -70px;
+                  top: -8px;
+                  border-radius: 30.001px;
+                  background: var(--brand-primary, #48BF84);">
+              </div>
+            </div>
+            <img style="display: flex;
+             width: 40px;
+             height: 40px;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;
+             border-radius: 200px;" src="../Performance dashboard Icons/teams_icon.svg">
+            <div style="display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;">
+              <div style="color: var(--text-content-primary, #181818);
+  font-size: 14px;
+  font-style: normal;
+  white-space: nowrap;
+  font-weight: 600;
+  line-height: normal;">
+                <%=team.title%>
+              </div>
+              <div style="display: -webkit-box;
+              width: 85px;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
+              overflow: hidden;
+              color: var(--text-content-secondary, #898989);
+              text-overflow: ellipsis;
+              
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: normal;
+                                  ">
+                <% for(let employeeId of team.employees) {%>
+                  <%=EmployeeMap.get(employeeId)%> ,
+                    <%}%>
+              </div>
+            </div>
+
+          </div>
+          <% } %>
+
+
+            <% for (let employee of employeeList) { %>
+              <% let index=employee._id%>
+                <% employee=employee;%>
+                  <div
+                    onclick="MarkSelectedinitiativesEmployeeinModal('<%=employee.displayName%>','<%=employee._id%>',['<%=employee._id%>'])"
+                    style="display: flex;
+          padding: 16px 24px;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          flex: 1 0 0;
+          align-self: stretch;" id="initiativesEmployee-<%=employee._id%>" class="initiativesEmployees">
+                    <div style="position: relative;display: none;" id="initiativeselectIcon-<%=employee._id%>"
+                      class="initiativesEmployeesIcons">
+                      <div>
+                        <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+              width: 20px;
+              height: 20px;
+              padding: 3px;
+              justify-content: center;
+              align-items: center;
+              position: absolute;
+              right: -70px;
+              top: -8px;
+              border-radius: 30.001px;
+              background: var(--brand-primary, #48BF84);">
+                      </div>
+                    </div>
+                    <img style="display: flex;
+         width: 40px;
+         height: 40px;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         border-radius: 200px;" src="<%=employee.image%>">
+                    <div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+                      <div style="color: var(--text-content-primary, #181818);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">
+                        <%=employee.displayName%>
+                      </div>
+                      <div style="color: var(--text-content-secondary, #898989);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">
+                        <%=employee.team%>
+                      </div>
+                    </div>
+
+                  </div>
+                  <% } %>
+      </div>
+    </div>
+    <div class="modal-footer" style="padding: 0.5rem;">
+      <button type="button" class="btn btn-outline-primary" data-dismiss="modal" style="display: flex;
+        padding: 16px 40px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      
+        border-radius: 12px;">Cancel</button>
+      <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SaveinitiativesEmployee()" style="display: flex;
+        padding: 16px 40px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border: none;
+        background-color: #48BF84;
+        border-radius: 12px;">Save</button>
+    </div>
+  </div>
+</div>
+</div>
+
+
+  <!-- Edit progress settings -->
+  <div class="modal fade docs-example-modal-xl" tabindex="-1" role="dialog" id="Editprogresssettings"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header" style="
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+      ">
+          <div style="
+          color: var(--gray-900, #101828);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+        ">
+            Edit progress settings
+          </div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal" />
+        </div>
+
+        <div class="modal-body" style="
+        display: flex;
+        padding: 20px 32px;
+        flex-direction: column;
+        overflow: auto;
+        max-height: 70vh;
+        align-items: flex-start;
+        gap: 32px;
+      ">
+
+          <div style="
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+          width: 100%;
+          align-self: stretch;
+        ">
+            <div style="
+            color: var(--gray-800, #1d2939);
+
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          ">
+              What metrics will measure your progress?
+            </div>
+            <div style="
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            width: 100%;
+            justify-content: space-between;
+            align-self: stretch;
+          ">
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="
+                color: var(--gray-800, #1d2939);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+              ">
+                  Measurments
+                </div>
+                <div class="select_box" style="display: flex" id="MatrixTypeModal" data-toggle="dropdown" aria-expanded="false">
+                  Percentage
+                  </div>
+                  <div class="dropdown-menu" style="
+                   flex-direction: column;
+                    align-items: flex-start;
+                    border: 1px solid var(--gray-300, #D0D5DD);
+                    border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+                    border-bottom: 1px solid var(--gray-300, #D0D5DD);
+                  " aria-labelledby="MatrixTypeModal" >
+                               <div class="dropdown_tab_active" onclick="SetMatrixType('MatrixTypeModal','Percentage')">% Percentage</div>
+                               <div class="dropdown_tab_active" onclick="SetMatrixType('MatrixTypeModal','Numerical')"># Numerical</div>
+                               <div class="dropdown_tab_active" onclick="SetMatrixType('MatrixTypeModal','Currency')">₹ Currency</div>
+                              
+                              
+                              </div>
+               
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="
+                color: var(--gray-800, #1d2939);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+              ">
+                  Starting value
+                </div>
+                <input class="select_box" value="0" id="StartingMatrixValueModal" />
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="
+                color: var(--gray-800, #1d2939);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+              ">
+                  Current value
+                </div>
+                <input class="select_box" value="0" id="CurrentMatrixValueModal" />
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="
+                color: var(--gray-800, #1d2939);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+              ">
+                  Target value
+                </div>
+                <input class="select_box" value="100" id="TargetMatrixValueModal" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer" style="padding: 0.5rem">
+          <button class="btn btn-outline-primary" style="
+          display: flex;
+          width: 189px;
+          padding: 16px 40px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          align-self: stretch;
+          border-radius: 12px;
+        " data-dismiss="modal">
+            Cancel
+          </button>
+          <button class="btn btn-primary" style="
+          display: flex;
+          padding: 16px 40px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          align-self: stretch;
+          border-radius: 12px;
+        " data-dismiss="modal" onclick="SaveMeasurments()" id="Objective_Submit">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Add Project Link -->
+    <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="AddProjectLink"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="background-color: #FAFAFA;">
+        <div class="modal-header"
+          style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+          <div style="color: var(--gray-900, #101828);
+font-size: 24pxpx;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Add Link</div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+        </div>
+        <div class="modal-body" style="display: inline-flex;
+padding-top: 24px;
+flex-direction: column;
+align-items: flex-start;
+gap: 22px;
+border-radius: 12px;">
+          <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+            <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link Title</div>
+            <input type="text" id="link-title" placeholder="Design_draft1" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+  border: 1px solid var(--stroke-secondary, #DCDCDC);
+  background: var(--surface-primary, #FFF);" onchange="ChangeLinkContent('title',event.target.value)">
+          </div>
+          <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+            <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link </div>
+            <input type="link" id="link-link"
+              placeholder="www.figma.com/file/4E5bk36Ib1giid=4861%3A134681&m" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+  border: 1px solid var(--stroke-secondary, #DCDCDC);
+  background: var(--surface-primary, #FFF);" onchange="ChangeLinkContent('url',event.target.value)"
+              required>
+          </div>
+        </div>
+        <div class="modal-footer" style="padding:0.5rem">
+
+          <button type="button" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" class="btn btn-outline-primary" data-dismiss="modal">
+            Cancel
+          </button>
+
+          <button type="button" data-dismiss="modal" class="btn btn-primary" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" onclick="AddProjectLink()" id="AddLinkButton" disabled>
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
+<!--  select subkr Employee -->
+ <div class="modal fade docs-example-modal-lg" id="selectsubKRTeamemployee" tabindex="-1" role="dialog"
+ aria-labelledby="myLargeModalLabel" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-lg">
+   <div class="modal-content" style="max-height: 90vh;overflow: auto;">
+     <div class="modal-header" style="display: flex;
+       align-items: center;
+       justify-content: space-between;
+       height: 70px;">
+       <h5 class="modal-title h6">Add Team member</h5>
+
+       <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+
+     </div>
+     <div class="modal-body" style="border-radius: 14px;
+       background: var(--surface-secondary, #FAFAFA);">
+       <div style="display: flex;
+         padding: 10px 14px;
+         align-items: center;
+         gap: 8px;
+         align-self: stretch;
+         border-radius: var(--radius-medium, 8px);
+         border: 1px solid var(--gray-300, #D0D5DD);
+         background: var(--White, #FFF);
+         /* Shadow/xs */
+         box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+         <img src="../Project icons/Search_icon.svg">
+         <input type="text" style="border: none;width: 100%;" placeholder="Search for Employee" 
+           oninput="filterAndSortModalsubKREmployees(event.target.value)">
+       </div>
+
+       <div style="display:flex;flex-wrap: wrap;gap:0px 16px" id="subKREmployeesModalBody">
+
+         <% for(let team of teams){%>
+
+           <div onclick="MarkSelectedsubKREmployeeinModal('<%=team.title%>','<%=team._id%>','team')" style="display: flex;
+               padding: 16px 24px;
+               flex-direction: column;
+               justify-content: center;
+               align-items: center;
+               gap: 8px;
+               flex: 1 0 0;
+               align-self: stretch;" id="subKREmployee-<%=team._id%>" class="subKREmployees">
+             <div style="position: relative;display: none;" id="subKRselectIcon-<%=team._id%>" class="subKREmployeesIcons">
+               <div>
+                 <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+                   width: 20px;
+                   height: 20px;
+                   padding: 3px;
+                   justify-content: center;
+                   align-items: center;
+                   position: absolute;
+                   right: -70px;
+                   top: -8px;
+                   border-radius: 30.001px;
+                   background: var(--brand-primary, #48BF84);">
+               </div>
+             </div>
+             <img style="display: flex;
+              width: 40px;
+              height: 40px;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              border-radius: 200px;" src="../Performance dashboard Icons/teams_icon.svg">
+             <div style="display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;">
+               <div style="color: var(--text-content-primary, #181818);
+   font-size: 14px;
+   font-style: normal;
+   white-space: nowrap;
+   font-weight: 600;
+   line-height: normal;">
+                 <%=team.title%>
+               </div>
+               <div style="display: -webkit-box;
+               width: 85px;
+               -webkit-box-orient: vertical;
+               -webkit-line-clamp: 1;
+               overflow: hidden;
+               color: var(--text-content-secondary, #898989);
+               text-overflow: ellipsis;
+               
+               font-size: 14px;
+               font-style: normal;
+               font-weight: 600;
+               line-height: normal;
+                                   ">
+                 <% for(let employeeId of team.employees) {%>
+                   <%=EmployeeMap.get(employeeId)%> ,
+                     <%}%>
+               </div>
+             </div>
+
+           </div>
+           <% } %>
+
+
+             <% for (let employee of employeeList) { %>
+               <% let index=employee._id%>
+                 <% employee=employee;%>
+                   <div
+                     onclick="MarkSelectedsubKREmployeeinModal('<%=employee.displayName%>','<%=employee._id%>',['<%=employee._id%>'])"
+                     style="display: flex;
+           padding: 16px 24px;
+           flex-direction: column;
+           justify-content: center;
+           align-items: center;
+           gap: 8px;
+           flex: 1 0 0;
+           align-self: stretch;" id="subKREmployee-<%=employee._id%>" class="subKREmployees">
+                     <div style="position: relative;display: none;" id="subKRselectIcon-<%=employee._id%>"
+                       class="subKREmployeesIcons">
+                       <div>
+                         <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+               width: 20px;
+               height: 20px;
+               padding: 3px;
+               justify-content: center;
+               align-items: center;
+               position: absolute;
+               right: -70px;
+               top: -8px;
+               border-radius: 30.001px;
+               background: var(--brand-primary, #48BF84);">
+                       </div>
+                     </div>
+                     <img style="display: flex;
+          width: 40px;
+          height: 40px;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border-radius: 200px;" src="<%=employee.image%>">
+                     <div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+                       <div style="color: var(--text-content-primary, #181818);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">
+                         <%=employee.displayName%>
+                       </div>
+                       <div style="color: var(--text-content-secondary, #898989);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">
+                         <%=employee.team%>
+                       </div>
+                     </div>
+
+                   </div>
+                   <% } %>
+       </div>
+     </div>
+     <div class="modal-footer" style="padding: 0.5rem;">
+       <button type="button" class="btn btn-outline-primary" data-dismiss="modal" style="display: flex;
+         padding: 16px 40px;
+         justify-content: center;
+         align-items: center;
+         gap: 10px;
+       
+         border-radius: 12px;">Cancel</button>
+       <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SavesubKREmployee()" style="display: flex;
+         padding: 16px 40px;
+         justify-content: center;
+         align-items: center;
+         gap: 10px;
+         border: none;
+         background-color: #48BF84;
+         border-radius: 12px;">Save</button>
+     </div>
+   </div>
+ </div>
+</div>
+
+  <!--initiatives Edit progress settings -->
+  <div class="modal fade docs-example-modal-xl" tabindex="-1" role="dialog" id="initiativesEditprogresssettings"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header" style="
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+      ">
+          <div style="
+          color: var(--gray-900, #101828);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+        ">
+            Edit progress settings
+          </div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal" />
+        </div>
+
+        <div class="modal-body" style="
+        display: flex;
+        padding: 20px 32px;
+        flex-direction: column;
+        overflow: auto;
+        max-height: 70vh;
+        align-items: flex-start;
+        gap: 32px;
+      ">
+
+          <div style="
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+          width: 100%;
+          align-self: stretch;
+        ">
+            <div style="
+            color: var(--gray-800, #1d2939);
+
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          ">
+              What metrics will measure your progress?
+            </div>
+            <div style="
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            width: 100%;
+            justify-content: space-between;
+            align-self: stretch;
+          ">
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="
+                color: var(--gray-800, #1d2939);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+              ">
+                  Measurments
+                </div>
+                <div class="select_box" style="display: flex" id="initiativesMatrixTypeModal" data-toggle="dropdown" aria-expanded="false">
+                  Percentage
+                  </div>
+                  <div class="dropdown-menu" style="
+                   flex-direction: column;
+                    align-items: flex-start;
+                    border: 1px solid var(--gray-300, #D0D5DD);
+                    border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+                    border-bottom: 1px solid var(--gray-300, #D0D5DD);
+                  " aria-labelledby="initiativesMatrixTypeModal" >
+                               <div class="dropdown_tab_active" onclick="SetMatrixType('initiativesMatrixTypeModal','Percentage')">% Percentage</div>
+                               <div class="dropdown_tab_active" onclick="SetMatrixType('initiativesMatrixTypeModal','Numerical')"># Numerical</div>
+                               <div class="dropdown_tab_active" onclick="SetMatrixType('initiativesMatrixTypeModal','Currency')">₹ Currency</div>
+                              
+                              
+                              </div>
+               
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="
+                color: var(--gray-800, #1d2939);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+              ">
+                  Starting value
+                </div>
+                <input class="select_box" value="0" id="initiativesStartingMatrixValueModal" />
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="
+                color: var(--gray-800, #1d2939);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+              ">
+                  Current value
+                </div>
+                <input class="select_box" value="0" id="initiativesCurrentMatrixValueModal" />
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div style="
+                color: var(--gray-800, #1d2939);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+              ">
+                  Target value
+                </div>
+                <input class="select_box" value="100" id="initiativesTargetMatrixValueModal" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer" style="padding: 0.5rem">
+          <button class="btn btn-outline-primary" style="
+          display: flex;
+          width: 189px;
+          padding: 16px 40px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          align-self: stretch;
+          border-radius: 12px;
+        " data-dismiss="modal">
+            Cancel
+          </button>
+          <button class="btn btn-primary" style="
+          display: flex;
+          padding: 16px 40px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          align-self: stretch;
+          border-radius: 12px;
+        " data-dismiss="modal" onclick="SaveinitiativesMeasurments()" id="Objective_Submit">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+ 
+  <script type="text/javascript">
+     let krs = `<%-JSON.stringify(kr)%>`;
+    krs = JSON.parse(krs);
+    function definedates() {
+      var start = krs.timePeriod?.startDate?.length > 0 ? moment(krs.timePeriod.startDate) : moment().subtract(29, "days");
+  var end = krs.timePeriod?.endDate?.length > 0 ? moment(krs.timePeriod.endDate) : moment();
+
+
+      function cb(start, end) {
+        $("#reportrange span").html(
+          start.format("MMM D") + " - " + end.format("MMM D, YYYY")
+        );
+        krs.timePeriod.startDate = start.format("MMMM D, YYYY");
+        krs.timePeriod.endDate = end.format("MMMM D, YYYY");
+        SavekrsDataApi()
+      }
+
+      $("#reportrange").daterangepicker(
+        {
+          startDate: start,
+          endDate: end,
+          ranges: {
+            "This Year": [moment().startOf("year"), moment().endOf("year")],
+            "Next 6 Months": [moment(), moment().add(6, "months")],
+            "Next 3 Months": [moment(), moment().add(3, "months")],
+            "Last 30 Days": [moment().subtract(29, "days"), moment()],
+            "This Month": [moment().startOf("month"), moment().endOf("month")],
+            "Last Month": [
+              moment().subtract(1, "month").startOf("month"),
+              moment().subtract(1, "month").endOf("month"),
+            ],
+          },
+        },
+        cb
+      );
+
+      cb(start, end);
+    }
+    definedates();
+    function SetMatrixType(id,value)
+{
+  document.getElementById(id).innerText=value;
+}
+    let objective_owner = "";
+    let objective_teams = [];
+    let subkrs =`<%-JSON.stringify(subkr)%>`;
+    subkrs = JSON.parse(subkrs);
+    let teams = `<%-JSON.stringify(teams)%>`;
+    teams = JSON.parse(teams);
+
+    let currentemployeeList = `<%-JSON.stringify(employeeList)%>`
+    currentemployeeList = JSON.parse(currentemployeeList)
+    let EmployeeMap = new Map();
+   
+let initiatives='<%- JSON.stringify(initiatives)%>'
+initiatives=JSON.parse(initiatives)
+
+
+ let initiativesIndex=0;
+    let employeeList_KR = krs.teams;
+    for (let employee of currentemployeeList)
+      EmployeeMap.set(employee._id.toString(), employee);
+    document.getElementById('OwnerImage').src = EmployeeMap.get(krs.owner[0])?.image;
+    let subkrindex = 0;
+   
+  
+
+   async function AddsubKeyResult() {
+      let index = subkrs.length;
+      subkrs.push({keyResultId:krs._id,title: '', teams: [], status: 'On Track', timePeriod:{startDate:new Date(),endDate:''}, matrix: { type: '%', startingValue: 0, currentValue: 0, targetValue: 100 } })
+    initiatives.push([]);
+      await  CreatesubKeyResultDataApi(index)
+     let ClicktoaddnewsubKR= document.getElementById('ClicktoaddnewsubKR')
+      let innerHTML = '';
+      innerHTML += ` <tr>
+        <td onmouseover="showIcons('.OpenIconkr${index}')" onmouseout="removeIcons('.OpenIconkr${index}')">
+          <div style="display: flex;align-items: center;gap:40px">
+          <div style="display: flex;gap:8px;align-items: center;">
+          <input type="text" value="" placeholder="Enter sub key result " style="border:none;border-radius:6px;" onchange="ChangeKRData('${index}','title',event.target.value)">
+          
+        </div>
+        <a href="/subkr/?id=${subkrs[index]._id.toString()}&krid=<%=kr._id%>&okrid=<%=okrid%>" class="OpenIconkr${index}" style="display: none;align-items: center;gap:8px;color: var(--gray-500, #667085);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 20px;">
+        <img src="../Project icons/maximize.svg">
+        Open
+        </div>
+      </div>
+        </td>
+         <td id="AssignedTo${index}" style="max-width: 200px;overflow: hidden;display: flex;align-items: center;gap:8px;white-space:nowrap;" data-target='#selectsubKRTeamemployee' data-toggle="modal" onclick="changesubKrIndex('${index}');MarkSelectedsubKREmployee();"><div style="display: flex;
+width: 32px;
+height: 32px;
+padding: 6px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+border-radius: 200px;
+background: var(--primary-50, #F9F5FF);" ><img src="../Performance dashboard Icons/Empty_User.svg"></div>Not Assigned yet</td>
+         <td><div onclick="changesubKrIndex('${index}')" style="padding:5px 12px;border-radius:16px;" id="KRStatus${index}" data-toggle="dropdown" aria-expanded="false"><div class="Status_completed">On Track</div></div>
+          <div class="dropdown-menu" style="
+            flex-direction: column;
+          " aria-labelledby="subKRStatus${index}">
+              <div class="StatusBox">Open</div>
+              <div class="StatusBox" onclick="ChangesubKRStatus('On Track')">
+                <div class="Status_completed">On Track</div>
+              </div>
+              <div class="StatusBox" onclick="ChangesubKRStatus('At risk')">
+                <div class="Status_progress">At risk</div>
+              </div>
+              <div class="StatusBox" onclick="ChangesubKRStatus('Off Track')">
+                <div class="Status_hold">Off Track</div>
+              </div>
+              <div class="StatusBox">Closed</div>
+              <div class="StatusBox" onclick="ChangesubKRStatus('Achieved')">
+                <div class="Status_completed">Achieved</div>
+              </div>
+              <div class="StatusBox" onclick="ChangesubKRStatus('Partial')">
+                <div class="Status_progress">Partial</div>
+              </div>
+              <div class="StatusBox" onclick="ChangesubKRStatus('Missed')">
+                <div class="Status_hold">Missed</div>
+              </div>
+              <div class="StatusBox" onclick="ChangesubKRStatus('Dropped')">
+                <div class="Status_notStarted">Dropped</div>
+              </div>
+            </div>
+          </td>
+         <td><input type="date" onchange="ChangeKRData('${index}','endDate',event.target.value)" value="2023-10-20" style="border-radius:6px;"></td>
+      
+        <td onmouseover="showIcons('.EditMatrixIocn${index}')" onmouseout="removeIcons('.EditMatrixIocn${index}')"><div style="display: flex;gap:8px;align-items: center;">
+       <div style="display:flex;flex-direction: column;gap:6px;">
+          <div style="display: flex;
+         width: 19px;
+         height: 13px;
+         flex-direction: column;
+         justify-content: center;
+         color: var(--gray-500, #667085);
+         font-size: 12px;
+         font-style: normal;
+         font-weight: 500;
+         line-height: 28px; /* 233.333% */" id="ProgressBarCV${index}">0</div>
+        <div class="ProgressKeyResult">
+          <div class="progress__bar" style="width: 0%;" id="ProgressBar${index}"></div>
+        </div>
+        <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+        <div style="display: flex;
+        width: 19px;
+        height: 13px;
+        flex-direction: column;
+        justify-content: center;
+        color: var(--gray-500, #667085);
+        
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px; /* 233.333% */" id="ProgressBarIV${index}">0%</div>
+         <div style="display: flex;
+         width: 19px;
+         height: 13px;
+         flex-direction: column;
+         justify-content: center;
+         color: var(--gray-500, #667085);
+         
+         font-size: 12px;
+         font-style: normal;
+         font-weight: 500;
+         line-height: 28px; /* 233.333% */" id="ProgressBarTV${index}">100%</div>
+        </div>
+        </div>
+        </div>
+        <img src="../Project icons/Edit.svg" class="EditMatrixIocn${index}" data-target="#Editprogresssettings" data-toggle="modal" onclick="changesubKrIndex('${index}');setSubKrMatrixModel()">
+        </td>
+        </tr>
+        <div style="display: none;flex-direction: column;gap:12px;align-items: flex-start;" id="InitiativesBox${index}">
+    <tr id="Clicktoaddnewinitiatives${index}" class="initiatives${index}" style="display: none;" onclick="AddInitiatives('${index}')">
+      <td>
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+          <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        <div style="display: flex;
+            padding: 4px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            border-radius: 4px;
+            border: 1px solid var(--gray-600, #475467);">
+        Click to add new initiatives
+        </div>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </div>`
+     
+  ClicktoaddnewsubKR .insertAdjacentHTML('beforebegin', innerHTML);
+     
+    }
+    
+
+
+//comment 
+
+function SaveComment(){
+  // i is for identify comment should insert only one time
+  let value=document.getElementById('CommentBox').value;
+  krs.comments.push({image:'<%=user?.image%>',employeeId:'<%=user?.id%>',content:value,date:new Date()});
+  SavekrsDataApi();
+  document.getElementById('CommentBox').value='';
+  document.getElementById('CommentBody').innerHTML=` <div style="display: flex;
+                          align-items: flex-start;
+                          gap: 8px;
+                          align-self: stretch;">
+                        <img src="<%=user?.image%>" style="display: flex;
+                        width: 32px;
+                        height: 32px;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 200px;">
+                        <div style="display: flex;
+                        padding: 14px 20px;
+                        align-items: flex-start;
+                        gap: 10px;
+                        width: 100%;
+                        flex: 1 0 0;
+                        align-self: stretch;
+                        border-radius: 12px;
+                        border: 1px solid #ECECEC;
+                        color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+                        background: #FFF;" placeholder="Leave a comment">${value}</div>
+                        </div>` +document.getElementById('CommentBody').innerHTML
+}
+
+
+
+
+//roadmap
+
+function AddRoadMapPoint()
+{
+  
+  krs.roadmap.push({title:'',status:false});
+  let roadmapBody=document.getElementById('RoadmapBox')
+  roadmapBody.innerHTML=''
+  for(let i=0;i<krs.roadmap?.length;i++){
+  roadmapBody.innerHTML+=`<div style="display: flex;align-items: center;gap:8px" >
+        <input type="checkbox" ${krs.roadmap[i].status?'checked':''} style="width: 20px;height: 20px;" onclick="ChangeStatusRoadMapPoint(${i})"/>
+       <input type="text" onchange="ChangeTitleRoadMapPoint(${i},event.target.value)"
+       value='${krs.roadmap[i].title}'
+          placeholder="Click to add new Checkpoint" style="border:none;border-radius:6px;padding:4px;color: var(--gray-800, #1D2939);
+width:100%;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */">
+      </div>`
+    }
+  roadmapBody.innerHTML+=`<div style="display: flex;align-items: center;gap:8px" id="AddRoadMapPoint" onclick="AddRoadMapPoint()">
+       
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+            <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <div style="display: flex;
+            padding: 4px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            border-radius: 4px;
+            border: 1px solid var(--gray-600, #475467);">
+          Click to add new Checkpoint
+          </div>
+      </div>`
+      SavekrsDataApi();
+}
+
+function ChangeStatusRoadMapPoint(i)
+{
+  krs.roadmap[i].status=!krs.roadmap[i].status;
+  SavekrsDataApi();
+}
+function ChangeTitleRoadMapPoint(i,value)
+{
+  krs.roadmap[i].title=value
+  SavekrsDataApi();
+}
+
+    function SetTeamImages(teams) {
+      teams=GiveUniqueEmployees(teams); 
+      let teamsImage = document.getElementById('TeamsMembers')
+      let innerhtml = SetTeams(teams);
+       
+      teamsImage.innerHTML = innerhtml;
+    }
+    SetTeamImages(employeeList_KR)
+
+    function SelectOwner(id, image) {
+      document.getElementById('OwnerImage').src = image;
+      krs.owner[0] = id;
+      SavekrsDataApi();
+    }
+
+    function Goback() {
+      window.history.back()
+    }
+
+    function ChangekrStatus(okrStatus) {
+     
+let element=CheckStatus(okrStatus);
+      document.getElementById("ObjectiveStatus").innerHTML = element
+      krs.status = okrStatus;
+      SavekrsDataApi();
+    }
+    function CheckStatus(Status)
+    {
+        var element = '';
+      if (Status == 'On Track') {
+        element = '<div class="Status_completed">On Track</div>';
+      } else if (Status == 'At risk') {
+        element = '<div class="Status_progress">At risk</div>';
+      } else if (Status == 'Off Track') {
+        element = '<div class="Status_hold">Off Track</div>';
+      } else if (Status == 'Achieved') {
+        element = '<div class="Status_completed">Achieved</div>';
+      } else if (Status == 'Partial') {
+        element = '<div class="Status_progress">Partial</div>';
+      } else if (Status == 'Missed') {
+        element = '<div class="Status_hold">Missed</div>';
+      } else if (Status == 'Dropped') {
+        element = '<div class="Status_notStarted">Dropped</div>';
+      }
+      return element;
+    }
+
+     
+
+
+    function SelectTeams(employees, name, id) {
+      for (let i = 0; i < objective_teams.length; i++) {
+        if (objective_teams[i].id == id)
+          return;
+      }
+      document.getElementById(
+        "TeamSelected"
+      ).innerHTML += `<div class="teamBox" id='Team${id}'>${name} <img src="../Performance dashboard Icons/TeamCross.svg" onclick="RemoveFromTeam('${id}')"></div>`;
+      objective_teams.push({ title: name, employees: employees, id: id });
+      MakeButtonActive()
+    }
+
+    function RemoveFromTeam(id) {
+      for (let i = 0; i < objective_teams.length; i++) {
+        if (objective_teams[i].id == id) {
+          objective_teams.splice(i, 1);
+          break;
+        }
+      }
+      document.getElementById(`Team${id}`).remove();
+      MakeButtonActive();
+    }
+
+    function SearchTeams(value) {
+      console.log(value);
+      let body = document.getElementById("DropDownTeams");
+      let innerHTML = "";
+
+      for (let team of teams) {
+        if (team.title.toLowerCase().includes(value.toLowerCase())) {
+          innerHTML += `<div style="display: flex;
+                padding: 8px;
+                align-items: center;
+                gap: 10px;
+                align-self: stretch;" onclick="SelectTeams('${team.employees}','${team.title}','${team._id}')">
+                      <img src="../Performance dashboard Icons/teams_icon.svg">
+                      <div style="display: flex;
+                flex-direction: column;
+                align-items: flex-start;">
+                        <div style="color: var(--gray-700, #344054);
+                
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 20px; /* 142.857% */">${team.title}</div>
+                        <div style="display: -webkit-box;
+               width: 85px;
+               -webkit-box-orient: vertical;
+               -webkit-line-clamp: 1;
+               overflow: hidden;
+               color: var(--text-content-secondary, #898989);
+               text-overflow: ellipsis;
+               
+               font-size: 14px;
+               font-style: normal;
+               font-weight: 600;
+               line-height: normal;
+                                   ">`;
+
+          for (let employeeId of team.employees) {
+            innerHTML += `${EmployeeMap.get(employeeId)},`;
+          }
+          innerHTML += ` </div>
+                      </div>
+                    </div>`;
+        }
+      }
+      for (let employee of currentemployeeList) {
+        if (employee.displayName.toLowerCase().includes(value.toLowerCase())) {
+          innerHTML += `<div style="display: flex;
+                  padding: 8px;
+                  cursor: pointer;
+                  align-items: center;
+                  gap: 10px;
+                  align-self: stretch;" onclick="SelectTeams(['${employee._id}'],'${employee.displayName}','${employee._id}')">
+                      <img style="display: flex;
+                  width: 32px;
+                  height: 32px;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  border-radius: 200px;" src="${employee.image}">
+                      <div style="display: flex;
+                  flex-direction: column;
+                  white-space: nowrap;
+                  align-items: flex-start;">
+                        <div style="color: var(--gray-700, #344054);
+                 font-size: 14px;
+                 font-style: normal;
+                 font-weight: 600;
+                 line-height: 20px; /* 142.857% */
+                 ">${employee.displayName}</div>
+                        <div style="color: var(--gray-500, #667085);
+                 
+                 font-size: 12px;
+                 font-style: normal;
+                 font-weight: 400;
+                 line-height: 18px; /* 150% */">${employee.team}</div>
+                      </div>
+                    </div>
+                    <div style="height: 1px;
+                 align-self: stretch;
+                 background: var(--gray-200, #EAECF0)"></div>`;
+        }
+      }
+      body.innerHTML = innerHTML;
+    }
+
+    function SearchOwners(value) {
+      console.log(value);
+      let body = document.getElementById("DropDownOwners");
+      let innerHTML = "";
+
+      for (let employee of currentemployeeList) {
+        if (employee.displayName.toLowerCase().includes(value.toLowerCase())) {
+          innerHTML += `<div style="display: flex;
+                  padding: 8px;
+                  cursor: pointer;
+                  align-items: center;
+                  gap: 10px;
+                  align-self: stretch;" onclick="SelectOwner('${employee._id}','${employee.image}')">
+                      <img style="display: flex;
+                  width: 32px;
+                  height: 32px;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  border-radius: 200px;" src="${employee.image}">
+                      <div style="display: flex;
+                  flex-direction: column;
+                  white-space: nowrap;
+                  align-items: flex-start;">
+                        <div style="color: var(--gray-700, #344054);
+                 font-size: 14px;
+                 font-style: normal;
+                 font-weight: 600;
+                 line-height: 20px; /* 142.857% */
+                 ">${employee.displayName}</div>
+                        <div style="color: var(--gray-500, #667085);
+                 
+                 font-size: 12px;
+                 font-style: normal;
+                 font-weight: 400;
+                 line-height: 18px; /* 150% */">${employee.team}</div>
+                      </div>
+                    </div>
+                    <div style="height: 1px;
+                 align-self: stretch;
+                 background: var(--gray-200, #EAECF0)"></div>`;
+        }
+      }
+      body.innerHTML = innerHTML;
+    }
+
+    function ChangeKRData(type, value) {
+      krs[type] = value;
+      SavekrsDataApi();
+    }
+
+   
+    function ToogleIcon(Iconid, boxid) {
+      let icon = document.getElementById(Iconid);
+      let box = document.getElementById(boxid);
+      if (icon.classList.contains("fa-angle-down")) {
+        icon.classList.remove("fa-angle-down");
+        icon.classList.add("fa-angle-up");
+        box.style.display = "none";
+      }
+      else {
+        icon.classList.remove("fa-angle-up");
+        icon.classList.add("fa-angle-down");
+        box.style.display = "flex";
+      }
+    }
+
+    function MarkSelectedEmployee() {
+      let employees = document.querySelectorAll('.Employees');
+      let employee_icons = document.querySelectorAll('.EmployeesIcons');
+      for (let employeeId of employees) {
+        if (employeeId.classList.contains('selected')) {
+          employeeId.classList.remove('selected');
+        }
+      }
+      for (let employeeId of employee_icons) {
+        if (employeeId.style.display == 'flex') {
+          employeeId.style.display = 'none';
+        }
+      }
+      for (let employeeId of krs.teams) {
+        let employee_box = document.getElementById('Employee-' + employeeId.id);
+        if (employee_box && !employee_box.classList.contains('selected')) {
+          employee_box.classList.add('selected');
+          let employee_icons = document.getElementById('selectIcon-' + employeeId.id);
+          employee_icons.style.display = 'flex';
+        }
+      }
+    }
+
+    function MarkSelectedEmployeeinModal(name, employeeId, employees) {
+      if (employees == 'team') {
+        for (let team of teams) {
+          if (team._id == employeeId) {
+            employees = team.employees;
+            break;
+          }
+        }
+      }
+      let employee_box = document.getElementById('Employee-' + employeeId);
+      if (employee_box.classList.contains('selected')) {
+        employee_box.classList.remove('selected');
+        let employee_icons = document.getElementById('selectIcon-' + employeeId);
+        employee_icons.style.display = 'none';
+        krs.teams = krs.teams.filter((employee) => employee.id != employeeId);
+      } else {
+        employee_box.classList.add('selected');
+        let employee_icons = document.getElementById('selectIcon-' + employeeId);
+        employee_icons.style.display = 'flex';
+        krs.teams.push({ title: name, employees: employees, id: employeeId });
+      }
+
+    }
+
+    async function SaveEmployee() {
+      SetTeamImages(krs.teams)
+      SavekrsDataApi();
+    }
+
+    // updateEmployeeList(employeeList_KR);
+    MarkSelectedEmployee()
+    function filterAndSortModalEmployees(searchText) {
+
+      let filteredEmployees = currentemployeeList.filter((employee) => {
+        return employee.displayName.toLowerCase().includes(searchText);
+      });
+
+      
+      let filteredTeams = teams.filter((team) => {
+        return team.title.toLowerCase().includes(searchText);
+      });
+
+     
+      filteredEmployees =filteredTeams.concat(filteredEmployees)
+      updateEmployeeList(filteredEmployees);
+    }
+
+
+    function updateEmployeeList(employeeList) {
+
+      employeeListContainer = document.getElementById('EmployeesModalBody');
+      employeeListContainer.innerHTML = '';
+      console.log(employeeList)
+      for (const employee of employeeList) {
+        let employeeElement = '';
+        if (!employee.employees)
+          employeeElement = createEmployeeElement(employee);
+        else
+          employeeElement = createTeamElement(employee);
+        employeeListContainer.innerHTML += employeeElement;
+      }
+      MarkSelectedEmployee()
+    }
+
+
+    function createEmployeeElement(employee) {
+      return `  <div onclick="MarkSelectedEmployeeinModal('${employee.displayName}','${employee._id}',['${employee._id}'])" style="display: flex;
+        padding: 16px 24px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex: 1 0 0;
+        align-self: stretch;" id="Employee-${employee._id}" class="Employees">
+          <div style="position: relative;display: none;" id="selectIcon-${employee._id}" class="EmployeesIcons">
+            <div>
+              <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+            width: 20px;
+            height: 20px;
+            padding: 3px;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            right: -70px;
+            top: -8px;
+            border-radius: 30.001px;
+            background: var(--brand-primary, #48BF84);">
+            </div>
+          </div>
+          <img style="display: flex;
+       width: 40px;
+       height: 40px;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       border-radius: 200px;" src="${employee.image}">
+          <div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+            <div style="color: var(--text-content-primary, #181818);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">${employee.displayName}</div>
+            <div style="color: var(--text-content-secondary, #898989);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">${employee.team}</div>
+          </div>
+
+        </div>`
+    }
+
+    function createTeamElement(team) {
+      let x=''
+      x+= `  <div onclick="MarkSelectedEmployeeinModal('${team.title}','${team._id}','team')" style="display:flex;
+        padding: 16px 24px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex: 1 0 0;
+        align-self: stretch;" id="Employee-${team._id}" class="Employees">
+          <div style="position: relative;display: none;" id="selectIcon-${team._id}" class="EmployeesIcons">
+            <div>
+              <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+            width: 20px;
+            height: 20px;
+            padding: 3px;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            right: -70px;
+            top: -8px;
+            border-radius: 30.001px;
+            background: var(--brand-primary, #48BF84);">
+            </div>
+          </div>
+          <img style="display: flex;
+                 width: 40px;
+                 height: 40px;
+                 flex-direction: column;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 200px;" src="../Performance dashboard Icons/teams_icon.svg">
+          <div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+            <div style="color: var(--text-content-primary, #181818);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">${team.title}</div>
+            <div style="display: -webkit-box;
+               width: 85px;
+               -webkit-box-orient: vertical;
+               -webkit-line-clamp: 1;
+               overflow: hidden;
+               color: var(--text-content-secondary, #898989);
+               text-overflow: ellipsis;
+               
+               font-size: 14px;
+               font-style: normal;
+               font-weight: 600;
+               line-height: normal;
+                                   ">`
+for(let employeeId of team.employees) {
+                 x+=EmployeeMap.get(employeeId).firstName +','
+                     }
+              x+=`</div>
+          </div>
+
+        </div>`
+        return x;
+    }
+   
+
+    function SetsubkrTeamImages(teams) {
+       teams=GiveUniqueEmployees(teams)
+      let teamsImage = document.getElementById('AssignedTo'+subkrindex)
+      let innerhtml = SetTeams(teams);
+     teamsImage.innerHTML = innerhtml;
+    }
+   
+    function SetTeams(teams)
+    { let innerhtml=''
+        for (let employeeId of teams) {
+
+innerhtml += `<img style="display: flex;
+width: 32px;
+height: 32px;
+margin-left: -10px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+border-radius: 200px;
+border: 1.5px solid var(--White, #FFF)" src="${EmployeeMap.get(employeeId).image}">`
+}
+if(teams.length==0)
+innerhtml=`<div style="display: flex;
+width: 32px;
+height: 32px;
+padding: 6px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+border-radius: 200px;
+background: var(--primary-50, #F9F5FF);"><img src="../Performance dashboard Icons/Empty_User.svg"></div>Not Assigned yet`
+return innerhtml;
+    }
+    for(let i=0;i<subkrs.length;i++) {
+      subkrindex=i;
+    SetsubkrTeamImages(subkrs[i].teams)
+    }
+   
+    function MarkSelectedsubKREmployee() {
+      let employees = document.querySelectorAll('.subKREmployees');
+      let employee_icons = document.querySelectorAll('.subKREmployeesIcons');
+      for (let employeeId of employees) {
+        if (employeeId.classList.contains('selected')) {
+          employeeId.classList.remove('selected');
+        }
+      }
+      for (let employeeId of employee_icons) {
+        if (employeeId.style.display == 'flex') {
+          employeeId.style.display = 'none';
+        }
+      }
+     
+      for (let employees of subkrs[subkrindex].teams) {
+        let employee_box = document.getElementById('subKREmployee-' + employees.id);
+        if (!employee_box.classList.contains('selected')) {
+          employee_box.classList.add('selected');
+        }
+        let employee_icons = document.getElementById('subKRselectIcon-' + employees.id);
+          employee_icons.style.display = 'flex';
+      }
+    }
+
+    function MarkSelectedsubKREmployeeinModal(name, employeeId, employees) {
+      if (employees == 'team') {
+        for (let team of teams) {
+          if (team._id == employeeId) {
+            employees = team.employees;
+            break;
+          }
+        }
+      }
+      let employee_box = document.getElementById('subKREmployee-' + employeeId);
+      if (employee_box.classList.contains('selected')) {
+        employee_box.classList.remove('selected');
+        let employee_icons = document.getElementById('subKRselectIcon-' + employeeId);
+        employee_icons.style.display = 'none';
+        subkrs[subkrindex].teams = subkrs[subkrindex].teams.filter((employee) => employee.id != employeeId);
+      } else {
+        employee_box.classList.add('selected');
+        let employee_icons = document.getElementById('subKRselectIcon-' + employeeId);
+        employee_icons.style.display = 'flex';
+        subkrs[subkrindex].teams.push({ title: name, employees: employees, id: employeeId });
+      }
+      CreatesubKeyResultDataApi(subkrindex)
+    }
+
+    async function SavesubKREmployee() {
+     
+      SetsubkrTeamImages(subkrs[subkrindex].teams)
+    }
+
+    function filterAndSortModalsubKREmployees(searchText) {
+
+      let filteredEmployees = currentemployeeList.filter((employee) => {
+        return employee.displayName.toLowerCase().includes(searchText);
+      });
+
+     
+      let filteredTeams = teams.filter((team) => {
+        return team.title.toLowerCase().includes(searchText);
+      });
+
+      filteredEmployees = filteredTeams.concat(filteredEmployees)
+      updatesubKREmployeeList(filteredEmployees);
+    }
+
+    function updatesubKREmployeeList(employeeList) {
+
+      employeeListContainer = document.getElementById('subKREmployeesModalBody');
+      employeeListContainer.innerHTML = '';
+      for (const employee of employeeList) {
+        let employeeElement = '';
+        if (  !employee.employees)
+          employeeElement = createsubKREmployeeElement(employee);
+        else
+          employeeElement = createsubKRTeamElement(employee);
+        employeeListContainer.innerHTML += employeeElement;
+      }
+      MarkSelectedsubKREmployee()
+    }
+
+    function createsubKREmployeeElement(employee) {
+      return `  <div onclick="MarkSelectedsubKREmployeeinModal('${employee.displayName}','${employee._id}',['${employee._id}'])" style="display: flex;
+        padding: 16px 24px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex: 1 0 0;
+        align-self: stretch;" id="subKREmployee-${employee._id}" class="Employees">
+          <div style="position: relative;display: none;" id="subKRselectIcon-${employee._id}" class="subKREmployeesIcons">
+            <div>
+              <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+            width: 20px;
+            height: 20px;
+            padding: 3px;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            right: -70px;
+            top: -8px;
+            border-radius: 30.001px;
+            background: var(--brand-primary, #48BF84);">
+            </div>
+          </div>
+          <img style="display: flex;
+       width: 40px;
+       height: 40px;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       border-radius: 200px;" src="${employee.image}">
+          <div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+            <div style="color: var(--text-content-primary, #181818);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">${employee.displayName}</div>
+            <div style="color: var(--text-content-secondary, #898989);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">${employee.teams}</div>
+          </div>
+
+        </div>`
+    }
+
+    function createsubKRTeamElement(team) {
+      let x=''
+      x+= `  <div onclick="MarkSelectedsubKREmployeeinModal('${team.title}','${team._id}','team')" style="display:flex;
+        padding: 16px 24px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex: 1 0 0;
+        align-self: stretch;" id="subKREmployee-${team._id}" class="subKREmployees">
+          <div style="position: relative;display: none;" id="subKRselectIcon-${team._id}" class="subKREmployeesIcons">
+            <div>
+              <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+            width: 20px;
+            height: 20px;
+            padding: 3px;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            right: -70px;
+            top: -8px;
+            border-radius: 30.001px;
+            background: var(--brand-primary, #48BF84);">
+            </div>
+          </div>
+          <img style="display: flex;
+                 width: 40px;
+                 height: 40px;
+                 flex-direction: column;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 200px;" src="../Performance dashboard Icons/teams_icon.svg">
+          <div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+            <div style="color: var(--text-content-primary, #181818);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">${team.title}</div>
+            <div style="display: -webkit-box;
+               width: 85px;
+               -webkit-box-orient: vertical;
+               -webkit-line-clamp: 1;
+               overflow: hidden;
+               color: var(--text-content-secondary, #898989);
+               text-overflow: ellipsis;
+               
+               font-size: 14px;
+               font-style: normal;
+               font-weight: 600;
+               line-height: normal;
+                                   ">`
+for(let employeeId of team.employees) {
+                 x+=EmployeeMap.get(employeeId).firstName +','
+                     }
+              x+=`</div>
+          </div>
+
+        </div>`
+        return x;
+    }
+   
+   
+    function changesubKrIndex(i) {
+      subkrindex = parseFloat(i);
+    }
+    function ChangesubKRStatus(krStatus) {
+        let element=CheckStatus(krStatus);
+
+      document.getElementById("subKRStatus" + subkrindex).innerHTML = element
+      subkrs[subkrindex].status = krStatus;
+      CreatesubKeyResultDataApi(subkrindex)
+    }
+    
+    function SaveMeasurments() {
+      let matrixType = document.getElementById("MatrixTypeModal").innerText;
+      if(matrixType=='Percentage')
+      matrixType='%';
+      else if(matrixType=='Currency')
+      matrixType='₹';
+      else if(matrixType=='Numerical')
+     matrixType=''
+      let startingMatrixValue = document.getElementById("StartingMatrixValueModal").value;
+      let currentMatrixValue = document.getElementById("CurrentMatrixValueModal").value;
+      let targetMatrixValue = document.getElementById("TargetMatrixValueModal").value;
+      subkrs[subkrindex].matrix = { type: matrixType, startingValue: startingMatrixValue, currentValue: currentMatrixValue, targetValue: targetMatrixValue }
+      let matrixCV = document.getElementById('ProgressBarCV' + subkrindex);
+      let matrixIV = document.getElementById('ProgressBarIV' + subkrindex);
+      let matrixTV = document.getElementById('ProgressBarTV' + subkrindex);
+      let matrixBar = document.getElementById('ProgressBar' + subkrindex);
+      matrixCV.innerHTML = currentMatrixValue + matrixType;
+      matrixIV.innerHTML = startingMatrixValue + matrixType;
+      matrixTV.innerHTML = targetMatrixValue + matrixType;
+      let Percentage_=(currentMatrixValue - startingMatrixValue) / (targetMatrixValue - startingMatrixValue) * 100;
+      Percentage_=Math.min(100, Percentage_);
+      matrixBar.style.width = Percentage_ + '%';
+  matrixCV.style.marginLeft = Percentage_ + '%';
+      CreatesubKeyResultDataApi(subkrindex)
+    }
+    async function SavekrsDataApi() {
+      try {
+        let res = await fetch('/create/keyresult', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(krs)
+        })
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+    function changesubkrdata(index,type,value)
+{
+  if(type=='endDate')
+{
+  subkrs[index].timePeriod.endDate=value;
+}
+  subkrs[index][type]=value;
+  CreatesubKeyResultDataApi(index);
+}
+    async function CreatesubKeyResultDataApi(i) {
+      try {
+        let res = await fetch('/create/subkeyresult', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(subkrs[i])
+        })
+        res=await res.json();
+        subkrs[i]._id=res._id;
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+// link and file upload 
+
+function OpenFileInput(id) {
+                  document.getElementById(id).click();
+                }
+
+               
+                let Link = {},
+                  file = {};
+
+                function ChangeLinkContent(type, value) {
+                  Link[type] = value;
+                  MakeLinkButtonAble();
+
+                }
+
+                function AddProjectLink() {
+    let id = generateRandomId();
+    Link.id = id;
+    krs.links.push(Link);
+    UpdateLinkbody();
+    SavekrsDataApi();
+  }
+
+                function AddProjectFile() {
+                  let id = generateRandomId();
+                  file.id = id;
+                  krs.files.push(file);
+                  UpdateFilebody();
+                  SavekrsDataApi();
+                }
+
+                function MakeLinkButtonAble() {
+                  if (Link.title?.length > 0 && Link.url?.length > 0) {
+                    document.getElementById('AddLinkButton').disabled = false;
+                  } else {
+                    document.getElementById('AddLinkButton').disabled = true;
+                  }
+                }
+
+
+                function generateRandomId() {
+                  return '_' + Math.random().toString(36).substr(2, 9);
+                }
+
+                function UpdateLinkbody() {
+                  let id = Link.id;
+                  let body = document.getElementById('Project_LinkFileBody');
+                  let innerhtmlfile = `
+      <div style="display: flex;
+                padding: 12px 16px;
+                align-items: center;
+                gap: 12px;
+                flex: 1 0 0;
+                border-radius: 12px;
+                border: 1px solid #ECECEC;
+                background: #FFF;" onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='link-${id}'>
+        <img src="../Performance dashboard Icons/Link Added.svg">
+        <div style="display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  gap: 4px;
+                  flex: 1 0 0;">
+          <div style="align-self: stretch;
+                    color: var(--content-on-light-primary, #181818);
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 17.352px;">
+            ${Link.title}
+          </div>
+          <div style="display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    align-self: stretch;
+                    overflow: hidden;
+                    color: var(--content-on-light-secondary, #898989);
+                    text-overflow: ellipsis;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 17.352px;">
+            ${Link.url}
+          </div>
+        </div>
+        <img src='../Project icons/Edit.svg' style="display:none" class='Icons-${id}' onclick='EditLink("${id}")' data-target='#AddProjectLink' data-toggle='modal'>
+        <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveLink("${id}")'>
+      </div>`;
+
+                  body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+                }
+
+                function UpdateFilebody() {
+                  let id = file.id;
+                  let body = document.getElementById('Project_LinkFileBody');
+                  let innerhtmlfile = `
+      <div style="display: flex;
+                padding: 12px 16px;
+                align-items: center;
+                gap: 12px;
+                flex: 1 0 0;
+                border-radius: 12px;
+                border: 1px solid #ECECEC;
+                background: #FFF;" onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='file-${id}'>
+        <img src="../Performance dashboard Icons/Document Added.svg">
+        <div style="display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  gap: 4px;
+                  flex: 1 0 0;">
+          <div style="align-self: stretch;
+                    color: var(--content-on-light-primary, #181818);
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 17.352px;">
+            ${file.title}
+          </div>
+          <div style="display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    align-self: stretch;
+                    overflow: hidden;
+                    color: var(--content-on-light-secondary, #898989);
+                    text-overflow: ellipsis;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 17.352px;">
+            ${file.url}
+          </div>
+        </div>
+        <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveFile("${id}")'>
+      </div>`;
+
+                  body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+                }
+
+               for(let i=0;i<krs.files.length;i++){
+                  file = krs.files[i];
+                  UpdateFilebody();
+                }
+                for(let i=0;i<krs.links.length;i++){
+                  Link = krs.links[i];
+                  UpdateLinkbody();
+                }
+
+                function ChangeProjectData(type, value) {
+                  project[type] = value;
+                  MakeSubmitButtonAble();
+                }
+
+                function RemoveFile(fileid) {
+                  let id = `file-${fileid}`
+                  const body = document.getElementById(id);
+                  body.remove();
+                  const index = krs.files.findIndex((file) => file.id === fileid);
+                  if (index != -1)
+                  krs.files.splice(index, 1);
+                  SavekrsDataApi();
+                }
+
+                function RemoveLink(linkid) {
+                  let id = `link-${linkid}`
+                  const body = document.getElementById(id);
+                  body.remove();
+                  const index = krs.links.findIndex((link) => link.id === linkid);
+                  if (index != -1)
+                    krs.links.splice(index, 1);
+                    SavekrsDataApi();
+                }
+
+                function EditLink(linkid) {
+                  const index = krs.links.findIndex((link) => link.id === linkid);
+                  Link = krs.links[index];
+                  RemoveLink(linkid);
+                  document.getElementById('link-title').value = Link.title;
+                  document.getElementById('link-link').value = Link.url;
+                }
+
+                function showIcons(classname) {
+                  const box = document.querySelectorAll(classname);
+                  box.forEach((element) => {
+                    element.style.display = 'flex';
+                  });
+                }
+
+                function removeIcons(classname) {
+                  const box = document.querySelectorAll(classname);
+                  box.forEach((element) => {
+                    element.style.display = 'none';
+                  });
+                }
+
+
+                async function handleProjectFileSelect(event) {
+                  try {
+                    let data = event.target.files[0];
+                    let filelink = await handleFileUpload(data);
+                    file.title = data.name;
+                    file.url = filelink;
+                    AddProjectFile();
+                  } catch (error) {
+                    console.log(error)
+                  }
+                }
+
+                async function handleFileUpload(file) {
+                  const formData = new FormData();
+                  formData.append('file', file);
+                  try {
+                    const uploadType = "EmployeeProject";
+                    const urlRes = await fetch(
+                      `/aws/get/preSignedUrl?fileName=${file.name}t&contentType=${file.type}&uploadType=${uploadType}`, {
+                      method: "GET",
+                    }
+                    );
+                    const urlData = await urlRes.json();
+                    const response = await fetch(urlData.url, {
+                      method: "PUT",
+                      headers: {
+                        "Content-Type": file.type,
+                      },
+                      body: file,
+                    });
+                    let url = `https://dvfkpf9qxfl09.cloudfront.net/${urlData.key}`;
+
+                    return url;
+                  } catch (error) {
+                    console.error('Error during file upload:', error);
+                  }
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ function Showinitiatives(i)
+    {
+      i=parseFloat(i)
+      let ToogleIcon=document.getElementById('ToogleIcon'+i);
+      let SubKRBox=document.querySelectorAll('.initiatives'+i);
+      if(ToogleIcon.classList.contains('fa-angle-right'))
+      {
+        ToogleIcon.classList.remove('fa-angle-right');
+        ToogleIcon.classList.add('fa-angle-down');
+        SubKRBox.forEach(box=>{
+            box.style.display='flex';
+        })
+      }
+      else
+      {
+        ToogleIcon.classList.remove('fa-angle-down');
+        ToogleIcon.classList.add('fa-angle-right');
+        SubKRBox.forEach(box=>{
+            box.style.display='none';
+        })
+      }
+      subkrindex=i;
+      for(let j=0;j<initiatives[i].length;j++)
+      {
+        initiativesIndex=j;
+        SetinitiativesTeamImages(initiatives[i][j].teams)
+      }
+    }
+    async function SavesubKREmployee() {
+      SetsubkrTeamImages(subkrs[subkrindex].teams)
+    }
+    async function AddInitiatives(i) {
+      i=parseFloat(i);
+  let j =  initiatives[i].length;
+  initiatives[i].push({subkeyResultId:subkrs[i]._id.toString(),title: '', teams: [], status: 'On Track', timePeriod:{startDate:new Date(),endDate:''}, matrix: { type: '%', startingValue: 0, currentValue: 0, targetValue: 100 } })
+  
+let  Clicktoaddnewinitiatives= document.getElementById('Clicktoaddnewinitiatives'+i)
+  let innerHTML = '';
+  let initiative=initiatives[i];
+
+  innerHTML += ` <tr>
+    <td onmouseover="showIcons('.OpenIconinitiatives${i}${j}')" onmouseout="removeIcons('.OpenIconinitiatives${i}${j}')">
+            <div style="display: flex;align-items: center;gap:40px">
+            <div style="display: flex;gap:8px;align-items: center;">
+          
+            <input type="text" value="${initiative[j].title}" placeholder="Enter sub key result " style="border:none;border-radius:6px;" onchange="changeinitiativesdata('${i}','${j}','title',event.target.value)">
+          </div>
+          <div class="OpenIconinitiatives${i}${j}" style="display: none;align-items: center;gap:8px;color: var(--gray-500, #667085);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 20px;">
+            <img src="../Project icons/maximize.svg">
+            Open
+            </div>
+            </div>
+          </td>
+
+<td id="AssignedTo${i}-${j}" style="max-width: 200px; overflow: hidden; display: flex; align-items: center; gap: 8px; white-space: nowrap;" data-target='#selectinitiativesTeamemployee' data-toggle="modal" onclick="changeinitiativesIndex('${i}','${j}');MarkSelectedinitiativesEmployee()">
+${initiative[j].teams?.length === 0 ?
+  `<div style="display: flex; width: 32px; height: 32px; padding: 6px; justify-content: center; align-items: center; flex-shrink: 0; border-radius: 200px; background: var(--primary-50, #F9F5FF);" >
+     <img src="../Performance dashboard Icons/Empty_User.svg">
+   </div>Not Assigned yet`
+  : ''}
+</td>
+
+<td>
+<div onclick="changeinitiativesIndex('${i}','${j}')" style="padding: 5px 12px; border-radius: 16px;" id="initiativestatus${i}-${j}" data-toggle="dropdown" aria-expanded="false">
+ <div class="Status_completed">On Track</div>
+</div>
+<div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="initiativestatus${i}-${j}">
+  <div class="StatusBox">Open</div>
+  <div class="StatusBox" onclick="Changeinitiativestatus('On Track')">
+    <div class="Status_completed">On Track</div>
+  </div>
+  <div class="StatusBox" onclick="Changeinitiativestatus('At risk')">
+    <div class="Status_progress">At risk</div>
+  </div>
+  <div class="StatusBox" onclick="Changeinitiativestatus('Off Track')">
+    <div class="Status_hold">Off Track</div>
+  </div>
+  <div class="StatusBox">Closed</div>
+  <div class="StatusBox" onclick="Changeinitiativestatus('Achieved')">
+    <div class="Status_completed">Achieved</div>
+  </div>
+  <div class="StatusBox" onclick="Changeinitiativestatus('Partial')">
+    <div class="Status_progress">Partial</div>
+  </div>
+  <div class="StatusBox" onclick="Changeinitiativestatus('Missed')">
+    <div class="Status_hold">Missed</div>
+  </div>
+  <div class="StatusBox" onclick="Changeinitiativestatus('Dropped')">
+    <div class="Status_notStarted">Dropped</div>
+  </div>
+</div>
+</td>
+
+<td><input type="date" onchange="changeinitiativesdata('${i}','${j}','endDate',event.target.value)" value="${initiatives[j].timePeriod?.endDate}" style="border-radius: 6px;"></td>
+
+
+<td onmouseover="showIcons('.EditMatrixIocn${i}-${j}')" onmouseout="removeIcons('.EditMatrixIocn${i}-${j}')">
+<div style="display: flex; align-items: center; gap: 8px;">
+  <div style="display: flex; flex-direction: column; gap: 6px;">
+    <div style="display: flex;
+          width: 19px;
+          height: 13px;
+          flex-direction: column;
+          justify-content: center;
+          color: var(--gray-500, #667085);
+          
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 28px;  margin-left:0%;" id="ProgressBarCV${i}-${j}">0%</div>
+         <div class="ProgressKeyResult">
+           <div class="progress__bar" style="width: 0%;" id="ProgressBar${i}-${j}"></div>
+         </div>
+         <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+         <div style="display: flex;
+         width: 19px;
+         height: 13px;
+         flex-direction: column;
+         justify-content: center;
+         color: var(--gray-500, #667085);
+         
+         font-size: 12px;
+         font-style: normal;
+         font-weight: 500;
+         line-height: 28px; /* 233.333% */" id="ProgressBarIV${i}-${j}">0%</div>
+          <div style="display: flex;
+          width: 19px;
+          height: 13px;
+          flex-direction: column;
+          justify-content: center;
+          color: var(--gray-500, #667085);
+          
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 28px; /* 233.333% */" id="ProgressBarTV${i}-${j}"> 100%</div>
+         </div>
+        </div>
+    <img src="../Project icons/Edit.svg" style="display: none;" class="EditMatrixIocn${i}-${j}" data-target="#initiativesEditprogresssettings" data-toggle="modal" onclick="changeinitiativesIndex('${i}','${j}');setInitiativesMatrixModel()">
+  </div>
+</div>
+</td>
+</tr>
+`
+
+Clicktoaddnewinitiatives.insertAdjacentHTML('beforebegin', innerHTML);
+  CreateinitiativesDataApi(i,j)
+}
+    function setInitiativesMatrixModel ()
+    {let type=initiatives[subkrindex][initiativesIndex].matrix.type
+      document.getElementById('initiativesMatrixTypeModal').innerHTML=type=='%'?'Percentage':type=='₹'?'Currency':'Numerical';
+      document.getElementById('initiativesStartingMatrixValueModal').value=initiatives[subkrindex][initiativesIndex].matrix.startingValue;
+      document.getElementById('initiativesCurrentMatrixValueModal').value=initiatives[subkrindex][initiativesIndex].matrix.currentValue;
+      document.getElementById('initiativesTargetMatrixValueModal').value=initiatives[subkrindex][initiativesIndex].matrix.targetValue;
+    }
+    function setSubKrMatrixModel()
+    { let type=subkrs[subkrindex].matrix.type;
+      document.getElementById('MatrixTypeModal').innerHTML=type=='%'?'Percentage':type=='₹'?'Currency':'Numerical';
+      document.getElementById('StartingMatrixValueModal').value=subkrs[subkrindex].matrix.startingValue;
+      document.getElementById('CurrentMatrixValueModal').value=subkrs[subkrindex].matrix.currentValue;
+      document.getElementById('TargetMatrixValueModal').value=subkrs[subkrindex].matrix.targetValue;
+    }
+    function SetinitiativesTeamImages(teams) {
+      teams=GiveUniqueEmployees(teams)
+  let teamsImage = document.getElementById('AssignedTo'+subkrindex+'-'+initiativesIndex)
+  let innerhtml = SetTeams(teams);
+   teamsImage.innerHTML = innerhtml;
+}
+
+function MarkSelectedinitiativesEmployee() {
+  let employees = document.querySelectorAll('.initiativesEmployees');
+  let employee_icons = document.querySelectorAll('.initiativesEmployeesIcons');
+  for (let employeeId of employees) {
+    if (employeeId.classList.contains('selected')) {
+      employeeId.classList.remove('selected');
+    }
+  }
+  for (let employeeId of employee_icons) {
+    if (employeeId.style.display == 'flex') {
+      employeeId.style.display = 'none';
+    }
+  }
+  for (let employees of initiatives[subkrindex][initiativesIndex].teams) {
+    let employee_box = document.getElementById('initiativesEmployee-' + employees.id);
+    if (employee_box && !employee_box.classList.contains('selected')) {
+      employee_box.classList.add('selected');
+      let employee_icons = document.getElementById('initiativeselectIcon-' + employees.id);
+      employee_icons.style.display = 'flex';
+    }
+  }
+}
+
+function MarkSelectedinitiativesEmployeeinModal(name, employeeId, employees) {
+  if (employees == 'team') {
+    for (let team of teams) {
+      if (team._id == employeeId) {
+        employees = team.employees;
+        break;
+      }
+    }
+  }
+  let employee_box = document.getElementById('initiativesEmployee-' + employeeId);
+  if (employee_box.classList.contains('selected')) {
+    employee_box.classList.remove('selected');
+    let employee_icons = document.getElementById('initiativeselectIcon-' + employeeId);
+    employee_icons.style.display = 'none';
+    initiatives[subkrindex][initiativesIndex].teams =initiatives[subkrindex][initiativesIndex].teams.filter((employee) => employee.id != employeeId);
+  } else {
+    employee_box.classList.add('selected');
+    let employee_icons = document.getElementById('initiativeselectIcon-' + employeeId);
+    employee_icons.style.display = 'flex';
+    initiatives[subkrindex][initiativesIndex].teams.push({ title: name, employees: employees, id: employeeId });
+  }
+  CreateinitiativesDataApi(subkrindex,initiativesIndex)
+}
+
+async function SaveinitiativesEmployee() {
+  SetinitiativesTeamImages(initiatives[subkrindex][initiativesIndex].teams)
+}
+
+function filterAndSortModalinitiativesEmployees(searchText) {
+
+  const filteredEmployees = currentemployeeList.filter((employee) => {
+    return employee.displayName.toLowerCase().includes(searchText);
+  });
+
+  // Sort the filtered employees so that matches come first
+  filteredEmployees.sort((a, b) => {
+    const aName = a.displayName.toLowerCase();
+    const bName = b.displayName.toLowerCase();
+    return aName.indexOf(searchText) - bName.indexOf(searchText);
+  });
+  const filteredTeams = teams.filter((team) => {
+    return team.title.toLowerCase().includes(searchText);
+  });
+
+  // Sort the filtered employees so that matches come first
+  filteredTeams.sort((a, b) => {
+    const aName = a.title.toLowerCase();
+    const bName = b.title.toLowerCase();
+    return aName.indexOf(searchText) - bName.indexOf(searchText);
+  });
+  filteredEmployees =filteredTeams.concat(filteredEmployees)
+  updateinitiativesEmployeeList(filteredEmployees);
+}
+
+function updateinitiativesEmployeeList(employeeList) {
+
+  employeeListContainer = document.getElementById('initiativesEmployeesModalBody');
+  employeeListContainer.innerHTML = '';
+ 
+  for (const employee of employeeList) {
+    let employeeElement = '';
+    if (!employee.employees)
+      employeeElement = createEmployeeElement(employee);
+    else
+      employeeElement = createTeamElement(employee);
+    employeeListContainer.innerHTML += employeeElement;
+  }
+  MarkSelectedinitiativesEmployee()
+}
+
+function createinitiativesEmployeeElement(employee) {
+  return `  <div onclick="MarkSelectedinitiativesEmployeeinModal('${employee.displayName}','${employee._id}',['${employee._id}'])" style="display: flex;
+    padding: 16px 24px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex: 1 0 0;
+    align-self: stretch;" id="initiativesEmployee-${employee._id}" class="Employees">
+      <div style="position: relative;display: none;" id="initiativeselectIcon-${employee._id}" class="initiativesEmployeesIcons">
+        <div>
+          <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+        width: 20px;
+        height: 20px;
+        padding: 3px;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: -70px;
+        top: -8px;
+        border-radius: 30.001px;
+        background: var(--brand-primary, #48BF84);">
+        </div>
+      </div>
+      <img style="display: flex;
+   width: 40px;
+   height: 40px;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   border-radius: 200px;" src="${employee.image}">
+      <div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+        <div style="color: var(--text-content-primary, #181818);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">${employee.displayName}</div>
+        <div style="color: var(--text-content-secondary, #898989);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">${employee.team}</div>
+      </div>
+
+    </div>`
+}
+
+function createsinitiativesTeamElement(team) {
+  let x=''
+  x+= `  <div onclick="MarkSelectedinitiativesEmployeeinModal('${team.title}','${team._id}','team')" style="display:flex;
+    padding: 16px 24px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex: 1 0 0;
+    align-self: stretch;" id="initiativesEmployee-${team._id}" class="initiativesEmployees">
+      <div style="position: relative;display: none;" id="initiativeselectIcon-${team._id}" class="initiativesEmployeesIcons">
+        <div>
+          <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+        width: 20px;
+        height: 20px;
+        padding: 3px;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: -70px;
+        top: -8px;
+        border-radius: 30.001px;
+        background: var(--brand-primary, #48BF84);">
+        </div>
+      </div>
+      <img style="display: flex;
+             width: 40px;
+             height: 40px;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;
+             border-radius: 200px;" src="../Performance dashboard Icons/teams_icon.svg">
+      <div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+        <div style="color: var(--text-content-primary, #181818);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">${team.title}</div>
+        <div style="display: -webkit-box;
+               width: 85px;
+               -webkit-box-orient: vertical;
+               -webkit-line-clamp: 1;
+               overflow: hidden;
+               color: var(--text-content-secondary, #898989);
+               text-overflow: ellipsis;
+               
+               font-size: 14px;
+               font-style: normal;
+               font-weight: 600;
+               line-height: normal;
+                                   ">`
+for(let employeeId of team.employees) {
+                 x+=EmployeeMap.get(employeeId).firstName +','
+                     }
+              x+=`</div>
+          </div>
+
+        </div>`
+        return x;
+}
+
+function GiveUniqueEmployees(employeesList)
+{
+  console.log(employeesList)
+let uniqueEmployees=[];
+ let teamEmployeesMap=new Map();
+ for(let team of employeesList)
+ {
+  if(!team.employees)
+  {
+    if(!teamEmployeesMap.has(team._id.toString()))
+    {
+      teamEmployeesMap.set(team._id.toString(),team._id.toString());
+      uniqueEmployees.push(team._id.toString());
+    }
+  }
+  else{
+    for(let employeeid of team.employees)
+    {
+      if(!teamEmployeesMap.has(employeeid.toString()))
+    {
+      teamEmployeesMap.set(employeeid.toString(),employeeid);
+      uniqueEmployees.push(employeeid);
+    }
+    }
+  }
+ }
+ return uniqueEmployees;
+}
+
+
+    function changeinitiativesIndex(i,j) {
+      subkrindex = parseFloat(i);
+      initiativesIndex = parseFloat(j);
+    }
+    function Changeinitiativestatus(initiativestatus) {
+      let element=CheckStatus(initiativestatus)
+      document.getElementById("initiativestatus" + subkrindex+'-'+initiativesIndex).innerHTML = element
+      initiatives[subkrindex][initiativesIndex].status = initiativestatus;
+      CreateinitiativesDataApi(subkrindex,initiativesIndex)
+    }
+    
+    function SaveinitiativesMeasurments() {
+  let matrixType = document.getElementById("initiativesMatrixTypeModal").innerText;
+  if(matrixType=='Percentage')
+      matrixType='%';
+      else if(matrixType=='Currency')
+      matrixType='₹';
+      else if(matrixType=='Numerical')
+     matrixType=''
+  let startingMatrixValue = document.getElementById("initiativesStartingMatrixValueModal").value;
+  let currentMatrixValue = document.getElementById("initiativesCurrentMatrixValueModal").value;
+  let targetMatrixValue = document.getElementById("initiativesTargetMatrixValueModal").value;
+  initiatives[subkrindex][initiativesIndex].matrix = { type: matrixType, startingValue: startingMatrixValue, currentValue: currentMatrixValue, targetValue: targetMatrixValue }
+  let matrixCV = document.getElementById('ProgressBarCV' + subkrindex +'-'+initiativesIndex);
+  let matrixIV = document.getElementById('ProgressBarIV' + subkrindex+'-'+initiativesIndex);
+  let matrixTV = document.getElementById('ProgressBarTV' + subkrindex+'-'+initiativesIndex);
+  let matrixBar = document.getElementById('ProgressBar' + subkrindex+'-'+initiativesIndex);
+  matrixCV.innerHTML = currentMatrixValue + matrixType;
+  matrixIV.innerHTML = startingMatrixValue + matrixType;
+  matrixTV.innerHTML = targetMatrixValue + matrixType;
+  let Percentage_ = (currentMatrixValue - startingMatrixValue) / (targetMatrixValue - startingMatrixValue) * 100;
+  
+  Percentage_ = Math.min(100, Math.max(0, Percentage_));
+  
+  matrixBar.style.width = Percentage_ + '%';
+  matrixCV.style.marginLeft = Percentage_ + '%';
+  CreateinitiativesDataApi(subkrindex,initiativesIndex)
+}
+    
+function changeinitiativesdata(index,index2,type,value)
+{
+  if(type == 'endDate')
+  {
+    initiatives[index][index2].timePeriod.endDate=value;
+  }
+ else
+ initiatives[index][index2][type]=value;
+ CreateinitiativesDataApi(index,index2);
+}
+    async function CreateinitiativesDataApi(i,j) {
+      try {
+        let res = await fetch('/create/task', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(initiatives[i][j])
+        })
+        res=await res.json();
+        initiatives[i][j]._id=res._id;
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+  
+
+   
+
+  </script>
+ 
+  <!-- Include JavaScript files -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <script src="../js/purpose.core.js"></script>
+  <!-- Page JS -->
+  <script src="../libs/autosize/dist/autosize.min.js"></script>
+
+  <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+  <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+  <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="../libs/moment/min/moment.min.js"></script>
+
+  <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+  <!-- Purpose JS -->
+  <script src="../js/purpose.js"></script>
+  <!-- Demo JS - remove it when starting your project -->
+  <script src="../js/demo.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+
+
+
+</body>
+
+</html>

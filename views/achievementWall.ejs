@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <meta name="author" content="Webpixels" />
+  <title>Trainity - Admin Panel</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+  <!-- Purpose CSS -->
+  <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+
+  <link rel="stylesheet" href="../libs/fullcalendar/dist/fullcalendar.min.css" />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../assets/libs/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+        /* @keyframes progress {
+  0% { --percentage: 0; }
+  100% { --percentage: var(--value); }
+}
+
+@property --percentage {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+} */
+    :root {
+      --surfaceprimary: rgba(255, 255, 255, 1);
+      --shadow-sm: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1);
+      --gray-900: rgba(16, 24, 40, 1);
+      --white: rgba(255, 255, 255, 1);
+      --gray-300: rgba(208, 213, 221, 1);
+      --gray-700: rgba(52, 64, 84, 1);
+      --blue-500: rgba(46, 144, 250, 1);
+      --blue-50: rgba(239, 248, 255, 1);
+      --blue-100: rgba(209, 233, 255, 1);
+      --success-500: rgba(18, 183, 106, 1);
+      --gray-200: rgba(234, 236, 240, 1);
+      --warning-500: rgba(247, 144, 9, 1);
+      --warning-50: rgba(255, 250, 235, 1);
+      --warning-100: rgba(254, 240, 199, 1);
+      --gray-500: rgba(102, 112, 133, 1);
+      --gray-50: rgba(249, 250, 251, 1);
+      --success-600: rgba(3, 152, 85, 1);
+      --success-25: rgba(246, 254, 249, 1);
+      --primary-600: rgba(0, 74, 173, 1);
+      --warning-700: rgba(181, 71, 8, 1);
+      --blue-700: rgba(23, 92, 211, 1);
+      --primary-700: rgba(105, 65, 198, 1);
+      --primary-50: rgba(249, 245, 255, 1);
+      --success-100: rgba(209, 250, 223, 1);
+      --success-50: rgba(236, 253, 243, 1);
+     
+      --text-md-normal-font-weight: 400;
+      --text-md-normal-font-size: 16px;
+      --text-md-normal-letter-spacing: 0px;
+      --text-md-normal-line-height: 24px;
+      --text-md-normal-font-style: normal;
+  
+      --text-sm-medium-font-weight: 500;
+      --text-sm-medium-font-size: 14px;
+      --text-sm-medium-letter-spacing: 0px;
+      --text-sm-medium-line-height: 20px;
+      --text-sm-medium-font-style: normal;
+    
+      --text-xs-medium-font-weight: 500;
+      --text-xs-medium-font-size: 12px;
+      --text-xs-medium-letter-spacing: 0px;
+      --text-xs-medium-line-height: 18px;
+      --text-xs-medium-font-style: normal;
+      --shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+      --gray-300: rgba(208, 213, 221, 1);
+      --gray-800: rgba(29, 41, 57, 1);
+      --gray-400: rgba(152, 162, 179, 1);
+      --gray-600: rgba(71, 84, 103, 1);
+
+      --gray-700: rgba(52, 64, 84, 1);
+      --gray-800: rgba(29, 41, 57, 1);
+      --gray-50: rgba(249, 250, 251, 1);
+      --success-50: rgba(236, 253, 243, 1);
+      --warning-50: rgba(255, 250, 235, 1);
+      --white: rgba(255, 255, 255, 1);
+     
+      --text-xs-medium-font-weight: 500;
+      --text-xs-medium-font-size: 12px;
+      --text-xs-medium-letter-spacing: 0px;
+      --text-xs-medium-line-height: 18px;
+      --text-xs-medium-font-style: normal;
+      --shadow-lg: 0px 4px 6px -2px rgba(16, 24, 40, 0.03), 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
+
+
+    }
+
+    .rating-status {
+      display: flex;
+      padding: 4px 8px;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+      color: var(--content-on-light-primary, #181818);
+font-size: 10px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+    }
+    .circle {
+      display: flex;
+      padding: 10px 4px;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      align-self: stretch;
+      border-radius: 8px;
+      font-size: 10px;
+      border: 1px dashed var(--ref-primary-primary-60-brand, #ECECEC);
+    }
+    .big {
+      border-radius: 8px;
+      /* border: 1px solid var(--brand-primary, #48BF84);
+      background: var(--pill-surface-trainity, #F2FAF6); */
+    }
+  
+    .small {
+      border-radius: 8px;
+      /* border: 1px dashed var(--stroke-primary, #ECECEC);
+      background: var(--surface-primary, #FFF); */
+    }
+  
+    .current_day {
+      border: 1px dashed var(--warning-400, #FDB022);
+      background: var(--warning-25, #FFFCF5);
+    }
+  
+    .perv_day {
+      border: 1px dashed var(--pill-text-red, #FF6565);
+      background: var(--error-50, #FEF3F2);
+    }
+  
+    .complete_day {
+      border: 1px dashed var(--ref-primary-primary-60-brand, #48BF84);
+      background: var(--ref-primary-primary-99, #F5FFF5);
+    }
+    .text-red-14-700{
+      color: #FF6565;
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+    }
+    .streak-dates-box{
+      max-width: max(32vw,475px);
+    display: flex;
+    padding: 16px;
+    height: 200px;
+    align-items: flex-start;
+    border-radius: 8px;
+    background: #FFF;
+    box-shadow: 0px 0px 0px 4px #F2F4F7, 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+}
+
+  
+    .daily-task-card {
+      border: 1px solid #ececec;
+      border-radius: 14px;
+      padding: 20px 24px;
+    }
+  
+    .golden-rating-status {
+      border-radius: 14px;
+      background: linear-gradient(129deg, #FBE6A2 0%, #FFFCF3 34.55%, #FBEECA 66.59%, #FEFAEB 100%);
+    }
+  
+    .skyblue-rating-status {
+      border-radius: 14px;
+      background: var(--pill-surface-trainity, #F2FAF6);
+    }
+  
+    .orange-rating-status {
+      border-radius: 14px;
+      background: var(--pill-surface-orange, #FFFBEB);
+    }
+  
+    .red-rating-status {
+      border-radius: 14px;
+      background: var(--pill-text-red, #FF6565);
+    }
+
+
+[role="progressbar"] {
+  --percentage: var(--value);
+ --primary:#48bf84;
+ --secondary:#F2F4F7;
+  --width: 280px;
+  --height: 154px;
+  animation: progress 2s 0.5s forwards;
+  width: var(--width);
+  height: var(--height);
+  aspect-ratio: 2 / 1;
+  border-radius: 50% / 100% 100% 0 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+[role="progressbar"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(from 0.75turn at 50% 100%, var(--primary) calc(var(--percentage) * 1% / 2), var(--secondary) calc(var(--percentage) * 1% / 2 + 0.1%));
+  mask: radial-gradient(at 50% 100%, white 55%, transparent 55.5%);
+  mask-mode: alpha;
+  -webkit-mask: radial-gradient(at 50% 100%, #0000 55%, #000 55.5%);
+  -webkit-mask-mode: alpha;
+}
+
+[role="progressbar"]::after {
+  counter-reset: percentage var(--value);
+  content: counter(percentage) ;
+  color: var(--gray-900, #101828);
+text-align: center;
+font-size: 48px;
+font-style: normal;
+font-weight: 500;
+line-height: 60px; /* 125% */
+letter-spacing: -0.96px;
+}
+
+    body {
+      font-family: 'Manrope', sans-serif !important;
+    }
+
+    .frame {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      position: relative;
+    }
+
+    .frame .div {
+      align-items: flex-start;
+      gap: 16px;
+      padding: 24px;
+      background-color: var(--surfaceprimary);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      position: relative;
+      flex: 1;
+      align-self: stretch;
+      flex-grow: 1;
+    }
+
+    .frame .badges {
+      position: relative;
+      width: 56px;
+      height: 56px;
+    }
+
+    .frame .overlap-group {
+      position: relative;
+      width: 63px;
+      height: 63px;
+      top: -3px;
+      left: -3px;
+      background-color: #02b478;
+      border-radius: 31.44px;
+      border: 3.44px solid;
+      border-color: #ffffff;
+    }
+
+    .frame .mask-group {
+      position: absolute;
+      width: 56px;
+      height: 56px;
+      top: 0;
+      left: 0;
+    }
+
+    .frame .img {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      top: 16px;
+      left: 16px;
+      object-fit: cover;
+    }
+
+    .frame .div-2 {
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      display: flex;
+      position: relative;
+      flex: 1;
+      align-self: stretch;
+      flex-grow: 1;
+    }
+
+    .frame .text-wrapper {
+      position: relative;
+      align-self: stretch;
+      margin-top: -1px;
+      font-weight: 600;
+      color: #181818;
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: 16px;
+    }
+
+    .frame .p {
+      position: relative;
+      flex: 1;
+      align-self: stretch;
+
+      color: #77879c;
+      font-size: 12px;
+      letter-spacing: 0;
+      line-height: 16px;
+    }
+
+    .frame .div-3 {
+      align-items: center;
+      gap: 16px;
+      padding: 24px;
+      background-color: var(--surfaceprimary);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      position: relative;
+      flex: 1;
+      align-self: stretch;
+      flex-grow: 1;
+    }
+    .streakcount-line {
+      width: 35.32px;
+      height: 1px;
+      margin-top: 65px;
+      border: 1px dashed #999;
+      margin-bottom: 10px;
+    }
+    .streakcount-box{
+    display: flex;
+flex-direction: column;
+align-items: flex-start;
+  }
+   
+    .frame .overlap-group-2 {
+      background-color: #3b82f6;
+      position: relative;
+      width: 63px;
+      height: 63px;
+      top: -3px;
+      left: -3px;
+      border-radius: 31.44px;
+      border: 3.44px solid;
+      border-color: #ffffff;
+    }
+
+    .frame .overlap-group-3 {
+      background-color: #a7b9d2;
+      position: relative;
+      width: 63px;
+      height: 63px;
+      top: -3px;
+      left: -3px;
+      border-radius: 31.44px;
+      border: 3.44px solid;
+      border-color: #ffffff;
+    }
+
+
+
+
+    .framePro {
+      display: flex;
+      width: 261.43px;
+      align-items: center;
+      position: relative;
+    }
+
+    .framePro .group-wrapper {
+      gap: 13.16px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .framePro .group {
+      position: relative;
+      width: 46.06px;
+      height: 46.05px;
+    }
+
+    .framePro .overlap-group {
+      position: relative;
+      width: 53px;
+      height: 53px;
+      top: -3px;
+      left: -3px;
+      background-color: #8b5cf6;
+      border-radius: 26.32px;
+      border: 3.29px solid;
+      border-color: #ffffff;
+    }
+
+    .framePro .mask-group {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      top: 0;
+      left: 0;
+    }
+
+    .framePro .img {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 13px;
+      left: 13px;
+      object-fit: cover;
+    }
+
+    .framePro .div-wrapper {
+      gap: 13.16px;
+      margin-left: -17.14px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .framePro .div {
+      background-color: #02b478;
+      position: relative;
+      width: 53px;
+      height: 53px;
+      top: -3px;
+      left: -3px;
+      border-radius: 26.32px;
+      border: 3.29px solid;
+      border-color: #ffffff;
+    }
+
+    .framePro .group-wrapper-2 {
+      gap: 12.34px;
+      margin-left: -17.14px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .framePro .overlap-group-2 {
+      background-color: #22d3ee;
+      position: relative;
+      width: 53px;
+      height: 53px;
+      top: -3px;
+      left: -3px;
+      border-radius: 26.32px;
+      border: 3.29px solid;
+      border-color: #ffffff;
+    }
+
+    .framePro .group-wrapper-3 {
+      justify-content: center;
+      gap: 13.98px;
+      margin-left: -17.14px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .framePro .overlap-group-3 {
+      background-color: #fed843;
+      position: relative;
+      width: 53px;
+      height: 53px;
+      top: -3px;
+      left: -3px;
+      border-radius: 26.32px;
+      border: 3.29px solid;
+      border-color: #ffffff;
+    }
+
+    .framePro .overlap-wrapper {
+      position: relative;
+      width: 46.05px;
+      height: 46.05px;
+      margin-left: -17.14px;
+    }
+
+    .framePro .overlap {
+      position: relative;
+      width: 46px;
+      height: 46px;
+    }
+
+    .framePro .ellipse {
+      position: relative;
+      width: 53px;
+      height: 53px;
+      top: -3px;
+      left: -3px;
+      background-color: var(--white);
+      border-radius: 26.32px;
+      border: 3.29px solid;
+      border-color: var(--gray-200);
+    }
+
+    .framePro .number {
+      position: absolute;
+      top: 7px;
+      left: 11px;
+      font-weight: 600;
+      color: var(--gray-900);
+      font-size: 19.7px;
+      letter-spacing: 0;
+      line-height: 31.3px;
+      white-space: nowrap;
+    }
+
+    .semicircle {
+      width: 100px;
+      /* Adjust the width and height as needed */
+      height: 50px;
+      /* Half of the desired width to create a semicircle */
+      background-color: transparent;
+      border: 2px solid #000;
+      /* 40% stroke */
+      border-top-left-radius: 100px;
+      /* Half of the width to create a semicircle */
+      border-top-right-radius: 100px;
+      /* Half of the width to create a semicircle */
+      position: relative;
+      text-align: center;
+    }
+
+    /* Center the text vertically and horizontally */
+    .semicircle p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+    }
+
+    .frameFeedback {
+      display: flex;
+      padding: 12px;
+      align-items: flex-start;
+      gap: 15px;
+      align-self: stretch;
+      border-radius: 8px;
+      border: 1px solid var(--gray-300, #D0D5DD);
+      background: #FFF;
+    }
+
+    .frameFeedback .text-wrapper {
+      width: fit-content;
+      margin-top: -1px;
+      
+      font-weight: 500;
+      color: var(--gray-400);
+      font-size: 12px;
+      letter-spacing: 0.06px;
+      white-space: nowrap;
+      position: relative;
+      line-height: 24px;
+    }
+
+    .frameFeedback .p {
+      align-self: stretch;
+      height: 47.82px;
+      text-overflow: ellipsis;
+      font-weight: 400;
+      color: var(--gray-600);
+      font-size: 14px;
+      letter-spacing: 0.07px;
+      position: relative;
+      line-height: 24px;
+    }
+.p{
+  overflow:hidden;
+}
+    .month {
+      display: flex;
+      min-width: 171px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 19px;
+      cursor: pointer;
+      border-radius: 8px;
+      background: #FFF;
+      /* Shadow/xs */
+      box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    }
+
+    .metric-item {
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      align-self: stretch;
+      border-radius: 8px 8px 0px 0px;
+      background: var(--White, #FFF);
+    }
+
+    .green {
+      background-color: #48bf84;
+      color: white;
+    }
+    .heading {
+      color: var(--gray-700, #344054);
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 24px;
+      /* 133.333% */
+    }
+
+    .frameGraph {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 36px;
+      position: relative;
+      background-color: #ffffff;
+    }
+
+    .frameGraph .heading-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+      align-self: stretch;
+      width: 100%;
+      flex: 0 0 auto;
+    }
+
+    .frameGraph .heading {
+      position: relative;
+      width: fit-content;
+      margin-top: -1px;
+      
+      font-weight: 600;
+      color: var(--gray-700);
+      font-size: 18px;
+      letter-spacing: 0;
+      line-height: 24px;
+      white-space: nowrap;
+    }
+
+    .frameGraph .group {
+      position: relative;
+      width: 682px;
+      height: 417.39px;
+
+      border-left: 3px solid #667085;
+      border-bottom: 3px solid #667085;
+    }
+
+    .frameGraph .overlap {
+      position: absolute;
+      width: 666px;
+      height: 389px;
+      top: 0;
+      left: 4px;
+      background-image: url(./img/line-199.svg);
+      background-size: 100% 100%;
+    }
+
+    .frameGraph .div {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      position: relative;
+      left: 2px;
+    }
+
+    .frameGraph .group-2 {
+      position: relative;
+      width: 605.62px;
+      height: 108px;
+      margin-right: -2px;
+    }
+
+    .frameGraph .overlap-group {
+      position: absolute;
+      width: 584px;
+      height: 48px;
+      top: 40px;
+      left: 0;
+      background: linear-gradient(180deg, rgb(152.07, 161.97, 178.92) 0%, rgb(234, 236, 240) 100%);
+    }
+
+    .frameGraph .img {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      top: 8px;
+      left: 544px;
+    }
+
+    .frameGraph .text {
+      position: absolute;
+      top: 88px;
+      left: 6px;
+      font-weight: 500;
+      color: var(--gray-700);
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: 20px;
+      white-space: nowrap;
+    }
+
+    .frameGraph .tooltip {
+      left: 564px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .frameGraph .content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 8px 12px;
+      position: relative;
+      align-self: stretch;
+      width: 100%;
+      flex: 0 0 auto;
+      background-color: var(--gray-50);
+      border-radius: 8px;
+    }
+
+    .frameGraph .text-wrapper {
+      position: relative;
+      width: fit-content;
+      margin-top: -1px;
+      font-size: var(--text-xs-medium-font-size);
+      text-align: center;
+      line-height: var(--text-xs-medium-line-height);
+      font-weight: var(--text-xs-medium-font-weight);
+      color: var(--gray-700);
+      letter-spacing: var(--text-xs-medium-letter-spacing);
+      white-space: nowrap;
+      font-style: var(--text-xs-medium-font-style);
+    }
+
+    .frameGraph .tooltip-2 {
+      position: relative;
+      width: 16px;
+      height: 6px;
+    }
+
+    .frameGraph .group-3 {
+      position: relative;
+      width: 539.62px;
+      height: 108.86px;
+    }
+
+    .frameGraph .avatar-wrapper {
+      position: absolute;
+      width: 517px;
+      height: 48px;
+      top: 41px;
+      left: 0;
+      background: linear-gradient(180deg, rgb(72, 191, 132) 0%, rgb(209, 250, 223) 100%);
+    }
+
+    .frameGraph .avatar {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      top: 8px;
+      left: 477px;
+      border-radius: 290.91px;
+      background-image: url(./img/avatar.png);
+      background-size: cover;
+      background-position: 50% 50%;
+    }
+
+    .frameGraph .text-2 {
+      position: absolute;
+      top: 89px;
+      left: 6px;
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 500;
+      color: var(--gray-700);
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .frameGraph .tooltip-3 {
+      left: 498px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .frameGraph .div-wrapper {
+      background-color: var(--success-50);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 8px 12px;
+      position: relative;
+      align-self: stretch;
+      width: 100%;
+      flex: 0 0 auto;
+      border-radius: 8px;
+    }
+
+    .frameGraph .group-4 {
+      position: relative;
+      width: 406.62px;
+      height: 107.71px;
+    }
+
+    .frameGraph .overlap-2 {
+      position: absolute;
+      width: 675px;
+      height: 88px;
+      top: 0;
+      left: 0;
+    }
+
+    .frameGraph .rectangle {
+      position: absolute;
+      width: 384px;
+      height: 48px;
+      top: 40px;
+      left: 0;
+    }
+
+    .frameGraph .avatar-2 {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      top: 48px;
+      left: 344px;
+      border-radius: 290.91px;
+      background-image: url(./img/avatar.svg);
+      background-size: cover;
+      background-position: 50% 50%;
+    }
+
+    .frameGraph .tooltip-4 {
+      left: 365px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .frameGraph .content-2 {
+      background-color: var(--warning-50);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 8px 12px;
+      position: relative;
+      align-self: stretch;
+      width: 100%;
+      flex: 0 0 auto;
+      border-radius: 8px;
+    }
+
+    .frameGraph .navbar {
+      display: flex;
+      width: 682px;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: absolute;
+      top: 407px;
+      left: 0;
+    }
+
+    .frameGraph .text-wrapper-2 {
+      position: relative;
+      width: fit-content;
+      margin-top: -1px;
+      font-weight: 500;
+      color: var(--gray-800);
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: 20px;
+      white-space: nowrap;
+    }
+    .Great{
+      color: var(--blue-500, #2E90FA);
+      background: var(--blue-50, #EFF8FF);
+    }
+    .Pending{
+      background: var(--gray-50, #F9FAFB);
+     
+color: var(--gray-500, #667085);
+    }
+    .Medium{
+      background: var(--warning-50, #FFFAEB);
+      color: var(--warning-500, #F79009);
+    }
+    .Great_img{
+      color: var(--blue-500, #2E90FA);
+      border: 16.072px solid var(--blue-50, #EFF8FF);
+background: var(--blue-100, #D1E9FF);
+    }
+    .Pending_img{
+      border: 16.072px solid var(--gray-50, #F9FAFB);
+background: var(--gray-100, #F2F4F7);
+color: var(--gray-500, #667085);
+    }
+    .Medium_img{
+      color: var(--warning-500, #F79009);
+      border: 16.073px solid var(--warning-50, #FFFAEB);
+background: var(--warning-100, #FEF0C7);
+    }
+  </style>
+
+  <!-- Hotjar Tracking Code for Admin Website -->
+  <script>
+    (function(h, o, t, j, a, r) {
+      h.hj = h.hj || function() {
+        (h.hj.q = h.hj.q || []).push(arguments)
+      };
+      h._hjSettings = {
+        hjid: 3534926,
+        hjsv: 6
+      };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script');
+      r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  </script>
+
+</head>
+
+<body class="application application-offset" style="margin-left:300px;width: calc(100vw - 300px);background: var(--gray-50, #F9FAFB);" id="MainPageContent">
+  <!-- Chat modal -->
+
+  <!-- Application container -->
+  <div>
+    <!-- Sidenav -->
+    <%- include('partials/sidepanel'); -%>
+    <!-- Content -->
+    <div class="main-content position-relative" style="margin-top: 10px;">
+      <div style="display: flex;flex-direction: column;padding: 32px;gap:32px;">
+        <div style="display: flex;
+    width: 100%;
+    align-items: flex-start;
+    gap: 23px;">
+          <div style="display: flex;
+      width:440px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      border-radius: 12px;
+      align-self: stretch;" class="card">
+            <div style="width: 100%;display: flex; padding: 16px 24px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 16px;">
+              <div style="display: flex;align-items: center;gap:16px;">
+                <img src="<%=employee.image%>" style="display: flex;
+      width: 80px;
+      height: 80px;
+      border-radius: 80px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;">
+                <div style="display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;">
+                  <div style="color: var(--text-content-primary, #181818);
+      
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;">
+                    <%= employee.displayName%>
+                  </div>
+                  <div style="color: var(--text-content-secondary, #898989);
+      
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;">
+                    <%= employee.team%>
+                  </div>
+                  <div style="background: black;
+                    border-radius: 12px;
+                    display: flex;
+                    width: 53px;
+                    height: 19.945px;
+                    flex-direction: column;
+                    justify-content: center;
+                    color: #FFF;
+                    text-align: center;
+                    font-size: 11px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 11px;">
+                    Level  <%= employee.currentLevel%>
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex;align-items: center;gap:12px;">
+                <div style="display: flex;
+                  align-items: center;
+                  gap: 12px;">
+                  <div style="color: var(--gray-700, #344054);
+                  
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 500;
+                  line-height: 24px; /* 171.429% */">Avg. Rating</div>
+                  <div style="color: var(--gray-900, #101828);
+                  text-align: right;
+                  
+                  font-size: 20px;
+                  font-style: normal;
+                  font-weight: 700;
+                  line-height: 38px; /* 190% */">  <% if(user.rating.cnt===0) { %>
+                            0.0
+                            <% } else { %>
+                            <%= Math.round((user.rating.value/user.rating.cnt)*100)/100 %>
+                            <% } %>
+                             <img src="../img/filled-star.svg" style="width: 24px;height: 24px;"></div>
+                </div>
+                <div style="display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 12px;">
+                  <div style="color: var(--gray-700, #344054);
+                    
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 24px; /* 171.429% */">Total badges earned</div>
+                  <div style="color: var(--gray-900, #101828);
+                    text-align: right;
+                    
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 38px; /* 190% */"><%=employee.badges%> <img src="../img/gem.svg" style="width: 24px;height: 24px;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div style="display: flex;
+    padding: 12px 16px;
+    float: right;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    border-radius: 0px 0px 8px 8px;
+border-top: 1px solid var(--gray-200, #EAECF0);
+background: var(--White, #FFF);
+    align-self: stretch;">
+
+              <div style="color: var(--success-500, #12B76A);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */">View More</div>
+            </div> -->
+          </div>
+          <div style="display: flex;
+            padding: 12px 0px 4px 0px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+            flex: 1 0 0;
+            overflow-x:hidden ;
+            width: calc(100% - 450px);
+            align-self: stretch;
+            border-radius: 12px;">
+            <div style="flex: 1 0 0;
+              color: #363636;
+              font-size: 20px;
+              font-style: normal;
+              font-weight: 700;
+              line-height: 22px; /* 110">Badges Earned</div>
+            
+              <% if(true){%>
+                <div style="display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 16px;
+                align-self: stretch;">
+<div style="color: #363636;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 22px; ">You haven't received any skill badges yet"</div>
+<div style="width: 465.734px;
+color: #363636;
+text-align: center;
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: 135%; /* 24.3px */
+letter-spacing: 0.18px;
+">Keep up the great work, submit those tasks, and you'll receive well-deserved skill badges.</div>
+</div>
+                <%}else{%>
+                  <div class="frame">
+              <div class="div" style="width: 250px;height:111px">
+                <div class="badges">
+                  <div class="overlap-group">
+                    <img class="img" src="../img/Skill badge icons/MVP.svg" />
+                  </div>
+                </div>
+                <div class="div-2">
+                  <div class="text-wrapper">Visionary</div>
+                  <p class="p">for demonstrating forward-thinking and planning abilities.</p>
+                </div>
+              </div>
+              <div class="div-3" style="width: 250px;height:111px">
+                <div class="badges">
+                  <div class="overlap-group-2">
+                    <img class="img" src="../img/Skill badge icons/MVP.svg" />
+                  </div>
+                </div>
+                <div class="div-2">
+                  <div class="text-wrapper">Visionary</div>
+                  <p class="p">for demonstrating forward-thinking and planning abilities.</p>
+                </div>
+              </div>
+              <div class="div" style="width: 250px;height:111px">
+                <div class="badges">
+                  <div class="overlap-group-3">
+                    <img class="img" src="../img/Skill badge icons/The Ultimate Team Player.svg" />
+                  </div>
+                </div>
+                <div class="div-2">
+                  <div class="text-wrapper">Visionary</div>
+                  <p class="p">for demonstrating forward-thinking and planning abilities.</p>
+                </div>
+              </div>
+            </div>
+              <%}%>
+          
+            <div style="display: flex;
+              padding: 8px 0px;
+              justify-content: flex-end;
+              align-items: flex-start;
+              gap: 4px;
+              cursor: pointer;
+              align-self: stretch;" data-target="#AllBadges" data-toggle='modal'>
+              <div style="color: var(--success-500, #12B76A);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */">View all badges</div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex;
+           width:100%;
+           flex-direction: column;
+            ">
+          <div style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="flex: 1 0 0;
+color: #363636;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 22px; ">Projects</div>
+            <select style="display: flex;
+padding: 10px 14px;
+align-items: center;
+gap: 8px;
+align-self: stretch;
+border-radius: 8px;
+border: 1px solid var(--gray-300, #D0D5DD);
+background: var(--White, #FFF);
+/* Shadow/xs */
+box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+              <option value="All">All</option>
+            </select>
+          </div>
+          <div style="display: flex;
+width:100%;
+ align-items: flex-end;
+ align-content: flex-end;
+ gap: 16px;
+ flex-wrap: wrap;">
+ <% if(false) { %>
+  <div style="height:60vh;display: flex;flex-direction:column; align-items: center;justify-content: center;gap:16px;width: 100%;">
+  <img src="../img/Skill badge icons/No Approved Projects Yet.svg">
+  <div style="color: #363636;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 110% */">No Approved Projects Yet</div>
+  <div style="color: #363636;
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  width: min(600px,80%);
+  line-height: 135%; /* 24.3px */
+  letter-spacing: 0.18px;"> Keep submitting your tasks under your projects,
+and your manager will approve the project once all the tasks are completed.</div>
+  </div>
+  <%}else{%>
+            <div style="display: flex;
+width: min(100vw,408px);
+flex-direction: column;
+align-items: flex-start;
+gap: 32px;
+flex-shrink: 0;
+border-radius: 12px;
+background: #FFF;
+/* Shadow/sm */
+box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);">
+              <img style="height: 220px;
+align-self: stretch;" src="../img/Skill badge icons/image 707.svg" />
+              <div style="display: flex;
+padding: 12px 16px;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;
+align-self: stretch;">
+                <div style="display: flex;gap:4px;align-items: center;">
+                  <img class="img" src="../img/Skill badge icons/calendar.svg" />
+                  <div style="color: var(--gray-500, #667085);
+
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 150% */">2 Aug -15 sep: 5 weeks</div>
+                </div>
+                <div style="display: flex;align-items: center;justify-content: space-between;">
+                  <div style="flex: 1 0 0;
+color: var(--gray-900, #101828);
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 30px; /* 150% */">
+                    Performance Management Roadmap
+                  </div>
+                  <img class="material-symbols" src="../img/Skill badge icons/material-symbols_verified-rounded.svg" />
+                </div>
+                <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 24px;
+align-self: stretch;">
+                  <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                    <div style="display: flex;
+width: 238.5px;
+align-items: center;
+gap: 16px;
+align-self: stretch;">
+                      <div style="display: flex;gap:4px;align-items: center;">
+                        <img class="img-3" src="../img/filled-star.svg" style="width: 27.602px;
+  height: 27.602px;" />
+                        <div style="color: var(--gray-900, #101828);
+  
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 38px; /">4.5</div>
+                      </div>
+                      <div style="display: flex;gap:4px;align-items: center;">
+                        <img class="img-3" src="../img/gem.svg" style="width: 27.602px;
+  height: 27.602px;" />
+                        <div style="color: var(--gray-900, #101828);
+  
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 38px; /">200</div>
+                      </div>
+                    </div>
+                    <div style="display: flex;
+padding: 4px 12px;
+justify-content: center;
+align-items: center;
+border-radius: 16px;
+color: var(--success-700, #027A48);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */
+background: var(--success-50, #ECFDF3);">
+                      Excellent
+                    </div>
+                  </div>
+                  <div class="framePro">
+                    <div class="group-wrapper">
+                      <div class="group">
+                        <div class="overlap-group">
+                          <img class="img" src="../img/Skill badge icons/Unstoppable Force.svg" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="div-wrapper">
+                      <div class="group">
+                        <div class="div">
+                          <img class="img" src="../img/Skill badge icons/Unstoppable Force.svg" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="group-wrapper-2">
+                      <div class="group">
+                        <div class="overlap-group-2">
+                          <img class="img" src="../img/Skill badge icons/Unstoppable Force.svg" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="group-wrapper-3">
+                      <div class="group">
+                        <div class="overlap-group-3">
+                          <img class="img" src="../img/Skill badge icons/Unstoppable Force.svg" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="overlap-wrapper">
+                      <div class="overlap">
+                        <div class="mask-group">
+                          <div class="ellipse"></div>
+                        </div>
+                        <div class="number">+4</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="frameFeedback">
+                  <img class="rectangle" src="<%=employee.image%>" style="width: 30.156px;border-radius: 30.156px;
+  height: 30.156px;">
+                  <div class="div">
+                    <div class="div-2">
+                      <div class="supporting-text">Rahul Gupta</div>
+                      <div class="text-wrapper">Manager</div>
+                    </div>
+                    <p class="p">
+                      Anshul’s super simplified, intuitive, minimal designs are delight to watch and&nbsp;&nbsp;gets the end task
+                      done with minimum steps
+                    </p>
+                  </div>
+                </div>
+                <div style="display: flex;
+height: 40px;
+padding: 10px 24px;
+justify-content: center;
+align-items: center;
+color: #48BF84;
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+gap: 8px;
+border-radius: 8px;
+border: 1px solid #48BF84;">
+                  View Project
+                </div>
+              </div>
+            </div>
+            <%}%>
+          </div>
+        </div>
+        <div style="display: flex;
+            width: 100%;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;">
+
+          <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+            <div style="flex: 1 0 0;
+                  color: #363636;
+                  font-size: 20px;
+                  font-style: normal;
+                  font-weight: 700;
+                  line-height: 22px; /* 110% */">Yearly Overview</div>
+            <select style="display: flex;
+                 padding: 10px 14px;
+                 align-items: center;
+                 gap: 8px;
+                 align-self: stretch;
+                 border-radius: 8px;
+                 border: 1px solid var(--gray-300, #D0D5DD);
+                 background: var(--White, #FFF);
+                 /* Shadow/xs */
+                 box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+                 ">
+              <option value="All">2021</option>
+            </select>
+          </div>
+
+          <div style="display: flex;align-items: center;gap:16px;overflow: auto;width: 100%;">
+            <% for(let i=0;i<months.length;i++) { %>
+            <div class="month" onclick="SetReportofMonth('<%=i+1%>')">
+              <div class="metric-item">
+                <div class="heading"><%=months[i].month%></div>
+              </div>
+              <div style="display: flex;
+                  padding: 4px 12px;
+                  justify-content: center;
+                  align-items: center;
+                  border-radius: 16px;
+                    text-align: center;
+                   
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 20px; /* 142.857% */
+                    " class=" <%=months[i].status%>"><%=months[i].status%>
+              </div>
+              <div style="display: flex;
+                  width: 90.004px;
+                  height: 90.004px;
+                  padding: 22.501px;
+                  justify-content: center;
+                  align-items: center;
+                  
+                  border-radius: 45.002px;
+                 " class="<%=months[i].status%>_img"><img src="../img/Skill badge icons/<%=months[i].status%>.svg" /></div>
+              <div style="color: var(--success-500, #12B76A);
+                border-radius: 0px 0px 8px 8px;
+border-top: 1px solid var(--gray-200, #EAECF0);
+display: flex;
+padding: 12px 16px;
+justify-content: center;
+align-items: center;
+gap: 20px;
+align-self: stretch;
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 500;
+                  line-height: 20px; /* 142.857% */">View Report</div>
+            </div>
+<%}%>
+          </div>
+        </div>
+        <div style="display: flex;flex-direction: column;gap:24px;">
+          <div style="color: #363636;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 22px; /* 110% */">Performance Insights - August</div>
+<% if(false) { %>
+  <div style="height:60vh;display: flex;flex-direction:column; align-items: center;justify-content: center;gap:16px;width: 100%;">
+  <img src="../img/Skill badge icons/Pending Monthly Performance Report.svg">
+  <div style="color: #363636;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 110% */">Pending Monthly Performance Report</div>
+    <div style="color: #363636;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    width: min(600px,80%);
+    line-height: 135%; /* 24.3px */
+    letter-spacing: 0.18px;">   Stay tuned! Your performance report for the Current month is on its way..</div>
+
+  <div style="color: #363636;
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  width: min(600px,80%);
+  line-height: 135%; /* 24.3px */
+  letter-spacing: 0.18px;"> In the meantime, keep up the good work, and continue submitting your initiatives.
+Your efforts contribute to your overall performance.</div>
+  </div>
+  <%}else{%>
+          <div style="display: flex;justify-content: space-between;gap:24px">
+            <div style="display: flex;
+width: 380px;
+padding: 24px;
+flex-direction: column;
+gap: 24px;
+align-self: stretch;
+border-radius: 8px;
+background: #FFF;">
+              <div style="color: var(--gray-700, #344054);
+font-size: 18px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 133.333% */"><%=employee.firstName%> Score</div>
+              <div style="display: flex;
+width: 100%;
+flex-direction: column;
+align-items: center;
+gap: 24px;
+align-self: stretch;">
+<div role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="33" style="--value: 33" id="progressbar"></div>
+
+              </div>
+              <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                <div style="flex: 1 0 0;
+color: var(--ref-neutral-neutral-17, #282B28);
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 130%; ">Average monthly rating</div>
+                <div style="display: flex;align-items:center;gap:4px">
+                  <img src="../img/filled-star.svg" style="width: 24px;
+height: 24px;">
+                  <span id="performance_AvgRating">4.1</span>
+                </div>
+              </div>
+              <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                <div style="flex: 1 0 0;
+  color: var(--ref-neutral-neutral-17, #282B28);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%; ">Total Badges earned for Looms</div>
+                <div style="display: flex;align-items:center;gap:4px">
+                  <img src="../img/gem.svg" style="width: 24px;
+  height: 24px;">
+                  <span id="performance_Badges">412</span>
+                </div>
+              </div>
+              <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                <div style="flex: 1 0 0;
+    color: var(--ref-neutral-neutral-17, #282B28);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%; ">Leaves Taken</div>
+                <div style="display: flex;align-items:center;gap:4px" id="performance_Leaves">
+
+                  
+                </div>
+              </div>
+              <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                <div style="flex: 1 0 0;
+      color: var(--ref-neutral-neutral-17, #282B28);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 130%; ">Looms missed</div>
+                <div style="display: flex;align-items:center;gap:4px" id="performance_LoomsMissed">
+
+                  0
+                </div>
+              </div>
+
+              <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                <div style="flex: 1 0 0;
+          color: var(--ref-neutral-neutral-17, #282B28);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 130%; ">Performance Level</div>
+                <div style="display: flex;
+         padding: 4px 12px;
+         justify-content: center;
+         align-items: center;
+         border-radius: 16px;
+         background: var(--blue-50, #EFF8FF);">Great</div>
+              </div>
+            </div>
+            <div style="display: flex;flex-direction:column;gap:10px;align-item:flex-start">
+              <div class="frameGraph">
+                <div class="heading-wrapper">
+                  <div class="heading">Performance comparisions</div>
+                </div>
+                <div class="group">
+                  <div class="overlap">
+                    <div class="div">
+                      <div class="group-2">
+                        <div class="overlap-group"><img class="img" src="../img/Skill badge icons/ph_target.svg" /></div>
+                        <div class="text">Expected Performance</div>
+                        <div class="tooltip">
+                          <div class="content">
+                            <div class="text-wrapper">90</div>
+                          </div>
+                         
+                        </div>
+                      </div>
+                      <div class="group-3">
+                        <div class="avatar-wrapper" style="display: flex;justify-content: flex-end;align-items: center
+                        ;" >
+                          <img style="width: 32px;
+                          height: 32px;
+                          border-radius: 32px;
+                          margin-right: 10px;" src="<%=employee.image%>" />
+                        </div>
+                        <div class="text-2">Top performer</div>
+                        <div class="tooltip-3">
+                          <div class="div-wrapper" >
+                            <div class="text-wrapper">80</div>
+                          </div>
+                         
+                        </div>
+                      </div>
+                      <div class="group-4">
+                        <div class="overlap-2">
+                          <div class="rectangle" id="PerformanceScoreGraph" style="background: linear-gradient(270deg, #F79009 -0.04%, #FEEFC7 100%);display: flex;justify-content: flex-end;align-items: center
+              ;" >
+               <img style="width: 32px;
+               height: 32px;
+               border-radius: 32px;
+               margin-right: 10px;" src="<%=employee.image%>" />
+              </div>
+                          <div class="avatar-2"></div>
+                          <div class="tooltip-4">
+                            <div class="content-2">
+                              <div class="text-wrapper" id="PerformanceScoreEmployee">60</div>
+                            </div>
+                           
+                          </div>
+                        </div>
+                        <div class="text"><%=employee.firstName%> Performance</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="navbar">
+                    <div class="text-wrapper-2">0</div>
+                    <div class="text-wrapper-2">10</div>
+                    <div class="text-wrapper-2">20</div>
+                    <div class="text-wrapper-2">30</div>
+                    <div class="text-wrapper-2">40</div>
+                    <div class="text-wrapper-2">50</div>
+                    <div class="text-wrapper-2">60</div>
+                    <div class="text-wrapper-2">70</div>
+                    <div class="text-wrapper-2">80</div>
+                    <div class="text-wrapper-2">90</div>
+                    <div class="text-wrapper-2">100</div>
+                  </div>
+                </div>
+              </div>
+              <div  style="display: inline-flex;
+            
+              padding: 24px;
+              flex-direction: column;
+              align-items: flex-start;
+              flex-shrink: 0;
+      
+              border-radius: 10.277px;
+              background: #FFF;
+              /* Shadow/sm */
+              box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);">
+<div style="color: var(--gray-700, #344054);
+font-size: 18px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 133.333% */">Monthly Overview</div>
+<div id="streak-count" style="display: flex;align-items: flex-start;flex-wrap: wrap;gap:10px 0px;">
+
+</div>
+              </div>
+            </div>
+          </div>
+          <%}%>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+<!-- Badges Modal -->
+
+<div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="AllBadges"
+  aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="border-radius: 12px;">
+      <div class="modal-header" style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+        <div style="color: var(--gray-900, #101828);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;">All Badges</div>
+        <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+      </div>
+
+      <div class="modal-body" style="display: flex;background: #fafafa;
+      padding: 16px 32px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;">
+      <div style="display: flex;
+      width: 772px;
+      align-items: center;
+      align-content: center;
+      gap: 12px;
+      flex-wrap: wrap;">
+       <div style="display: flex;
+       width: 360px;
+       padding: 24px;
+       align-items: flex-start;
+       gap: 16px;
+       flex-shrink: 0;
+       background: var(--surface-primary, #FFF);">
+       <img src="../img/Skill badge icons/Game-Changer.svg">
+       <div >
+        <div style="align-self: stretch;
+        color: #181818;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%; /* 1">Game Changer</div>
+        <div style="height: 36px;
+        align-self: stretch;
+        color: #77879C;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px; /* 133.333% */
+        ">
+for having a major impact on the organization or project
+        </div>
+       </div>
+      </div>
+      <div style="display: flex;
+       width: 360px;
+       padding: 24px;
+       align-items: flex-start;
+       gap: 16px;
+       flex-shrink: 0;
+       background: var(--surface-primary, #FFF);">
+       <img src="../img/Skill badge icons/Game-Changer.svg">
+       <div >
+        <div style="align-self: stretch;
+        color: #181818;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%; /* 1">Game Changer</div>
+        <div style="height: 36px;
+        align-self: stretch;
+        color: #77879C;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px; /* 133.333% */
+        ">
+for having a major impact on the organization or project
+        </div>
+       </div>
+      </div>
+      <div style="display: flex;
+       width: 360px;
+       padding: 24px;
+       align-items: flex-start;
+       gap: 16px;
+       flex-shrink: 0;
+       background: var(--surface-primary, #FFF);">
+       <img src="../img/Skill badge icons/Game-Changer.svg">
+       <div >
+        <div style="align-self: stretch;
+        color: #181818;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%; /* 1">Game Changer</div>
+        <div style="height: 36px;
+        align-self: stretch;
+        color: #77879C;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px; /* 133.333% */
+        ">
+for having a major impact on the organization or project
+        </div>
+       </div>
+      </div>
+      <div style="display: flex;
+       width: 360px;
+       padding: 24px;
+       align-items: flex-start;
+       gap: 16px;
+       flex-shrink: 0;
+       background: var(--surface-primary, #FFF);">
+       <img src="../img/Skill badge icons/Game-Changer.svg">
+       <div >
+        <div style="align-self: stretch;
+        color: #181818;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%; /* 1">Game Changer</div>
+        <div style="height: 36px;
+        align-self: stretch;
+        color: #77879C;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px; /* 133.333% */
+        ">
+for having a major impact on the organization or project
+        </div>
+       </div>
+      </div>
+      <div style="display: flex;
+       width: 360px;
+       padding: 24px;
+       align-items: flex-start;
+       gap: 16px;
+       flex-shrink: 0;
+       background: var(--surface-primary, #FFF);">
+       <img src="../img/Skill badge icons/Game-Changer.svg">
+       <div >
+        <div style="align-self: stretch;
+        color: #181818;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%; /* 1">Game Changer</div>
+        <div style="height: 36px;
+        align-self: stretch;
+        color: #77879C;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px; /* 133.333% */
+        ">
+for having a major impact on the organization or project
+        </div>
+       </div>
+      </div>
+      <div style="display: flex;
+       width: 360px;
+       padding: 24px;
+       align-items: flex-start;
+       gap: 16px;
+       flex-shrink: 0;
+       background: var(--surface-primary, #FFF);">
+       <img src="../img/Skill badge icons/Game-Changer.svg">
+       <div >
+        <div style="align-self: stretch;
+        color: #181818;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%; /* 1">Game Changer</div>
+        <div style="height: 36px;
+        align-self: stretch;
+        color: #77879C;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px; /* 133.333% */
+        ">
+for having a major impact on the organization or project
+        </div>
+       </div>
+      </div>
+    </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+  <script>
+
+function getCurrentDay() {
+     let days = 0;
+     let streakCountHTML = "";
+     let today = new Date();
+    today= new Date(today.getTime() + today.getTimezoneOffset() * 60000); // Convert to GMT
+
+     const year = today.getFullYear();
+     let month = today.getMonth() + 1;
+     let day = today.getDate();
+
+
+     if (month < 10) {
+       month = `0${month}`;
+     }
+     if (day < 10) {
+       day = `0${day}`;
+     }
+
+     today = {
+       date: `${year}-${month}-${day}`
+     };
+     return today;
+   }
+
+   function SetReportofMonth(selectedMonth) {
+     let streakDays;
+     fetch('/streakmonth/' + selectedMonth + '/' + '<%=employee._id%>')
+       .then(response => response.json())
+       .then(data => {
+         streakDays = data.streakdays;
+        //  let today = getCurrentDay();
+       let today=new Date();
+         SetStreakDates('streak-count', streakDays);
+         let avgRating=0,totalBadges=0,totalLeaves=0,totalLoomMissed=0,count=0;
+         for(let data of streakDays){
+          if(data.rating>0)
+          count++;
+           avgRating+=data.rating;
+           totalBadges+=data.badges;
+           if(data.onLeave)
+           totalLeaves++;
+           else if(data.date>today.date)
+           totalLoomMissed+=4- data.countTaskStatus;
+         }
+document.getElementById('performance_Leaves').innerText=totalLeaves;
+document.getElementById('performance_LoomsMissed').innerText=totalLoomMissed;
+document.getElementById('performance_AvgRating').innerText=count==0?0:(avgRating/count).toFixed(2);
+document.getElementById('performance_Badges').innerText=totalBadges;
+let performanceScore=(10*(count==0?0:(avgRating/count))+(50/(2*count) *totalBadges)).toFixed(0);
+if(totalLoomMissed>5)
+{
+  performanceScore-=(totalLoomMissed/2);
+}
+if(totalLeaves>6)
+{
+  performanceScore-=(totalLeaves*3);
+}
+
+document.getElementById('progressbar').style.setProperty('--value',performanceScore);
+document.getElementById('PerformanceScoreGraph').style.width=performanceScore+'%';
+document.getElementById('PerformanceScoreEmployee').innerText=performanceScore;
+const element = document.getElementsByClassName('tooltip-4')[0]; // Access the first (and only) element
+
+// Set the 'left' property for the element
+element.style.left = performanceScore + '%';
+const progressBars = document.querySelectorAll('[role="progressbar"]');
+
+// Loop through the progress bars and modify the --primary color variable
+progressBars.forEach((progressBar) => {
+  // Modify the --primary color variable to your desired color
+  let color;
+  if(performanceScore<10)
+  color='#D92D20'
+  else if(performanceScore<30)
+  color='#F04438';
+  else if(performanceScore<40)
+  color='#EC4A0A';
+  else if(performanceScore<50)
+  color='#FB6514';
+  else if(performanceScore<60)
+  color='#FD853A';
+  else if(performanceScore<70)
+  color='#FDB022';
+  else if(performanceScore<80)
+  color=' #30885C';
+  else 
+  color='#48BF84';
+  progressBar.style.setProperty('--primary',color );
+});
+        //  let longestStreak = 0;
+        //  let shortestStreak = 30;
+        //  let currentStreak = 0;
+        //  let totalRating = 0;
+        //  let totalBadges = 0;
+        //  let streakrewards = 0;
+        //  let streakStart = null;
+        //  let streakEnd = null;
+        //  let currentdays = 0;
+        //  for (let i = 0; i < streakDays.length; i++) {
+        //    if (streakDays[i].date <= today.date)
+        //      currentdays++;
+        //    totalRating += streakDays[i].rating;
+        //    totalBadges += streakDays[i].badges;
+        //    if (streakDays[i].isdone) {
+        //      currentStreak++;
+        //      if (currentStreak > longestStreak) {
+        //        longestStreak = currentStreak;
+        //      }
+        //    } else {
+
+        //      if (currentStreak > 0) {
+        //        if (currentStreak < shortestStreak) {
+        //          shortestStreak = currentStreak;
+        //        }
+        //        currentStreak = 0;
+        //      }
+        //    }
+        //    if (currentStreak == 3)
+        //      streakrewards += 3;
+        //    else if (currentStreak == 5)
+        //      streakrewards += 7;
+        //    else if (currentStreak == 10)
+        //      streakrewards += 15;
+        //    else if (currentStreak == 15)
+        //      streakrewards += 22;
+        //    else if (currentStreak == 23)
+        //      streakrewards += 32;
+        //  }
+
+        //  const averageRating = totalRating / currentdays;
+        //  totalBadges += streakrewards;
+
+        //  const modaltotalBadges = document.getElementById('modal-total-badges');
+        //  const modalavgrating = document.getElementById('modal-rating-avg')
+        //  const modalministreak = document.getElementById('modal-mini-streak')
+        //  const modalmaxistreak = document.getElementById('modal-maxi-streak')
+        //  const modalstreakrewards = document.getElementById('modal-streak-rewards');
+        //  const modalStreakMonth = document.getElementById('modal-streak-month');
+        //  modalStreakMonth.innerHTML = `Total Badges Earned in ${months[Number(selectedMonth) - 1]}`
+        //  modaltotalBadges.innerHTML = `${totalBadges} <img src="../img/gem.svg" style='width:24px'>`
+        //  modalavgrating.innerHTML = `${averageRating.toFixed(2)}  <img src="../img/icons performance mgmt/desktop/d_star_full.svg"/>`
+        //  modalministreak.innerHTML = `${shortestStreak == 30 ? 0 : shortestStreak} Days`;
+        //  modalmaxistreak.innerHTML = `${longestStreak} days`
+        //  modalstreakrewards.innerHTML = `${streakrewards} Badges`
+
+       })
+       .catch(error => {
+         // Handle any errors
+         console.error(error);
+       });
+   }
+
+   function SetStreakDates(id, streakDays) {
+     let days = 0;
+     let today = getCurrentDay();
+     streakCountHTML = '';
+     let container = document.getElementById(id);
+     let dayToStartNextWeek = 0;
+     let weekNo = 0;
+     let ClassAdded = false;
+     for (let i = 0; i < streakDays.length; i++) {
+
+       let date = new Date(streakDays[i].date);
+       if (date.getDay() != 1)
+         dayToStartNextWeek++;
+       else
+         break;
+     }
+     if (dayToStartNextWeek == 0)
+       dayToStartNextWeek = 5;
+     for (let i = 0; i < streakDays.length; i++) {
+       let styleblendmode = streakDays[i].ratingReviewStatus == 'Pending' ? '' : 'luminosity'
+
+       if (streakDays[i].isdone || streakDays[i].date >= today.date) {
+         days += 1;
+       } else {
+         days = 0;
+       }
+
+       let ratingClass = 'rating-status'
+       let rating = streakDays[i].rating ? streakDays[i].rating : 0;
+       let starpath = "../img/black_star.svg"
+       if (rating != 0) {
+         if (rating >= 4.5) {
+           ratingClass += ' golden-rating-status'
+         } else if (rating >= 3.5) {
+           ratingClass += ' skyblue-rating-status'
+         } else if (rating >= 2.5) {
+           ratingClass += ' orange-rating-status'
+         } else {
+           starpath = '../img/white_star.svg'
+           ratingClass += ' red-rating-status'
+         }
+       }
+       let taskStatus = streakDays[i].taskStatus;
+       let taskStatusSrc = '';
+       let taskDivClass = '';
+
+       if (streakDays[i].date < today.date) {
+         taskDivClass = 'perv_day';
+         for (let j = 1; j < 4; j++) {
+           if (!taskStatus[j] || taskStatus.length <= j) {
+             if (j === 1) {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sunrise_perv.svg';
+               break;
+             } else if (j === 2) {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sun_perv.svg';
+               break;
+             } else {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sunset_perv.svg';
+               break;
+             }
+           }
+         }
+         let tasksubmmitedcount = 0;
+         for (let i = 1; i < taskStatus.length; i++) {
+           if (taskStatus[i])
+             tasksubmmitedcount++;
+         }
+
+         if (taskStatusSrc == '' && (taskStatus.length == 4 || streakDays[i].rating > 0)) {
+           if (streakDays[i].rating > 0 && streakDays[i].rating >= 2.5 && streakDays[i].rating <= 3.5) {
+             taskDivClass = 'current_day';
+             taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_yellow.svg';
+           } else if (streakDays[i].rating > 0 && streakDays[i].rating < 2.5) {
+             taskDivClass = 'perv_day';
+             taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_red.svg';
+           } else {
+             taskDivClass = 'complete_day';
+             taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_green.svg';
+           }
+         } else if (taskStatusSrc == '' || tasksubmmitedcount <= 1) {
+           taskDivClass = 'perv_day';
+           taskStatusSrc = '../img/icons performance mgmt/desktop/Cross_red.svg';
+         }
+       } else if (streakDays[i].date === today.date) {
+         taskDivClass = 'current_day';
+         for (let j = 0; j < 4; j++) {
+           if (!taskStatus[j] || taskStatus.length <= j) {
+             if (j === 1) {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sunrise.svg';
+             } else if (j === 2) {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sun.svg';
+             } else {
+               taskStatusSrc = '../img/icons performance mgmt/desktop/sunset.svg';
+             }
+           }
+         }
+         if (taskStatusSrc == '' && taskStatus.length == 4) {
+           taskDivClass = 'complete_day';
+           taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_green.svg';
+         }
+       }
+
+       if (streakDays[i].onLeave) {
+         taskDivClass = 'perv_day';
+         taskStatusSrc = '../img/icons performance mgmt/desktop/Cross_red.svg';
+       }
+
+   
+
+       streakCountHTML += ` <div>
+    <div style="display: flex; gap: 5px; justify-content: center; align-items: flex-end; margin-bottom: 10px; width: 45px; height: 30px;">
+      ${streakDays[i].ratingReviewStatus !== '' ?
+            `<div style="
+          display: flex;
+          width: 16px;
+          height: 16px;
+          padding: 4px 0px;
+          justify-content: center;
+          align-items: center;
+          gap: 4px;
+          border-radius: 4px;
+          background: var(--indigo-50, #EEF4FF);  
+          mix-blend-mode: ${styleblendmode};
+        "> 
+          <img src="../img/icons performance mgmt/desktop/ratingReviewPerformance.svg" style="width: 20px;
+    height: 20px;">
+        </div>` : ''}
+      ${streakDays[i].onLeave? 
+              `<div 
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                color: #FF6565;
+                font-size: 10px;
+                font-weight: 500;
+                width:90px;
+              ">
+              ${streakDays[i].leaveType ? streakDays[i].leaveType + ' Leave' : ''}  
+            </div>`:''
+          }
+    </div>`
+
+       if (days == 3 || days == 5 || days == 10 || days == 15 || days == 23) {
+         if (streakDays[i].date > today.date) {
+           streakCountHTML += `
+            <div class="streakcount-box">
+              <div style="font-size: 14px; padding: 0px 4px;" class="circle small">
+                <div>+${days == 3 ? 3 : days == 5 ? 7 : days == 10 ? 15 : days == 15 ? 22 : days == 23 ? 32 : 0}<img src='../img/gem.svg'/></div>
+                <img src='../img/icons performance mgmt/desktop/Streak states_notDone.svg' style="width: 20px;
+    height: 20px;">
+                <div>${streakDays[i].date.slice(-2)}</div>
+              </div>
+              <div class=" ${ratingClass}" >${rating != 0 ? rating + `<img style="width:12px;margin-bottom:4px"  src=${starpath}>` : ''}</div>
+            </div>
+            </div>
+          `;
+         } else {
+           streakCountHTML += `
+            <div  class="streakcount-box">
+              <div style="font-size: 14px; padding: 0px 4px;  border-radius: 8px;
+border: 1px dashed var(--ref-primary-primary-60-brand, #48BF84);
+background: var(--surface-primary, #FFF);" class="circle big ${streakDays[i].isdone ? 'green' : 'text-green'}">
+                <div>+${days == 3 ? 3 : days == 5 ? 7 : days == 10 ? 15 : days == 15 ? 22 : days == 23 ? 32 : 0}<img src='../img/gem.svg'/></div>
+                <img src='../img/icons performance mgmt/desktop/Streak states.svg'style="width: 20px;
+    height: 20px;">
+                <div>${streakDays[i].date.slice(-2)}</div>
+              </div>
+              <div class=" ${ratingClass}" >${rating != 0 ? rating + `<img style="width:12px;margin-bottom:4px"  src=${starpath}>` : ''}</div>
+            </div>
+          </div>
+          `;
+         }
+
+         if (i + 1 != streakDays.length) {
+           streakCountHTML += `<div class="streakcount-line" style="border: 1px dashed #48BF84"></div>`;
+         }
+       } else {
+         streakCountHTML += `
+          <div class="streakcount-box" >
+            <div class="circle small ${streakDays[i].isdone ? 'green' : taskDivClass}">
+              <img src="${streakDays[i].isdone ? '../img/icons performance mgmt/desktop/Streak states.svg' : streakDays[i].date > today.date ? '../img/icons performance mgmt/desktop/Streak states_notDone.svg' : taskStatusSrc}" style="width: 20px;
+    height: 20px;">
+              <div>${streakDays[i].date.slice(-2)}</div>
+            </div>
+            <div class=" ${ratingClass}" >${rating != 0 ? rating + `<img style="width:12px;margin-bottom:4px" src=${starpath}>` : ''}</div>
+          </div>
+        </div>
+      </div>
+        `;
+
+         if (i + 1 != streakDays.length) {
+           if (streakDays[i].isdone) {
+             streakCountHTML += `<div class="streakcount-line" style="border: 1px dashed #48bf84"></div>`;
+           } else {
+             streakCountHTML += `<div class="streakcount-line" style="border: 1px dashed #999"></div>`;
+           }
+         }
+       }
+     }
+
+     container.innerHTML = streakCountHTML;
+
+   }
+    SetReportofMonth('09');
+  </script>
+  <script src="../js/purpose.core.js"></script>
+  <!-- Page JS -->
+  <script src="../libs/autosize/dist/autosize.min.js"></script>
+
+  <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+  <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+  <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="../libs/moment/min/moment.min.js"></script>
+
+  <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+  <!-- Purpose JS -->
+  <script src="../js/purpose.js"></script>
+  <!-- Demo JS - remove it when starting your project -->
+  <script src="../js/demo.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+
+
+
+</body>
+
+</html>

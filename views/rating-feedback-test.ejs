@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <meta name="author" content="Webpixels" />
+  <title>Trainity - Admin Panel</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+  <!-- Purpose CSS -->
+  <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="../libs/fullcalendar/dist/fullcalendar.min.css" />
+
+  <link rel="stylesheet" href="../../assets/libs/flatpickr/dist/flatpickr.min.css" />
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap" rel="stylesheet" />
+  <!-- Hotjar Tracking Code for Admin Website -->
+
+
+  <style>
+      body {
+      font-family: 'Manrope', sans-serif !important;
+    }
+    .selfratingdiv.disabled {
+      pointer-events: none;
+      /* Disable click events */
+      opacity: 0.5;
+      /* Make it visually look disabled */
+    }
+
+    .box {
+      box-sizing: border-box;
+
+      /* Auto layout */
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 10px 18px;
+      gap: 10px;
+      width: 500.5px;
+      height: 297px;
+      background: #ffffff;
+      /* Stroke/Secondary */
+
+      border: 1px solid #dcdcdc;
+      border-radius: 14px;
+    }
+
+    .p {
+      font-size: 10px;
+      margin-top: -5px;
+    }
+
+    .heading {
+      width: 140px;
+      height: 33px;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 33px;
+      color: #48bf84;
+      flex: none;
+      order: 0;
+      flex-grow: 0;
+    }
+
+    .box-heading {
+
+      font-style: normal;
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 16px;
+      /* identical to box height */
+
+      /* Text/Content/Primary */
+
+      color: #181818;
+    }
+
+    .box-body {
+      width: 432.5px;
+   
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 155%;
+      /* or 22px */
+
+      /* Text/Content/Primary */
+
+      color: #181818;
+    }
+
+    .child:not(:last-child)::after {
+      content: "";
+      width: 1px;
+      height: 50%;
+      background-color: black;
+      position: absolute;
+      right: 0;
+
+    }
+
+    .activeRatingReviewTab {
+      color: #48bf84;
+      padding-bottom: 10px;
+      width: 120px;
+      display: flex;
+      border-bottom: 1px solid #48bf84;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal1 {
+      box-sizing: border-box;
+
+      /* Auto layout */
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 24px;
+      gap: 24px;
+      isolation: isolate;
+
+      position: relative;
+      width: 513px;
+      height: 411px;
+      left: 3526.08px;
+      top: 1538.61px;
+
+      /* Surface/Primary */
+
+      background: #ffffff;
+      /* Stroke/Primary */
+
+      border: 1px solid #ececec;
+      border-radius: 14px;
+    }
+
+    .text-normal {
+      color: "#898989";
+    }
+
+    .text-success {
+      color: #48bf84;
+    }
+
+    .greentab {
+      color: #48bf84;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body class="application application-offset">
+  <!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="RatingInfoModal" tabindex="-1" role="dialog" aria-labelledby="modal-change-username"
+    aria-hidden="true" style="margin-left: 20px">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+      <div class="modal-content model-xl">
+        <div class="modal-header" style="    display: flex;
+        align-items: center;
+        gap: 20px;">
+          <div class="modal-title d-flex align-items-center" id="modal-title-change-username" style="
+                  display: flex;
+                  justify-content: space-between;
+                  width:100%;
+                ">
+              <div style="display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: flex-start;
+              gap: 6px;
+              flex: 1 0 0;">
+               <div style="
+
+               height: 27px;
+           
+               font-style: normal;
+               font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+               line-height: 27px;
+               color: #181818;
+             ">Rating and Feedback</div>
+                <div style="font-style: normal;
+                font-weight: 700;
+                font-size: 24px;
+                line-height: 33px;
+                color: #48bf84;" id="headingdate"></div>
+              </div>
+            <div style="display: flex; flex-direction: row; gap: 40px">
+              <div style="display: flex;
+                  padding: 16px;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-self: stretch;
+                  border-radius: 12px;
+                  border: 1px solid var(--stroke-secondary, #DCDCDC);">
+                <div style="font-size: 24px; font-weight: bold;color:black" id="RatingInfoModal_badges"></div>
+                <div style="
+                        width: 85px;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 12px;
+                        line-height: 16px;
+                        color: #181818;
+                      ">
+                  Badges Earned
+                </div>
+              </div>
+              <div  style="display: flex;
+                  padding: 16px;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 8px;
+                  border-radius: 12px;
+                  background: #122E20;">
+                <div id="RatingInfoModal_rating" style="display: flex;gap:5px;color: #FACC15;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 800;
+                line-height: normal;">
+                  <img src="../img/icons performance mgmt/desktop/d_star_empty.svg" />
+                </div>
+                <div style="
+                            width: 90px;
+                            height: 16px;
+                        
+                            font-style: normal;
+                            font-weight: 500;
+                            font-size: 12px;
+                            line-height: 16px;
+                            color: #edf1f5;
+                            flex: none;
+                            order: 1;
+                            flex-grow: 0;
+                          ">
+                  Today's Avarage
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+
+        </div>
+        <div class="modal-body " style="display: flex;border-radius: 14px;justify-content: space-between;padding:15px 30px;
+            background: var(--surface-secondary, #FAFAFA);">
+          <div class="card row" style="padding:20px;flex-direction: column;border-radius: 14px;
+              border: 1px solid var(--stroke-secondary, #DCDCDC);
+              background: var(--surface-primary, #FFF);max-width: 40%;">
+            <div style="font-size: 16px;font-weight: 700;color:black">Rating Breakdown</div>
+            <div style="font-size: 14px;margin-bottom: 30px;">Your Performance in Key Areas</div>
+            <div style="display: flex;flex-direction: column;gap:20px;width:300px;" id="AcutalRatingBox">
+
+              <div style="display: flex; justify-content: space-between">
+                <div>
+                  <h6>Work Size</h6>
+                </div>
+                <div id="ratingdive0">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div>
+                  <h6>Quality</h6>
+
+                </div>
+                <div id="ratingdive1">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div>
+                  <h6>Loom Uploads</h6>
+
+                </div>
+                <div id="ratingdive2">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div>
+                  <h6>Task Summary</h6>
+
+                </div>
+                <div id="ratingdive3">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div>
+                  <h6>Explanation Clarity</h6>
+
+                </div>
+                <div id="ratingdive4">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+            </div>
+            <div class="heading" id="RatingRequestButton" style="font-size: 14px;cursor:pointer" data-dismiss="modal"
+              data-target="#Rating-Review-modal-step1" data-toggle="modal">
+              <u> Request Review</u>
+            </div>
+          </div>
+          <div class="card row" style="border-radius: 14px;
+              border: 1px solid var(--stroke-secondary, #DCDCDC);
+              width:67%;
+              " id="feedback-modal">
+
+            <div class="box-heading">
+              <ul class="nav nav-tabs" style="margin:20px">
+                <li class="nav-item" onclick="ChanageFeedbackTab(1)">
+                  <div class="activeRatingReviewTab" id="FeedbackTab1">Feedback</div>
+                </li>
+                <li class="nav-item" onclick="ChanageFeedbackTab(2)">
+                  <div class="" id="FeedbackTab2">Actionable</div>
+                </li>
+              </ul>
+            </div>
+            <div class="box-body" id="feedback-box"
+              style="margin:10px;display:flex;flex-direction:column;width:100%;justify-content:center;align-items:center;height:60%">
+              <%performanceRecord.feedback%>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="container">
+            <h5 style="
+                    width: 117px;
+                    height: 22px;
+
+                
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 16px;
+                    line-height: 22px;
+                    /* identical to box height */
+
+                    /* Text/Content/Primary */
+
+                    color: #181818;
+                  ">
+              Day's Overview
+            </h5>
+            <div>
+              <div class="row" style="display: flex;
+                  justify-content: center;
+                  align-items: center;">
+                <div class="col child" style="flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;"
+                  style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+                  <div style="display: flex; flex-direction: row; gap: 10px">
+
+                    <img src="../img/icons performance mgmt/desktop/d_signin_done_disabled_big.svg"
+                      id="modal-sigin-img" />
+                    Sign In
+                  </div>
+                  <div class="text-black" id="modal-sigin-text" style=" margin-top: 5px">
+                    Incomplete
+                  </div>
+                </div>
+                <div class="col child" style="flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;">
+                  <div style="display: flex; flex-direction: row; gap: 10px;align-items: center;">
+                    <img src="../img/icons performance mgmt/desktop/d_tasks_done_disabled_big.svg"
+                      id="modal-task-img" />
+                    Tasks
+                  </div>
+                  <div class="text-normal" id="modal-task-text" style="margin-top: 5px">
+                    Check
+                  </div>
+                </div>
+                <div class="col child " style="flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;">
+                  <div style="display: flex; flex-direction: row; gap: 10px;align-items: center;">
+
+                    <img src="../img/icons performance mgmt/desktop/d_noon_done_disabled_big.svg" id="modal-noon-img">
+                    Noon Update
+                  </div>
+                  <div class="text-normal" id="modal-noon-text" style="margin-top: 5px">
+                    Check
+                  </div>
+                </div>
+                <div class="col child " style="flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;">
+                  <div style="display: flex; flex-direction: row; gap: 10px;align-items: center;">
+
+                    <img src="../img/icons performance mgmt/desktop/d_eod_disabled_big.svg" id="modal-eod-img" />
+                    EOD Update
+                  </div>
+                  <div class="text-normal" id="modal-eod-text" style="margin-top: 5px">
+                    Check
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!---rating review modal step 1-->
+  <div class="modal fade" id="Rating-Review-modal-step1" tabindex="-1" role="dialog"
+    aria-labelledby="Rating-Review-modal-step1" aria-hidden="true" style="margin-left: 20px">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+
+      <div class="modal-content model-xl">
+        <div class="modal-header" >
+          <div class="modal-title d-flex align-items-center" id="modal-title-change-username" style="
+                display: flex;
+                justify-content: space-between;
+               width:100%;
+              ">
+            <div>
+              
+                <div style="
+                    height: 27px;
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 20px;
+                    align-items: center;
+                    display: flex; gap:5px;
+                    line-height: 27px;
+                    color: #181818;
+                  ">Rating Review Request for
+               <span style="font-style: normal;
+               font-weight: 700;
+               font-size: 24px;
+               line-height: 33px;
+               color: #48bf84;" id="Rating-Review-modal-step1-date"></span>
+               </div>
+
+              </h4>
+              <div style="font-size: 16px;color:black;margin-bottom: -5px;">Step 1/2</div>
+              <div>Select Rating and rate yourself</div>
+            </div>
+
+            <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+
+          </div>
+        </div>
+        <div class="modal-body " style="display: flex;border-radius: 14px;justify-content: space-between;padding:15px 30px;
+          background: var(--surface-secondary, #FAFAFA);">
+          <div class="card row" style="padding:20px;flex-direction: column;border-radius: 14px;
+            border: 1px solid var(--stroke-secondary, #DCDCDC);width: 50%;">
+            <div style="font-size: 16px;font-weight: 700;color:black">Select the rating parameters you want to request a
+              review for*:</div>
+            <div style="display: flex;flex-direction: column;gap:20px;width:400px;margin-top:20px"
+              id="RatingReviewBody">
+              <div style="display: flex; justify-content: space-between">
+                <div style="display: flex;align-items: flex-start;gap:10px">
+                  <input type="checkbox" style="width: 20px;
+                      height: 24px;" onchange="ChangeVisiblity(this,5)">
+                  <h6>Select All</h6>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <div style="display: flex;align-items: flex-start;gap:10px">
+                  <input type="checkbox" style="width: 20px;
+                      height: 24px;" onchange="ChangeVisiblity(this,0)">
+                  <h6>Work Size</h6>
+                </div>
+                <div class="ratingdiv">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div style="display: flex;align-items: flex-start;gap:10px">
+                  <input type="checkbox" style="width: 20px;
+                      height: 24px;" onchange="ChangeVisiblity(this,1)">
+                  <h6>Quality</h6>
+
+                </div>
+                <div class="ratingdiv">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div style="display: flex;align-items: flex-start;gap:10px">
+                  <input type="checkbox" style="width: 20px;
+                      height: 24px;" onchange="ChangeVisiblity(this,2)">
+                  <h6>Loom Uploads</h6>
+
+                </div>
+                <div class="ratingdiv">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div style="display: flex;align-items: flex-start;gap:10px">
+                  <input type="checkbox" style="width: 20px;
+                      height: 24px;" onchange="ChangeVisiblity(this,3)">
+                  <h6>Task Summary</h6>
+
+                </div>
+                <div class="ratingdiv">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div style="display: flex;align-items: flex-start;gap:10px">
+                  <input type="checkbox" style="width: 20px;
+                      height: 24px;" onchange="ChangeVisiblity(this,4)">
+                  <h6>Explanation Clarity</h6>
+
+                </div>
+                <div class="ratingdiv">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card row" style="padding:20px;flex-direction: column;border-radius: 14px;
+            border: 1px solid var(--stroke-secondary, #DCDCDC);width: 50%;">
+            <div style="font-size: 16px;font-weight: 700;color:black">Please rate yourself on the Selected performance
+              parameters.</div>
+            <div style="display: flex;flex-direction: column;gap:20px;width:400px;margin-top:60px"
+              id="SelfRatingReviewBody">
+
+              <div style="display: flex; justify-content: space-between">
+                <div>
+                  <h6>Work Size</h6>
+                </div>
+                <div class="selfratingdiv disabled">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div>
+                  <h6>Quality</h6>
+
+                </div>
+                <div class="selfratingdiv disabled">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div>
+                  <h6>Loom Uploads</h6>
+
+                </div>
+                <div class="selfratingdiv disabled">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div>
+                  <h6>Task Summary</h6>
+
+                </div>
+                <div class="selfratingdiv disabled">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between">
+                <div>
+                  <h6>Explanation Clarity</h6>
+
+                </div>
+                <div class="selfratingdiv disabled">
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer" style="padding:0.4rem 1.25rem">
+          <button type="button" class="btn btn-outline-success" style="border-radius: 12px;width:140px"
+            data-dismiss="modal">Cancel</button>
+          <button type="button" id="SelfRatingModalButton1" class="btn btn-primary" disabled
+            style="border-radius: 12px;width:140px" data-dismiss="modal" data-target="#Rating-Review-modal-step2"
+            data-toggle="modal" id="S">Next</button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!---rating review modal step 2-->
+  <div class="modal fade" id="Rating-Review-modal-step2" tabindex="-1" role="dialog"
+    aria-labelledby="Rating-Review-modal-step2" aria-hidden="true" style="margin-left: 20px">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+
+      <div class="modal-content model-xl">
+        <div class="modal-header" >
+          <div class="modal-title d-flex align-items-center" id="modal-title-change-username" style="
+              display: flex;
+              justify-content: space-between;
+             width:100%;
+            ">
+            <div>
+             
+                <div style="
+                  height: 27px;
+                  font-style: normal;
+                  font-weight: 700;
+                  font-size: 20px;
+                  display: flex; gap:5px;
+                  align-items: center;
+                  line-height: 27px;
+                  color: #181818;
+                ">Rating Review Request for 
+                <span style="font-style: normal;
+                font-weight: 700;
+                font-size: 24px;
+                display: flex;
+                gap:5px;
+                line-height: 33px;
+                color: #48bf84;" id="Rating-Review-modal-step2-date"></span>
+</div>
+              <div style="font-size: 16px;color:black;margin-bottom: -5px;">Step 2/2</div>
+              <div>Provide justification and comments</div>
+            </div>
+
+            <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+
+          </div>
+        </div>
+        <div class="modal-body " style="display: flex;border-radius: 14px;justify-content: space-between;padding:15px;
+        background: var(--surface-secondary, #FAFAFA);">
+          <div style="display: flex;
+        padding: 20px 18px;
+        margin:15px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 9px;
+        flex: 1 0 0;
+        height:40vh;
+        background-color: white;
+                align-self: stretch;
+        border-radius: 14px;
+        border: 1px solid var(--stroke-secondary, #DCDCDC);">
+            <div style="color:black;
+          text-align: center;
+  
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;">Provide justification and comments for your self rating*</div>
+            <textarea oninput="SaveJustification(event)" value=""
+              placeholder="Let us know why you feel your rating should be revisited. Share any relevant details or challenges you faced."
+              style="width:100%;height:100%;display: flex;
+          padding: 16px;
+          align-items: flex-start;
+          gap: 10px;
+          flex: 1 0 0;
+          border:none;
+          align-self: stretch;
+          border-radius: 14px;
+          background: #FAFAFA;"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer"
+          style="padding:0.4rem 1.25rem;display: flex;align-items: center;justify-content: space-between;">
+          <div style="color: #48BF84;
+          text-align: center;
+  
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;" data-dismiss="modal" data-target="#Rating-Review-modal-step1" data-toggle="modal">
+            < Go Back </div>
+              <div style="display: flex;gap:10px;align-items: center;">
+                <button type="button" class="btn btn-outline-success" style="border-radius: 12px;width:140px"
+                  data-dismiss="modal">Cancel</button>
+                <button type="button" id="SelfRatingModalButton2" class="btn btn-primary" disabled
+                  style="border-radius: 12px;width:140px" data-dismiss="modal"
+                  onclick="SendReviewRatingRequest()">Submit</button>
+              </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+ 
+
+  <!---rating reviewed modal step 1-->
+  <div class="modal fade" id="Rating-Reviewed-modal-step1" tabindex="-1" role="dialog"
+    aria-labelledby="modal-change-username" aria-hidden="true" style="margin-left: 20px">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+      <div class="modal-content model-xl">
+        <div class="modal-header" style="align-items: center;display: flex;gap:20px;">
+          <div class="modal-title d-flex align-items-center" id="modal-title-change-username" style="
+            display: flex;
+            justify-content: space-between;
+            width:100%;
+          ">
+             <div style="display: flex;
+             flex-direction: column;
+             justify-content: center;
+             align-items: flex-start;
+             gap: 6px;
+             flex: 1 0 0;">
+             
+                <div style="
+                height: 27px;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 20px;
+                line-height: 27px;
+                color: #181818;
+              ">Rating Review Request Update</span>
+                <div  style="font-style: normal;
+                font-weight: 700;
+                font-size: 24px;
+                line-height: 33px;
+                color: #48bf84;" id="ratingreviwedheadingdate"></div>
+
+
+        </div>
+            </div>
+            
+            <div style="display: flex; flex-direction: row; gap: 40px">
+              <div style="display: flex;
+                  padding: 16px;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-self: stretch;
+                  border-radius: 12px;
+                  border: 1px solid var(--stroke-secondary, #DCDCDC);">
+                <div style="font-size: 24px; font-weight: bold;color:black" id="ratingreviwedbadges"></div>
+                <div style="
+                        width: 85px;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 12px;
+                        line-height: 16px;
+                        color: #181818;
+                      ">
+                  Badges Earned
+                </div>
+              </div>
+              <div  style="display: flex;
+                  padding: 16px;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 8px;
+                  border-radius: 12px;
+                  background: #122E20;">
+                <div id="ratingreviwedrating" style="display: flex;gap:5px;color: #FACC15;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 800;
+                line-height: normal;">
+                  <img src="../img/icons performance mgmt/desktop/d_star_empty.svg" />
+                </div>
+                <div style="
+                            width: 90px;
+                            height: 16px;
+                        
+                            font-style: normal;
+                            font-weight: 500;
+                            font-size: 12px;
+                            line-height: 16px;
+                            color: #edf1f5;
+                            flex: none;
+                            order: 1;
+                            flex-grow: 0;
+                          ">
+                  Today's Avarage
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+
+        </div>
+        <div class="modal-body " style="border-radius: 14px;padding:15px 30px;
+      background: var(--surface-secondary, #FAFAFA);">
+          <div style="flex: 1 0 0;
+      color: #000;
+      font-size: 16px;
+      margin-bottom: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      letter-spacing: -0.048px;" id="Rating-Reviewed-message">
+            Your review request has been reviewed by your manager, and considered your feedback. We have made the
+            following changes to the review.
+          </div>
+          <div style="display: flex;border-radius: 14px;justify-content: space-between;width:100%">
+            <div class="card row" style="padding:20px;flex-direction: column;border-radius: 14px;
+        border: 1px solid var(--stroke-secondary, #DCDCDC);width: 50%;">
+              <ul class="nav nav-tabs" style="margin:-10px 0px 20px 0px">
+                <li class="nav-item" onclick="ChanageRatingReviewedTab(1)">
+                  <div class="activeRatingReviewTab" id="RatingReviewTab1">Updated Rating</div>
+                </li>
+                <li class="nav-item" onclick="ChanageRatingReviewedTab(2)">
+                  <div class="" id="RatingReviewTab2">Self Rating</div>
+                </li>
+                <li class="nav-item" onclick="ChanageRatingReviewedTab(3)">
+                  <div id="RatingReviewTab3">Previous Rating</div>
+                </li>
+
+              </ul>
+
+              <div style="display: flex;flex-direction: column;gap:20px;" id="Rating-Reviewed-body">
+
+                <!-- <div style="display: flex; justify-content: space-between">
+              <div>
+                <h6>Avg. rating</h6>
+              </div>
+              <div id="ratingreviwedavgrating" style="color:black;font-size: 20px;"> 
+                
+              </div>
+            </div> -->
+                <div style="display: flex; justify-content: space-between">
+                  <div>
+                    <h6>Work Size</h6>
+                  </div>
+                  <div id="ratingdive0">
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between">
+                  <div>
+                    <h6>Quality</h6>
+
+                  </div>
+                  <div id="ratingdive1">
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between">
+                  <div>
+                    <h6>Loom Uploads</h6>
+
+                  </div>
+                  <div id="ratingdive2">
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between">
+                  <div>
+                    <h6>Task Summary</h6>
+                  </div>
+                  <div id="ratingdive3">
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between">
+                  <div>
+                    <h6>Explanation Clarity</h6>
+
+                  </div>
+                  <div id="ratingdive4">
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                    <i class="fas fa-star" size="20" style="color: #e6e6e6"></i>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class=" row" style="flex-direction: column;width: 50%;height:380px">
+              <div class="card col" id="rating-reviwed-feedback-modal" style="padding:20px 10px;border-radius: 14px;
+border: 1px solid var(--stroke-secondary, #DCDCDC);">
+                <div class="box-heading">
+                  <h5 class="card-title mb-0">
+                    Manager Feedback/Appracation
+                  </h5>
+                  <span class="text-muted text-sm">By <%= manager.firstName + " " + manager.lastName %></span>
+                </div>
+                <div class="box-body" id="feedback-box" style="margin:10px">
+                  <%performanceRecord.feedback%>
+                </div>
+              </div>
+              <div class="card col" id="rating-reviwed-feedback2-modal" style="padding:20px 10px;border-radius: 14px;
+          border: 1px solid var(--stroke-secondary, #DCDCDC);height:380px">
+                <div class="box-heading">
+                  <h5 class="card-title mb-0">
+                    Manager Feedback/Appracation
+                  </h5>
+                  <span class="text-muted text-sm">By <%= manager.firstName + " " + manager.lastName %></span>
+                </div>
+                <div class="box-body" id="feedback-box" style="margin:10px">
+                  <%performanceRecord.feedback%>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" data-dismiss="modal" style="padding:0.5rem" data-target="#Rating-Reviewed-modal-step2"
+          data-toggle="modal">
+          <button class="btn btn-success" style="border-radius:12px ;">Next</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!---rating reviewed modal step 2-->
+  <div class="modal fade" id="Rating-Reviewed-modal-step2" tabindex="-1" role="dialog"
+    aria-labelledby="Rating-Reviewed-modal-step2" aria-hidden="true" style="margin-left: 20px">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+      <div class="modal-content model-xl" >
+        <div class="modal-header" style="align-items: center;display: flex;gap:20px;">
+
+          
+          <div class="modal-title d-flex align-items-center" id="modal-title-change-username" style="
+          display: flex;
+          justify-content: space-between;
+          width:100%;
+        ">
+            <div style="display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 6px;
+            flex: 1 0 0;">
+             <div style="
+             height: 27px;
+             font-style: normal;
+             font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+             line-height: 27px;
+             color: #181818;
+           ">Rating Review Request Update</div>
+              <div style="font-style: normal;
+              font-weight: 700;
+              font-size: 24px;
+              line-height: 33px;
+              color: #48bf84;" id="ratingreviwedheadingdatestep2"></div>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 40px">
+              <div style="display: flex;
+              padding: 16px;
+              flex-direction: column;
+              justify-content: center;
+              align-self: stretch;
+              border-radius: 12px;
+              border: 1px solid var(--stroke-secondary, #DCDCDC);">
+            <div style="font-size: 24px; font-weight: bold;color:black" id="ratingreviwedbadgesstep2"></div>
+            <div style="
+                    width: 85px;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 12px;
+                    line-height: 16px;
+                    color: #181818;
+                  ">
+              Badges Earned
+            </div>
+          </div>
+              <div style="display: flex;
+                  padding: 16px;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 8px;
+                  border-radius: 12px;
+                  background: #122E20;">
+                <div style="display: flex;gap:5px;color: #FACC15;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 800;
+                line-height: normal;"  id="ratingreviwedratingstep2">
+                  <img src="../img/icons performance mgmt/desktop/d_star_empty.svg" />
+                </div>
+                <div style="
+                            width: 90px;
+                            height: 16px;
+                        
+                            font-style: normal;
+                            font-weight: 500;
+                            font-size: 12px;
+                            line-height: 16px;
+                            color: #edf1f5;
+                            flex: none;
+                            order: 1;
+                            flex-grow: 0;
+                          ">
+                  Today's Avarage
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+
+        </div>
+        <div class="modal-body " style="display: flex;flex-direction: column;gap:20px; border-radius: 14px;justify-content: space-between;padding:15px 30px;
+    background: var(--surface-secondary, #FAFAFA);">
+          <div style="display: flex;
+   padding: 20px 16px;
+   flex-direction: column;
+   align-items: flex-start;
+   gap: 12px;
+   align-self: stretch;
+   border-radius: 14px;
+   border: 1px solid var(--stroke-secondary, #DCDCDC);
+   background: var(--surface-primary, #FFF);">
+            <div style="color: black;font-size: 16px;">
+              Are you satisfied with the review outcome?
+            </div>
+            <div style="display: flex;align-items: center;gap:16px">
+              <div style="display: flex;
+   padding: 8px 16px;
+   cursor: pointer;
+    align-items: flex-start;
+    gap: 4px;color: var(--brand-primary, #48BF84);font-size: 16px;"
+                onclick="setBackgroundColor('satisfiedbutton','#E7F6EF')" id="satisfiedbutton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                  <path
+                    d="M12 22.0469C17.5228 22.0469 22 17.5697 22 12.0469C22 6.52403 17.5228 2.04688 12 2.04688C6.47715 2.04688 2 6.52403 2 12.0469C2 17.5697 6.47715 22.0469 12 22.0469Z"
+                    stroke="#48BF84" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M8 14.0469C8 14.0469 9.5 16.0469 12 16.0469C14.5 16.0469 16 14.0469 16 14.0469"
+                    stroke="#48BF84" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M9 9.04688H9.01" stroke="#48BF84" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M15 9.04688H15.01" stroke="#48BF84" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                Yes, I'm satisfied
+
+              </div>
+              <div style="display: flex;
+    padding: 8px 16px;
+    cursor: pointer;
+    align-items: flex-start;
+    gap: 4px;color: var(--brand-primary, #FF6565);font-size: 16px;"
+                onclick="setBackgroundColor('unsatisfiedbutton','#FFEAEA')" id="unsatisfiedbutton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                  <path
+                    d="M12.5 22.9648C18.0228 22.9648 22.5 18.4877 22.5 12.9648C22.5 7.442 18.0228 2.96484 12.5 2.96484C6.97715 2.96484 2.5 7.442 2.5 12.9648C2.5 18.4877 6.97715 22.9648 12.5 22.9648Z"
+                    stroke="#FF6565" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M16.5 16.9648C16.5 16.9648 15 14.9648 12.5 14.9648C10 14.9648 8.5 16.9648 8.5 16.9648"
+                    stroke="#FF6565" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M9.5 9.96484H9.51" stroke="#FF6565" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M15.5 9.96484H15.51" stroke="#FF6565" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                No, I'd like to discuss.
+
+              </div>
+            </div>
+          </div>
+          <div style="display: flex;
+height: 145px;
+padding: 20px 16px;
+flex-direction: column;
+align-items: flex-start;
+gap: 12px;
+align-self: stretch;
+border-radius: 14px;
+border: 1px solid var(--stroke-secondary, #DCDCDC);
+background: var(--surface-primary, #FFF);">
+            <div style="color:black; font-size:16px">Feedback and Comments (Optional)</div>
+            <textarea oninput="SaveFeedbackAndComment(event.target.value)" style="display: flex;
+padding: 16px;
+align-items: flex-start;
+gap: 10px;
+flex: 1 0 0;
+align-self: stretch;
+border-radius: 14px;
+background: #FAFAFA;"
+              placeholder="We value your opinion. Please share your thoughts on the updated rating and feedback.">
+</textarea>
+          </div>
+        </div>
+        <div class="modal-footer"
+          style="padding:0.4rem 1.25rem;display: flex;justify-content: space-between;align-items: center;">
+          <div style="color: #48BF84;
+    text-align: center
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    cursor: pointer;
+    line-height: normal;" data-dismiss="modal" data-target="#Rating-Reviewed-modal-step1" data-toggle="modal">
+            < Go Back </div>
+
+              <button type="button" id="SelfRatingModalButton2" class="btn btn-primary"
+                style="border-radius: 12px;width:140px" data-dismiss="modal"
+                onclick="PutReviewRatingRequest()">Submit</button>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    let SelfRatingList = [0, 0, 0, 0, 0];
+    let RatingList = [0, 0, 0, 0, 0];
+    let justification = ''
+    let date;
+    let managerFeedback;
+    let isSatisfied = '';
+    let feedbackEmployee = '';
+    function ChangeDate(date) {
+      const options = { day: "numeric", month: "long", year: "numeric" };
+      const formattedDate = new Date(date).toLocaleDateString(
+        undefined,
+        options
+      );
+      return formattedDate;
+    }
+
+    function setBackgroundColor(id, newColor) {
+      const box1 = document.getElementById('unsatisfiedbutton');
+      const box2 = document.getElementById('satisfiedbutton');
+      box1.style.backgroundColor = '';
+      box2.style.backgroundColor = '';
+      let box = document.getElementById(id)
+      box.style.backgroundColor = newColor;
+      if (id == 'satisfiedbutton')
+        isSatisfied = 'true';
+      else
+        isSatisfied = 'false';
+      console.log(isSatisfied)
+
+      let button = document.getElementById('SelfRatingModalButton2')
+      button.disabled = false;
+    }
+    function SaveFeedbackAndComment(value) {
+      feedbackEmployee = value;
+    }
+
+    let reviewratingData;
+    function openModal() {
+      const modal = document.getElementById("myModal");
+      modal.style.display = "block";
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("myModal");
+      modal.style.display = "none";
+    }
+
+    function ChanageRatingReviewedTab(i) {
+      let index = i;
+      let ratingdiv = document.getElementById("Rating-Reviewed-body");
+      let feedbackdiv = document.getElementById("rating-reviwed-feedback-modal")
+      for (let j = 1; j <= 3; j++) {
+        let tab = document.getElementById("RatingReviewTab" + j);
+        if (j === index) {
+          tab.classList.add("activeRatingReviewTab");
+        } else {
+          tab.classList.remove("activeRatingReviewTab");
+        }
+      }
+      let secondfeedbackbox = document.getElementById('rating-reviwed-feedback2-modal')
+      if (secondfeedbackbox)
+        secondfeedbackbox.style.display = "none"
+      if (i == 1) {
+        SetRatingsBox(JSON.stringify(reviewratingData?.updatedRating), 'Rating-Reviewed-body')
+
+
+        if (reviewratingData?.justificationFromManager.length > 0)
+          feedbackdiv.innerHTML = ` 
+           <div class="box-heading" >
+              <h5 class="card-title mb-0">
+                Manager Feedback New
+              </h5>
+      
+            </div>
+           <div class="box-body" id="feedback-box" style="margin:10px">
+           ${reviewratingData?.justificationFromManager} </div>`
+        else
+          feedbackdiv.innerHTML = `
+           <div class="box-body" id="feedback-box" style="margin:10px;display:flex;flex-direction:column;width:100%;height:100%;justify-content:center;align-items:center">
+           <img src="../img/icons performance mgmt/desktop/Frame 42521.svg">
+           <div style="color:black;font-size:16px;font-weight:700"> 
+            Great job! Feedback is on its way 
+            </div>
+            <div style="color:black;font-size;14px"> 
+              Your efforts are recognized, and your dedication shows. Keep up the excellent work and stay motivated!
+            </div>
+           `
+
+
+        if (reviewratingData?.status == 'DisApproved' && managerFeedback.length > 0) {
+          let secondfeedbackbox = document.getElementById('rating-reviwed-feedback2-modal')
+          secondfeedbackbox.style.display = "flex"
+          secondfeedbackbox.innerHTML = `   <div class="box-heading" >
+              <h5 class="card-title mb-0">
+                Manager Feedback Pervious
+              </h5>
+              
+            </div>
+            <div class="box-body" id="feedback-box" style="margin:10px">
+              ${managerFeedback}
+            
+            </div>`
+        }
+      }
+      else if (i == 2) {
+        SetRatingsBox(JSON.stringify(reviewratingData?.selfRating), 'Rating-Reviewed-body')
+        feedbackdiv.innerHTML = `   <div class="box-heading" >
+              <h5 class="card-title mb-0">
+                Your Justification and comments
+              </h5>
+            </div>
+            <div class="box-body" id="feedback-box" style="margin:10px">
+              ${reviewratingData?.justificationFromEmployee}
+            </div>`
+      }
+      else if (i == 3) {
+        SetRatingsBox(JSON.stringify(reviewratingData?.originalRating), 'Rating-Reviewed-body')
+
+        if (managerFeedback.length > 0)
+          feedbackdiv.innerHTML = ` 
+           <div class="box-heading" >
+              <h5 class="card-title mb-0">
+                Manager Feedback/Appracation
+              </h5>
+            </div>
+           <div class="box-body" id="feedback-box" style="margin:10px">
+           ${managerFeedback} </div>`
+        else
+          feedbackdiv.innerHTML = `
+           <div class="box-body" id="feedback-box" style="margin:10px;display:flex;width:100%;height:100%;justify-content:center;align-items:center;flex-direction:column">
+           <img src="../img/icons performance mgmt/desktop/Frame 42521.svg">
+           <div style="color:black;font-size:16px;font-weight:700"> 
+            Great job! Feedback is on its way 
+            </div>
+            <div style="color:black;font-size;14px"> 
+              Your efforts are recognized, and your dedication shows. Keep up the excellent work and stay motivated!
+            </div>
+           `
+
+      }
+    }
+
+    function ChanageFeedbackTab(i) {
+      let index = i;
+      let feedbackdiv = document.getElementById("feedback-box")
+      for (let j = 1; j <= 2; j++) {
+        let tab = document.getElementById("FeedbackTab" + j);
+        if (j === index) {
+          tab.classList.add("activeRatingReviewTab");
+        } else {
+          tab.classList.remove("activeRatingReviewTab");
+        }
+      }
+
+      if (i == 1) {
+        if (managerFeedback.length > 0)
+          feedbackdiv.innerHTML = ` 
+           ${managerFeedback}`
+        else
+          feedbackdiv.innerHTML = `
+           <img src="../img/icons performance mgmt/desktop/Frame 42521.svg">
+           <div style="color:black;font-size:16px;font-weight:700"> 
+            Great job! Feedback is on its way 
+            </div>
+            <div style="color:black;font-size;14px"> 
+              Your efforts are recognized, and your dedication shows. Keep up the excellent work and stay motivated!
+            </div>
+           `
+      }
+      else if (i == 2) {
+        if (managerActionable.length > 0)
+          feedbackdiv.innerHTML = ` 
+          
+           ${managerActionable}`
+        else
+          feedbackdiv.innerHTML = `
+          <img src="../img/icons performance mgmt/desktop/Frame 42521.svg">
+           <div style="color:black;font-size:16px;font-weight:700"> 
+            Great job! 
+            </div>
+            <div style="color:black;font-size;14px"> 
+              Your efforts are recognized, and your dedication shows. Keep up the excellent work and stay motivated!
+            </div>
+           `
+      }
+    }
+
+    const getPerformanceByDate = async (date) => {
+      const headingdate = document.getElementById("headingdate");
+      headingdate.innerHTML = ChangeDate(date);
+      date = date;
+      let employeeID = '<%= employee._id %>';
+      let response = await fetch(`/fetch/recordbydate/${date}/${employeeID}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      let data = await response.json();
+      let performanceRecord = data.performanceRecord;
+      const feedbackDiv = document.getElementById("feedback-modal");
+
+      managerFeedback = performanceRecord.feedback;
+      managerActionable = performanceRecord.actionable;
+      ChanageFeedbackTab(1);
+console.log(performanceRecord)
+      const ratingdiv = document.getElementById("RatingInfoModal_rating");
+      ratingdiv.innerHTML = `  
+                        ${performanceRecord.rating > 0 ? performanceRecord.rating : ''}
+                         <img
+                            src="../img/icons performance mgmt/desktop/d_star_full.svg"
+                          /> `;
+
+      const badgediv = document.querySelector("#RatingInfoModal_badges");
+      badgediv.innerHTML = ` <img
+                        src="../img/gem.svg"
+                        style="width: 24px;"
+                      />${performanceRecord.badges} `;
+
+      SetRatingsBox(JSON.stringify(performanceRecord.ratingList), 'AcutalRatingBox', date)
+      const signinimg = document.getElementById("modal-sigin-img");
+      const taskimg = document.getElementById("modal-task-img");
+      const noonimg = document.getElementById("modal-noon-img");
+      const sigintext = document.getElementById("modal-sigin-text");
+      const tasktext = document.getElementById("modal-task-text");
+      const noontext = document.getElementById("modal-noon-text");
+      const eodimg = document.getElementById("modal-eod-img");
+      const eodtext = document.getElementById("modal-eod-text");
+      if (performanceRecord && performanceRecord.taskStatus[0]) {
+        signinimg.src =
+          "../img/icons performance mgmt/desktop/d_signin_done_big.svg";
+        sigintext.classList.add("text-black");
+        sigintext.innerHTML = "Done";
+        sigintext.classList.remove("text-normal");
+      }
+      else {
+        signinimg.src =
+          "../img/icons performance mgmt/desktop/d_signin_done_disabled_big.svg";
+        sigintext.classList.remove("text-black");
+        sigintext.innerHTML = "Incomplete";
+        sigintext.classList.add("text-normal");
+      }
+      if (performanceRecord && performanceRecord.taskStatus[1]) {
+        taskimg.src =
+          "../img/icons performance mgmt/desktop/d_tasks_done_big.svg  ";
+        tasktext.innerHTML = `<a href=${performanceRecord.links[1]} target=_blank class=text-success>Check</a>`
+        tasktext.classList.add("text-success");
+        tasktext.classList.remove("text-normal");
+      }
+      else {
+        taskimg.src =
+          "../img/icons performance mgmt/desktop/d_tasks_done_disabled_big.svg  ";
+        tasktext.innerHTML = `Check`
+        tasktext.classList.remove("text-success");
+        tasktext.classList.add("text-normal");
+      }
+      if (performanceRecord && performanceRecord.taskStatus[2]) {
+        noonimg.src =
+          "../img/icons performance mgmt/desktop/d_noon_done_big.svg";
+        noontext.innerHTML = `<a href=${performanceRecord.links[2]} target=_blank class=text-success>Check</a>`
+        noontext.classList.add("text-success");
+        noontext.classList.remove("text-normal");
+      } else {
+        noonimg.src =
+          "../img/icons performance mgmt/desktop/d_noon_done_disabled_big.svg";
+        noontext.innerHTML = `Check`
+        noontext.classList.remove("text-success");
+        noontext.classList.add("text-normal");
+      }
+
+      if (performanceRecord && performanceRecord.taskStatus[3]) {
+        eodimg.src =
+          "../img/icons performance mgmt/desktop/d_eod_done_big.svg";
+        eodtext.innerHTML = `<a href=${performanceRecord.links[3]} target=_blank class=text-success>Check</a>`
+        eodtext.classList.add("text-success");
+        eodtext.classList.remove("text-normal");
+      }
+      else {
+        eodimg.src =
+          "../img/icons performance mgmt/desktop/d_eod_disabled_big.svg";
+        eodtext.innerHTML = `Check`
+        eodtext.classList.remove("text-success");
+        eodtext.classList.add("text-normal");
+      }
+
+      const RatingRequestButton = document.getElementById('RatingRequestButton');
+      RatingRequestButton.onclick = function () {
+        SetRatingForSelfRatingBody(JSON.stringify(performanceRecord.ratingList), date);
+      }
+    };
+
+    function SetRatingsBox(ratings, ratingboxId, d) {
+      date = d;
+
+      let ratingList = JSON.parse(ratings)
+      const ratingDiv = document.getElementById(`${ratingboxId}`);
+      const stars = ratingDiv.getElementsByTagName("i");
+
+      for (let i = 0; i < 5; i++) {
+        let rating = ratingList[i];
+        for (let j = 0; j < 5; j++) {
+          if (j < rating) {
+            stars[j + 5 * i].style.color = "#facc15";
+          }
+          else {
+            stars[j + 5 * i].style.color = "#e6e6e6";
+          }
+        }
+      }
+
+    }
+
+    function SetRatingForSelfRatingBody(ratingList, d) {
+      RatingList = JSON.parse(ratingList);
+      date = d;
+      const step1datebutton = document.getElementById('Rating-Review-modal-step1-date')
+      step1datebutton.innerHTML=ChangeDate(d);
+      const step2datebutton = document.getElementById('Rating-Review-modal-step2-date')
+      step2datebutton.innerHTML=ChangeDate(d);
+      SelfRatingList = JSON.parse(ratingList);
+      SetRatingsBox(ratingList, 'RatingReviewBody', d);
+      SetRatingsBox(ratingList, 'SelfRatingReviewBody', d);
+
+    }
+
+    function handleStarClick(index, stars) {
+      for (let i = 0; i < stars.length; i++) {
+        if (i <= index) {
+          stars[i].style.color = "#facc15"; // Yellow color
+        } else {
+          stars[i].style.color = "#eff2f7";
+        }
+      }
+
+    }
+
+    const starRatingDivs = document.querySelectorAll(".selfratingdiv");
+
+    for (let i = 0; i < starRatingDivs.length; i++) {
+      const stars = starRatingDivs[i].getElementsByTagName("i");
+
+      for (let j = 0; j < stars.length; j++) {
+        stars[j].addEventListener("click", function () {
+          SelfRatingList[i] = j + 1;
+          handleStarClick(j, stars);
+          avgrating =
+            SelfRatingList[0] +
+            SelfRatingList[1] +
+            SelfRatingList[2] +
+            SelfRatingList[3] +
+            SelfRatingList[4];
+
+          ChangeButtonVisbility();
+        });
+      }
+    }
+
+    function ChangeVisiblity(checkbox, index) {
+      const starRatingDivs = document.querySelectorAll(".selfratingdiv");
+      if(index==5)
+      {
+        for(let i=0;i<5;i++)
+        {
+          if (checkbox.checked)
+        starRatingDivs[i].classList.remove("disabled");
+      else
+        starRatingDivs[i].classList.add("disabled");
+        }
+      }
+      else{
+      if (checkbox.checked)
+        starRatingDivs[index].classList.remove("disabled");
+      else
+        starRatingDivs[index].classList.add("disabled");
+      }
+    }
+
+    function ChangeButtonVisbility() {
+      for (let i = 0; i < 5; i++) {
+        if (RatingList[i] != SelfRatingList[i]) {
+          const button = document.getElementById('SelfRatingModalButton1');
+          button.disabled = false;
+          break;
+        }
+        else {
+          const button = document.getElementById('SelfRatingModalButton1');
+          button.disabled = true;
+        }
+      }
+    }
+
+    function SaveJustification(event) {
+      justification = event.target.value;
+      const button = document.getElementById('SelfRatingModalButton2');
+      if (justification.length > 0)
+        button.disabled = false;
+      else
+        button.disabled = true;
+    }
+
+    async function SetRatingReviwedModal(badges, rating, managerfeedback, date, employeeId) {
+      date = date;
+      const ratingdiv = document.querySelector("#ratingreviwedrating");
+      ratingdiv.innerHTML = `  
+                        ${rating > 0 ? rating : ''}
+                          <img
+                            src="../img/icons performance mgmt/desktop/d_star_full.svg"
+                          /> `;
+      const badgediv = document.querySelector("#ratingreviwedbadges");
+      badgediv.innerHTML = ` <img
+                        src="../img/gem.svg"
+                        style="width: 20px; margin-left: 2px"
+                      />${badges} `;
+
+      const datebox = document.getElementById('ratingreviwedheadingdate');
+      datebox.innerHTML = ChangeDate(date);
+      try {
+        let response = await fetch(`/reviewRating/${employeeId}/${date}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        })
+        managerFeedback = managerfeedback
+        response = await response.json();
+        reviewratingData = response.ratingreview;
+      }
+      catch (error) {
+        console.log(error)
+      }
+      let messagebox = document.getElementById('Rating-Reviewed-message')
+      if (reviewratingData?.status == 'Pending') {
+        messagebox.innerHTML = 'Your request is pending';
+        ChanageRatingReviewedTab(1)
+      }
+      else if (reviewratingData?.status == 'Approved') {
+        ChanageRatingReviewedTab(1);
+        let selfratingtab = document.getElementById('RatingReviewTab2')
+        selfratingtab.style.display = "none"
+        messagebox.innerHTML = `Your review request has been reviewed by your manager, and considered your feedback. We <span style="font-weight:700">approved</span> your self-ratings.`
+      }
+      else if (reviewratingData?.status == 'Disapproved') {
+        ChanageRatingReviewedTab(3);
+        let updatedratingtab = document.getElementById('RatingReviewTab1')
+        updatedratingtab.style.display = "none"
+        messagebox.innerHTML = `Your review request has been reviewed by your manager. While we have considered your feedback, the manager has decided to keep the original rating <span style="font-weight:700">unchanged</span>.`
+      }
+      else if (reviewratingData?.status == 'Edited') {
+        ChanageRatingReviewedTab(1);
+        messagebox.innerHTML = 'Your review request has been reviewed by your manager, and considered your feedback. We have made the following changes to the review.'
+      }
+      SetModalReviwedStep2(rating, badges, date)
+      SetRatingsBox(JSON.stringify(reviewratingData?.updatedRating), 'Rating-Reviewed-body')
+    }
+
+    function SetModalReviwedStep2(rating, badges, date) {
+      const ratingdiv = document.querySelector("#ratingreviwedratingstep2");
+console.log(rating);
+      ratingdiv.innerHTML = ` 
+      ${rating > 0 ? rating : ''} 
+                          <img
+                            src="../img/icons performance mgmt/desktop/d_star_full.svg"
+                          /> `;
+      const badgediv = document.querySelector("#ratingreviwedbadgesstep2");
+      badgediv.innerHTML = ` <img
+                        src="../img/gem.svg"
+                        style="width: 20px; margin-left: 2px"
+                      />${badges} `;
+
+      const datebox = document.getElementById('ratingreviwedheadingdatestep2');
+      datebox.innerHTML = ChangeDate(date);
+
+    }
+    async function SendReviewRatingRequest() {
+      let data = {
+        originalRating: RatingList,
+        selfRating: SelfRatingList,
+        justificationFromEmployee: justification,
+        employeeId: '<%= employee._id%>',
+        date,
+        status: 'Pending',
+      }
+
+      try {
+        let response = await fetch('/reviewRating', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+        if (response.status === 200) {
+          console.log("Response status is 200");
+          $('#successModal').modal('show');
+        }
+      }
+      catch (error) {
+        console.log(error);
+        $('#errorModal').modal('show');
+      }
+    }
+
+    async function PutReviewRatingRequest() {
+
+      let employeeId = '<%= employee._id%>'
+      console.log(isSatisfied, feedbackEmployee)
+      date = reviewratingData?.date;
+
+      try {
+        let response = await fetch(`/reviewRating/${employeeId}/${date}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ isSatisfied, feedbackEmployee }),
+        })
+        if (response.status === 200) {
+          console.log("Response status is 200");
+          $('#successModal').modal('show');
+        }
+      }
+      catch (error) {
+        console.log(error);
+        $('#errorModal').modal('show');
+      }
+    }
+
+
+
+  </script>
+</body>
+
+</html>

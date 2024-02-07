@@ -1,0 +1,806 @@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<style>
+  a.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: #98A2B3;
+  }
+
+  a.activeLink {
+    color: var(--ref-primary-primary-60-brand, #48BF84);
+
+  }
+
+  .completed_day {
+    color: var(--brand-primary, #48BF84);
+  }
+  .completed_day_box{
+    border: 1px dashed var(--ref-primary-primary-60-brand, #48BF84);
+      background: var(--ref-primary-primary-99, #F5FFF5);
+  }
+  .not_completed_day_box {
+    border: 1px dashed var(--pill-text-red, #FF6565);
+      background: var(--error-50, #FEF3F2);
+  }
+ .active_box{
+  display: flex;
+width: 124px;
+padding: 4px;
+justify-content: space-between;
+align-items: center;
+flex-shrink: 0;
+border-radius: 4px;
+border: 1px solid var(--gray-300, #D0D5DD);
+background: #F2FAF6;
+ }
+ .current_day_box {
+      border: 1px dashed var(--warning-400, #FDB022);
+      background: var(--warning-25, #FFFCF5);
+    }
+ .inactive_box{
+  display: flex;
+padding: 4px;
+justify-content: space-between;
+align-items: center;
+flex: 1 0 0;
+border-radius: 4px;
+border: 1px solid var(--gray-300, #D0D5DD);
+background: #FFF;
+ }
+  .current_day {
+    color: #FACC15;
+  }
+
+  .not_completed_day {
+    color: var(--Red, #FF6565);
+  }
+
+  .next_day {
+    color: var(--content-on-light-tertiary, #A7ADB9);
+  }
+</style>
+<div style="display: flex; justify-content: space-between; padding: 5px 0px; align-self: stretch;width: 100%;">
+  <div style="color: var(--content-on-light-primary, #181818);
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Daily Summaries</div>
+  <div style="display: flex;gap:4px;align-items: center;">
+    <div id="reportrange" style="border: none; width: 100%;cursor: pointer;display: flex; padding: 12px 16px; justify-content: center; align-items: center; gap: 8px; border-radius: 8px; border: 1px solid var(--stroke-secondary, #DCDCDC);cursor: pointer;color: var(--gray-900, #101828);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px; /* 150% */">
+      <span id="DailySummaryDateOption"> </span>
+    </div>
+    <select style="display: flex; padding: 12px 16px; justify-content: center; align-items: center; gap: 8px; border-radius: 8px; border: 1px solid var(--stroke-secondary, #DCDCDC);cursor: pointer;" id="DailySummaryRatingOption" onchange="SetPerformanceData()">
+      <option value="All" selected>All</option>
+      <option value="Rated">Rated</option>
+      <option value="Not Rated">Not Rated</option>
+
+    </select>
+  </div>
+</div>
+<div style="display: flex;
+flex-direction: column;
+width: 100%;
+max-height: 100vh;
+overflow: auto;
+align-items: flex-start;
+gap: 16px;
+align-self: stretch;
+" id="PerformanceRecordBody">
+
+</div>
+
+
+<script type="text/javascript">
+  let PerformanceDate;
+
+  function initializeDateRangePicker() {
+    var currentDate = moment();
+    var startOfWeek = currentDate.clone().startOf('isoWeek'); 
+    var endOfWeek = currentDate.clone().endOf('isoWeek'); 
+    if (currentDate.isoWeekday() === 7) {
+      startOfWeek.subtract(7, 'days');
+      endOfWeek.subtract(3, 'days');
+    }
+
+    function cb(start, end) {
+      $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+      SetPerformanceData();
+    }
+
+    $('#reportrange').daterangepicker({
+      startDate: startOfWeek,
+      endDate: endOfWeek,
+      ranges: {
+        'Today': [moment(), moment()],
+        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'This Week': [startOfWeek, endOfWeek], 
+        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+      }
+    }, cb);
+
+    cb(startOfWeek, endOfWeek); 
+  }
+
+  initializeDateRangePicker();
+
+  function formatDateToCustomFormat(dateString) {
+    const options = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      weekday: 'short'
+    };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', options);
+  }
+
+  function InsertVideoLink(videoUrl, id) {
+    let link = '';
+    const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?youtu\.be\/([^\s]+)/i;
+    const loomRegex = /(?:https?:\/\/)?(?:www\.)?(?:loom\.com\/embed\/|loom\.com\/share\/)([a-zA-Z0-9]+)/i;
+
+    if (videoUrl.match(youtubeRegex)) {
+      // Extract video ID from YouTube URL
+      const match = videoUrl.match(youtubeRegex);
+      link = `https://www.youtube.com/embed/${match[1]}`;
+    } else if (videoUrl.match(loomRegex)) {
+      // Extract video ID from Loom URL
+      const match = videoUrl.match(loomRegex);
+      link = `https://www.loom.com/embed/${match[1]}`;
+    } else {
+      // Invalid video URL
+      link = '';
+    }
+
+    const videodiv = document.getElementById(id);
+
+    if (link.length > 0) {
+      videodiv.innerHTML = `
+      <iframe
+        style="width:100%;height:100%;"
+        src="${link}"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
+    `;
+    } else {
+      videodiv.innerHTML = `
+      <div style="display: flex;
+width: 100%;
+height: 136px;
+justify-content: center;
+align-items: center;
+gap: 4px;
+flex-shrink: 0;
+background: var(--gray-300, #D0D5DD);">
+
+      <img
+        src="../Performance dashboard Icons/video_not_uploaded.svg"
+      />
+      </div>
+    `;
+    }
+  }
+
+  let ratingListMap = new Map();
+  let employeeIndexMap = new Map();
+  async function SetPerformanceData() {
+    let box = document.getElementById('PerformanceRecordBody');
+
+    let ratingStatus = document.getElementById('DailySummaryRatingOption').value;
+    let dateRange = document.getElementById('DailySummaryDateOption').innerText;
+    let data = await getPerformanceData(dateRange, ratingStatus);
+
+    let innerthml = '';
+    let index = 0;
+    for (let performance of data) {
+      let ratingList = performance.ratingList;
+      ratingListMap.set(index, ratingList);
+      employeeIndexMap.set(performance.date, index);
+      index++;
+      let   {taskDivClass,taskStatusSrc,dailytaskstatus }= GetStatus(performance.date,performance.taskStatus)
+      let ratingClass = 'rating-status'
+        let rating = performance.rating ? performance.rating : 0;
+        let starpath = "../img/black_star.svg"
+        if (rating != 0) {
+          if (rating >= 4.5) {
+            ratingClass += ' golden-rating-status'
+          } else if (rating >= 3.5) {
+            ratingClass += ' skyblue-rating-status'
+          } else if (rating >= 2.5) {
+            ratingClass += ' orange-rating-status'
+          } else {
+            starpath = '../img/white_star.svg'
+            ratingClass += ' red-rating-status'
+          }
+        }
+
+      innerthml += `<div style="display: flex;
+padding: 24px;
+justify-content: space-between;
+align-items: flex-start;
+align-self: stretch;
+border-radius: 10.277px;
+border: 0.8px solid #DCDCDC;
+background: #FFF;">
+              <div style="display: flex; width: min(535px, 100%);flex-direction: column; align-items: flex-start; gap: 12px; align-self: stretch;">
+                
+                <div  onclick="openmodal('${performance.date}')" data-toggle='modal' data-target='#managerModalRating' style="
+              display: flex;gap:8px">
+              <div style="display: flex;flex-direction: column;">
+              <div style="font-size: 14px;" class="circle small ${taskDivClass+'_box'}">
+                <img src='${taskStatusSrc}' />
+                <div>${performance.date.slice(-2)}</div>
+              </div>
+
+              <div class=" ${ratingClass}" >${rating != 0 ? rating + `<img style="width:15px;margin-bottom:4px"  src=${starpath}>` : ''}</div>
+            </div>
+            <div class=${taskDivClass} style="line-height:24px;font-weight:700;margin-top:20px">${formatDateToCustomFormat(performance.date)}</div>
+            </div>`
+
+                    if (performance.keyPoints.length > 0 &&performance.keyPoints.length[2]!=''){
+
+
+        innerthml += `   <div style="color: var(--gray-900, #101828); font-size: 14px; font-style: normal; font-weight: 500; line-height: 24px;">`
+      for (let keypoint of performance.keyPoints)
+        innerthml += `  <li>${keypoint}</li>`
+            }
+            else{
+              innerthml += `<div style="width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;"><img src="../Performance dashboard Icons/alert_red.svg" style="width:24px;"><div style="color: var(--gray-900, #101828);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px;">Daily Summary Not Submitted</div>`
+            }
+          
+            innerthml += `</div></div>   <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+                <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;" style="color: black;">
+                    <div class="active_box" id="VideoDiv_${performance.date}--1" onclick="changeTab('${performance.links[3]}','VideoDiv_${performance.date}--1')">
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <img src="../img/icons performance mgmt/desktop/d_eod_done_big.svg" id="modal-eod-img" />
+                        <div  style="color: var(--ref-neutral-neutral-0, #000);
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 24px;">EOD </div>
+                      </div>
+                      <a href="${performance.links[3]}"  class="${
+  performance.links[3].length === 0 ? 'disabled' : 'activeLink'
+}"  target="_blank"  style="
+                      font-size: 14px;
+                      font-style: normal;
+                      font-weight: 700;
+                      line-height: 24px;"><img src="${dailytaskstatus[2]}"></a>
+                    </div>
+          
+                    <div class="inactive_box"  id="VideoDiv_${performance.date}--2" onclick="changeTab('${performance.links[2]}','VideoDiv_${performance.date}--2')">
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <img src="../img/icons performance mgmt/desktop/d_noon_done_big.svg" id="modal-noon-img" />
+                        <div style="color: var(--ref-neutral-neutral-0, #000);
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 24px;"  >Noon</div>
+                      </div>
+                      <a href="${performance.links[2]}" class="${
+  performance.links[2].length === 0 ? 'disabled' : 'activeLink'
+}" target="_blank" style="
+                      font-size: 14px;
+                      font-style: normal;
+                      font-weight: 700;
+                      line-height: 24px;"><img src="${dailytaskstatus[2]}"></a>
+                    </div>
+          
+                    <div class="inactive_box" id="VideoDiv_${performance.date}--3" onclick="changeTab('${performance.links[1]}','VideoDiv_${performance.date}--3')">
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <img src="../img/icons performance mgmt/desktop/d_tasks_done_big.svg"  id="modal-task-img" />
+                        <div style="color: var(--ref-neutral-neutral-0, #000);
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 24px;">Tasks</div>
+                      </div>
+                      <a href="${performance.links[1]}" class="${
+  performance.links[1].length === 0 ? 'disabled' : 'activeLink'
+}"  target="_blank"  style="
+                      font-size: 14px;
+                      font-style: normal;
+                      font-weight: 700;
+                      line-height: 24px;"><img src="${dailytaskstatus[2]}"></a>
+                    </div>
+                  </div>
+               
+                  <div style="display:flex;justify-content:center;width:100%;border-radius: 8px;" id='VideoDiv_${performance.date}'>
+                
+                  </div>
+          
+                 
+                  <div style="display: flex; justify-content: space-between; align-items: center; gap: 32px; align-self: stretch;">
+                  <div style="display: flex; height: 24px; justify-content: center; align-items: center; gap: 12px;">
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+                      <img onclick="UpdatePerformanceBadges(-0.5,'performance_${performance.date}_badges')" src="../img/icons performance mgmt/desktop/d_substract_green.svg" style="width: 24px; height: 24px;cursor:pointer" />
+                      <div style="display: flex; font-size: 21px; font-weight: 600; color: black;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                          <input type="text"  class="text-14-500 borderless-number-input" value="${performance.badges}" onchange="UpdateBadgesInput('performance_${performance.date}_badges')" style="height: 24px; color: black" id="performance_${performance.date}_badges" />
+                        </div>
+                        <img src="../img/icons performance mgmt/desktop/d_badge.svg" style="width: 24px; height: 24px;" />
+                      </div>
+                      <img onclick="UpdatePerformanceBadges(0.5,'performance_${performance.date}_badges')" src="../img/icons performance mgmt/desktop/d_add_green.svg" style="width: 24px; height: 24px;cursor:pointer" />
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center; gap: 10px;">
+                      <img src="../img/icons performance mgmt/desktop/reset.svg" onclick="resetPerformancebadges('performance_${performance.date}_badges',${index-1})" style="width: 24px; height: 24px;cursor:pointer" />
+                    </div>
+                  </div>
+                  <div style="display: flex; align-items: center; align-content: center; gap: 12px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 12px;" class="text-16-600">
+                      <div style="display: flex;
+                      align-items: center;
+                      color:#FACC15;
+                      gap: 8px;"><input value="${performance.rating}" type="text" style="color:#FACC15;width:55px;text-align:right;border:none;font-size:24px;"  id='performance_${performance.date}_rating' onchange="UpdateRating('performance_${performance.date}_rating')"> <img src="../img/icons performance mgmt/desktop/d_star_full.svg" style="width: 24px; height: 24px;" /></div>
+                    </div>
+                    <div class="dropdown dropleft">
+                    <div  style="color: var(--ref-primary-primary-60-brand, #48BF84);cursor:pointer; font-size: 14px; font-style: normal; font-weight: 700; line-height: 24px;" onclick="ChangeVisibility('editRatingBoxVP_${performance.date}')">Edit</div>
+                  
+                      <div  id="editRatingBoxVP_${performance.date}" style="display: none;
+                      width: 365px;
+                      z-index:99;
+                      position:absolute;
+                      background:white;
+                      right:0px;
+                      padding: 16px 24px;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      gap: 16px;
+                      border-radius: 12px; border: 1px solid var(--stroke-primary, #ECECEC);
+                      box-shadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.10);
+                     
+                     ">
+                      <div  style="color: #000;
+                      
+                      font-size: 18px;
+                      font-style: normal;
+                      font-weight: 600;
+                      line-height: normal;">
+                      Rating parameters
+                      </div>
+                        <ol class="rounded-list performance-stars" >
+                          <li>
+                            <div
+                              style="
+                                display: flex;
+        
+                                justify-content: space-between;
+                                flex-wrap: nowrap;
+                                align-items: stretch;
+                              "
+                              class="rating-box"
+                            >
+                              <div>
+                                <h6 class="heading">Work Size</h6>
+                                <p class="p">
+                                  Ability to do good amount of work
+                                </p>
+                              </div>
+                              <div  > `
+      let point = ratingList[0];
+      for (let i = 1; i <= 5; i++) {
+        innerthml += `
+                                <i
+                                  class="fas fa-star"
+                                  size="20"
+                                  style="color: ${point >= i ? '#FACC15' : '#dddfe1'}"
+                                ></i>`
+      }
+      innerthml += `  </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div
+                              style="display: flex; justify-content: space-between"
+                              class="rating-box"
+                            >
+                              <div>
+                                <h6 class="heading">Quality</h6>
+                                <p class="p">
+                                  Driving positive business outcome
+                                </p>
+                              </div>
+                              <div > `
+      point = ratingList[1];
+      for (let i = 1; i <= 5; i++) {
+
+        innerthml += `
+                                <i
+                                  class="fas fa-star"
+                                  size="20"
+                                  style="color: ${point >= i ? '#FACC15' : '#dddfe1'}"
+                                ></i>`
+      }
+      innerthml += `  </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div
+                              style="display: flex; justify-content: space-between"
+                              class="rating-box"
+                            >
+                              <div>
+                                <h6 class="heading">Loom Uploads</h6>
+                                <p class="p">
+                                  Submissions of daily Loom uploads
+                                </p>
+                              </div>
+                              <div > `
+      point = ratingList[2];
+      for (let i = 1; i <= 5; i++) {
+
+        innerthml += `
+                                <i
+                                  class="fas fa-star"
+                                  size="20"
+                                  style="color: ${point >= i ? '#FACC15' : '#dddfe1'}"
+                                ></i>`
+      }
+      innerthml += `  </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div
+                              style="display: flex; justify-content: space-between"
+                              class="rating-box"
+                            >
+                              <div>
+                                <h6 class="heading">Task Summary</h6>
+                                <p class="p">
+                                  Keeping everyone updated with your work
+                                </p>
+                              </div>
+        
+                              <div > `
+      point = ratingList[3];
+      for (let i = 1; i <= 5; i++) {
+
+        innerthml += `
+                                <i
+                                  class="fas fa-star"
+                                  size="20"
+                                  style="color: ${point >= i ? '#FACC15' : '#dddfe1'}"
+                                ></i>`
+      }
+      innerthml += `  </div>
+                            </div>
+                          </li>
+                          <li>
+                            <div
+                              style="display: flex; justify-content: space-between"
+                              class="rating-box"
+                            >
+                              <div>
+                                <h6 class="heading">Explanation Clarity</h6>
+                                <p class="p">
+                                  Driving results/solving problems with the founder 
+                                </p>
+                              </div>
+        
+                              <div > `
+      point = ratingList[4];
+      for (let i = 1; i <= 5; i++) {
+
+        innerthml += `
+                                <i
+                                  class="fas fa-star"
+                                  size="20"
+                                  style="color: ${point >= i ? '#FACC15' : '#dddfe1'}"
+                                ></i>`
+      }
+      innerthml += `  </div>
+                            </div>
+                          </li>
+                        </ol>
+                      </div>
+                   
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>`
+
+
+    }
+    box.innerHTML = innerthml;
+    for (let performance of data) {
+      let id = 'VideoDiv_' + performance.date;
+      let link = performance.links[3];
+      InsertVideoLink(link, id);
+    }
+    setclickonStars();
+  }
+
+  function changeTab(link, id) {
+    let dumyid = id.split('--')[0];
+
+    for (let i = 1; i <= 3; i++) {
+      let box = document.getElementById(dumyid + '--' + i);
+      box.style.background = 'white';
+    }
+
+    let box = document.getElementById(id);
+    box.style.background = '#F2FAF6';
+    InsertVideoLink(link, dumyid);
+  }
+
+
+  function GetStatus(date,taskStatus) {
+    let taskStatusSrc = '';
+    let dailytaskstatus=['../Performance dashboard Icons/check_arrow.svg','../Performance dashboard Icons/check_arrow.svg','../Performance dashboard Icons/check_arrow.svg']
+  
+    let taskDivClass = '';
+    let tasksubmmitedcount = 0;
+    for (let i = 1; i < taskStatus.length; i++) {
+      if (taskStatus[i])
+        tasksubmmitedcount++;
+    }
+    let todaydate = new Date();
+    let performanceDate = new Date(date);
+    todaydate.setHours(0, 0, 0, 0); // Set the time to midnight for comparison
+  performanceDate.setHours(0, 0, 0, 0); // Set the time to midnight for comparison
+  
+    if (performanceDate < todaydate) {
+      if (taskStatus.length == 4) {
+        taskDivClass = 'completed_day'
+        taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_green.svg';
+            } else {
+        taskDivClass = 'not_completed_day';
+
+        for (let j = 1; j < 4; j++) {
+          if (!taskStatus[j] || taskStatus.length <= j) {
+            if (j === 1) {
+              taskStatusSrc = '../img/icons performance mgmt/desktop/sunrise_perv.svg';
+              break;
+            } else if (j === 2) {
+              taskStatusSrc = '../img/icons performance mgmt/desktop/sun_perv.svg';
+              break;
+            } else {
+              taskStatusSrc = '../img/icons performance mgmt/desktop/sunset_perv.svg';
+              break;
+            }
+          }
+        }
+        for (let j = 1; j < 4; j++) {
+          if (!taskStatus[j] || taskStatus.length <= j) {
+            if (j === 1) {
+              dailytaskstatus[j-1]=['../Performance dashboard Icons/alert_red.svg']
+
+            } else if (j === 2) {
+              dailytaskstatus[j-1]=['../Performance dashboard Icons/alert_red.svg']
+
+            } else {
+              dailytaskstatus[j-1]=['../Performance dashboard Icons/alert_red.svg']
+ }
+          }
+        }
+       
+        if (tasksubmmitedcount <= 1)
+          taskStatusSrc = '../img/icons performance mgmt/desktop/Cross_red.svg';
+      }
+    } else if (performanceDate == todaydate) {
+      taskDivClass = 'current_day'
+      for (let j = 0; j < 4; j++) {
+        if (!taskStatus[j] || taskStatus.length <= j) {
+          if (j === 1) {
+            taskStatusSrc = '../img/icons performance mgmt/desktop/sunrise.svg';
+          } else if (j === 2) {
+            taskStatusSrc = '../img/icons performance mgmt/desktop/sun.svg';
+          } else {
+            taskStatusSrc = '../img/icons performance mgmt/desktop/sunset.svg';
+          }
+        }
+        for (let j = 1; j < 4; j++) {
+          if (!taskStatus[j] || taskStatus.length <= j) {
+            if (j === 1) {
+              dailytaskstatus[j-1]=['../Performance dashboard Icons/check_arrow_disable.svg']
+
+            } else if (j === 2) {
+              dailytaskstatus[j-1]=['../Performance dashboard Icons/check_arrow_disable.svg']
+
+            } else {
+              dailytaskstatus[j-1]=['../Performance dashboard Icons/check_arrow_disable.svg']
+ }
+          }
+        }
+      }
+      if (taskStatusSrc == '' && taskStatus.length == 4) {
+        taskDivClass = 'complete_day';
+        taskStatusSrc = '../img/icons performance mgmt/desktop/Completed_green.svg';
+      }
+    } else {
+      taskDivClass = 'next_day'
+      taskStatusSrc = '../img/icons performance mgmt/desktop/sunrise.svg';
+     
+              dailytaskstatus=['../Performance dashboard Icons/check_arrow_disable.svg','../Performance dashboard Icons/check_arrow_disable.svg','../Performance dashboard Icons/check_arrow_disable.svg']
+        }
+    return {
+      taskDivClass,
+      taskStatusSrc,
+      dailytaskstatus
+    };
+  }
+
+
+
+  function ChangeVisibility(id) {
+    PerformanceDate = id.split('ditRatingBoxVP_')[1];
+    let box = document.getElementById(id);
+    if (box.style.display == 'none')
+      box.style.display = "flex";
+    else
+      box.style.display = 'none';
+  }
+
+  async function getPerformanceData(daterange, ratingStatus) {
+    try {
+      let employeeId = '<%= employee._id%>';
+      console.log(employeeId);
+      let data = await fetch(`/performanceData/${employeeId}/${daterange}/${ratingStatus}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      data = await data.json();
+      return data.performances;
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  function UpdatePerformanceBadges(extra, id) {
+    let badgesbox = document.getElementById(id);
+    let badges = parseFloat(badgesbox.value);
+    PerformanceDate = id.split('_')[1];
+    if (eval(badges + extra) >= 0) badgesbox.value = eval(badges + extra);
+    submitButtonPerformanceRating(PerformanceDate);
+  }
+
+  function resetPerformancebadges(id, index) {
+    PerformanceDate = id.split('_')[1];
+    let ratingLists = ratingListMap.get(index);
+
+    avgrating = calculateAverageRating(ratingLists);
+
+   
+    updateUI(avgrating);
+    submitButtonPerformanceRating(PerformanceDate);
+  }
+
+
+
+
+  function handleStarClickPerformance(index, stars, performanceIndex,incr) {
+    let j = index % 5;
+    let initialindex = Math.floor(index / 5) * 5;
+
+   
+    for (let i = 0; i < 5; i++) {
+      stars[i].className='fas fa-star'
+    }
+    for (let i = 0; i < 5; i++) {
+      if (i <= j) {
+        stars[initialindex + i].style.color = "#facc15"; // Yellow color
+        if(incr<1 && j==i)
+        {
+          stars[i].className='fas fa-star-half'
+        }
+      } else {
+        stars[initialindex + i].style.color = "#eff2f7";
+      }
+    }
+
+    let ratingLists = ratingListMap.get(performanceIndex);
+    ratingLists[Math.floor(index / 5)] = index % 5 + incr;
+    ratingListMap.set(performanceIndex, ratingLists)
+
+    // Recalculate the average rating
+    avgrating = calculateAverageRating(ratingLists);
+
+    // Update the UI or perform any necessary actions based on the average rating
+    updateUI(avgrating);
+  }
+
+  function calculateAverageRating(ratingList) {
+    const sum = ratingList.reduce((total, rating) => total + rating, 0);
+    return sum / ratingList.length;
+  }
+
+  function updateUI(avgrating) {
+  
+    let badge = document.getElementById('performance_' + PerformanceDate + '_badges');
+
+    if (avgrating > 4.7) badge.value = 2;
+    else if (avgrating > 4.4) badge.value = 1.5;
+    else if (avgrating > 4.1) badge.value = 1;
+    else badge.value = 0;
+    let ratingbox = document.getElementById('performance_' + PerformanceDate + '_rating');
+    ratingbox.value = avgrating;
+    submitButtonPerformanceRating(PerformanceDate);
+  }
+
+  function UpdateRating(id) {
+    PerformanceDate = id.split('_')[1];
+    submitButtonPerformanceRating(PerformanceDate);
+  }
+
+  function UpdateBadgesInput(id) {
+
+    PerformanceDate = id.split('_')[1];
+    submitButtonPerformanceRating(PerformanceDate);
+
+  }
+
+  function setclickonStars() {
+    let starRatingBox = document.getElementsByClassName("performance-stars");
+
+    for (let i = 0; i < starRatingBox.length; i++) {
+      let star = starRatingBox[i].getElementsByTagName("i");
+
+      for (let j = 0; j < star.length; j++) {
+        star[j].addEventListener("click", function(e) {
+          let boxProperty = stars[j].getBoundingClientRect();
+       
+        let diff=e.clientX-boxProperty.x;
+       
+        if(diff<(boxProperty.width)/2)
+        {
+          handleStarClickPerformance(j, star, i,0.5);
+        }
+       else
+       { 
+        handleStarClickPerformance(j, star, i,1);
+      }
+       
+
+        });
+      }
+    }
+  }
+
+  async function submitButtonPerformanceRating(date) {
+
+    const badges = parseFloat(document.getElementById('performance_' + date + '_badges').value);
+    const rating = parseFloat(document.getElementById('performance_' + date + '_rating').value);
+    let index = employeeIndexMap.get(date);
+    const ratingList = ratingListMap.get(index);
+    const data = {
+      employeeID: '<%=employee._id%>',
+      date,
+      badges,
+      ratingList,
+      rating,
+    };
+    console.log(data);
+    let response = await fetch('/mark/performance', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data),
+    });
+    console.log(response);
+  }
+</script>

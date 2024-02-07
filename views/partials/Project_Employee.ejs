@@ -1,0 +1,1045 @@
+
+<div id="ProjectsBody" style="display: none;
+padding: 32px;
+flex-direction: column;
+align-items: flex-start;
+gap: 20px;
+align-self: stretch;
+border-radius: 14px;" class="container_Style">
+        <div style="display: flex;
+justify-content: space-between;
+align-items: center;
+align-self: stretch;">
+          <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 2px;">
+            <div style="color: var(--content-on-light-primary, #181818);
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Your Projects</div>
+            <div style="color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 171.429% */">
+              Projects are your canvas for professional growth.
+              <span style="font-weight: 700;">Complete tasks, compile reports, and earn recognition. </span>
+              Your contributions define our success. After manager approval, your work shines in your profile.
+              <u onclick="ExpendBlock('.Projectlessinfo','.Projectmoreinfo')" class="Projectlessinfo" style="cursor: pointer;"> Read More</u>
+              <span class="Projectmoreinfo" style="display: none;flex-direction: column;">Here's how it works:
+                <li>After completing your tasks, you'll be asked to create a report summarizing your achievements.</li>
+                <li>Once approved by your manager, your work will be prominently featured in your recruiter profile.</li>
+                Your contributions define our success, and your profile reflects your journey.
+                <u onclick="ExpendBlock('.Projectlessinfo','.Projectmoreinfo')" style="cursor: pointer;"> Read Less</u>
+              </span>
+            </div>
+            <!-- <div class="Tasks" data-target="#SubmitProject" data-toggle="modal" style="display: flex;
+height: 46px;
+gap:4px;
+padding: 10px 24px 10px 16px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+border-radius: var(--radius-medium, 8px);
+background: var(--content-brand, #48BF84);color: var(--content-inverted-primary, #FFF);
+text-align: center;
+cursor: pointer;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+letter-spacing: 0.1px;">Compile Project Report <img src="../img/gem.svg"> 40</div> -->
+          </div>
+          <i class="fa fa-angle-up" id="Projectsicons" onclick="CloseBox('.Projects','Projectsicons','inline-table')" style="width: 40px;
+ height: 40px;border-radius: 40px;background: var(--surface-fourth, #EBEBEB);  padding:15px;  display: flex;
+align-items: center;
+justify-content: center;"></i>
+
+        </div>
+        <div class="Projects" style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 12px;
+align-self: stretch;">
+<% if(Projects.length>0){%>
+          <div style="display: flex;
+align-items: flex-start;
+gap: 16px;
+flex-wrap: wrap;
+align-self: stretch;">
+<% for(let project of Projects){%>
+            <div style="display: flex;
+            width: 400px;
+height: 450px;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;
+border-radius: 12px;
+border: 1px solid var(--gray-300, #D0D5DD);
+background: #FFF;">
+                <div style="border-radius: 12px 12px 0px 0px;width: 100%;overflow: hidden;">
+                  <img src="../img/Skill badge icons/image 707.svg" >
+                </div>
+              <div style="display: flex;
+padding: 12px 16px;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;
+align-self: stretch;">
+                <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;
+align-self: stretch;">
+                  <div style="display: flex;gap:4px;align-items: center;">
+                    <img src="../Performance dashboard Icons/calander.svg">
+                    <div style="color: var(--gray-500, #667085);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 150% */">
+                      1st Jul - 30th Jul: 6 weeks
+                    </div>
+                  </div>
+                  <div style="color: var(--gray-900, #101828);
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 30px; /* 150% */">
+                   <%=project.title%>
+                  </div>
+                  <div class="Projects" style="display: flex;
+align-items: center;
+gap: 12px;
+align-self: stretch;">
+                    <div class="progressTask">
+                      <div class="progress__fill"></div>
+                    </div>
+                    <div style="color: var(--gray-700, #344054);
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 28px; /* 200% */">50%</div>
+
+                  </div>
+                  <div style="display: flex;
+align-items: center;
+gap: 10px;">
+                    <img src="<%=employee.image%>" style="display: flex;
+width: 32px;
+height: 32px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+border-radius: 200px;">
+                    <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;">
+                      <div style="color: var(--gray-700, #344054);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */">
+                        <%=employee.displayName%>
+                      </div>
+                      <div style="color: var(--gray-500, #667085);
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 18px; /* 150% */">
+                        4 Task Submitted</div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <%}%>
+          </div>
+          <%}else{%>
+            <div style="display: flex;
+            height: 106px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            align-self: stretch;
+            " class="Tasks">
+              <div style="color: var(--gray-600, #475467);
+          
+          text-align: center;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 22px; /* 137.5% */
+          ">No Projects assigned yet
+              </div>
+              <div style="color: var(--gray-500, #667085);
+          text-align: center;
+          
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 22px; /* 157.143% */
+          ">Here, you'll find the Projects assigned by manager
+              </div>
+            </div>
+          <%}%>
+          <!-- <a href='/projectTask/project' style="display: flex;
+padding: 10px 16px;
+margin-top: 12px;
+align-items: center;
+gap: 8px;
+cursor: pointer;
+color: var(--brand-primary, #48BF84);
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: 24px;
+border-radius: var(--radius-medium, 8px);">
+            View All Projects
+        </a> -->
+        </div>
+      </div>
+  
+  
+  <!-- Submit Project Modal -->
+
+  <div class="modal fade docs-example-modal-xl" tabindex="-1" role="dialog" id="SubmitProject" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header" style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+          <div style="color: var(--gray-900, #101828);
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Project Report</div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+        </div>
+
+        <div class="modal-body" style="display: flex;
+        padding: 32px;
+        flex-direction: column;
+        overflow: auto;
+        max-height: 70vh;
+        align-items: flex-start;
+        gap: 32px;">
+          <div style="color: var(--gray-900, #101828);
+       font-size: 24px;
+       font-style: normal;
+       font-weight: 700;
+       line-height: normal;">P - management: Internal team productivity enhancement tool 
+       </div>
+       <div style="display: flex;
+       flex-direction: column;
+       align-items: flex-start;
+       gap: 12px;
+       align-self: stretch;">
+       <div style="display: flex;flex-direction: column;justify-content: flex-start;gap:8px">
+      <div style="color: var(--gray-800, #1D2939);
+
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      ">
+      Upload Image
+    </div>
+    <div style="align-self: stretch;
+    color: var(--gray-600, #475467);
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.21px;
+    ">Add an image that represents your project's success. It could be a screenshot, or any visual that captures your contribution.</div>
+      </div>
+
+     
+          <div style="display: flex;
+       padding: 24px 16px;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       gap: 4px;
+       align-self: stretch;
+       border-radius: 12px;
+       border: 1px dashed #DCDCDC;
+       background: var(--surface-primary, #FFF);" onclick="selectFile('add file')" ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
+       <img src="../Performance dashboard Icons/Project/upload-cloud CTA.svg" style="width: 56px;
+       height: 56px;
+       flex-shrink: 0;">
+            <input type="file" id="add file" class="custom-input-file" onchange="handleAddFileSelect(event)">
+
+           <div style="width: 300px;"><span style="color:#48BF84">Click to Upload </span>or Drag and Drop
+            (jpg,png, pdf)</div> 
+           
+          </div>
+        </div>
+          <div style="display: flex;
+                         flex-direction: column;
+                         width: 100%;
+                         align-items: flex-start;
+                         gap: 8px;">
+            <div style="color: var(--gray-800, #1D2939);
+                       
+                       font-size: 16px;
+                       font-style: normal;
+                       font-weight: 600;
+                       line-height: normal;">Project Objectives</div>
+            <textarea style="display: flex;
+                       padding: 14px 20px;
+                       align-items: center;
+                       gap: 10px;
+                       align-self: stretch;
+                       color: var(--gray-500, #667085);
+                     
+                     font-size: 14px;
+                     font-style: normal;
+                     height: 48px;
+                     
+                     font-weight: 500;
+                     line-height: normal;
+                     letter-spacing: 0.21px;
+                       border-radius: 12px;
+                       border: 1px solid #ECECEC;
+                       background: #FFF;" placeholder="Briefly describe Project Objectives"></textarea>
+          </div>
+          <div style="display: flex;
+                       flex-direction: column;
+                       width: 100%;
+                       align-items: flex-start;
+                       gap: 8px;">
+            <div style="color: var(--gray-800, #1D2939);
+                     
+                     font-size: 16px;
+                     font-style: normal;
+                     font-weight: 600;
+                     line-height: normal;">Description</div>
+            <textarea style="display: flex;
+                     padding: 14px 20px;
+                     align-items: center;
+                     gap: 10px;
+                     align-self: stretch;
+                     color: var(--gray-500, #667085);
+                   
+                   font-size: 14px;
+                   font-style: normal;
+                   height: 48px;
+                   
+                   font-weight: 500;
+                   line-height: normal;
+                   letter-spacing: 0.21px;
+                     border-radius: 12px;
+                     border: 1px solid #ECECEC;
+                     background: #FFF;" placeholder="Briefly describe What you accomplished in this project"></textarea>
+          </div>
+          <div style="display: flex;
+       flex-direction: column;
+       align-items: flex-start;
+       gap: 8px;">
+            <div style="color: var(--gray-800, #1D2939);
+       
+       font-size: 16px;
+       font-style: normal;
+       font-weight: 600;
+       line-height: normal;">Timeline</div>
+            <div style="display: flex;
+       align-items: center;
+       gap: 8px;
+       align-self: stretch;">
+              <img src="../Performance dashboard Icons/calander.svg">
+              <div style="color: var(--gray-600, #475467);
+      
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;">
+                Start Date
+              </div>
+              <input style="display: flex;
+      height: 48px;
+      padding: 14px 20px;
+      align-items: center;
+      gap: 10px;
+      color: var(--gray-500, #667085);
+/* Text sm/Normal */
+
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 142.857% */
+
+      border-radius: 12px;
+      border: 1px solid var(--gray-300, #D0D5DD);
+      background: #FFF;" type="date">
+              <div style="color: var(--gray-600, #475467);
+      
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;">
+                DueDate
+              </div>
+              <input style="display: flex;
+      height: 48px;
+      padding: 14px 20px;
+      align-items: center;
+      gap: 10px;
+      color: var(--gray-500, #667085);
+/* Text sm/Normal */
+
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 142.857% */
+
+      border-radius: 12px;
+      border: 1px solid var(--gray-300, #D0D5DD);
+      background: #FFF;" type="date">
+            </div>
+          </div>
+          <div style="display: flex;
+     flex-direction: column;
+     align-items: flex-start;
+     width: 100%;
+     gap: 12px;">
+            <div style="display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;">
+              <div style="color: var(--gray-800, #1D2939);
+  
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;">Tasks</div>
+              <div style="color: var(--gray-600, #475467);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.21px;">Your Approved Contributions</div>
+            </div>
+            <div style="width: 100%;overflow: auto;">
+            <table style="width: 100%;">
+              <tr style="background: var(--gray-100, #F2F4F7);">
+                <th style="width: 45%;">Task Title</th>
+                <th>Timeline</th>
+                <th>Files</th>
+                <th>Links</th>
+                <th>Quality</th>
+                <th>Speed</th>
+                <th>Ratings</th>
+                <th>Badges</th>
+                <th>Feedback</th>
+              </tr>
+              <tr style="
+      background: #FFF;">
+                <td style="display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                min-width: 300px;
+                overflow: hidden;
+color: var(--gray-700, #344054);
+text-overflow: ellipsis;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 150% 
+                ">
+                  📊 Monthly Performance Report
+                </td>
+                
+                <td style="color: var(--gray-500, #667085);
+                    font-size: 14px;
+                    font-style: normal;
+                    width: 160px;
+                    font-weight: 400;
+                    line-height: 20px; /* 142.857% */">2 -27 aug 2023</td>
+                <td style="color: var(--content-on-light-primary, #181818);
+                      font-size: 16px;
+                      font-style: normal;
+                      font-weight: 600;
+                      line-height: 16px; /* 100% */">1 <img src='../Performance dashboard Icons/File.svg' style="width: 24px;height: 24px;"></td>
+                <td style="color: var(--gray-500, #667085);
+                      font-size: 14px;
+                      font-style: normal;
+                      font-weight: 400;
+                      line-height: 20px; /* 142.857% */">1 <img src='../Performance dashboard Icons/Link.svg' style="width: 24px;height: 24px;"></td>
+                <td style="color: var(--content-on-light-primary, #181818);
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 16px; /* 100% */"><span style="color:#48BF84;">8</span>/10</td>
+                <td style="color: var(--gray-500, #667085);
+                        font-size: 14px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 20px; /* 142.857% */"><span style="color:#48BF84;">8</span>/10</td>
+                <td style="color: black;
+                        font-size: 14px;
+                        display: flex;gap:4px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 20px; /* 142.857% */">4.8 <img src="../img/filled-star.svg" style="width: 24px;
+height: 39.999px;
+flex-shrink: 0;"></td>
+                <td style="color: var(--content-on-light-primary, #181818);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 16px; /* 100% */">10 <img src='../img/gem.svg' style="width: 24px;height: 24px;"></td>
+
+                <td><img src="../Performance dashboard Icons/Tasks/One feedback(number is dynamic).svg"></td>
+              </tr>
+
+
+            </table>
+          </div>
+          </div>
+
+          <div style="display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    gap: 8px;">
+            <div style="color: var(--gray-800, #1D2939);
+  
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;">Business Outcome</div>
+            <textarea style="display: flex;
+  padding: 14px 20px;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  color: var(--gray-500, #667085);
+
+font-size: 14px;
+font-style: normal;
+height: 48px;
+
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+  border-radius: 12px;
+  border: 1px solid #ECECEC;
+  background: #FFF;" placeholder="Describe the specific business outcome you achieved through this task."></textarea>
+          </div>
+          <div style="display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  gap: 8px;">
+            <div style="color: var(--gray-800, #1D2939);
+
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Learnings and Next steps</div>
+            <textarea style="display: flex;
+padding: 14px 20px;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+color: var(--gray-500, #667085);
+
+font-size: 14px;
+font-style: normal;
+height: 60px;
+
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+border-radius: 12px;
+border: 1px solid #ECECEC;
+background: #FFF;" placeholder="Reflect on the learnings or insights gained from this task. What did you discover, understand, or gain as knowledge during the process? Please summarize them here."></textarea>
+          </div>
+          <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;
+align-self: stretch;
+">
+            <div style="color: var(--gray-800, #1D2939);
+
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Attach files and links</div>
+            <div style="display: flex;align-items: center;gap:8px;flex-wrap: wrap;">
+              <div style="display: flex;
+padding: 12px 16px;
+align-items: center;
+gap: 12px;
+flex: 1 0 0;
+border-radius: 12px;
+border: 1px solid #ECECEC;
+background: #FFF;">
+                <img src="../Performance dashboard Icons/Document Added.svg">
+                <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 4px;
+flex: 1 0 0;">
+                  <div style="align-self: stretch;
+color: var(--content-on-light-primary, #181818);
+
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 17.352px; /* 108.447% */">
+                    Design_draft1
+                  </div>
+                  <div style="display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 1;
+align-self: stretch;
+overflow: hidden;
+color: var(--content-on-light-secondary, #898989);
+text-overflow: ellipsis;
+
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 17.352px; /* 144.597% */">
+                    www.figma.com/file/4E5bk36Ib1giid=4861%3A134681&m
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex;
+align-items: flex-start;
+gap: 8px;">
+              <div style="display: flex;
+width: 103px;
+height: 52px;
+padding: 16px 24px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+background: #FFF;">
+                <!-- <input type="file" > -->
+                <img src="../Performance dashboard Icons/File.svg">
+                <img src="../Performance dashboard Icons/AddMedia.svg">
+              </div>
+              <div style="display: flex;
+width: 103px;
+height: 52px;
+padding: 16px 24px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+background: #FFF;" data-target="#AddLink" data-toggle="modal">
+                <img src="../Performance dashboard Icons/Link.svg">
+                <img src="../Performance dashboard Icons/AddMedia.svg">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer" style="padding: 0.5rem">
+          <button class="btn btn-outline-primary" style="display: flex;
+width: 189px;
+padding: 16px 40px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+align-self: stretch;
+border-radius: 12px;" data-dismiss="modal"> Cancel</button>
+          <button class="btn btn-primary" style="display: flex;
+width: 189px;
+padding: 16px 40px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+align-self: stretch;
+border-radius: 12px;" data-target="#ShowAllTask" data-toggle="modal" data-dismiss="modal">Submit</button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- Project Welcome Modal -->
+
+  <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="ProjectModal" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-body" style="display: flex;
+        padding: 40px 64px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 33px;
+        border-radius: 12px;
+        background: #FFF;
+        ">
+          <img src="../Performance dashboard Icons/Welcome to Your Projects! icon.svg">
+          <div style="display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        align-self: stretch;">
+            <div style="color: var(--ref-primary-primary-12, #002614);
+        text-align: center;
+        font-size: 34px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;">
+              Welcome to Your Projects!
+            </div>
+            <div style="align-self: stretch;
+        color: var(--ref-primary-primary-12, #002614);
+        text-align: center;
+        font-size: 20px;
+        display: flex;
+    flex-direction: column;
+    gap: 8px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.2px;">Here, you'll find a new way to enhance your portfolio and contribute to our company's goals.
+              <span style="display: flex;">
+                Projects are compilations of tasks, showcasing your ongoing efforts and accomplishments. </span>
+              <span style="display: flex;">Let's revamp the way we work together to make your contributions stand out! </span>
+            </div>
+            <div style="color: var(--brand-primary, #48BF84);
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+cursor: pointer;
+line-height: 24px; /* 150% */">Read More</div>
+          </div>
+          <div style="display: flex;
+      width: 223px;
+      height: 56px;
+      padding: 16px 40px;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: #FFF;
+text-align: center;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+cursor: pointer;
+      border-radius: 12px;
+      background: #48BF84;" data-dismiss="modal">
+            Continue </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var projectData = {};
+   
+          function ChangeModalData(value) {
+          projectData=value;
+          document.getElementById('Project_Title')=projectData.title?projectData.title:'';
+          document.getElementById('Project_StartDate')=projectData.startDate?projectData.startDate:'';
+          document.getElementById('Project_EndDate')=projectData.endDate?projectData.endDate:'';
+          document.getElementById('Project_Assignee')=projectData.assignedTo?projectData.assignedTo:'Select Employee';
+          document.getElementById('Project_Objectives')=projectData.objectives?projectData.objectives:'';
+          document.getElementById('Project_Description')=projectData.description?projectData.description:'';
+          document.getElementById('Project_LinkFileBody')='';
+          for(let files of projectData.files)
+          {
+          file=files;
+          UpdateFilebody();
+          }
+          for(let links of projectData.links)
+          {
+          Link=files;
+          UpdateLinkbody();
+          }
+          }
+          
+          function MakeSubmitButtonAble()
+          {
+           
+          let button=document.getElementById('Project_Submit');
+          if(projectData.title?.length>0 && projectData.startDate?.length>0 && projectData.endDate?.length>0 && projectData.assignedTo?.length>0) {
+          button.disabled=false;
+          
+          }
+          else{
+          button.disabled=true;
+          }
+          }
+    
+          function ChangeTab() {
+          let TasksTab = document.getElementById('TasksTab');
+          let ProjectsTab = document.getElementById('ProjectsTab');
+          let TasksBody = document.getElementById('TasksBody');
+          let ProjectsBody = document.getElementById('ProjectsBody');
+          if (TasksBody.style.display == 'flex') {
+          TasksTab.classList.remove('active');
+          ProjectsTab.classList.add('active');
+          TasksBody.style.display = 'none';
+          ProjectsBody.style.display = 'flex';
+          } else {
+          TasksTab.classList.add('active');
+          ProjectsTab.classList.remove('active');
+          TasksBody.style.display = 'flex';
+          ProjectsBody.style.display = 'none';
+          }
+          }
+          function OpenFileInputProject()
+          {
+          document.getElementById('FileInputFild').click();
+          }
+         
+          projectData.links=[];
+          projectData.files=[];
+          let Link = {},file={};
+          function ChangeLinkContent(type, value) {
+          Link[type] = value;
+         
+          MakeLinkButtonAble();
+          }
+    
+          function AddLink() {
+          let id=generateRandomId();
+          Link.id =id;
+          projectData.links.push(Link);
+          UpdateLinkbody();
+          }
+          function AddFile() {
+          let id=generateRandomId();
+          file.id=id;
+          projectData.files.push(file);
+          UpdateFilebody();
+          }
+          function MakeLinkButtonAble() {
+          if (Link.title?.length > 0 && Link.url?.length > 0) {
+          document.getElementById('AddLinkButton').disabled = false;
+          } else {
+          document.getElementById('AddLinkButton').disabled = true;
+          }
+          }
+          function generateRandomId() {
+          return '_' + Math.random().toString(36).substr(2, 9);
+          }
+          function UpdateLinkbody() {
+          let id=Link.id;
+          let body = document.getElementById('Project_LinkFileBody');
+          let innerhtmlfile = `
+          <div style="display: flex;
+                    padding: 12px 16px;
+                    align-items: center;
+                    gap: 12px;
+                    flex: 1 0 0;
+                    border-radius: 12px;
+                    border: 1px solid #ECECEC;
+                    background: #FFF;" onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='link-${id}'>
+            <img src="../Performance dashboard Icons/Link Added.svg">
+            <div style="display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      gap: 4px;
+                      flex: 1 0 0;">
+              <div style="align-self: stretch;
+                        color: var(--content-on-light-primary, #181818);
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 17.352px;">
+                ${Link.title}
+              </div>
+              <div style="display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        align-self: stretch;
+                        overflow: hidden;
+                        color: var(--content-on-light-secondary, #898989);
+                        text-overflow: ellipsis;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 17.352px;">
+                ${Link.url}
+              </div>
+            </div>
+            <img src='../Project icons/Edit.svg' style="display:none" class='Icons-${id}' onclick='EditLink("${id}")' data-target='#AddLink' data-toggle='modal'>
+            <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveLink("${id}")'>
+          </div>`;
+    
+          body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+          }
+    
+          function UpdateFilebody() {
+          let id=file.id;
+          let body = document.getElementById('Project_LinkFileBody');
+          let innerhtmlfile = `
+          <div style="display: flex;
+                    padding: 12px 16px;
+                    align-items: center;
+                    gap: 12px;
+                    flex: 1 0 0;
+                    border-radius: 12px;
+                    border: 1px solid #ECECEC;
+                    background: #FFF;" onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='file-${id}'>
+            <img src="../Performance dashboard Icons/Document Added.svg">
+            <div style="display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      gap: 4px;
+                      flex: 1 0 0;">
+              <div style="align-self: stretch;
+                        color: var(--content-on-light-primary, #181818);
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 17.352px;">
+                ${file.title}
+              </div>
+              <div style="display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        align-self: stretch;
+                        overflow: hidden;
+                        color: var(--content-on-light-secondary, #898989);
+                        text-overflow: ellipsis;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 17.352px;">
+                ${file.url}
+              </div>
+            </div>
+            <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveFile("${id}")'>
+          </div>`;
+    
+          body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+          }
+    
+    
+    
+          function ChangeProjectData(type, value) {
+          projectData[type] = value;
+          MakeSubmitButtonAble();
+          }
+    
+          function RemoveFile(fileid)
+          {let id=`file-${fileid}`
+          const body = document.getElementById(id);
+          body.remove();
+          const index = projectData.files.findIndex((file) => file.id === fileid);
+          if(index!=-1)
+          projectData.files.splice(index, 1);
+    
+          }
+          function RemoveLink(linkid)
+          {
+          let id=`link-${linkid}`
+          const body = document.getElementById(id);
+          body.remove();
+          const index = projectData.links.findIndex((link) => link.id === linkid);
+          if(index!=-1)
+          projectData.links.splice(index, 1);
+          }
+          function EditLink(linkid)
+          {
+          const index = projectData.links.findIndex((link) => link.id === linkid);
+          Link=projectData.links[index];
+          RemoveLink(linkid);
+          document.getElementById('link-title').value=Link.title;
+          document.getElementById('link-link').value=Link.url;
+          }
+    
+          function showIcons(classname) {
+          const box = document.querySelectorAll(classname);
+          box.forEach((element) => {
+          element.style.display = 'flex';
+          });
+          }
+    
+          function removeIcons(classname) {
+          const box = document.querySelectorAll(classname);
+          box.forEach((element) => {
+          element.style.display = 'none';
+          });
+          }
+    
+    
+          async function handleFileSelect(event) {
+          try{
+          let data = event.target.files[0];
+          let filelink= await handleFileUpload(data);
+          file.title=data.name;
+          file.url=filelink;
+          AddFile();
+          }
+          catch(error)
+          {
+          console.log(error)
+          }
+          }
+    
+    
+    
+          async function handleFileUpload(file) {
+          const formData = new FormData();
+          formData.append('file', file);
+          try {
+          const uploadType = "EmployeeProject";
+          const urlRes = await fetch(
+          `/aws/get/preSignedUrl?fileName=${file.name}t&contentType=${ file.type}&uploadType=${uploadType}`,
+          {
+          method: "GET",
+          }
+          );
+          const urlData = await urlRes.json();
+          const response = await fetch(urlData.url, {
+          method: "PUT",
+          headers: {
+          "Content-Type": file.type,
+          },
+          body: file,
+          });
+          let url=`https://dvfkpf9qxfl09.cloudfront.net/${urlData.key}`;
+    
+          return url;
+          } catch (error) {
+          console.error('Error during file upload:', error);
+          }
+          }
+    
+          // async function CreateProject()
+          // {
+          //   console.log(projectData);
+          // try{
+          // let response=await fetch('/create/project',{
+          // method: 'POST',
+          // headers: {
+          // 'Content-Type': 'application/json',
+          // },
+          // body: JSON.stringify(projectData)
+          // })
+          // response=await response.json();
+          // if (response.status == 200)
+          // {
+          // $("#successModal").modal('show');
+          // location.reload();
+          // }
+          // }
+          // catch(error)
+          // {
+          // console.log(error);
+          // $("#errorModal").modal('show');
+          // }
+          // }
+    
+          </script>

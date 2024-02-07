@@ -1,0 +1,875 @@
+<% function formatDate(dateString) {
+  if (!dateString) {
+      return ''; // Handle the case where dateString is empty or undefined
+  }
+
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+}
+%>
+<div  style="width: 100%;overflow: auto;" class="table-responsive" id="InitiativesBox">
+     
+    <table style="width: 100%;" class="table" id="TaskTable">
+      <thead> 
+        <tr class="TasksHeader" id="TasksHeader">
+          
+          <th  onmouseover="ShowIconsT('HeaderT')" onmouseout="RemoveIconsT('HeaderT')" style="width:20px">
+            <div style="display: flex;gap:8px;align-items: center;">
+            <img src="../Performance dashboard Icons/three_dot.svg"  class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="threeDotTsHeaderT" style="display: none;" >
+            <div aria-labelledby='threeDotTsHeaderT' class="dropdown-menu" style="flex-direction: column;
+            align-items: flex-start;
+            border: 1px solid var(--gray-300, #D0D5DD);
+            border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+            border-bottom: 1px solid var(--gray-300, #D0D5DD);
+            " class="container_Style">
+           
+            <div class="dropdown_tab_active" data-toggle="modal" data-target="#DeleteTConfirmation" onclick="changeinitiativeIndex(-1)">
+            <img src="../Performance dashboard Icons/dropdown_delete.svg"> Delete
+            </div>
+            <!-- <div class="dropdown_tab_active" onclick="CheckBadgesAreAllot(-1)" >
+              <i class="fa fa-check" aria-hidden="true" style="color: #48BF84;"></i> Approve
+            </div>
+            <div class="dropdown_tab_active" onclick="SetRejectionModal(-1)" data-target="#RejectTs" data-toggle="modal">
+              <i class="fa fa-times" aria-hidden="true" style="color: #FF6565;"></i> Reject
+            </div> -->
+            </div>
+          <input type="checkbox" style="display: none;" id="checkboxTsHeaderT" class="Tcheckbox" onclick="SelectAllT()">
+            <div>Sr No</div>
+          </div>
+          </th>
+         
+        
+          <% for (let i = 0; i < TaskTableHeaders?.length; i++) { %>
+            <% let header = TaskTableHeaders[i] %>
+            <th style="padding:0px;<%= header.style %>;" onmouseover="showIcons('.Border-<%=header._id%>')" onmouseout="removeIcons('.Border-<%=header._id%>')"  id="TaskMainTableManager<%= i %>"
+      >
+              <div style="display: flex;align-items: center;gap:5px;justify-content: center;width: calc( 100% - 6px );overflow: hidden;" id="TaskMainTableManagerDiv<%= i %>">
+                 <input type="text" value="<%= header.title %>" style="border:none;max-width: 90%;" onchange="ChangeTaskHeaderTitle('<%=i%>',event.target.value)" size="<%= header.title.length+1 %>">
+                <img src="../Performance dashboard Icons/three_dot.svg"  class="Border-<%=header._id%>" data-toggle="dropdown" aria-expanded="false" style="display: none;" >
+                <div  class="dropdown-menu" style="flex-direction: column;
+                align-items: flex-start;
+                border: 1px solid var(--gray-300, #D0D5DD);
+                border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+                border-bottom: 1px solid var(--gray-300, #D0D5DD);
+                " class="container_Style">
+               
+                <div class="dropdown_tab_active" data-toggle="modal" data-target="#DeleteTaskHeaderConfirmation" onclick="setHeaderToDelete('<%=header._id%>','<%=header.usedName%>')">
+                <img src="../Performance dashboard Icons/dropdown_delete.svg"> Delete
+                </div>
+                <div class="dropdown_tab_active"  data-toggle="dropdown" aria-expanded="false">
+                 <div style="display: flex;align-items: center;gap:8px;"  > <i class="fa fa-plus"></i> Add Column to right <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                  
+                </div>
+                <div  class="dropdown-menu"   style="flex-direction: column;
+          padding: 16px;
+          width: 370px;
+          align-items: flex-start;
+          gap: 16px;
+          color: var(--gray-800, #1D2939);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 20px; /* 125% */
+          background-color: white;
+          ">
+          <div >Column Type</div>
+<div style="display: flex;align-items: flex-start;gap:16px;justify-content: flex-start;flex-wrap: wrap;">
+<div class="AddColumnBox" onclick="AddNewTaskCol('label','<%=i+1%>')">
+  <img src="../img/clock.svg" style="width: 20px;">
+  Status
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('date','<%=i+1%>')">
+  <img src="../img/NewCalendar.svg" style="width: 20px;">
+ Date
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('text','<%=i+1%>')">
+  <i class="fa fa-text-width" aria-hidden="true"></i>
+  Text
+</div>
+<!-- <div class="AddColumnBox" onclick="AddNewTaskCol('timeline','<%=i+1%>')">
+  <img src="../img/NewCalendar.svg" style="width: 20px;">
+Timeline
+</div> -->
+<div class="AddColumnBox" onclick="AddNewTaskCol('numbers','<%=i+1%>')">
+  <img src="../img/NumberIcon.svg" style="width: 20px;">
+  Numbers
+</div>
+
+<!-- <div class="AddColumnBox" onclick="AddNewTaskCol('people','<%=i+1%>')">
+  <i class="fa fa-users" aria-hidden="true"></i>
+  People
+</div> -->
+<div class="AddColumnBox" onclick="AddNewTaskCol('label','<%=i+1%>')">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+ Label
+</div>
+<!-- <div class="AddColumnBox" onclick="AddNewTaskCol('dropddown','<%=i+1%>')">
+ -<i class="fa fa-chevron-down" aria-hidden="true"></i>
+ Dropddown
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('files','<%=i+1%>')">
+  <i class="fa fa-file" aria-hidden="true"></i>
+Files
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('links','<%=i+1%>')">
+  <i class="fa fa-link" aria-hidden="true"></i>
+ Links
+</div> -->
+</div>
+            </div>
+               <!--  <div class="dropdown_tab_active" onclick="SetRejectionModal(-1)" data-target="#RejectTs" data-toggle="modal">
+                  <i class="fa fa-times" aria-hidden="true" style="color: #FF6565;"></i> Reject
+                </div> -->
+                </div>
+               
+              </div> 
+                <div class="Border-<%=header._id%> HeaderBorder" style="display: none;"></div>
+            </th>
+           
+        <% } %>
+          <th style="width: 120px;display: flex;gap:4px;align-items: center;cursor: pointer;">
+            <div style="display: flex;gap:4px;align-items: center;" data-toggle="dropdown" aria-expanded="false" id="AddColumnTask" ><i class="fa fa-plus" aria-hidden="true"></i>Add column</div>
+          <div  class="dropdown-menu" aria-labelledby='AddColumnTask'  style="flex-direction: column;
+          padding: 16px;
+          width: 370px;
+          align-items: flex-start;
+          gap: 16px;
+          color: var(--gray-800, #1D2939);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 20px; /* 125% */
+          background-color: white;
+          ">
+          <div >Column Type</div>
+<div style="display: flex;align-items: flex-start;gap:16px;justify-content: flex-start;flex-wrap: wrap;">
+<div class="AddColumnBox" onclick="AddNewTaskCol('label')">
+  <img src="../img/clock.svg" style="width: 20px;">
+  Status
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('date')">
+  <img src="../img/NewCalendar.svg" style="width: 20px;">
+ Date
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('text')">
+  <i class="fa fa-text-width" aria-hidden="true"></i>
+  Text
+</div>
+<!-- <div class="AddColumnBox" onclick="AddNewTaskCol('timeline')">
+  <img src="../img/NewCalendar.svg" style="width: 20px;">
+Timeline
+</div> -->
+<div class="AddColumnBox" onclick="AddNewTaskCol('numbers')">
+  <img src="../img/NumberIcon.svg" style="width: 20px;">
+  Numbers
+</div>
+<!-- 
+<div class="AddColumnBox" onclick="AddNewTaskCol('people')">
+  <i class="fa fa-users" aria-hidden="true"></i>
+  People
+</div> -->
+<div class="AddColumnBox" onclick="AddNewTaskCol('label')">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+ Label
+</div>
+<!-- <div class="AddColumnBox" onclick="AddNewTaskCol('dropddown')">
+ -<i class="fa fa-chevron-down" aria-hidden="true"></i>
+ Dropddown
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('files')">
+  <i class="fa fa-file" aria-hidden="true"></i>
+Files
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('links')">
+  <i class="fa fa-link" aria-hidden="true"></i>
+ Links
+</div> -->
+</div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody  class="list" id="InitiativesBody">
+        
+    <% for(let i=0;i<initiative.length;i++){%>
+      <tr onclick="changeinitiativeIndex('<%=i%>')" draggable="true" class="Tasks" id="Tasks<%=i%>">
+
+        <td  onmouseover="ShowIconsT('T<%=i%>')" onmouseout="RemoveIconsT('T<%=i%>')" style="width:20px">
+          <div style="display: flex;gap:8px;align-items: center;">
+          <img src="../Performance dashboard Icons/three_dot.svg"  class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="threeDotTsT<%=i%>" style="display: none;" >
+          <div aria-labelledby='threeDotTST<%=i%>' class="dropdown-menu" style="flex-direction: column;
+          align-items: flex-start;
+          border: 1px solid var(--gray-300, #D0D5DD);
+          border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+          border-bottom: 1px solid var(--gray-300, #D0D5DD);
+          " class="container_Style">
+         
+          <div class="dropdown_tab_active" data-toggle="modal" data-target="#DeleteTConfirmation"  onclick="changeinitiativeIndex('<%=i%>')">
+          <img src="../Performance dashboard Icons/dropdown_delete.svg"> Delete
+          </div>
+          <!-- <div class="dropdown_tab_active" onclick="CheckBadgesAreAllot('<%=i%>')">
+            <i class="fa fa-check" aria-hidden="true" style="color: #48BF84;"></i> Approve
+          </div>
+          <div class="dropdown_tab_active" onclick="SetRejectionModal('<%=i%>')" data-target="#RejectTs" data-toggle="modal">
+            <i class="fa fa-times" aria-hidden="true" style="color: #FF6565;"></i> Reject
+          </div> -->
+          </div>
+        <input type="checkbox" style="display: none;" id="checkboxTsT<%=i%>" class="Tcheckbox" >
+          <div><%=i+1%></div>
+        </div>
+        </td>
+        <% let index=0%>
+       
+        <% for (let header of TaskTableHeaders) { %>
+          <% let nudges=initiative[i].data.Nudge?.length || 0%>
+          
+         <% if(header.usedName=='Nudge'){%>
+           <td style='<%= TaskTableHeaders[index].style %>' data-target="#Tasknudge" data-toggle="modal" onclick="SetTaskNudgeModal('<%=i%>')">
+             <%if(nudges==0){%>
+              <img src="../img/NoNudge.svg">
+              <%}else if(nudges==1){%>
+                <img src="../img/OneNudge.svg">
+                <%}else{%>
+                  <div style="display: flex;position: relative;">
+                    <div style="color: var(--White, #FFF);
+                    font-size: 10px;
+                    top:-3px;
+                    right:1px;
+                    width: 11.615px;
+height: 11.615px;
+position: absolute;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 20px; /* 200% */"><%=nudges%></div>
+                  <img src="../img/NudgeMore.svg">
+                </div>
+                  <%}%>
+              </td>
+          <%}else if (header.usedName === 'Tasks') { %>
+            <td onmouseover="showIcons('.OpenIcons<%= initiative[i]._id %>')" onmouseout="removeIcons('.OpenIcons<%= initiative[i]._id %>')" style="<%= TaskTableHeaders[index].style %>">
+              <div style="display: flex; align-items: center; gap: 40px; width:100%;">
+                <div style="width: 95%; display: flex; gap: 8px; align-items: center;" data-toggle="tooltip" data-placement="top" title="<%= initiative[i].data?.Tasks %>">
+                  <i class="fa fa-angle-right" style="font-size: 25px; color: <%= subTasks[i].length > 0 ? '#1D2939' : '#98A2B3' %>" onclick="ShowsubTasks('<%= i %>')" id="ToogleIcon<%= i %>"></i>
+                  <div class="AddRow" style="width: 80%">
+                    <input type="text" class="TaskTitle" value="<%= initiative[i].data?.Tasks %>" placeholder="Enter task title " style="width: 100%; border: none; border-radius: 6px; height: 30px; background: transparent;" onchange="changeinitiativedata('<%= i %>','Tasks',event.target.value)">
+                  </div>
+                  <%if(subTasks[i].length){%>
+                    <%=subTasks[i].length%> <img src="../Performance dashboard Icons/Tasks/corner_down_right.svg"> 
+                    <%}%>
+                </div>
+                <div  onclick="OpenTaskSideBar('<%=i%>')" onmouseover="showIcons('.OpenIcons<%= initiative[i]._id %>')" onmouseout="removeIcons('.OpenIcons<%= initiative[i]._id %>')" class="OpenIcons<%= initiative[i]._id %>" style="display: none; align-items: center; gap: 8px; color: var(--gray-500, #667085); font-size: 14px; cursor: pointer; font-style: normal; font-weight: 600; line-height: 20px;">
+                  <img src="../Project icons/maximize.svg">
+                  Open
+                </div>
+                <% let postcount=initiative[i].posts?.length ||0%>
+                <% let src=postcount==0?'../img/message-square-gray.svg':'../img/message-square-green.svg'%>      
+                <div style="display: flex;align-items: center;position: relative;" onclick="OpenTaskSideBar('<%=i%>')">
+                <img src="<%=src%>">
+               <% if(postcount>0){%>
+                <div style="color: var(--White, #FFF);
+                display: flex;
+                font-size: 12px;
+                position: absolute;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 20px;
+                width: 14.926px;
+                height: 14.926px;
+                background: #48bf84;
+                border-radius: 14.926px;
+                bottom: 0;
+                right: -5px;
+                justify-content: center;
+                align-items: center;"><%=postcount%></div>
+                <%}%>
+              </div>
+              </div>
+                </td>
+          <% } else if (header.usedName === 'objective') { %>
+            <td style="<%= TaskTableHeaders[index].style %>">
+              <div style="padding: 5px 12px; border-radius: 16px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; width: 150px; cursor: pointer; overflow: hidden; text-overflow: ellipsis;" id="initiativeObjective<%= i %>" data-toggle="dropdown" aria-expanded="false">
+                <% if (!initiative[i].data?.ObjectiveTitle || initiative[i].data?.ObjectiveTitle.length === 0) { %>
+                  Select Objective
+                <% } else { %>
+                  <%= initiative[i].data.ObjectiveTitle %>
+                <% } %>
+              </div>
+              <div class="dropdown-menu initiativesObjective" style="flex-direction: column; padding: 5px 12px; border-radius: 8px;" aria-labelledby="initiativeObjective<%= i %>"></div>
+            </td>
+          <% } else if (header.usedName === 'project') { %>
+            <td style="<%= TaskTableHeaders[index].style %>">
+              <div style="padding: 5px 12px; border-radius: 16px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; width: 150px; overflow: hidden; text-overflow: ellipsis;" id="initiativeProject<%= i %>" data-toggle="dropdown" aria-expanded="false">
+                <% if (!initiative[i].data?.projectTitle || initiative[i].data?.projectTitle.length === 0) { %>
+                  Select Project
+                <% } else { %>
+                  <%= initiative[i].data?.projectTitle %>
+                <% } %>
+              </div>
+              <div class="dropdown-menu initiativesProject" style="flex-direction: column; padding: 5px 12px; border-radius: 8px;" aria-labelledby="initiativeProject<%= i %>"></div>
+            </td>
+          <% } else if (header.usedName === 'krs') { %>
+            <td style="<%= TaskTableHeaders[index].style %>">
+              <div style="padding: 5px 12px; border-radius: 16px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; width: 150px; overflow: hidden; text-overflow: ellipsis;" id="initiativeKR<%= i %>" data-toggle="dropdown" aria-expanded="false" onclick="CheckAllkrsBox('<%= i %>')">
+                <% if (initiative[i].data?.krs?.length === 0) { %>
+                  Select Key result
+                <% } else { %>
+                  <% for (let j = 0; j < initiative[i].data?.krs?.length; j++) { %>
+                    <%= initiative[i].data.krs[j].title %><%= j < initiative[i].data?.krs?.length - 1 ? ',' : '' %>
+                  <% } %>
+                <% } %>
+              </div>
+              <div class="dropdown-menu initiativesKr" style="flex-direction: column; padding: 5px 12px; border-radius: 8px;" aria-labelledby="initiativeKR<%= i %>"></div>
+            </td>
+          <% } else if (header.usedName === 'subkrs') { %>
+            <td style="<%= TaskTableHeaders[index].style %>">
+              <div style="padding: 5px 12px; border-radius: 16px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; width: 150px; overflow: hidden; text-overflow: ellipsis;" id="initiativeSubKR<%= i %>" data-toggle="dropdown" aria-expanded="false" onclick="CheckAllSubkrsBox('<%= i %>')">
+                <% if (!initiative[i].data?.subkrs || initiative[i].data?.subkrs?.length === 0) { %>
+                  Select Sub Key result
+                <% } else { %>
+                  <% for (let j = 0; j < initiative[i].data?.subkrs?.length; j++) { %>
+                    <%= initiative[i].data.subkrs[j].title %><%= j < initiative[i].data?.subkrs?.length - 1 ? ',' : '' %>
+                  <% } %>
+                <% } %>
+              </div>
+              <div class="dropdown-menu initiativesSubKr" style="flex-direction: column; padding: 5px 12px; border-radius: 8px;" aria-labelledby="initiativeSubKR<%= i %>"></div>
+            </td>
+          <% } else if (header.type === 'label') { %>
+            <td style="<%= TaskTableHeaders[index].style %>">
+              <div style="padding: 5px 12px; border-radius: 16px;" id="initiative<%= header.usedName %><%= i %>" data-toggle="dropdown" aria-expanded="false">
+                <% let style = '' %>
+                <% style += initiative[i].data && initiative[i].data[header.usedName]?.color?.length > 0 ? 'color:' + initiative[i].data[header.usedName]?.color + ';' : '' %>
+                <% let title = initiative[i].data && initiative[i].data[header.usedName]?.label %>
+                <% style += initiative[i].data && initiative[i].data[header.usedName]?.bgcolor?.length > 0 ? 'background:' + initiative[i].data[header.usedName]?.bgcolor : '' %>
+                <div class="Status_hold" style="<%= style %>"><%= title %></div>
+              </div>
+              <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="initiative<%= header.usedName %><%= i %>" id="initiative<%=header.usedName%><%=i%>dropdown">
+                <% let dropdownindex=0%>
+                <% for (let label of header.labels) { %>
+
+                  <div class="StatusBox" onclick="changeinitiativeIndex('<%=i%>');setStatusToTask('<%=label.label%>', '<%= header.usedName %>','<%=dropdownindex%>')">
+                    <% let color = label?.color %>
+                    <% let title = label?.label %>
+                    <% let bgcolor = label?.bgcolor %>
+                     <div class="Status_hold" style="color:<%= color %>; background:<%= bgcolor %>"><%= title %></div>
+                   
+                  </div>
+                  <% dropdownindex+=1%>
+                <% } %>
+                
+                <div class="StatusBox" data-target="#manageLabels" data-toggle="modal" onclick="SetLabelsType('<%=header._id%>')">
+                 <i class="fa fa-plus"></i> Add Label
+                </div>
+              </div>
+            </td>
+            <% } else if (header.usedName == 'Badges') { %>
+              <td style="gap:0px;<%= TaskTableHeaders[index].style %>" >
+                <div class="InputTypeNumber" style="width:100%">
+                <input type="number" style="width: 38px; border: none;text-align: right;" 
+                       value="<%= initiative[i].data && initiative[i].data[header.usedName] %>" 
+                       onchange="changeinitiativedata('<%= i %>', '<%= header.usedName %>', event.target.value)"></div>
+                <img src="../img/gem.svg" style="width: 24px;height: 24px;">
+              </td>
+          <% } else if (header.usedName === 'Effort' || header.type === 'number') { %>
+            <td style="gap:4px;<%= TaskTableHeaders[index].style %>">
+              <div class="InputTypeNumber" style="width:100%">
+              <input type="number" style="width: 38px; border:none;text-align: right;" value="<%= initiative[i].data && initiative[i].data[header.usedName] %>" onchange="changeinitiativedata('<%= i %>', '<%= header.usedName %>', event.target.value)">
+              </div>
+              <%if(header.usedName === 'Effort'){%>
+                     <div style="font-size: 18px;">D</div>
+                <%}%>
+            </td>
+            <% } else if (header.type === 'text') { %>
+              <td style="<%= TaskTableHeaders[index].style %>">
+                <input type="text" style="width:100%; border: none" placeholder="Enter text" value="<%= initiative[i].data && initiative[i].data[header.usedName] %>" onchange="changeinitiativedata('<%= i %>', '<%= header.usedName %>', event.target.value)">
+              </td>
+          <% } else if (header.usedName === 'Progress') { %>
+            <td style="<%= TaskTableHeaders[index].style %>">
+              <div class="progresscircle-bar progresstask" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#48bf84 calc(5 * 1%), #F2F4F7 0); animation: html-progresscircle 2s 1 forwards;" data-toggle="tooltip" data-placement="top" title="">
+                <div class="EffortsDays" style="color: var(--gray-500, #667085); font-size: 12px; font-style: normal; margin-top: 7px; font-weight: 500; line-height: 20px;">
+                  <progress id="progresstask" min="0" max="100" value="9"></progress>
+                </div>
+              </div>
+            </td>
+          <% } else if (header.usedName === 'Owner') { %>
+            <td id="Owner<%= i %>" style="<%= TaskTableHeaders[index].style %>">
+              <div style="display: flex; align-items: center; gap: 12px; width: 150px; overflow: hidden;" id="initiativeOwner<%= i %>" data-toggle="dropdown" aria-expanded="false">
+                <img src="<%= initiative[i].data?.Owner?.image?.length > 0 ? initiative[i].data?.Owner?.image : '../Performance dashboard Icons/Empty_User.svg' %>" style="width: 24px; height: 24px; border-radius: 200px;">
+                <%= initiative[i].data?.Owner?.name?.length > 0 ? initiative[i].data?.Owner?.name : 'Select Owner' %>
+              </div>
+              <div class="dropdown-menu initiativesOwner" style="flex-direction: column; padding: 5px 12px; border-radius: 8px;" aria-labelledby="initiativeOwner<%= i %>"></div>
+            </td>
+        
+     
+      <% } else if (header.usedName == 'AllotmentDate' || header.type == 'date') { %>
+        <td onclick="OpenDateInput(event, 'DateCalendarTask<%= header.usedName %><%= i %>')" 
+            style="color: var(--gray-800, #1D2939); line-height: 20px; <%= TaskTableHeaders[index].style %>;">
+          <span id="<%= header.usedName %>Task<%= i %>">
+            <%= initiative[i].data && formatDate(initiative[i].data[header.usedName]) %>
+          </span>
+          <img src="../img/NewCalendar.svg">
+          <input type="date" id="DateCalendarTask<%= header.usedName %><%= i %>" style="width: 0px;" 
+                 value="<%= initiative[i].data && initiative[i].data[header.usedName] %>" 
+                 onchange="changeinitiativedata('<%= i %>', '<%= header.usedName %>', event.target.value)">
+        </td>
+    
+       <%} else if(header.usedName=='files'){%>
+       <td class="d-flex align-items-center gap-3" style="<%=TaskTableHeaders[index].style%>">
+        <input type="file" id="TaskFileInputField<%=i%>" style="width: 0px;" onchange="handleTaskFileSelect(event)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*">
+        <div data-toggle="dropdown" aria-expanded="false">
+            <span id='Task-FileBody-<%=i%>'><%= initiative[i].data?.files?.length%></span>
+            <img src="../Performance dashboard Icons/File.svg" style="width: 24px; height: 24px;">
+        </div>
+        <img src="../img/Add.svg" onclick="OpenFileInput('TaskFileInputField<%=i%>')">
+        <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativeTaskFile<%=i%>dropdown"></div>
+    </td>
+    <%} else if(header.usedName=='links'){%>
+    <td class="d-flex align-items-center gap-3" style="<%=TaskTableHeaders[index].style%>">
+      <div style="padding: 5px 12px; border-radius: 16px; display: flex; gap: 8px; align-items: center;" data-toggle="dropdown" aria-expanded="false">
+        <span id='Task-LinkBody-<%=i%>'><%= initiative[i].data && initiative[i].data.links ? initiative[i].data.links.length : 0 %></span>
+        <img src="../Performance dashboard Icons/Link.svg" style="width: 24px; height: 24px;">
+        
+      </div>
+      <img src="../img/Add.svg" data-target="#AddTaskLink" data-toggle="modal">
+      <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativeTaskLink<%=i%>dropdown"></div>
+  </td>
+  <%}%>
+  <% index+=1%>
+         <%}%>
+       </tr>
+      <%}%>
+      <tr id="ClicktoaddnewTasksInPage">
+          
+        <td style="width: 250px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: flex-start;">
+         
+         
+          <div style="display: flex;
+          padding: 4px;
+          justify-content: center;
+          align-items: center;
+          gap: 4px;
+          " onclick="Addinitiatives('ClicktoaddnewTasksInPage')" class="AddRow">
+        <i class="fa fa-plus"></i>  Click to add new Tasks
+          </div>
+
+        </td>
+        
+      </tr>
+      </tbody>
+  </table>
+  </div>
+  <div id="BottomBarT" style="display:none;
+align-items: center;
+position: fixed;
+ bottom: 50px; 
+justify-content: center;
+align-self:center;
+">
+<div style="display: flex;align-items: center;background-color: white;border-radius: 8px;">
+<div style="
+color: var(--content-button-active, #FFF);
+background: var(--pill-text-blue, #3B82F6);" class="stick_box">
+<div id="select_noT">1</div>
+<div>Selected</div>
+</div>
+<div   style="
+color: var(--gray-700, #344054);
+padding: 0px 16px;" class="stick_box" >
+<div data-toggle="dropdown"
+aria-expanded="false" id="tprojects" style="display:flex;flex-direction: column;gap:12px;align-items: center;">
+<img src="../img/project_icon.svg">
+<div >Change Project</div>
+</div>
+<div class="dropdown-menu" style="
+flex-direction: column;
+color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* ;
+" aria-labelledby="tprojects">
+ <div style="display: flex;
+         width: 100%;
+         height: 44px;
+         padding: 12px;
+         gap:12px;
+         justify-content: center;
+         align-items: center;
+         border-radius: 8px 8px 0px 0px;">
+         <img src="../Project icons/Search_icon.svg">
+         <input type="text" style="border: none;width: 100%;" placeholder="Search for Project" 
+             oninput="filterAndSortTProject(event.target.value)">
+     </div> 
+     <div  style="max-height:200px;overflow:auto">
+       
+         
+     </div>
+</div>
+</div>
+<div   style="
+color: var(--gray-700, #344054);
+padding: 0px 16px;" class="stick_box" >
+<div data-toggle="dropdown"
+aria-expanded="false" id="tprojects" style="display:flex;flex-direction: column;gap:12px;align-items: center;" onclick="changeinitiativeIndex(-1)">
+<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+<path d="M12.8182 2.25C13.3742 2.25 13.9182 2.296 14.4502 2.382L12.5782 4.254C11.0176 4.30083 9.5048 4.80331 8.22629 5.69948C6.94778 6.59566 5.95945 7.84637 5.38313 9.29743C4.80681 10.7485 4.6677 12.3365 4.98294 13.8656C5.29818 15.3948 6.05399 16.7983 7.15721 17.9031C8.26042 19.008 9.66282 19.7658 11.1915 20.0833C12.7202 20.4007 14.3084 20.2639 15.7603 19.6897C17.2122 19.1155 18.4644 18.129 19.3624 16.8518C20.2604 15.5746 20.7651 14.0625 20.8142 12.502L22.6882 10.63C23.0198 12.65 22.7235 14.7232 21.8393 16.5694C20.9551 18.4157 19.5256 19.9461 17.7438 20.954C15.9621 21.9618 13.9139 22.3986 11.876 22.2053C9.83807 22.012 7.90857 21.1979 6.34809 19.873C4.78761 18.5481 3.67133 16.7762 3.15002 14.7966C2.6287 12.8171 2.72747 10.7252 3.43299 8.80353C4.13851 6.88188 5.41678 5.22304 7.09515 4.05106C8.77353 2.87909 10.7712 2.25043 12.8182 2.25ZM21.7002 3.374C21.3448 3.01848 20.9227 2.73646 20.4583 2.54405C19.9938 2.35164 19.496 2.25261 18.9932 2.25261C18.4905 2.25261 17.9927 2.35164 17.5282 2.54405C17.0637 2.73646 16.6417 3.01848 16.2862 3.374L11.1182 8.542C11.0094 8.65111 10.9273 8.7839 10.8782 8.93L8.91022 14.77C8.8449 14.964 8.83501 15.1724 8.88167 15.3717C8.92833 15.5711 9.02969 15.7534 9.17434 15.8983C9.31899 16.0431 9.5012 16.1447 9.70045 16.1917C9.89971 16.2386 10.1081 16.229 10.3022 16.164L16.1422 14.2C16.289 14.1512 16.4225 14.0691 16.5322 13.96L21.7002 8.79C22.0557 8.43453 22.3378 8.01251 22.5302 7.54804C22.7226 7.08357 22.8216 6.58575 22.8216 6.083C22.8216 5.58025 22.7226 5.08243 22.5302 4.61796C22.3378 4.15349 22.0557 3.72947 21.7002 3.374ZM17.7002 4.788C18.0431 4.44508 18.5083 4.25242 18.9932 4.25242C19.4782 4.25242 19.9433 4.44508 20.2862 4.788C20.6291 5.13092 20.8218 5.59603 20.8218 6.081C20.8218 6.56597 20.6291 7.03108 20.2862 7.374L15.2822 12.376L11.3842 13.688L12.6962 9.792L17.7002 4.788Z" fill="#667085"/>
+</svg>
+<div >Change Status</div>
+</div>
+<div class="dropdown-menu" style="flex-direction: column;" >
+<div class="StatusBox" onclick="ChangeTaskStatus('Completed','Status',0)"><div class="Status_completed">Completed</div></div>
+ <div class="StatusBox" onclick="ChangeTaskStatus('In Progress','Status',1)"><div class="Status_progress">In Progress</div></div>
+ <div class="StatusBox" onclick="ChangeTaskStatus('Upcoming','Status',2)"><div class="Status_upcoming">Upcoming</div></div>
+<div class="StatusBox" onclick="ChangeTaskStatus('Not Started','Status',3)"><div class="Status_notStarted">Not Started</div></div>
+ <div class="StatusBox" onclick="ChangeTaskStatus('On Hold','Status',4)"><div class="Status_hold">On Hold</div></div>
+</div>
+</div>
+<div style="
+color: var(--gray-700, #344054);
+padding: 0px 16px;" class="stick_box" onclick="ApproveFroTaskSubmission()">
+<i class="fa fa-check" aria-hidden="true" style="color: #48BF84;"></i> 
+<div>Approve for Submission</div>
+</div>
+<div style="
+color: var(--gray-700, #344054);
+padding: 0px 16px;" class="stick_box" data-target="#DeleteTConfirmation" onclick="changeinitiativeIndex(-1)" data-toggle="modal" onclick="SetRejectionModal(-1)">
+<i class="fa fa-trash" aria-hidden="true" style="color: #FF6565;"></i>
+
+ <div style="color: #FF6565;">Delete</div>
+</div>
+<div onclick="HideBottmBarT()" style="
+color: var(--gray-700, #344054);
+padding: 0px 16px;" class="stick_box">
+  <img src="../img/icons performance mgmt/desktop/close_40x40.svg">
+ </div>
+</div>
+</div>
+
+<%- include('TaskOpen.ejs') %>
+ <!--  Manage Labels -->
+
+ <div class="modal fade docs-example-modal-lg" id="manageLabels" tabindex="-1" role="dialog"
+ aria-labelledby="myLargeModalLabel" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-lg">
+   <div class="modal-content" style="max-height: 90vh;overflow: auto;">
+     <div class="modal-header" style="display: flex;
+       align-items: center;
+       justify-content: space-between;
+       height: 70px;">
+       <h5 class="modal-title h6">Edit Labels</h5>
+
+       <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+
+     </div>
+     <div class="modal-body" style="display: flex;
+     border-radius: 14px;
+     padding: 45px 10px;
+     gap: 16px;
+     background: white;
+     flex-direction: column;" id="LabelsModalBody">
+     <div style="display: flex;
+     padding-right: 0px;
+     justify-content: space-between;
+     align-items: center;
+     align-self: stretch;">
+   <div style="display: flex;gap:12px;align-items: center;">
+   <img src="../Project icons/horizontalBar.svg">
+   <div style="display: flex;gap:8px;align-items: center;">
+   <div style="width: 15.695px;
+   height: 15.695px;border-radius: 50%;" class="bg-yellow"></div>
+   <input style="display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 1;
+   overflow: hidden;
+   color: var(--gray-900, #101828);
+   text-overflow: ellipsis;
+   width: 80%;
+   font-size: 14px;
+   font-style: normal;
+   font-weight: 600;
+   line-height: 20px;" value="">
+   </div>
+   </div>  
+ 
+ <img src="../Project icons/delete_phase.svg" onclick="deletePhase('title')">
+ </div>
+     </div>
+     <div class="modal-footer" style="padding: 0.5rem;">
+       <button type="button" class="btn btn-outline-primary" data-dismiss="modal" style="display: flex;
+         padding: 16px 40px;
+         justify-content: center;
+         align-items: center;
+         gap: 10px;
+       
+         border-radius: 12px;">Cancel</button>
+       <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SaveLabelsChange()" style="display: flex;
+         padding: 16px 40px;
+         justify-content: center;
+         align-items: center;
+         gap: 10px;
+         border: none;
+         background-color: #48BF84;
+         border-radius: 12px;">Save</button>
+     </div>
+   </div>
+ </div>
+</div>
+
+
+<% let NudegArr=[
+{title:'Task Reminder',description:'Reminder to start working on the upcoming task. If you have any questions, feel free to reach out',img:'../NudgeType/Reminder.svg',style:'border: 4px solid var(--Success-50, #ECFDF3);background: var(--Success-100, #D1FADF);'},
+{title:'Progress Check',description:`How's the task going? A quick update on the task would be great. Let's make sure we're aligned.`,img:'../NudgeType/Progress.svg',style:'border: 4px solid var(--Warning-50, #FFFAEB);background: var(--Warning-100, #FEF0C7);'},  
+{title:'Task Delayed ',description:`It's running a bit behind schedule. If possible, let's accelerate the work to keep things on track.`,img:'../NudgeType/Delayed.svg',style:'border: 4px solid var(--Error-50, #FEF3F2);background: var(--Error-100, #FEE4E2);'}, 
+{title:'Checklist Completion',description:`Ensure you've covered all aspects of the task. Cross-check against the checklist to make sure nothing is missed.`,img:'../NudgeType/Complete.svg',style:'border: 4px solid var(--Success-50, #ECFDF3);background: var(--Success-100, #D1FADF);'},  
+{title:'Task Recap',description:`As we move forward, take a moment to recap the task objectives. Are we still aligned with the initial goals, or do we need any adjustments?`,img:'../NudgeType/Milestone.svg',style:'border: 4px solid var(--Success-50, #ECFDF3);background: var(--Success-100, #D1FADF);'}, 
+{title:'Quality Assurance',description:`Now that the task is completed, conduct a quick quality check to ensure everything meets the required standards.`,img:'../NudgeType/Search.svg',style:'border: 4px solid var(--Success-50, #ECFDF3);background: var(--Success-100, #D1FADF);'},  
+{title:'Priority Update',description:`Considering the task's importance, let's focus on this one to ensure a smooth project flow. Thanks for your dedication!`,img:'../NudgeType/Priority.svg',style:'border: 4px solid var(--Success-50, #ECFDF3);background: var(--Success-100, #D1FADF);'}, 
+{title:'Milestone Achieved',description:`Great progress so far! Let's acknowledge the small wins.`,img:'../NudgeType/Milestone.svg',style:'border: 4px solid var(--Success-50, #ECFDF3);background: var(--Success-100, #D1FADF);'},  
+{title:'Task Documentation',description:`Don't forget to update task documentation as you progress. It's crucial for future reference and continuous improvement.`,img:'../NudgeType/Milestone.svg',style:'border: 4px solid var(--Success-50, #ECFDF3);background: var(--Success-100, #D1FADF);'}, 
+{title:'Task Recap',description:`As we move forward, take a moment to recap the task objectives. Are we still aligned with the initial goals, or do we need any adjustments?`,img:'../NudgeType/Milestone.svg',style:'border: 4px solid var(--Success-50, #ECFDF3);background: var(--Success-100, #D1FADF);'},  
+{title:'Time Management',description:`Efficient time management is crucial. Ensure you're allocating time wisely for each phase of the task to meet deadlines effectively.`,img:'../NudgeType/Milestone.svg',style:'border: 4px solid var(--Success-50, #ECFDF3);background: var(--Success-100, #D1FADF);'}, 
+{title:'Team Collaboration',description:`If the task involves collaboration, reach out to your teammates for input and support. Teamwork enhances efficiency and creativity.`,img:'../NudgeType/TeamCollaboration.svg',
+style:'border: 4px solid var(--Success-50, #ECFDF3);background: var(--Success-100, #D1FADF);' 
+} 
+]%>
+
+ <!--Task nudge -->
+ <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="Tasknudge" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="border-radius: 14px">
+      <div class="modal-header">
+        <h5 class="modal-title h6" id="myLargeModalLabel">
+          Send a Nudge
+        </h5>
+        <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal" />
+      </div>
+      <div class="modal-body" style="
+  border: 1px solid var(--stroke-primary, #ececec);
+  display: flex;
+  background: var(--surface-primary, #fff);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  max-height: 70vh;
+  overflow: auto;
+">
+<div style="display: flex;
+width:100%;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;" id="PerviousTaskNudge">
+
+</div>
+        <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;
+align-self: stretch;
+cursor: pointer;
+">
+          <div  style="color: var(--Gray-800, #1D2939);
+          font-size: 14px;
+         
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;">Select a Pre- Written Nudge</div>
+          <div style="width: 100%;">
+          <div  data-toggle="dropdown" aria-expanded="false"  style="display: flex;
+height: 48px;
+padding: 14px 20px;
+width: 100%;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+font-size: 14px;
+border-radius: 12px;
+border: 1px solid var(--Gray-400, #98A2B3);
+background: var(--Gray-50, #F9FAFB);" id="TaskNudgeTitle" class="text-gray-14-500">Select the type of nudge you'd like to send.</div>
+<div class="dropdown-menu" style="flex-direction: column; width: 90%; padding: 5px 12px; border-radius: 16px;height:50vh;overflow:auto">
+ 
+<% NudegArr.map((nudge)=>{ %>
+    <div style="display: flex;
+  padding: 12px;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid var(--Gray-200, #EAECF0);
+  gap: 10px;
+  align-self: stretch;" onclick="SetTaskNudgeInfo('TaskNudgeTitle',{title:`<%=nudge.title%>`,description:`<%=nudge.description%>`,img:'<%=nudge.img%>',style:`<%=nudge.style%>`})">
+  <div style="display: flex;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 28px;
+  <%=nudge.style%>
+  ">
+    <img src="<%=nudge.img%>">
+  </div>
+  <div style="display: flex;flex-direction:column;gap:0px;">
+  <div style="color: var(--Gray-700, #344054);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; ">
+  <%=nudge.title%>
+  </div>
+  <div style="color: var(--Gray-700, #667085);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.14px;
+  line-height: 20px; ">
+  <%=nudge.description%>
+  </div>
+  </div>
+  </div>
+  <%})%>
+</div>
+
+</div>
+</div>
+       
+<div style="color: var(--Gray-500, #667085);
+text-align: center;
+align-self: stretch;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+">OR</div>
+        <div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;
+align-self: stretch;
+
+">
+          <div style="color: var(--Gray-800, #1D2939);
+          font-size: 14px;
+         
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;">Custom Nudge Message</div>
+           <textarea placeholder="Compose your message or warning for the nudge." style="display: flex;
+height: 85px;
+width: 100%;
+font-size: 14px;
+padding: 14px 20px;
+align-items: flex-start;
+gap: 10px;
+align-self: stretch;
+border-radius: 12px;
+border: 1px solid var(--Gray-400, #98A2B3);
+background: var(--Gray-50, #F9FAFB);
+" id="TaskNudgedescription" onchange="SetTaskNudgeInfo('TaskNudgedescription',{description:event.target.value})"></textarea>
+        </div>
+      </div>
+      
+      <div class="modal-footer" style="padding: 1rem">
+        <button class="btn btn-outline-primary" style="
+    display: flex;
+    height: 48px;
+    padding: 8px 16px;
+    align-items: center;
+    gap: 8px;
+    border-radius: 14px;
+  " data-dismiss="modal">
+          Cancel
+        </button>
+        <button class="btn btn-primary"   style="
+    display: flex;
+    height: 48px;
+    padding: 8px 16px;
+    align-items: center;
+    gap: 8px;
+    border-radius: 14px;
+  " data-dismiss="modal" onclick="SendTaskNudge()">
+          Send Nudge
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--delete nudge modal -->
+<div class="modal docs-example-modal"  id="delete-NudegTask" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal">
+        <div class="modal-content" id="myModalsm" style="border-radius: 12px;">
+            <div class="modal-header">
+                <div style="
+                  color: var(--text-content-primary, #181818);
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 130%;
+                ">
+                    Confirm Deletion
+                </div>
+            </div>
+            <div class="modal-body">
+               
+                <div style="color: var(--gray-600, #475467);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 135%; /* 18.9px */
+            letter-spacing: 0.14px;"> Are you sure you want to delete this nudge? 
+This action cannot be undone.
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 10px;padding:0.7rem;" class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary heading" style="display: flex;
+            padding: 8px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex: 1 0 0;
+            align-self: stretch;
+            border-radius: var(--radius-medium, 8px);
+            color: var(--gray-700, #344054);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  
+            border: 1px solid var(--gray-300, #D0D5DD);" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn" style="
+                display: flex;
+  height: 46px;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: var(--content-inverted-primary, #FFF);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.1px;
+  flex: 1 0 0;
+  border-radius: var(--radius-medium, 8px);
+  background: var(--Red, #FF6565);
+                " data-dismiss="modal" onclick="deleteTaskNudge()">
+                    Delete Nudge
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Get trained, work on virtual projects and get certified in 8 weeks."
+    />
+    <meta name="author" content="Webpixels" />
+    <title>Trainity - Admin Panel</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+
+    <title>Login Page - Trainity</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=Manrope:wght@200;300;400;500;600;700;800&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+<!-- Hotjar Tracking Code for Admin Website -->
+<script>
+  (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:3534926,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+    <style>
+      @media screen and (max-width: 776px) {
+        .hide-mobile {
+          display: none;
+        }
+      }
+
+      @media screen and (min-width: 777px) {
+        .hide-desktop {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="login-page">
+      <div class="login-content-container">
+        <div class="main-routes">
+          <div class="auth-container">
+            <div class="auth-illustration">
+              <div class="auth-illustration-main">
+                <div class="auth-illustration-text"></div>
+              </div>
+              <img
+                src="https://trainity.space/img/brand/white.png"
+                alt=""
+                class="company-logo"
+              />
+            </div>
+            <div class="auth-form-main">
+              <div class="auth-form-container">
+                <div class="auth-form">
+                  <div class="auth-form-heading">
+                    <h2>Login / Sign up</h2>
+                  </div>
+                  <div class="auth-form-text">ADMINS ONLY</div>
+                  <div class="auth-btn">
+                    <a href="/auth/google" class="google-sign-in-btn">
+                      <img src="../img/custom/google-logo.png" alt="" />
+                      Login with Google
+                    </a>
+                  </div>
+
+                  <div
+                    class="horizontal-rule"
+                    style="
+                      width: 100%;
+                      border-top: 2px solid rgba(255, 255, 255, 0.1);
+                    "
+                  ></div>
+                </div>
+                <div class="privacy-policy-text">
+                  <div class="seperator-line-container">
+                    <span class="seperator-line"></span>
+                  </div>
+                  Protected by reCAPTCHA. Google
+                  <a
+                    href="https://policies.google.com/privacy"
+                    class="privacy-link"
+                    target="blank"
+                  >
+                    <span class="link-text">Privacy Policy</span>
+                  </a>
+                  &
+                  <a
+                    href="https://policies.google.com/terms"
+                    class="privacy-link"
+                  >
+                    <span class="link-text">Terms of Service</span>
+                  </a>
+                  apply.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+
+  <script>
+    const phoneForm = document.querySelector(".phone-form");
+    const otpForm = document.querySelector(".otp-form");
+    const phoneBtn = document.querySelector(".phone-btn");
+    const errorMsg = document.querySelector(".error-message");
+    const infoMsg = document.querySelector(".info-message");
+    const phoneSubmitBtn = document.querySelector("#phone-submit");
+    const otpSubmitBtn = document.querySelector("#otp-submit");
+    let sheetID = 0;
+    let phoneVal = "";
+    const revealPhoneForm = () => {
+      errorMsg.textContent = ``;
+      infoMsg.textContent = ``;
+      sheetID = 0;
+      phoneBtn.classList.add("hide");
+      phoneForm.classList.remove("hide");
+    };
+
+    phoneForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const phone = phoneForm.phone.value;
+      var countDownDate = new Date().getTime() + 17000;
+
+      var x = setInterval(function () {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        infoMsg.innerHTML = `Sending OTP (${seconds}s remaining)`;
+        if (distance < 0) {
+          clearInterval(x);
+          infoMsg.innerHTML = "OTP sent";
+        }
+      }, 1000);
+
+      phoneSubmitBtn.classList.add("hide");
+      errorMsg.textContent = ``;
+      try {
+        const res = await fetch("/auth/twilio/sendOTP", {
+          method: "POST",
+          body: JSON.stringify({
+            userPhone: phone,
+          }),
+          headers: { "Content-Type": "application/json" },
+        });
+        countDownDate = new Date().getTime();
+        infoMsg.innerHTML = ``;
+        const data = await res.json();
+        if (data.status === "201") {
+          sheetID = data.sheetID;
+          phoneVal = phone;
+          phoneForm.classList.add("hide");
+          otpForm.classList.remove("hide");
+        } else if (data.status === "404") {
+          throw Error("User not found.");
+        } else if (data.status === "304") {
+          throw Error("Mobile number not valid");
+        } else {
+          throw Error("Something went wrong! Try again later");
+        }
+      } catch (err) {
+        infoMsg.textContent = ``;
+        otpForm.classList.add("hide");
+        phoneBtn.classList.remove("hide");
+        phoneSubmitBtn.classList.remove("hide");
+        if (err.message == "Unexpected end of JSON input")
+          errorMsg.textContent = "Something went wrong! Try again later";
+        else errorMsg.textContent = err.message;
+      }
+    });
+
+    otpForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const otp = otpForm.otp.value;
+      infoMsg.textContent = `Logging In...`;
+      phoneSubmitBtn.classList.remove("hide");
+      otpSubmitBtn.classList.add("hide");
+      try {
+        const res = await fetch("/auth/twilio/otp", {
+          method: "POST",
+          body: JSON.stringify({
+            otp,
+            sheetID,
+            userPhone: phoneVal,
+          }),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        infoMsg.textContent = ``;
+
+        if (res.status == 200) window.location.reload();
+        else {
+          const data = await res.json();
+          if (data.msg) throw Error(data.msg);
+        }
+      } catch (err) {
+        infoMsg.textContent = ``;
+        otpForm.classList.add("hide");
+        otpSubmitBtn.classList.remove("hide");
+        phoneBtn.classList.remove("hide");
+        if (err.message == "Unexpected end of JSON input")
+          errorMsg.textContent = "Something went wrong! Try again later";
+        else errorMsg.textContent = err.message;
+      }
+    });
+  </script>
+</html>

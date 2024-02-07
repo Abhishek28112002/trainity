@@ -17968,9 +17968,7 @@ textarea[resize="horizontal"] {
   background-color: #fff;
   border-color: rgba(110, 0, 255, 0.5);
 }
-.application {
-  opacity: 0;
-}
+
 .application.ready {
   opacity: 1;
 }

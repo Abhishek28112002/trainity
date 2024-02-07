@@ -1,0 +1,546 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Purpose Application UI is the following chapter we've finished in order to create a complete and robust solution next to the already known Purpose Website UI."
+    />
+    <meta name="author" content="Webpixels" />
+    <title>Trainity Dashboard</title>
+    <!-- Favicon -->
+    <!-- Favicon -->
+    <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+    <!-- Font Awesome 5 -->
+    <link
+      rel="stylesheet"
+      href="../../libs/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+    <!-- Page CSS -->
+    <!-- <link
+      rel="stylesheet"
+      href="../../libs/quill/dist/quill.core.css"
+      type="text/css"
+    /> -->
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+    <link rel="stylesheet" href="../../libs/select2/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="../../libs/flatpickr/dist/flatpickr.min.css" />
+    <!-- Purpose CSS -->
+    <link rel="stylesheet" href="../../css/purpose.css" id="stylesheet" />
+  </head>
+
+  <body class="application application-offset">
+    <div
+      class="modal fade fixed-right"
+      id="modal-products"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-vertical" role="document">
+        <div class="modal-content">
+          <div class="scrollbar-inner">
+            <div class="modal-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Application container -->
+    <div class="container-fluid container-application">
+      <!-- Sidenav -->
+      <%- include('partials/sidepanel'); -%>
+      <!-- Content -->
+      <div class="main-content footer-margin-mobile position-relative">
+        <!-- Main nav -->
+        <%- include('partials/navbar'); -%>
+
+         <!-- Page content -->
+        <div class="page-content">
+                  
+          <!-- Page title -->
+          <div class="page-title">
+            <div class="row justify-content-between align-items-center">
+              <div
+                class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0"
+              >
+                <!-- Page title + Go Back button -->
+                <div class="d-inline-block">
+                  <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">
+                    Projects
+                  </h5>
+                </div>
+                <!-- Additional info -->
+                <div class="align-items-center ml-4 d-inline-flex">
+                  <span class="h4 text-dark mb-0 mr-2" id="pendingCount">-</span>
+                  <span class="text-sm opacity-7 text-white"
+                    >approval pending</span
+                  >
+                </div>
+                
+              </div>
+              
+            </div>
+          </div>
+          <form class="mt-4" id="filterForm">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm">
+                    <div class="row">
+                      <% for(let i=0; i<projectList.length; i++) {%>
+                        <div class="col-sm">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input project-checkbox" name="Project-<%= projectList[i]._id %>" id="check-project-<%= projectList[i]._id %>">
+                            <label class="custom-control-label form-control-label text-muted" for="check-project-<%= projectList[i]._id %>">P - <%= i+1 %></label>
+                          </div>
+                        </div>
+                      <% } %>
+                      
+                      
+                    </div>
+                    
+                  </div>
+                  <div class="col-auto">
+                    <input type="submit" value="Filter" id="filterBtn" class="btn btn-primary">
+                      
+                  </div>
+                  <div class="col-sm-auto align-items-center" id="loading-container" style="transform: translateY(10px); display: none;">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                  </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </form>
+          <!-- Listing -->
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header actions-toolbar border-0">
+              <div class="actions-search" id="actions-search">
+                <div class="input-group input-group-merge input-group-flush">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text bg-transparent"
+                      ><i class="fas fa-search"></i
+                    ></span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control form-control-flush"
+                    placeholder="Type and hit enter ..."
+                  />
+                  <div class="input-group-append">
+                    <a
+                      href="#"
+                      class="input-group-text bg-transparent"
+                      data-action="search-close"
+                      data-target="#actions-search"
+                      ><i class="fas fa-times"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="row justify-content-between align-items-center">
+                <div class="col">
+                  <h6 class="d-inline-block mb-0">Projects</h6>
+                </div>
+                <div class="col text-right">
+                  <div class="actions">
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Table -->
+            <div class="table-responsive">
+              <table class="table align-items-center">
+                <thead>
+                  <tr>
+                    <th scope="col-sm" class="sort" >Project Name/No</th>
+                    <th scope="col" class="sort">Sub ID</th>
+                    <!-- <th scope="col" class="sort">Days Taken</th> -->
+                    <th scope="col" class="sort">
+                      Drive Link
+                    </th>
+                    <th scope="col" class="sort">
+                      Video Link
+                    </th>
+
+                    <th scope="col"></th>
+                    
+                  </tr>
+                </thead>
+                <tbody class="list">
+
+                </tbody>
+                <!-- Modal -->
+                <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label class="form-control-label mb-0">
+                            Description
+                          </label>
+
+                          <div class="quillEditor" id="quillEditor"></div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </table>
+            </div>
+
+            <!-- Check Modal -->
+            <div class="modal mark-submission-modal" tabindex="-1" role="dialog" aria-labelledby="mark-submission-modal" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h5 class="modal-title h6" id="mark-submission-modal">Check Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+
+                    <h5 class="project-title"> </h5>
+
+                    <form id="mark-submission">
+                      <div class="form-group">
+                        <label for="score" class="form-control-label">Score</label>
+                        <input type="number" step="0.1" name="score" id="score" class="form-control"  />
+                      </div>
+
+                      <div class="form-group">
+                        <label for="feedback" class="form-control-label">Project Feedback</label>
+                        <textarea rows="3" name="feedback" id="feedback" class="form-control"></textarea>
+                      </div>
+
+                      <h5 class="text-center mb-4">Rate Project Tasks</h5>
+
+                      <div class="task-form-container">
+                        
+                      </div>
+
+                      
+
+                      <button class="btn btn-primary form-control"> Submit </button>
+                      
+
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+          </div>
+          
+        </div>
+
+       
+      </div>
+    </div>
+    <!-- Scripts -->
+    <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+    <script src="../../js/purpose.core.js"></script>
+    <!-- Page JS -->
+    <script src="../../libs/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="../../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <!-- <script src="../../libs/quill/dist/quill.min.js"></script> -->
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="../../libs/select2/dist/js/select2.min.js"></script>
+    <script src="../../libs/flatpickr/dist/flatpickr.min.js"></script>
+    <!-- Purpose JS -->
+    <script src="../../js/purpose.js"></script>
+    <!-- Demo JS - remove it when starting your project -->
+    <script src="../../js/demo.js"></script>
+
+    <script>
+      
+      
+        var options = {
+          placeholder: "Enter the task content",
+          theme: "snow",
+        };
+        const editor = new Quill('#quillEditor', {
+          modules: {
+            toolbar: [
+              [{ header: [1, 2, false] }],
+              ['bold', 'italic', 'underline'],
+              ['image', 'code-block']
+            ]
+          },
+          placeholder: 'Write Feedback...',
+          theme: 'snow'  // or 'bubble'
+        });
+  
+        const svg = document.querySelector(".ql-picker-label");
+        svg.remove();
+
+        const checkProject = async (id) => {
+          const form = document.querySelector(`#score-form-${id}`);
+
+          
+          const scoreInput = document.querySelector(`#select-score-${id}`)
+          const scoreVal = scoreInput.value;
+          const feedback = editor.root.innerHTML;
+
+      
+
+          try {
+            const res = await fetch("/check/project", {
+              method: "PATCH",
+              body: JSON.stringify({
+                score: scoreVal,
+                feedback,
+                submissionID: id,
+              }),
+              headers: { "Content-Type": "application/json" },
+            })
+
+            const data = await res.json();
+         
+            // if(data.status==200){
+            //   alert("Done");
+            //   document.querySelector(`#row-${id}`).remove();
+            //   document.querySelector(`#project-check-${id}`).remove();
+            //   editor.root.innerHTML = ``;
+            // }
+            // else
+            //   alert("Oops, Something went wrong!");
+          } catch (error) {
+            console.log(error);
+            alert("Oops, Something went wrong!");
+          }
+         }
+      
+    </script>
+
+    <script>
+      const markSubmissionModal = document.querySelector('.mark-submission-modal');
+      const projectTitle = markSubmissionModal.querySelector('.project-title');
+      const taskFormContainer = markSubmissionModal.querySelector('.task-form-container');
+      const projectCheckForm = document.querySelector('#mark-submission');
+
+
+      let currentProject = {};
+      let currentSubmission = {};
+
+      const setupCheckModal = (project, submission) => {
+        projectCheckForm.score.value = 0;
+        projectCheckForm.feedback.value = '';
+        projectTitle.textContent = project.title;
+       
+
+        currentProject = project;
+        currentSubmission = submission;
+
+        taskFormContainer.innerHTML = ``;
+
+        for(let i=0; i<project.tasks.length; i++) {
+          const task = project.tasks[i];
+          const taskDiv = document.createElement('div');
+          taskDiv.innerHTML = ` <h6>
+                            ${task.title}
+                          </h6>
+                          <div class="form-row">
+                            
+                            <div class="col-md-4 mb-3">
+                              <label for="task-${i}">Task-${i+1} Score</label>
+                              <input type="number" step="1" class="form-control" name="score-task-${i}" id="score-task-${i}" placeholder="Enter Score" required>
+                             
+                            </div>
+                            <div class="col-md-8 mb-3">
+                              <label for="task-${i}">Task-${i+1} Feedback</label>
+                              <textarea  class="form-control" name="feedback-task-${i}" id="feedback-task-${i}" placeholder="Enter Feedback"></textarea>
+                             
+                            </div>
+                          </div>`
+
+            taskFormContainer.appendChild(taskDiv);
+
+        }
+
+
+      }
+
+
+      projectCheckForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const projectScore = projectCheckForm.score.value;
+        const projectFeedback = projectCheckForm.feedback.value;
+        const taskRating = [];
+
+        for(let i=0; i<currentProject.tasks.length; i++) {
+          const taskScore = Number(projectCheckForm.querySelector(`#score-task-${i}`).value);
+          const comment = projectCheckForm.querySelector(`#feedback-task-${i}`).value;
+          taskRating.push({
+            score: taskScore,
+            comment: comment,
+          })
+        };
+
+        try {
+          const response = await fetch('/check/project', {
+            method: "PATCH",
+            body: JSON.stringify({
+              score: projectScore,
+              feedback: projectFeedback,
+              taskRating,
+              submissionID: currentSubmission._id,
+            }),
+            headers: {
+              "Content-Type": "application/json"
+            }
+          });
+
+          const data = await response.json();
+          if(data._id) {
+            document.querySelector(`#row-${currentSubmission._id}`).remove();
+            $('.mark-submission-modal').modal('hide');
+          }else {
+            alert('Oops, something went wrong');
+          }
+
+        } catch (error) {
+          console.log(error);
+          alert('Oops, something went wrong !');
+        }
+
+      });
+
+
+
+
+    </script>
+
+
+
+    <script>
+      const filterForm = document.querySelector("#filterForm");
+      const checkBoxArray = document.querySelectorAll(".project-checkbox");
+      const tbody = document.querySelector("tbody");
+      
+      filterForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        document.querySelector("#filterBtn").style.display="none";
+        document.querySelector("#loading-container").style.display="block";
+        document.querySelector("#pendingCount").innerHTML = "-"
+        let filterArr = [];
+        for(let i=0; i<checkBoxArray.length; i++){
+          if(checkBoxArray[i].checked){
+            const projectID = checkBoxArray[i].getAttribute('id').split('-')[2];
+            filterArr.push(projectID);
+          }
+        }
+     
+        tbody.innerHTML=``;
+        const res = await fetch("/pending/submissions", {
+          method: "POST",
+          body: JSON.stringify({
+            projectIDArr: filterArr,
+          }),
+          headers: { "Content-Type": "application/json" }
+        })
+
+        const data = await res.json();
+        const projectList = data?.projectList;
+        const pendingSubmissions = data?.pendingSubmissions;
+
+   
+
+        if(res.status==200){
+
+          document.querySelector("#filterBtn").style.display="block";
+          document.querySelector("#loading-container").style.display="none";
+          document.querySelector("#pendingCount").innerHTML = pendingSubmissions.length;
+          for(let i=0; i<pendingSubmissions.length; i++){
+            const project = projectList[pendingSubmissions[i].projectID];
+            let trow = document.createElement("tr");
+            trow.innerHTML = `<td scope="row">
+                      <div class="media align-items-center">
+                        
+                        <div class="media-body">
+                          <a href="overview.html" class="name mb-0 text-sm set-text-limit"
+                            > ${ project.projectID + " - " + project.title}  </a
+                          >
+                        </div>
+                      </div>
+                    </td>
+                    
+
+                    <td>
+
+                      
+                      ${ pendingSubmissions[i].subID}
+
+                    </td>
+
+
+                    <td>
+                      <a href=" ${ pendingSubmissions[i].driveLink}" style="font-size: smaller;" class="btn btn-primary btn-sm" target="_blank">
+                        Visit
+                      </a>
+                    </td>
+                    <td>
+                      <a href=" ${ pendingSubmissions[i].videoLink}" style="font-size: smaller;" class="btn btn-primary btn-sm" target="_blank">
+                        View
+                      </a>
+                    </td>
+                    <td class="text-right">
+                      <!-- Button trigger modal -->
+                      <!-- <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#project-check-${ pendingSubmissions[i].subID}-${ pendingSubmissions[i].projectID}-${ pendingSubmissions[i].userID}">
+                        <i class="fas fa-check"></i>
+                      </button> -->
+                      <button class="btn btn-primary btn-sm mark-submission-btn" type="button" data-toggle="modal" data-target=".mark-submission-modal"   aria-expanded="false" aria-controls="collapseExample">
+                        <i class="fas fa-check"></i>
+                      </button>
+                      
+                    
+                    </td>`
+                trow.setAttribute("id", `row-${pendingSubmissions[i]._id}`);
+                  
+                const btn = trow.querySelector('.mark-submission-btn');
+                btn.onclick = () => {
+                  setupCheckModal(project, pendingSubmissions[i]);
+                }
+
+            
+                    tbody.appendChild(trow);
+          }
+
+        }else {
+          alert("Something went wrong")
+        }
+
+        
+        
+      } )
+    </script>
+
+
+
+  </body>
+</html>

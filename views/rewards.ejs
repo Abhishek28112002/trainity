@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <meta name="author" content="Webpixels" />
+    <title>Trainity - Admin Panel</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+    <!-- Font Awesome 5 -->
+    <!-- Hotjar Tracking Code for Admin Website -->
+   
+<script>
+  (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:3534926,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+    <link
+      rel="stylesheet"
+      href="../libs/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+    <!-- Purpose CSS -->
+    <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+    <!-- Font Awesome 5 -->
+    <link
+      rel="stylesheet"
+      href="../libs/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+    <!-- Page CSS -->
+    <link
+      rel="stylesheet"
+      href="../libs/fullcalendar/dist/fullcalendar.min.css"
+    />
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/libs/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+    <style>
+       .cards.disabled {
+    pointer-events: none; /* Disable click events */
+    opacity: 0.5; /* Make it visually look disabled */
+  }
+  body{
+       font-family: 'Manrope', sans-serif !important;
+     }
+      .buttonreward{
+      
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    width: 150px;
+    gap: 4px;
+    background: #F7F7F7;
+    border: 1px solid #ECECEC;
+    border-radius: 12px;
+    justify-content: center;
+            
+      }
+      .daily-task-card {
+        border: 1px solid #ececec;
+        border-radius: 14px;
+        padding: 20px 24px;
+      }
+
+      
+    .words {
+      overflow: hidden;
+    color: black;
+    text-overflow: ellipsis;
+    font-size: 18px;
+    font-style: normal;
+    line-height: normal;
+    height: 40px;
+    margin: 10px 0px;
+    display: flex;
+   
+    justify-content: space-between;
+    }
+      .roadmap {
+        display: flex;
+        align-items: center;
+        }
+
+        .checkpoint {
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        }
+
+        .checkpoint img {
+        width: 40px;
+        height: 40px;
+        }
+
+        .checkpoint-title {
+        margin-top: 10px;
+        }
+
+        .dotted-rule {
+      flex: 1;
+      border-bottom: 2px dashed #fff;
+      height: 2px;
+    }
+
+    .solid-rule {
+      flex: 1;
+      height: 6px;
+      flex-shrink: 0;
+      margin:0px -5px;
+      background:#fff;
+    }
+      .cards
+      {
+      
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 20px 16px 16px;
+          gap: 8px;
+      margin-bottom: 20px;
+     
+          width: 272.2px;
+         
+          background: #FFFFFF;
+            border: 1px solid #ECECEC;
+          border-radius: 12px;
+      }
+      .modal-card{
+        display: flex;
+flex-direction: column;
+align-items: center;
+padding: 20px 18px;
+gap: 16px;
+
+        
+        border:1px solid #48bf84;
+        border-radius:12px ;
+       
+      }
+   
+    .box {
+      display: flex;
+          flex-direction: row;
+            justify-content: space-around;
+            flex-flow:wrap;
+      padding: 20px;
+     
+    }
+    
+    
+    
+    @media screen and (max-width: 768px) {
+      .card {
+        width: calc(33.33% - 20px);
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .card {
+        width: calc(50% - 20px);
+      }
+    }
+    
+    @media screen and (max-width: 320px) {
+      .card {
+        width: calc(100% - 20px);
+      }
+    }
+    .modal-button:hover{
+      background-color:#48bf84 ;
+      border-color: transparent;
+
+    }
+    .modal-button.clicked {
+      background-color: #48bf84 ;
+    }
+
+    </style>
+  </head>
+
+  <body class="application application-offset" style="margin-left:300px;width: calc(100vw - 300px);padding:0 32px;background: #48bf84;" id="MainPageContent">
+    <!-- Chat modal -->
+
+    <!-- Application container -->
+    <div  >
+      <!-- Sidenav -->
+      <%- include('partials/sidepanel'); -%>
+      <!-- Content -->
+      <div class="main-content position-relative" > 
+     
+        <div class="page-content">
+          <div class="row mb-4">
+            <div
+              style="
+                padding-left: 20px;
+                display: grid;
+                grid-template-columns: auto auto;
+              "
+            >
+              <button class="btn" 
+                style="background: white;
+                border-bottom: 2px solid white;
+                color: #48bf84;"
+              >
+                <i class="fas fa-award"></i>
+                Rewards
+              </button>
+              <button
+              class="btn"
+              style="color: white;"
+              <% if(locals.managerVisiting){ %>
+              onclick="window.location.href='/admin/bonus?employeeId=<%=employee._id%>'"
+              <%} else { %>
+              onclick="window.location.href='/bonus'"
+              <% } %>
+              >
+                <i class="fas fa-gift"></i>
+                Bonuses and ESOPs
+              </button>
+            </div>
+          </div>
+          <%- include('partials/utility-modals'); -%>
+          <!-- Level Map -->
+          <div class="container">
+            <div class="roadmap">
+              <% for(let i=0; i<levels.length; i++) { %>
+              <% if(levels[i].state===0) { %>
+              <div class="checkpoint">
+                <img src="../img/LevelLocked.svg" alt="Checkpoint Icon 1">
+  
+              </div>
+              <% if(i<(levels.length-1)) { %>
+              <div class="dotted-rule"></div>
+              <% } %>
+              <% } else if(levels[i].state===1) { %>
+              <div class="checkpoint">
+                <img src="../img/LevelOngoing.svg" alt="Checkpoint Icon 1">
+  
+              </div>
+              <% if(i<(levels.length-1)) { %>
+              <div class="dotted-rule"></div>
+              <% } %>
+              <% } else { %>
+              <div class="checkpoint">
+                <img src="../img/LevelComplete.svg" alt="Checkpoint Icon 1">
+  
+              </div>
+              <% if (i < (levels.length - 1)) { %>
+              <% let percbadges =(((user.badges - levels[i].badges) / (levels[i + 1].badges - levels[i].badges)) * 100).toFixed(2); %>
+  
+              <div style="width:<%= percbadges>=100?100:percbadges-21%>px;">
+                <div class="solid-rule"></div>
+              </div>
+              <% if(percbadges < 100) { %>
+              <div class="greendot" style=" width:20px">
+                <div style="color:white"><%=percbadges%>%</div>
+                <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 17 17" fill="none">
+                    <circle cx="8.86328" cy="8.40234" r="7.5" fill="#fff" stroke="white" />
+                  </svg>
+                </div>
+                <div style="
+      width: 57.902px;
+      color: #FFF;
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;">
+                  <% if (percbadges < 50) { %>
+                  <%= user.badges %> badges achieved
+                  <% } else if (percbadges >= 50 && percbadges < 70) { %>
+                  Halfway there
+                  <% } else { %>
+                  Only <%= levels[i+1].badges - user.badges %> more to go
+                  <% } %>
+                </div>
+  
+              </div>
+  
+              <div style="width:<%= 100-percbadges%>px;">
+                <div class="dotted-rule"></div>
+              </div>
+              <% } %>
+              <% } %>
+  
+              <% } %>
+  
+              <% } %>
+  
+            </div>
+            <div class="roadmap mt-3 mb-3" style="gap:30px">
+              <% for(let i=0; i<levels.length; i++) { %>
+              <div class="checkpoint">
+                <button class="btn badge-pill badge" style="font-size: 11px; letter-spacing: 15%; font-weight: 700; color: #fff; padding: 5px; background: #181818;" data-toggle="modal" data-target="#levelModal-<%= i %>"> LEVEL <%= i+1 %> </button>
+                <!-- <p class="mb-0" style="font-size: 16px;  font-weight: 600; color: #fff;">TRAINITY FELLOW</p> -->
+                <p class="mb-0" style="font-size: 11px;  font-weight: 600; color: #fff; text-align: center;">
+                  <img src="../img/gem.svg" style="width: 20px;" /> <%= levels[i].badges %>
+                </p>
+              </div>
+              <% if(i<(levels.length-1)) { %>
+              <div style="height: 0px; flex: 1;"></div>
+              <% } %>
+  
+              <!-- Modal -->
+              <div class="modal fade" id="levelModal-<%= i %>" tabindex="-1" role="dialog" aria-labelledby="levelModal-<%= i %>Label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="levelModal-<%= i %>Label">LEVEL <%= i+1 %></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="card bg-gradient-info px-4 py-5">
+                        <div class="card-body">
+                          <h5 class="h4 text-white"><%= levels[i].title %></h5>
+                          <p class="mt-4 mb-0 text-white">
+                            <%= levels[i].description %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+  
+                  </div>
+                </div>
+              </div>
+              <% } %>
+            </div>
+  
+          </div>
+
+          <div class="container">
+            <div class="card bg-white px-2 py-3">
+            <div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            position: absolute;
+            width:100%">
+                <div style="font-weight: 600;
+                font-size: 24px;
+                color:black;
+                line-height: 33px;">Buy Exiting Rewards from your points</div>
+                <div style="display: flex;gap:20px">
+                <div style="display: flex;font-weight: 700;
+                font-size: 40px;
+                line-height: 100%;"><h3 ><%=employee.badges-employee.usedBadges%></h3><img src="../img/gem.svg" height="40px" width="50px" alt="gem"/></div>
+               <!-- <div><button class="btn btn-primary modal-button" type="button" data-toggle="modal" data-target=".docs-example-modal-sm" >Buy Badges</button></div> -->
+                <div><button class="btn btn-primary modal-button"  id="switchbutton"  type="button"  >Purchase History</button></div>
+              </div>
+            </div>
+        
+         
+          <div  style="margin-top:90px" >
+            <div class="box" id="rewardssection" >
+              <% let data = rewardsdata.slice(1); %>
+              <% let rewards; %>
+            
+              <% // Assuming 'employee.badges' contains a valid value for the limit %>
+              <% let limit = employee.badges-employee.usedBadges; %>
+            
+              <% // Define the compareByBadges function %>
+              <% function compareByBadges(a, b) { %>
+                <% if (a[2] <= limit && b[2] > limit) { %>
+                  <% return -1; // a comes before b %>
+                <% } else if (a[2] > limit && b[2] <= limit) { %>
+                  <% return 1; // b comes before a %>
+                <% } else { %>
+                  <% return a[2] - b[2]; // Sort in ascending order based on badges if both can be purchased or both can't be purchased %>
+                <% } %>
+              <% } %>
+            
+              <% // Set the rewards variable by sorting the data using compareByBadges %>
+              <% rewards = data.slice().sort(compareByBadges); %>
+            
+              <% // Loop through the sorted rewards and render the items %>
+              <% for (let i = 0; i < rewards.length; i++) { %>
+                <% if (rewards[i][0]) { %>
+                  <% const isDisabled = rewards[i][2]> limit; %>
+                <div style="position: relative;">
+                  <% let productdata= JSON.stringify(rewards[i]);%>
+                  <a class="cards <%= isDisabled ? 'disabled' : '' %>" style="min-width: 172.2px; color: black;overflow: hidden;" href="<%= rewards[i][4] %>" target="_blank" >
+                    <i class="fa fa-cart-plus" id="cartIcon-<%=i%>" onclick="SetPurchaseData(event,'cartIcon-<%=i%>','<%=productdata%>')" aria-hidden="true" style="position: absolute;top:1%;right:1%" data-target="#PurchaseModal" data-toggle="modal"></i>
+                    <div style="height: 180px;"><img style="width: 100%; height: 100%" src='<%= rewards[i][3] %>' /></div>
+                    <div class="words"><%= rewards[i][0] %></div>
+                    <div>
+                      <button class="buttonreward">
+                        &#8377; <del><%= rewards[i][1] %></del>
+                        <img src='../img/gem.svg' style="width: 20px" /><%= rewards[i][2] %>
+                      </button>
+                    </div>
+                  </a>
+                </div>
+                <% } %>
+              <% } %>
+            </div>
+            <div class="box" id="historysection" style="display: none;">
+              <% let historyData = rewardsHistory; %>
+          
+             
+            
+              <% // Loop through the sorted rewards and render the items %>
+              <% for (let i = 0; i < historyData.length; i++) { %>
+                <div style="position: relative;">
+                  <adiv class="cards " style="min-width: 172.2px; color: black;overflow: hidden;">
+                   <div style="height: 180px;"><img style="width: 100%; height: 100%" src='<%= historyData[i][5] %>' /></div>
+                    <div class="words"><%= historyData[i][2] %></div>
+                    <div style="display: flex;flex-direction: column;gap:10px">
+                      <button class="buttonreward" style="background:#48bf84">
+                        <%=historyData[i][7]?historyData[i][7]:'Will Update Soon'%>
+                      </button>
+                      <button class="buttonreward">
+                      
+                        <img src='../img/gem.svg' style="width: 20px" /><%= historyData[i][4] %>
+                      </button>
+                    </div>
+                  </a>
+                </div>
+              <% } %>
+              <% if(historyData.length==0){%>
+                <h5>No Purchase History </h5>
+                <%}%>
+            </div>
+            
+        </div>
+      </div>
+    </div>
+    
+
+
+
+<!-- Purchase Modal -->
+<div class="modal fade" id="PurchaseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color:black">Confirm Purchase</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body words" id="modal-body" style="height:10vh ;display: block;">
+       Do You want to purchase 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Not Now</button>
+        <button type="button" class="btn btn-primary" onclick="PurchaseProduct()" data-dismiss="modal">Purchase</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade docs-example-modal-sm"  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered " >
+    <div class="modal-content" style="width: 600px;">
+      <div class="modal-header" style="margin-bottom: 10px;">
+        <div style="display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        width: 381px;
+        height: 72px;">
+        <h3 class="modal-title h6" id="mySmallModalLabel" style="
+        height: 36px;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 28px;
+        line-height: 36px;
+        color: #181818;">Buy Badges</h3>
+        <p>Purchase ONLY FOR COURSE related rewards </p>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding:15px;">
+        <div style="display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 8px;
+        
+        width: 530px;
+        height: 91.33px;
+        ">
+          <div class="modal-card">
+            <div><img src='/img/gem.svg'  width="37.33px"
+              height="37.33px"/></div>
+            <div><h6>1 Badges</h6></div>
+            </div>
+            <div class="modal-card">
+              <div><img src='/img/gem.svg'  width="37.33px"
+                height="37.33px"/></div>
+              <div><h6>5 Badges</h6></div>
+              </div>
+              <div class="modal-card">
+                <div><img src='/img/gem.svg'  width="37.33px"
+                  height="37.33px"/></div>
+                <div><h6>10 Badges</h6></div>
+                </div>
+                <div class="modal-card">
+                  <div><img src='/img/gem.svg' 
+                    width="37.33px"
+                    height="37.33px"/></div>
+                  <div><h6>20 Badges</h6></div>
+                  </div>
+
+        </div>
+        <div style="margin:60px 30px 0px;display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0px;
+        gap: 8px;
+        padding:10px 20px;
+        background: #E6FCF1;
+        border-radius: 16px;
+        "><h5 style="color:#48bf84;">1 Badge= &#8377 100</h5></div>
+      </div>
+      <button style="margin:0px 40px 30px" class="btn btn-primary" style="background-color: #48bf84;">Proceed</button>
+    </div>
+  </div>
+</div>
+    </div>
+</div>
+ <script>
+  let rewards=`<%-JSON.stringify(rewardsdata)%>`
+  rewards=JSON.parse(rewards)
+ 
+ 
+  
+  const linkElement = document.querySelector('.cards');
+   let prodocuInfo;
+
+  function SetPurchaseData(event,id,product)
+  { prodocuInfo=JSON.parse(product);
+   
+    const cartIcon = document.getElementById(id);
+    if (event.target === cartIcon) {
+      event.preventDefault(); 
+    }
+    const modalbody=document.getElementById('modal-body');
+    modalbody.innerHTML = `
+    Do You want to purchase ${prodocuInfo[0]} for   <img src="../img/gem.svg" style="width: 20px" />${prodocuInfo[2]}
+    `
+  }
+  
+  async function PurchaseProduct()
+  { let employee=`<%-JSON.stringify(employee)%>`;
+
+  employee=JSON.parse(employee);
+  try{
+     let response=await fetch('/rewards/purchase',{
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({product:prodocuInfo,employeeId:employee._id}),
+     })
+     location.reload();
+    }
+    catch(error){console.log(error);
+    }
+  }
+ 
+  let showhistory=false;
+  document.getElementById('switchbutton').addEventListener('click',SwitchRewardsAndHistory);
+  async function SwitchRewardsAndHistory() 
+  {
+const button=document.getElementById('switchbutton');
+const rewardssection=document.getElementById('rewardssection');
+const historysection=document.getElementById('historysection');
+if(showhistory)
+{
+  showhistory=false;
+  button.innerText='Purchase History '
+  rewardssection.style.display='flex';
+  historysection.style.display='none';
+}
+else
+{showhistory=true;
+button.innerText='Go to Rewards';
+rewardssection.style.display='none';
+  historysection.style.display='flex';
+}
+  }
+
+ </script>
+    <!-- Scripts -->
+    <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+    <script src="../js/purpose.core.js"></script>
+    <!-- Page JS -->
+    <script src="../libs/autosize/dist/autosize.min.js"></script>
+   
+    <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+    <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="../libs/moment/min/moment.min.js"></script>
+
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+    <!-- Purpose JS -->
+    <script src="../js/purpose.js"></script>
+    <!-- Demo JS - remove it when starting your project -->
+    <script src="../js/demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+  
+
+  </body>
+</html>

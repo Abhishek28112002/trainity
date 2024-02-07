@@ -1,0 +1,5078 @@
+<style>
+    .HeaderBorder {
+        width: 5px;
+        height: 100%;
+        background-color: rgb(75, 78, 105);
+        transition: background .1s ease;
+    }
+   
+
+    .fa {
+        cursor: pointer;
+    }
+    .fa-trash:hover{
+        color:#FF6565
+    }
+
+    .Tasks.fa:hover {
+        background: #fafafa;
+        padding: 4px 8px;
+        font-size: 16px;
+        border-radius: 8px;
+    }
+
+    .onhovercolorgreen:hover {
+        color: #48BF84;
+    }
+
+    .stick_box {
+        display: flex;
+        padding: 16px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        border-radius: var(--radius-medium, 8px) 0px 0px var(--radius-medium, 8px);
+
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        /* 150% */
+    }
+
+    table {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+        border: 1px solid #EAECF0;
+    }
+
+    .selected {
+        background-color: #ECFDF3;
+    }
+
+    .AddColumnBox {
+        display: flex;
+        align-items: center;
+        padding: 12px 24px;
+        gap: 8px;
+        border-radius: 8px;
+        box-sizing: border-box;
+        border: 1px solid var(--gray-300, #D0D5DD);
+        background: var(--White, #FFF);
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+        width: 160px;
+        color: var(--Gray-700, #344054);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+        /* 142.857% */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+    }
+
+    .AddRow:hover {
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid var(--gray-600, #475467);
+    }
+   
+    .InputTypeNumber:hover{
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid var(--gray-600, #475467);
+    }
+
+    .dropdown-menu {
+        background-color: white;
+        color: var(--gray-600, #475467);
+    }
+
+    .hoverbgWhite:hover {
+        background: var(--gray-100, #F2F4F7);
+    }
+
+    tr:hover {
+        background: var(--gray-100, #F2F4F7);
+    }
+
+    input:hover {
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid var(--gray-300, #D0D5DD);
+    }
+
+    .subTask {
+        width: 90%;
+        margin-left: 4%;
+        align-items: center;
+        display: flex;
+        border-radius: var(--radius-medium, 8px);
+        justify-content: flex-start;
+
+
+    }
+
+
+    thead {
+        background: var(--gray-100, #F2F4F7);
+    }
+
+
+    th,
+    td {
+        user-select: none;
+        border: 1px solid #ddd;
+        display: flex;
+        padding: 12px 24px;
+        align-items: center;
+        gap: 12px;
+        align-self: stretch;
+        min-width: 70px;
+        overflow: hidden;
+    }
+
+
+
+    input,
+    select {
+        border: none;
+        border-radius: 6px;
+    }
+
+    input {
+        background: transparent;
+
+    }
+
+    select {
+        border: none;
+        background-color: transparent;
+    }
+
+    .status {
+        height: 24px;
+        cursor: pointer;
+        display: flex;
+        padding: 2px 10px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 16px;
+    }
+
+
+
+    th,
+    td {
+        color: var(--gray-600, #475467);
+        font-size: 12px;
+        font-style: normal;
+        text-align: center;
+        font-weight: 500;
+        line-height: 18px;
+        border-radius: 0px;
+
+        /* 150% */
+    }
+
+
+
+    td {
+        font-size: 16px;
+    }
+
+    th,
+    td {
+        justify-content: center;
+        white-space: nowrap;
+    }
+
+    @keyframes html-progresscircle {
+        to {
+            --progresscircle-value: 92;
+        }
+    }
+
+    .progresscircle-bar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+    }
+
+
+
+    .progresstask::before {
+        animation: html-progresscircle 2s 1 forwards;
+    }
+
+    progress {
+        visibility: hidden;
+        width: 0;
+        height: 0;
+    }
+
+    .subTask th {
+        background: var(--gray-100, #F2F4F7);
+        text-align: center;
+    }
+
+    .subTask th,
+    .subTask td {
+        width: 130px;
+    }
+
+    .drag-over {
+        color: #fff !important;
+        border: 1px dashed #48BF84 !important;
+
+    }
+
+    .drag-over-cell {
+        background-color: #48BF84 !important;
+    }
+    .buttonOT{
+        display: flex;
+padding: 10px 16px;
+cursor: pointer;
+justify-content: center;
+align-items: center;
+gap: 8px;
+color:white;
+border-radius: var(--Radius-medium, 8px);
+background: var(--Brand-Primary, #48BF84);
+box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    }
+</style>
+
+
+<!-- A Delete Task Confirmation Modal -->
+
+<div class="modal docs-example-modal" tabindex="-1" id="DeleteTConfirmation" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-dialog-centered modal">
+        <div class="modal-content" id="myModalsm" style="border-radius: 12px;">
+            <div class="modal-header">
+                <div style="
+                  color: var(--text-content-primary, #181818);
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 130%;
+                ">
+                    Confirm Deletion
+                </div>
+            </div>
+            <div class="modal-body">
+                <div style="
+                color: var(--gray-600, #475467);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 135%; /* 18.9px */
+  letter-spacing: 0.14px;
+  
+  
+                ">
+                    Are you sure you want to delete this task?
+                </div>
+                <div style="color: var(--gray-600, #475467);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 135%; /* 18.9px */
+            letter-spacing: 0.14px;"> This action cannot be undone and all associated data will be permanently removed.
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 10px;padding:0.7rem;" class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary heading" style="display: flex;
+            padding: 8px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex: 1 0 0;
+            align-self: stretch;
+            border-radius: var(--radius-medium, 8px);
+            color: var(--gray-700, #344054);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  
+            border: 1px solid var(--gray-300, #D0D5DD);" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn" style="
+                display: flex;
+  height: 46px;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: var(--content-inverted-primary, #FFF);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.1px;
+  flex: 1 0 0;
+  border-radius: var(--radius-medium, 8px);
+  background: var(--Red, #FF6565);
+                " data-dismiss="modal" onclick="DeleteT()">
+                    Delete Task
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- A Delete Task Header Confirmation Modal -->
+
+<div class="modal docs-example-modal" tabindex="-1" id="DeleteTaskHeaderConfirmation" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal">
+        <div class="modal-content" id="myModalsm" style="border-radius: 12px;">
+            <div class="modal-header">
+                <div style="
+                  color: var(--text-content-primary, #181818);
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 130%;
+                ">
+                    Confirm Deletion
+                </div>
+            </div>
+            <div class="modal-body">
+                <div style="
+                color: var(--gray-600, #475467);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 135%; /* 18.9px */
+  letter-spacing: 0.14px;
+  
+  
+                ">
+                    Are you sure you want to delete this task header?
+                </div>
+                <div style="color: var(--gray-600, #475467);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 135%; /* 18.9px */
+            letter-spacing: 0.14px;"> This action cannot be undone and all associated data will be permanently removed.
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 10px;padding:0.7rem;" class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary heading" style="display: flex;
+            padding: 8px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex: 1 0 0;
+            align-self: stretch;
+            border-radius: var(--radius-medium, 8px);
+            color: var(--gray-700, #344054);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  
+            border: 1px solid var(--gray-300, #D0D5DD);" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn" style="
+                display: flex;
+  height: 46px;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: var(--content-inverted-primary, #FFF);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.1px;
+  flex: 1 0 0;
+  border-radius: var(--radius-medium, 8px);
+  background: var(--Red, #FF6565);
+                " data-dismiss="modal" onclick="DeleteTaskHeader()">
+                    Delete Task <Header></Header>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- A Delete SubTask Header Confirmation Modal -->
+
+<div class="modal docs-example-modal" tabindex="-1" id="DeleteSubTaskHeaderConfirmation" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal">
+        <div class="modal-content" id="myModalsm" style="border-radius: 12px;">
+            <div class="modal-header">
+                <div style="
+                  color: var(--text-content-primary, #181818);
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 130%;
+                ">
+                    Confirm Deletion
+                </div>
+            </div>
+            <div class="modal-body">
+                <div style="
+                color: var(--gray-600, #475467);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 135%; /* 18.9px */
+  letter-spacing: 0.14px;
+  
+  
+                ">
+                    Are you sure you want to delete this Sub task header?
+                </div>
+                <div style="color: var(--gray-600, #475467);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 135%; /* 18.9px */
+            letter-spacing: 0.14px;"> This action cannot be undone and all associated data will be permanently removed.
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 10px;padding:0.7rem;" class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary heading" style="display: flex;
+            padding: 8px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex: 1 0 0;
+            align-self: stretch;
+            border-radius: var(--radius-medium, 8px);
+            color: var(--gray-700, #344054);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  
+            border: 1px solid var(--gray-300, #D0D5DD);" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn" style="
+                display: flex;
+  height: 46px;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: var(--content-inverted-primary, #FFF);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: 0.1px;
+  flex: 1 0 0;
+  border-radius: var(--radius-medium, 8px);
+  background: var(--Red, #FF6565);
+                " data-dismiss="modal" onclick="DeleteSubTaskHeader()">
+                    Delete Subtask Header <Header></Header>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ConfirmChaneTProject -->
+
+<div class="modal docs-example-modal" tabindex="-1" id="ConfirmChaneTProject" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal">
+        <div class="modal-content" id="myModalsm" style="border-radius: 12px;">
+            <div class="modal-header">
+                <div style="
+                  color: var(--text-content-primary, #181818);
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 130%;
+                ">
+                    Confirm Project change
+                </div>
+            </div>
+            <div class="modal-body">
+                <div style="
+                color: var(--gray-600, #475467);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 135%; /* 18.9px */
+  letter-spacing: 0.14px;
+  
+  
+                ">
+                    Are you sure you want to change project for selected tasks? All the related KRs and SubKR will be
+                    Disconnected </div>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 10px;padding:0.7rem;" class="modal-footer">
+                <button class="btn btn-outline-primary" style="display: flex;
+         
+         padding: 0px 24px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          align-self: stretch;
+          border-radius: 12px;" data-dismiss="modal"> Cancel</button>
+                <button type="button" class="btn" style="
+                display: flex;
+  padding: 0px 24px;
+  align-items: center;
+  display: flex;
+  height: 48px;
+  padding: 8px 24px;
+  align-items: center;
+  gap: 8px;
+  color: #FFF;
+  
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border-radius: 14px;
+  background: var(--brand-primary, #48BF84);
+  
+  gap: 18px;
+                " data-dismiss="modal" onclick="setProjectToT()">
+                    Change Project
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Task Link -->
+<div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="AddTaskLink"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header"
+                style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+                <div style="color: var(--gray-900, #101828);
+font-size: 24pxpx;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Add Link</div>
+                <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+            </div>
+            <div class="modal-body" style="display: inline-flex;
+padding-top: 24px;
+flex-direction: column;
+align-items: flex-start;
+gap: 22px;
+border-radius: 12px;">
+                <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+                    <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link Title</div>
+                    <input type="text" id="Tasklink-title" placeholder="Design_draft1" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+border: 1px solid var(--stroke-secondary, #DCDCDC);
+background: var(--surface-primary, #FFF);">
+                </div>
+                <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+                    <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link </div>
+                    <input type="link" id="Tasklink-link"
+                        placeholder="www.figma.com/file/4E5bk36Ib1giid=4861%3A134681&m" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+border: 1px solid var(--stroke-secondary, #DCDCDC);
+background: var(--surface-primary, #FFF);">
+                </div>
+            </div>
+            <div class="modal-footer" style="padding:1rem">
+
+                <button type="button" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" class="btn btn-outline-primary" data-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="button" data-dismiss="modal" class="btn btn-primary" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" onclick="AddTaskLink()" id="AddTaskLinkButton">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Sub Task Link -->
+<div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="AddsubTaskLink"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header"
+                style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+                <div style="color: var(--gray-900, #101828);
+font-size: 24pxpx;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Add Link</div>
+                <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+            </div>
+            <div class="modal-body" style="display: inline-flex;
+padding-top: 24px;
+flex-direction: column;
+align-items: flex-start;
+gap: 22px;
+border-radius: 12px;">
+                <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+                    <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link Title</div>
+                    <input type="text" id="subTasklink-title" placeholder="Design_draft1" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+border: 1px solid var(--stroke-secondary, #DCDCDC);
+background: var(--surface-primary, #FFF);">
+                </div>
+                <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+                    <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link </div>
+                    <input type="link" id="subTasklink-link"
+                        placeholder="www.figma.com/file/4E5bk36Ib1giid=4861%3A134681&m" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+border: 1px solid var(--stroke-secondary, #DCDCDC);
+background: var(--surface-primary, #FFF);">
+                </div>
+            </div>
+            <div class="modal-footer" style="padding:1rem">
+
+                <button type="button" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" class="btn btn-outline-primary" data-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="button" data-dismiss="modal" class="btn btn-primary" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" onclick="AddsubTaskLink()" id="AddsubTaskLinkButton">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+    let tablecolstyles = [];
+    let tablesubtaskcolstyles = [];
+    let projectMap = new Map();
+
+    let krs = new Map();
+    var subkrs = new Map();
+
+
+    let currentemployeeList = []
+
+    let OKRS = new Map()
+
+    let subTaskHeader;
+    async function GetData() {
+      try{
+        console.log('<%=taskgetdataurl%>')
+        let response = await fetch('/taskdata?id=<%=taskgetdataurl%>')
+       
+        let data = await response.json()
+       
+        projectMap = new Map(data.projects);
+        krs = new Map(data.krs);
+        subkrs = new Map(data.subkrs);
+        currentemployeeList = data.employees;
+        OKRS = new Map(data.OKRs);
+
+        initiative = data.initiative;
+        subTaskHeader = data.subTaskHeader;
+        subTasks = data.subtasks;
+        TaskSubmissions=data.TaskSubmissions;
+        setownerToTaskDropdown()
+        setobjectiveToTaskDropdown()
+        SetProgressTask()
+        SetLocalStorageStyleToSubTaskTableColums()
+        SetLocalStorageStyleToTableColums()
+      }
+      catch(error)
+      {
+        console.log(error);
+      }
+    }
+
+   
+    let initiative = [];
+    let subTasks = [];
+
+    GetData();
+    let tableHeader = '<%-JSON.stringify(TaskTableHeaders)%>'
+    tableHeader = JSON.parse(tableHeader)
+
+    function CountEffectiveEffortsDays(startTime, endTime, returnDecimal = false) {
+
+    const start = new Date(startTime);
+    const today = new Date(endTime);
+
+    let totalDays = 0;
+    let currentDate = start;
+    let partialDay = 0;
+
+    while (currentDate <= today) {
+        const dayOfWeek = currentDate.getDay();
+        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+            totalDays++;
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+        partialDay += 1 / (24 * 60); // Increment by 1 minute
+    }
+
+    const decimalDays = totalDays + partialDay;
+
+    return returnDecimal ? decimalDays : totalDays;
+}
+
+
+
+function SetProgressTask() {
+    const progressbars = document.querySelectorAll('.progresstask');
+
+    for (let i = 0; i < initiative.length; i++) {
+        const task = initiative[i];
+
+        if (!progressbars[i]) {
+            continue;
+        }
+
+        let totaldays = parseFloat(task.data?.Effort) || 0;
+        let actualefforts = task.data['AllotmentDate'];
+
+        if (task.submitted) {
+            actualefforts = CountEffectiveEffortsDays(actualefforts,task.submittedAt);
+        }
+        else{
+            actualefforts = CountEffectiveEffortsDays(actualefforts,new Date());
+        }
+  
+        let effortDays = actualefforts;
+        let percentage = (effortDays * 100) / totaldays;
+        let color = '#48bf84';
+       
+        if (percentage < 5) {
+            percentage = 5;
+        }
+
+        if (effortDays > totaldays) {
+                if (effortDays > totaldays) {
+            if (effortDays <= totaldays + 2) {
+                color = '#FDB022';
+            } else if (effortDays <= totaldays + 3) {
+                color = '#FD853A';
+            } else if (effortDays <= totaldays + 4) {
+                color = '#F97066';
+            } else {
+                color = '#B42318';
+            }
+        }
+
+            progressbars[i].setAttribute('data-original-title', `${Math.round(effortDays - totaldays)} days Overdue`);
+        }
+
+        const progressText = progressbars[i].querySelector('.EffortsDays');
+        progressText.textContent = `${Math.round(effortDays)}D`;
+
+        progressbars[i].style.background = `
+            radial-gradient(closest-side, white 79%, transparent 80% 100%),
+            conic-gradient(${color} ${percentage}%, #F2F4F7 0)`;
+
+        progressbars[i].style.animation = 'html-progresscircle 2s 1 forwards';
+    }
+}
+
+
+    function SetProgressSubTask() {
+
+        let i = initiativeindex
+        let progressbars = document.querySelectorAll(`.progresssubtask${i}`);
+        for (let j = 0; j < subTasks[i].length; j++) {
+            let subtask = subTasks[i][j];
+            let totaldays = parseFloat(subtask.data?.Effort);
+          
+            if (isNaN(totaldays)) totaldays = 0;
+            let actualefforts = subtask.data['AllotmentDate'];
+
+            if (subtask.submitted) {
+            actualefforts = CountEffectiveEffortsDays(actualefforts,subtask.submittedAt);
+        }
+        else{
+            actualefforts = CountEffectiveEffortsDays(actualefforts,new Date());
+        }
+            let effortDays = actualefforts;
+            let percentage = (effortDays * 100) / totaldays;
+            let color = '#48bf84';
+            if (percentage < 5) percentage = 5;
+            if (effortDays > totaldays) {
+                if (effortDays > totaldays) {
+            if (effortDays <= totaldays + 2) {
+                color = '#FDB022';
+            } else if (effortDays <= totaldays + 3) {
+                color = '#FD853A';
+            } else if (effortDays <= totaldays + 4) {
+                color = '#F97066';
+            } else {
+                color = '#B42318';
+            }
+        }
+
+                if (progressbars[j])
+                    progressbars[j].setAttribute('data-original-title', `${Math.round(effortDays - totaldays)} days Overdue`);
+            }
+            let progressText = progressbars[j]?.querySelector('.EffortsDays');
+            if (progressText)
+                progressText.textContent = Math.round(effortDays) + "D";
+            if (progressbars[j]) {
+                progressbars[j].style.background = `
+            radial-gradient(closest-side, white 79%, transparent 80% 100%),
+            conic-gradient(${color} calc(${percentage} * 1%), #F2F4F7 0)`;
+                progressbars[j].style.animation = 'html-progresscircle 2s 1 forwards';
+            }
+        }
+    }
+
+    // add initaive
+    function ShowsubTasks(i) {
+
+        document.querySelectorAll('.subTask').forEach(element => element.remove());
+        i = parseFloat(i);
+        initiativeindex = i
+        let ToogleIcon = document.getElementById('ToogleIcon' + i);
+        let subTaskContainer = document.getElementById('subTaskContainer' + i);
+        let tasks = document.getElementById('Tasks' + i);
+        if (ToogleIcon.classList.contains('fa-angle-right')) {
+            ToogleIcon.classList.remove('fa-angle-right');
+            ToogleIcon.classList.add('fa-angle-down');
+
+
+            let innerHTML = `
+            <div style="background-color: white;">
+                        <tr class="subTasks${i} subTask" style="margin-top: 20px; justify-content: flex-start;">
+                            ${subTaskHeader.map((header, index) => `<th style="padding:0px;${tablesubtaskcolstyles[index]}"  onmouseover="showIcons('.BorderSubTask-${header._id}')" onmouseout="removeIcons('.BorderSubTask-${header._id}')">
+                                <div style="display: flex;align-items: center;gap:5px;justify-content: center;width: calc( 100% - 6px );overflow: hidden;" id="subTaskcol${header._id}">
+                              <input type="text"  value="${header.title}" style="border:none;max-width: 90%;" onchange="ChangeSubTaskHeaderTitle('${index}',event.target.value)">  
+                              <img src="../Performance dashboard Icons/three_dot.svg"  class="BorderSubTask-${header._id}" data-toggle="dropdown" aria-expanded="false" style="display: none;" >
+                <div  class="dropdown-menu" style="flex-direction: column;
+                align-items: flex-start;
+                border: 1px solid var(--gray-300, #D0D5DD);
+                border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+                border-bottom: 1px solid var(--gray-300, #D0D5DD);
+                " class="container_Style">
+               
+                <div class="dropdown_tab_active" data-toggle="modal" data-target="#DeleteSubTaskHeaderConfirmation" onclick="setSubHeaderToDelete('${header._id}','${header.usedName}')">
+                <img src="../Performance dashboard Icons/dropdown_delete.svg"> Delete
+                </div>
+                </div>
+                                </div>
+                               
+                                <div class="BorderSubTask-${header._id} HeaderBorder" style="display: none;"></div>
+           </th>`).join('')}
+                        </tr>`;
+
+            for (let j = 0; j < subTasks[i].length; j++) {
+               innerHTML+=MakeSubTaskRow(i,j);
+            }
+
+            innerHTML += `
+                        <tr id="ClicktoaddnewsubTasks${i}" class="subTasks${i} subTask" style="margin-bottom:20px;">
+                            <td style="width: 250px; display: flex; gap: 8px; align-items: center; justify-content: flex-start;">
+                                <div style="display: flex; padding: 4px; justify-content: center; align-items: center; gap: 4px;" onclick="AddsubTasks('${i}')" class="AddRow">
+                                    <i class="fa fa-plus"></i> Click to add new subTasks
+                                </div>
+                            </td>
+                        </tr>
+                   
+            </div>`;
+            tasks.insertAdjacentHTML('afterend', innerHTML);
+            for (let i = 0; i < subTaskHeader.length; i++) {
+                makeColumnResizable(`subTaskcol${subTaskHeader[i]._id}`, MakeSubTaskDragggable);
+            }
+            initiativeindex = i;
+            setownerToSubTaskDropdown()
+            SetProgressSubTask()
+
+
+            for (let j = 0; j < subTasks[i].length; j++) {
+                subTaskindex = j;
+                UpdatesubTaskFilebody('manager')
+                UpdatesubTaskLinkbody('manager')
+            }
+
+            AddDragDropResizeSubTask(initiativeindex);
+        } else {
+            ToogleIcon.classList.remove('fa-angle-down');
+            ToogleIcon.classList.add('fa-angle-right');
+            document.querySelectorAll('.subTask').forEach(element => element.remove());
+        }
+        AddDragDropSubTaskRow()
+    }
+
+function MakeSubTaskRow(i,j)
+{
+let innerHTML='';
+innerHTML += `<tr onclick="changeSubTaskIndex('${j}')" class="subTasks${i} subTask" draggable="true">`;
+
+for (let index = 0; index < subTaskHeader.length; index++) {
+    let header = subTaskHeader[index];
+    if (header.type === 'text') {
+        innerHTML += `
+        <td  style='${tablesubtaskcolstyles[index]}' data-toggle="tooltip" data-placement="top" title="${subTasks[i][j].data.SubTask}">
+            <div style="width: 100%;"  class="AddRow">
+                <input type="text" value="${subTasks[i][j].data.SubTask}" placeholder="Enter ${header.title} title" style="border: none; border-radius: 6px; height: 30px; width: 100%; background: transparent;" onchange="changesubTaskdata('${j}','${header.usedName}',event.target.value)">
+            </div>
+        </td>`;
+    } else if (header.type === 'label') {
+        let style = '';
+        style += subTasks[i][j].data && subTasks[i][j].data[header.usedName]?.color?.length > 0 ? 'color:' + subTasks[i][j].data[header.usedName]?.color + ';' : '';
+        let title = subTasks[i][j].data && subTasks[i][j].data[header.usedName]?.label;
+        style += subTasks[i][j].data && subTasks[i][j].data[header.usedName]?.bgcolor?.length > 0 ? 'background:' + subTasks[i][j].data[header.usedName]?.bgcolor : '';
+
+        innerHTML += `<td style='${tablesubtaskcolstyles[index]}'>
+        <div style="padding:5px 12px;border-radius:16px;" id="subTask${header.usedName}${i}-${j}" data-toggle="dropdown" aria-expanded="false">
+            
+             <div class="Status_hold" style="${style}">${title}</div>
+        </div>
+        <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="subTask${header.usedName}${i}-${j}" id="subTask${header.usedName}${i}-${j}dropdown">`
+        let dropdownindex = 0;
+        for (let label of header.labels) {
+            let color = label?.color;
+            let title = label?.label;
+            let bgcolor = label?.bgcolor;
+            innerHTML += `  <div class="StatusBox" onclick="changeSubTaskIndex('${j}');setStatusToSubTask('${label.label}', '${header.usedName}','${dropdownindex}')">
+                    <div class="Status_hold" style="color:${color}; background:${bgcolor}">${title}</div>
+                </div>`
+            dropdownindex += 1;
+        }
+        innerHTML += `  </div>
+    </td>`;
+    } else if (header.type === 'number') {
+        let values = subTasks[i][j].data
+        innerHTML += `<td style='gap:4px;${tablesubtaskcolstyles[index]}' ><div class="InputTypeNumber" style="width:100%">
+        <input type="number" style="width:38px;border:none;text-align:right" value="${values?.[header.usedName]}" onchange="changesubTaskdata('${j}','${header.usedName}',event.target.value)"></div>`
+        if(header.usedName=='Badges')
+innerHTML += `<img src="../img/gem.svg" style="width:24px;height:24px">
+</td>`;
+else if(header.usedName=='Effort')
+innerHTML += `<div style="font-size:18px">D</div>
+</td>`;
+    } else if (header.type === 'progressbar') {
+        innerHTML += `<td style='${tablesubtaskcolstyles[index]}'>
+        <div class="progresscircle-bar progresssubtask${i}" style="background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(#48bf84 calc(0 * 1%), #F2F4F7 0); animation: html-progresscircle 2s 1 forwards;" data-toggle="tooltip" data-placement="top" title="">
+            <div class="EffortsDays" style="color: var(--gray-500, #667085); font-size: 12px; font-style: normal; margin-top:7px; font-weight: 500; line-height: 20px;">
+                0D
+                <progress id="progresstask" min="0" max="100" value="9"></progress>
+            </div>
+        </div>
+    </td>`;
+    } else if (header.usedName === 'Owner') {
+        innerHTML += `<td id="Owner${i}-${j}" style='${tablesubtaskcolstyles[index]}'>
+        <div style="display: flex;align-items: center;gap:12px;width: 150px;overflow: hidden;" id="initiativeOwner${i}-${j}" data-toggle="dropdown" aria-expanded="false">
+            <img src="${subTasks[i][j].data?.Owner?.image?.length > 0 ? subTasks[i][j].data?.Owner?.image : '../Performance dashboard Icons/Empty_User.svg'}" style="width: 24px;height: 24px;border-radius:200px ;"> ${subTasks[i][j].data?.Owner?.name?.length > 0 ? subTasks[i][j].data?.Owner?.name : 'Select Owner'}
+        </div>
+        <div class="dropdown-menu subinitiativesOwner" style="flex-direction: column; padding: 5px 12px; border-radius:8px;" aria-labelledby="initiativeOwner${i}-${j}">
+        </div>
+    </td>`;
+    } else if (header.type === 'date') {
+        innerHTML += `<td style="${tablesubtaskcolstyles[index]};color: var(--gray-800, #1D2939); line-height: 20px;" onclick="OpenDateInput(event,'Date${header.usedName}CalendarSubTask${i}-${j}')">
+        <span id="${header.usedName}SubTask${i}-${j}">${formatDate(subTasks[i][j].data[header.usedName])}</span>
+        <img src="../img/NewCalendar.svg">
+        <input type="date" id="Date${header.usedName}CalendarSubTask${i}-${j}" style="width:0px;" value="${subTasks[i][j].data[header.usedName]}" onchange="changesubTaskdata('${j}','${header.usedName}',event.target.value)">
+    </td>`;
+    } else if (header.type === 'files') {
+        innerHTML += `<td class="d-flex align-items-center gap-3" style='${tablesubtaskcolstyles[index]}'>
+        <input type="file" id="subTaskFileInputField${i}-${j}" style="width: 0px;" onchange="handlesubTaskFileSelect(event)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*">
+        <div id="initiativeStatus${i}-${j}" data-toggle="dropdown" aria-expanded="false">
+            <span id='subTask-FileBody-${i}-${j}'>${subTasks[i][j].data && subTasks[i][j].data.files ? subTasks[i][j].data.files.length : 0}</span>
+            <img src="../Performance dashboard Icons/File.svg" style="width: 24px; height: 24px;">
+        </div>
+        <img src="../img/Add.svg" onclick="OpenFileInput('subTaskFileInputField${i}-${j}')">
+        <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativesubTaskFile${i}-${j}dropdown"></div>
+    </td>`;
+    } else if (header.type === "links") {
+        innerHTML += `<td class="d-flex align-items-center gap-3" style='${tablesubtaskcolstyles[index]}'>
+        <div style="padding: 5px 12px; border-radius: 16px; display: flex; gap: 8px; align-items: center;" data-toggle="dropdown" aria-expanded="false">
+            <span id='subTask-LinkBody-${i}-${j}'>${subTasks[i][j].data && subTasks[i][j].data.links ? subTasks[i][j].data.links.length : 0}</span>
+            <img src="../Performance dashboard Icons/Link.svg" style="width: 24px; height: 24px;">
+        </div>
+        <img src="../img/Add.svg" data-target="#AddsubTaskLink" data-toggle="modal">
+        <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativesubTaskLink${i}-${j}dropdown"></div>
+    </td>`;
+    }
+    else {
+        innerHTML += `<td class="d-flex align-items-center gap-3" style='${tablesubtaskcolstyles[index]}'>
+         </td>`;
+    }
+}
+
+innerHTML += `</tr>`;
+return innerHTML;
+}
+
+function MakeTaskRow(i)
+{
+let innerHTML=''
+innerHTML += `<td  onmouseover="ShowIconsT('T${i}')" onmouseout="RemoveIconsT('T${i}')">
+<div style="display: flex;gap:8px;align-items: center;">
+<img src="../Performance dashboard Icons/three_dot.svg"  class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="threeDotTsT${i}" style="display: none;" >
+<div aria-labelledby='threeDotTST${i}' class="dropdown-menu" style="flex-direction: column;
+align-items: flex-start;
+border: 1px solid var(--gray-300, #D0D5DD);
+border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+border-bottom: 1px solid var(--gray-300, #D0D5DD);
+" class="container_Style">
+
+<div class="dropdown_tab_active" data-toggle="modal" data-target="#DeleteTConfirmation"  onclick="changeinitiativeIndex('${i}')">
+<img src="../Performance dashboard Icons/dropdown_delete.svg"> Delete
+</div>
+<!-- <div class="dropdown_tab_active" onclick="CheckBadgesAreAllot('${i}')">
+<i class="fa fa-check" aria-hidden="true" style="color: #48BF84;"></i> Approve
+</div>
+<div class="dropdown_tab_active" onclick="SetRejectionModal('${i}')" data-target="#RejectTs" data-toggle="modal">
+<i class="fa fa-times" aria-hidden="true" style="color: #FF6565;"></i> Reject
+</div> -->
+</div>
+<input type="checkbox" style="display: none;" id="checkboxTsT${i}" class="Tcheckbox" >
+<div>${i + 1}</div>
+</div>
+</td>`
+ let postcount=initiative[i].posts?.length ||0
+let src=postcount==0?'../img/message-square-gray.svg':'../img/message-square-green.svg'
+          let nudges=initiative[i].data.Nudge?.length ||0   
+for (let index = 0; index < tableHeader.length; index++) {
+    let header=tableHeader[index];
+
+    if(tableHeader[index].usedName=='Nudge')
+    {
+     innerHTML+=`<td style='${tablecolstyles[index]}' data-target="#Tasknudge" data-toggle="modal" onclick="SetTaskNudgeModal('${i}')">`
+        if(nudges==0){
+            innerHTML+=`  <img src="../img/NoNudge.svg">`
+              }else if(nudges==1){
+                innerHTML+=`  <img src="../img/OneNudge.svg">`
+                }else{
+                    innerHTML+=`
+                    <div style="display: flex;position: relative;">
+                    <div style="color: var(--White, #FFF);
+                    font-size: 10px;
+                    top:-3px;
+                    right:1px;
+                    width: 11.615px;
+height: 11.615px;
+position: absolute;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 20px; /* 200% */">
+                    ${nudges}
+                    </div>
+                    <img src="../img/NudgeMore.svg"> </div>`
+                  }
+                  innerHTML+=`</td>`
+    }
+    else if (tableHeader[index].usedName == 'Tasks') {
+        innerHTML += `<td onmouseover="showIcons('.OpenIcons${initiative[i]._id}')" onmouseout="removeIcons('.OpenIcons${initiative[i]._id}')" style='${tablecolstyles[index]}'>
+     <div style="display: flex;align-items: center;gap:40px;width:100%">
+         <div style="width:95%;display: flex;gap:8px;align-items: center;">
+             <i class="fa fa-angle-right" style="font-size: 25px;color: #98A2B3;" onclick="ShowsubTasks('${i}')" id="ToogleIcon${i}"></i>
+            <div class="AddRow" style="width:80%"> 
+                <input type="text" class="TaskTitle" value="${initiative[i].data.Tasks}" placeholder="Enter Task title "  style="width:100%;border:none;border-radius:6px;height: 30px;
+background: transparent;" onchange="changeinitiativedata('${i}','Tasks',event.target.value)" class="AddRow">
+</div>
+${subTasks[i].length>0?`${subTasks[i].length}<img src="../Project icons/subparticon.svg">`:""} 
+         </div>
+         <div  onclick="OpenTaskSideBar('${i}')" onmouseover="showIcons('.OpenIcons${initiative[i]._id }')" onmouseout="removeIcons('.OpenIcons${initiative[i]._id }')" class="OpenIcons${initiative[i]._id }" style="display: none; align-items: center; gap: 8px; color: var(--gray-500, #667085); font-size: 14px; cursor: pointer; font-style: normal; font-weight: 600; line-height: 20px;">
+                  <img src="../Project icons/maximize.svg">
+                  Open
+                </div>
+                   <div style="display: flex;align-items: center;position: relative;" onclick="OpenTaskSideBar('${i}')">
+                <img src="${src}">
+               ${ postcount>0?`
+                <div style="color: var(--White, #FFF);
+                display: flex;
+                font-size: 12px;
+                position: absolute;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 20px;
+                width: 14.926px;
+                height: 14.926px;
+                background: #48bf84;
+                border-radius: 14.926px;
+                bottom: 0;
+                right: -5px;
+                justify-content: center;
+                align-items: center;">${postcount}</div>`:""}
+              </div>
+     </div>
+    
+ </td>`
+    } else if (tableHeader[index].usedName == 'objective') {
+        innerHTML += `<td style='${tablecolstyles[index]}'>
+   <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+       -webkit-box-orient: vertical;
+       -webkit-line-clamp: 1;
+       overflow: hidden;
+       width:150px;
+       overflow: hidden;
+       text-overflow: ellipsis;" id="initiativeObjective${i}" data-toggle="dropdown" aria-expanded="false">
+        ${(!initiative[i].data?.ObjectiveTitle || initiative[i].data?.ObjectiveTitle.length === 0)?'Select Objective':initiative[i].data.ObjectiveTitle } 
+      
+       </div>
+     <div class="dropdown-menu initiativesObjective" style="
+     flex-direction: column;
+     padding:5px 12px;border-radius:8px;
+   " aria-labelledby="initiativeObjective${i}">
+      
+     </div>
+ </td>`
+    } else if (tableHeader[index].usedName == 'project') {
+        innerHTML += `<td style='${tablecolstyles[index]}'>
+     <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+             -webkit-box-orient: vertical;
+             -webkit-line-clamp: 1;
+             
+             overflow: hidden;
+             width:150px;
+             overflow: hidden;
+             text-overflow: ellipsis;" id="initiativeProject${i}" data-toggle="dropdown" aria-expanded="false" >
+            ${(!initiative[i].data?.projectTitle || initiative[i].data?.projectTitle.length === 0)?'Select Project': initiative[i].data?.projectTitle }
+     </div>
+     <div class="dropdown-menu initiativesProject" style="
+     flex-direction: column;
+     padding:5px 12px;border-radius:8px;
+   " aria-labelledby="initiativeProject${i}">
+     </div>
+ </td>`
+}else if (tableHeader[index].usedName == 'krs') {
+    let innerHTML = `<td style='${tablecolstyles[index]}'>
+        <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                
+                overflow: hidden;
+                width:150px;
+                overflow: hidden;
+                text-overflow: ellipsis;" id="initiativeKR${i}" data-toggle="dropdown" aria-expanded="false" onclick="CheckAllkrsBox(${i})">`;
+
+    if (initiative[i].data?.krs?.length === 0) {
+        innerHTML += 'Select Key result';
+    } else {
+        initiative[i].data?.krs.forEach((krs, j) => {
+            innerHTML += `${initiative[i].data.krs[j].title}${j < initiative[i].data?.krs?.length - 1 ? ',' : ''}`;
+        });
+    }
+
+    innerHTML += `</div>
+        <div class="dropdown-menu initiativesKr" style="
+        flex-direction: column;
+        padding:5px 12px;border-radius:8px;
+    " aria-labelledby="initiativeKR${i}">
+    </div>
+    </td>`;
+    } else if (tableHeader[index].usedName == 'subkrs') {
+    let innerHTML = `<td style='${tablecolstyles[index]}'>
+        <div style="padding:5px 12px;border-radius:16px;" id="initiativeSubKR${i}" data-toggle="dropdown" aria-expanded="false" onclick="CheckAllSubkrsBox(${i})">`;
+
+    if (!initiative[i].data?.subkrs || initiative[i].data?.subkrs?.length === 0) {
+        innerHTML += 'Select Sub Key result';
+    } else {
+        for (let j = 0; j < initiative[i].data?.subkrs?.length; j++) {
+            innerHTML += `${initiative[i].data.subkrs[j].title}${j < initiative[i].data?.subkrs?.length - 1 ? ',' : ''}`;
+        }
+    }
+
+    innerHTML += `</div>
+        <div class="dropdown-menu initiativesSubKr" style="flex-direction: column; padding:5px 12px;border-radius:8px;" aria-labelledby="initiativeSubKR${i}">
+        </div>
+    </td>`;
+} else if (tableHeader[index].type == 'label') {
+        let header = tableHeader[index];
+        let style = ''
+        style += initiative[i].data && initiative[i].data[header.usedName]?.color?.length > 0 ? 'color:' + initiative[i].data[header.usedName]?.color + ';' : ''
+        let title = initiative[i].data && initiative[i].data[header.usedName]?.label
+        style += initiative[i].data && initiative[i].data[header.usedName]?.bgcolor?.length > 0 ? 'background:' + initiative[i].data[header.usedName]?.bgcolor : ''
+
+        innerHTML += `<td style='${tablecolstyles[index]}'>
+<div style="padding:5px 12px;border-radius:16px;" id="initiative${tableHeader[index].usedName}${i}" data-toggle="dropdown" aria-expanded="false">
+    <div class="Status_notStarted" style="${style}">${title}</div>
+</div>
+<div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="initiative${tableHeader[index].usedName}${i}" id="initiative${tableHeader[index].usedName}${i}dropdown">
+    ${tableHeader[index]?.labels?.map((label, dropdownindex) => (
+            `<div class="StatusBox" onclick="changeinitiativeIndex('${i}');setStatusToTask('${label.label}', '${tableHeader[index].usedName}','${dropdownindex}')">
+            <div class="Status_hold" style="color:${label?.color}; background:${label?.bgcolor}">${label.label}</div>
+        </div>`
+        )).join('')
+
+            }
+    <div class="StatusBox" data-target="#manageLabels" data-toggle="modal" onclick="SetLabelsType('${tableHeader[index]._id}')">
+         <i class="fa fa-plus"></i> Add Label
+        </div>
+</div>
+</td>`
+    } else if (tableHeader[index].usedName == 'Badges') {
+        innerHTML += ` <td style='gap:0px;${tablecolstyles[index]}' ><div class="InputTypeNumber" style="width:100%"><input type="number" value=${initiative[i].data && initiative[i].data['Badges']} style="width:38px;border: none;text-align:right"  onchange="changeinitiativedata('${i}','Badges',event.target.value)"></div> <img src="../img/gem.svg" style="width:24px;height:24px;"></td>`
+    } else if (tableHeader[index].usedName == 'Effort' || tableHeader[index].type == 'number') {
+        innerHTML += `<td style='gap:4px;${tablecolstyles[index]}' ><div class="InputTypeNumber" style="width:100%"><input type="number" style="width:38px;border:none;text-align:right" value=${initiative[i].data['Effort']} onchange="changeinitiativedata('${i}','${tableHeader[index].usedName}',event.target.value)"></div> <div style="font-size:18px">D</div></td>`
+    }else if(tableHeader[index].type == 'number') {
+        innerHTML += `<td style='gap:4px;${tablecolstyles[index]}' ><div class="InputTypeNumber" style="width:100%"><input type="number" style="width:38px;border:none;text-align:right" value=${initiative[i].data[tableHeader[index].usedName]} onchange="changeinitiativedata('${i}','${tableHeader[index].usedName}',event.target.value)"></div></td>`
+    } else if (tableHeader[index].usedName == 'Progress') {
+        innerHTML += `<td style='${tablecolstyles[index]}'>
+    <div class="progresscircle-bar progresstask" style="background: 
+  radial-gradient(closest-side, white 79%, transparent 80% 100%),
+  conic-gradient(#48bf84 calc(5 * 1%), #F2F4F7 0);
+animation: html-progresscircle 2s 1 forwards;" data-toggle="tooltip" data-placement="top" title="">
+<div class="EffortsDays" style="color: var(--gray-500, #667085);
+font-size: 12px;
+font-style: normal;
+margin-top:7px;
+font-weight: 500;
+line-height: 20px;">
+0D
+  <progress id="progresstask" min="0" max="100" value="4"></progress>
+  </div>
+</div>
+</td>`
+
+    } else if (tableHeader[index].usedName == 'Owner') {
+        innerHTML += `  <td id="Owner${i}" style='${tablecolstyles[index]}'>
+     <div style="display: flex;align-items: center;gap:12px;width: 150px;overflow: hidden;" id="initiativeOwner${i}" data-toggle="dropdown" aria-expanded="false">
+        <img src="${initiative[i]?.data?.Owner?.image?.length > 0 ? initiative[i]?.data?.Owner?.image : '../Performance dashboard Icons/Empty_User.svg'}" style="width: 24px;height: 24px;border-radius:200px ;">  ${initiative[i]?.data?.Owner?.name?.length ? initiative[i]?.data?.Owner?.name : 'Select Owner'}
+       </div>
+     <div class="dropdown-menu initiativesOwner" style="border-radius:8px;flex-direction: column; padding: 5px 12px;" aria-labelledby="initiativeOwner${i}">
+     </div>
+ </td>`
+    } else if (tableHeader[index].usedName == 'AllotmentDate' || tableHeader[index].type == 'date') {
+        innerHTML += `
+<td style="color: var(--gray-800, #1D2939);
+line-height: 20px;${tablecolstyles[index]}" onclick="OpenDateInput(event,'DateCalendar${tableHeader[index].usedName}Task${i}')">
+<span id='${tableHeader[index].usedName}Task${i}'> ${initiative[i].data && formatDate(initiative[i].data[tableHeader[index].usedName])} </span>
+<img src="../img/NewCalendar.svg">
+ <input type="date" id="DateCalendar${tableHeader[index].usedName}Task${i}" style="width:0px;" value="<%=new Date()%>"onchange="changeinitiativedata('${i}','${tableHeader[index].usedName}',event.target.value)"></td>
+</td>`
+    } else if (tableHeader[index].usedName == 'files') {
+        innerHTML += `  <td class="d-flex align-items-center gap-3" style='${tablecolstyles[index]}'>
+     <input type="file" id="TaskFileInputField${i}" style="width: 0px;" onchange="handleTaskFileSelect(event)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*">
+     <div  data-toggle="dropdown" aria-expanded="false">
+         <span id='Task-FileBody-${i}'>${initiative[i].data?.files?.length}</span>
+         <img src="../Performance dashboard Icons/File.svg" style="width: 24px; height: 24px;">
+     </div>
+     <img src="../img/Add.svg" onclick="OpenFileInput('TaskFileInputField${i}')">
+     <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativeTaskFile${i}dropdown"></div>
+ </td>`
+    } else if (tableHeader[index].usedName == 'links') {
+        innerHTML += `<td class="d-flex align-items-center gap-3" style='${tablecolstyles[index]}'>
+     <div style="padding: 5px 12px; border-radius: 16px; display: flex; gap: 8px; align-items: center;" data-toggle="dropdown" aria-expanded="false">
+         <span id='Task-LinkBody-${i}'>${initiative[i].data?.links?.length}</span>
+         <img src="../Performance dashboard Icons/Link.svg" style="width: 24px; height: 24px;">
+     </div>
+     <img src="../img/Add.svg" data-target="#AddTaskLink" data-toggle="modal">
+     <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativeTaskLink${i}dropdown"></div>
+ </td>`
+    }
+}
+return innerHTML;
+
+}
+
+
+function SetAllInitiatives() {
+let initaiveBody=document.getElementById('InitiativesBody');
+initaiveBody.innerHTML='';
+let innerHTML='';
+for(let i=0;i<initiative.length;i++)
+{
+    innerHTML+=`<tr onclick="changeinitiativeIndex('${i}')" draggable="true" class="Tasks" id="Tasks${i}" style="cursor: move;">`
+        innerHTML+=MakeTaskRow(i);
+        innerHTML+='</tr>'
+}
+innerHTML+=` <tr id="ClicktoaddnewTasksInPage">
+          
+          <td style="width: 250px;
+          display: flex;
+          gap: 8px;
+          align-items: center;
+          justify-content: flex-start;">
+           
+           
+            <div style="display: flex;
+            padding: 4px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            " onclick="Addinitiatives('ClicktoaddnewTasksInPage')" class="AddRow">
+          <i class="fa fa-plus"></i>  Click to add new Tasks
+            </div>
+  
+          </td>
+          
+        </tr>`
+initaiveBody.innerHTML=innerHTML;
+for (let i = 0; i < initiative.length; i++) {
+        initiativeindex = i;
+        UpdateTaskFilebody()
+        UpdateTaskLinkbody()
+    }
+//setobjectiveToTaskDropdown()
+        setownerToTaskDropdown()
+        AddDragDropTaskRow()
+        SetProgressTask()
+}
+
+function SetTaskHeaders()
+{
+    let TasksHeader=document.getElementById('TasksHeader')
+    let innerhtml='';
+    innerhtml+=`<th  onmouseover="ShowIconsT('HeaderT')" onmouseout="RemoveIconsT('HeaderT')" style="width:20px">
+            <div style="display: flex;gap:8px;align-items: center;">
+            <img src="../Performance dashboard Icons/three_dot.svg"  class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="threeDotTsHeaderT" style="display: none;" >
+            <div aria-labelledby='threeDotTsHeaderT' class="dropdown-menu" style="flex-direction: column;
+            align-items: flex-start;
+            border: 1px solid var(--gray-300, #D0D5DD);
+            border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+            border-bottom: 1px solid var(--gray-300, #D0D5DD);
+            " class="container_Style">
+           
+            <div class="dropdown_tab_active" data-toggle="modal" data-target="#DeleteTConfirmation" onclick="changeinitiativeIndex(-1)">
+            <img src="../Performance dashboard Icons/dropdown_delete.svg"> Delete
+            </div>
+            <!-- <div class="dropdown_tab_active" onclick="CheckBadgesAreAllot(-1)" >
+              <i class="fa fa-check" aria-hidden="true" style="color: #48BF84;"></i> Approve
+            </div>
+            <div class="dropdown_tab_active" onclick="SetRejectionModal(-1)" data-target="#RejectTs" data-toggle="modal">
+              <i class="fa fa-times" aria-hidden="true" style="color: #FF6565;"></i> Reject
+            </div> -->
+            </div>
+          <input type="checkbox" style="display: none;" id="checkboxTsHeaderT" class="Tcheckbox" onclick="SelectAllT()">
+            <div>Sr No</div>
+          </div>
+          </th>`
+         
+        
+           for (let i = 0; i < tableHeader?.length; i++) { 
+             let header = tableHeader[i] 
+             let style=tablecolstyles[i]
+             innerhtml+=` <th style="padding:0px;${style};" onmouseover="showIcons('.Border-${header._id}')" onmouseout="removeIcons('.Border-${header._id}')"  id="TaskMainTableManager${ i }"
+>
+        <div style="display: flex;align-items: center;gap:5px;justify-content: center;width: calc( 100% - 6px );overflow: hidden;" id="TaskMainTableManagerDiv${ i }">
+           <input type="text" value="${ header.title }" style="border:none;max-width: 90%;" onchange="ChangeTaskHeaderTitle('${i}',event.target.value)" size="${ header.title.length+1 }">
+          <img src="../Performance dashboard Icons/three_dot.svg"  class="Border-${header._id}" data-toggle="dropdown" aria-expanded="false" style="display: none;" >
+          <div  class="dropdown-menu" style="flex-direction: column;
+          align-items: flex-start;
+          border: 1px solid var(--gray-300, #D0D5DD);
+          border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+          border-bottom: 1px solid var(--gray-300, #D0D5DD);
+          " class="container_Style">
+         
+          <div class="dropdown_tab_active" data-toggle="modal" data-target="#DeleteTaskHeaderConfirmation" onclick="setHeaderToDelete('${header._id}','${header.usedName}')">
+          <img src="../Performance dashboard Icons/dropdown_delete.svg"> Delete
+          </div>
+          <div class="dropdown_tab_active"  data-toggle="dropdown" aria-expanded="false">
+           <div style="display: flex;align-items: center;gap:8px;"  > <i class="fa fa-plus"></i> Add Column to right <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+            
+          </div>
+          <div  class="dropdown-menu"   style="flex-direction: column;
+    padding: 16px;
+    width: 370px;
+    align-items: flex-start;
+    gap: 16px;
+    color: var(--gray-800, #1D2939);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 125% */
+    background-color: white;
+    ">
+    <div >Column Type</div>
+<div style="display: flex;align-items: flex-start;gap:16px;justify-content: flex-start;flex-wrap: wrap;">
+<div class="AddColumnBox" onclick="AddNewTaskCol('label','${i+1}')">
+<img src="../img/clock.svg" style="width: 20px;">
+Status
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('date','${i+1}')">
+<img src="../img/NewCalendar.svg" style="width: 20px;">
+Date
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('text','${i+1}')">
+<i class="fa fa-text-width" aria-hidden="true"></i>
+Text
+</div>
+<!-- <div class="AddColumnBox" onclick="AddNewTaskCol('timeline','${i+1}')">
+<img src="../img/NewCalendar.svg" style="width: 20px;">
+Timeline
+</div> -->
+<div class="AddColumnBox" onclick="AddNewTaskCol('numbers','${i+1}')">
+<img src="../img/NumberIcon.svg" style="width: 20px;">
+Numbers
+</div>
+
+<!-- <div class="AddColumnBox" onclick="AddNewTaskCol('people','${i+1}')">
+<i class="fa fa-users" aria-hidden="true"></i>
+People
+</div> -->
+<div class="AddColumnBox" onclick="AddNewTaskCol('label','${i+1}')">
+<i class="fa fa-tag" aria-hidden="true"></i>
+Label
+</div>
+<!-- <div class="AddColumnBox" onclick="AddNewTaskCol('dropddown','${i+1}')">
+-<i class="fa fa-chevron-down" aria-hidden="true"></i>
+Dropddown
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('files','${i+1}')">
+<i class="fa fa-file" aria-hidden="true"></i>
+Files
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('links','${i+1}')">
+<i class="fa fa-link" aria-hidden="true"></i>
+Links
+</div> -->
+</div>
+      </div>
+         <!--  <div class="dropdown_tab_active" onclick="SetRejectionModal(-1)" data-target="#RejectTs" data-toggle="modal">
+            <i class="fa fa-times" aria-hidden="true" style="color: #FF6565;"></i> Reject
+          </div> -->
+          </div>
+         
+        </div> 
+          <div class="Border-${header._id} HeaderBorder" style="display: none;"></div>
+      </th>`
+     
+  } 
+   innerhtml+=`<th style="width: 120px;display: flex;gap:4px;align-items: center;cursor: pointer;">
+      <div style="display: flex;gap:4px;align-items: center;" data-toggle="dropdown" aria-expanded="false" id="AddColumnTask" ><i class="fa fa-plus" aria-hidden="true"></i>Add column</div>
+    <div  class="dropdown-menu" aria-labelledby='AddColumnTask'  style="flex-direction: column;
+    padding: 16px;
+    width: 370px;
+    align-items: flex-start;
+    gap: 16px;
+    color: var(--gray-800, #1D2939);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 125% */
+    background-color: white;
+    ">
+    <div >Column Type</div>
+<div style="display: flex;align-items: flex-start;gap:16px;justify-content: flex-start;flex-wrap: wrap;">
+<div class="AddColumnBox" onclick="AddNewTaskCol('label')">
+<img src="../img/clock.svg" style="width: 20px;">
+Status
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('date')">
+<img src="../img/NewCalendar.svg" style="width: 20px;">
+Date
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('text')">
+<i class="fa fa-text-width" aria-hidden="true"></i>
+Text
+</div>
+<!-- <div class="AddColumnBox" onclick="AddNewTaskCol('timeline')">
+<img src="../img/NewCalendar.svg" style="width: 20px;">
+Timeline
+</div> -->
+<div class="AddColumnBox" onclick="AddNewTaskCol('numbers')">
+<img src="../img/NumberIcon.svg" style="width: 20px;">
+Numbers
+</div>
+<!-- 
+<div class="AddColumnBox" onclick="AddNewTaskCol('people')">
+<i class="fa fa-users" aria-hidden="true"></i>
+People
+</div> -->
+<div class="AddColumnBox" onclick="AddNewTaskCol('label')">
+<i class="fa fa-tag" aria-hidden="true"></i>
+Label
+</div>
+<!-- <div class="AddColumnBox" onclick="AddNewTaskCol('dropddown')">
+-<i class="fa fa-chevron-down" aria-hidden="true"></i>
+Dropddown
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('files')">
+<i class="fa fa-file" aria-hidden="true"></i>
+Files
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('links')">
+<i class="fa fa-link" aria-hidden="true"></i>
+Links
+</div> -->
+</div>
+      </div>
+    </th>`
+    TasksHeader.innerHTML=innerhtml;
+   
+    AddDragDropResize()
+} 
+
+async function Addinitiatives(id) {
+        if (!id) {
+            id = 'InitiativesBody'
+        }
+        CreateNewTask();
+        let i = initiative.length - 1;
+        initiativeindex = i;
+ initiative[initiativeindex].srNo=initiativeindex;
+
+        await SaveTask(initiativeindex);
+        let Addinitiativesbox = document.getElementById(id)
+        let innerHTML=`<tr  draggable="true" onclick="changeinitiativeIndex(${initiativeindex})" class="Tasks" id="Tasks${initiativeindex}">`
+       
+            innerHTML+= MakeTaskRow(initiativeindex);
+            innerHTML+='</tr>'
+        // if (id == 'ClicktoaddnewTasks' || id == 'ClicktoaddnewTasksInPage')
+        Addinitiativesbox.insertAdjacentHTML('beforebegin', innerHTML)
+        // else
+        //     Addinitiativesbox.innerHTML = innerHTML + Addinitiativesbox.innerHTML
+        setobjectiveToTaskDropdown()
+        setownerToTaskDropdown()
+        AddDragDropTaskRow()
+    }
+    var subTaskindex = 0
+
+    function formatDate(dateString) {
+        if (!dateString) {
+            return ''; // Handle the case where dateString is empty or undefined
+        }
+
+        const date = new Date(dateString);
+        const day = date.getDate();
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const month = monthNames[date.getMonth()];
+        const year = date.getFullYear();
+
+        return `${day} ${month} ${year}`;
+    }
+
+    function SerachTasks(value) {
+        let initiatives = document.querySelectorAll('.Tasks')
+        let initaiveTitles = document.querySelectorAll('.TaskTitle')
+        initiatives.forEach((initiative, i) => {
+            if (initaiveTitles[i].value.toLowerCase().includes(value.toLowerCase())) {
+                initiative.style.display = 'flex'
+            }
+            else {
+                initiative.style.display = 'none'
+            }
+        })
+    }
+    function changeSubTaskIndex(i) {
+        subTaskindex = parseFloat(i);
+    }
+    async function AddsubTasks(index_, message) {
+
+        let data = {}
+        for (let header of subTaskHeader) {
+            data[header.usedName] = ''
+        }
+        data['projectId'] = initiative[initiativeindex].data.projectId;
+        data['ObjectiveId'] = initiative[initiativeindex].data.ObjectiveId;
+        data['ObjectiveTitle'] = initiative[initiativeindex].data.ObjectiveTitle;
+        data['projectTitle'] = initiative[initiativeindex].data.projectTitle;
+        data['PImpact'] = { label: 'Low', color: '#667085', bgcolor: '#F9FAFB' }
+        data['Effort'] = 1
+        data['Badges'] = 0;
+        data['Clarity'] = { label: 'Low', color: '#667085', bgcolor: '#F9FAFB' }
+        data['Owner'] = initiative[initiativeindex].data.Owner;
+        data['Status'] = { label: "Not Started", color: "#667085", bgcolor: '#F9FAFB' }
+        data['SubmissionApproval'] = { label: "Pending", color: "#F79009", bgcolor: '#FFFAEB' }
+        data['links'] = []
+        data['files'] = []
+        data['subkrs'] = initiative[initiativeindex].data.subkrs;
+        data['taskId'] = initiative[initiativeindex]._id.toString();
+        
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = currentDate.getDate().toString().padStart(2, '0');
+        let taskdate = `${year}-${month}-${day}`
+        data['AllotmentDate'] = `${year}-${month}-${day}`;
+        subTasks[initiativeindex].push({ data,srNo: subTasks[initiativeindex].length})
+
+        let j = subTasks[initiativeindex].length - 1;
+        subTaskindex = parseFloat(j);
+        let i = initiativeindex;
+
+        await SaveSubTask(initiativeindex, subTaskindex);
+        let Addinitiativesbox = document.getElementById('ClicktoaddnewsubTasks' + initiativeindex)
+        let innerHTML = MakeSubTaskRow(initiativeindex,j);
+        Addinitiativesbox.insertAdjacentHTML('beforebegin', innerHTML)
+        setownerToSubTaskDropdown()
+    }
+
+
+
+    function changesubTaskdata(i, type, value) {
+        subTaskindex = parseFloat(i);
+        subTasks[initiativeindex][subTaskindex].data[type] = value;
+        SaveSubTask(initiativeindex, subTaskindex)
+        if (type == 'AllotmentDate') {
+            document.getElementById('AllotmentDateSubTask' + initiativeindex + '-' + subTaskindex).textContent = formatDate(value)
+        }
+    }
+    function setStatusToSubTask(status, type, index) {
+        let statusbody = document.getElementById('subTask' + type + initiativeindex + '-' + subTaskindex)
+
+        type = type.trim()
+        let statusbodydropdown = document.getElementById('subTask' + type + initiativeindex + '-' + subTaskindex + 'dropdown')
+        let selectedChild = statusbodydropdown.children[index];
+        statusbody.innerHTML = selectedChild.innerHTML;
+        if (type == 'Status' && subTasks[initiativeindex][subTaskindex].data[type] != status && (subTasks[initiativeindex][subTaskindex].data[type] == 'In Progress' || status == 'In Progress')) {
+            if (status == 'In Progress') {
+                subTasks[initiativeindex][subTaskindex].InProgressStartedTime = new Date();
+            }
+            else {
+                subTasks[initiativeindex][subTaskindex].InProgressStartedTime = null;
+                subTasks[initiativeindex][subTaskindex].PervInProgressTime += new Date() - (subTasks[initiativeindex][subTaskindex].InProgressStartedTime ? new Date(subTasks[initiativeindex][subTaskindex].InProgressStartedTime) : new Date());
+            }
+        }
+
+        let mainitem = selectedChild.querySelector('.Status_hold').style;
+        subTasks[initiativeindex][subTaskindex].data[type] = { label: status, color: mainitem?.color, bgcolor: mainitem?.background };
+
+        SaveSubTask(initiativeindex, subTaskindex)
+    }
+
+
+
+    for (let i = 0; i < initiative.length; i++) {
+        initiativeindex = i;
+        UpdateTaskFilebody()
+        UpdateTaskLinkbody()
+    }
+    function setSubkrToTaskDropdown() {
+        let subkrsbodies = document.querySelectorAll('.initiativesSubKr');
+
+        for (let i = 0; i < subkrsbodies.length; i++) {
+            let subkrsbody = subkrsbodies[i];
+            initiativeindex = i;
+            let krsId = initiative[initiativeindex]?.data?.krs;
+
+            let all_subkrs = [];
+            for (let kr of krsId || []) {
+                all_subkrs.push(...subkrs.get(kr.id) || [])
+            }
+            subkrsbody.innerHTML = '';
+
+            if (all_subkrs.length === 0) {
+                subkrsbody.innerHTML = `
+                 <div style="display: flex;
+                     width: 100%;
+                     height: 44px;
+                     justify-content: center;
+                     align-items: center;
+                     border-radius: 8px 8px 0px 0px;">
+                     No Sub-KRs to select for the objective
+                 </div>`;
+
+            }
+            else {
+                subkrsbody.innerHTML = `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 justify-content: center;
+                 align-items: center;
+                 gap:12px;
+                 border-radius: 8px 8px 0px 0px;">
+                 <img src="../Project icons/Search_icon.svg">
+                 <input type="text" style="border: none;width: 100%;" placeholder="Search for SubKr" id="searchsubkrInput"
+                     oninput="filterAndSortSubKr(event.target.value)">
+             </div> <div id="initiativesSubKrdropdownbody${initiativeindex}">
+             ${all_subkrs.map(subkr => `
+                 <div style="height: 1px;
+                     
+                     background: var(--gray-200, #EAECF0);"></div>
+                 <div style="display: flex;
+                     padding: 16px 24px;
+                     align-items: center;
+                     gap: 12px;
+                     flex: 1 0 0;" onclick="setSubkrToTask('${subkr._id}','${subkr.title}')" class="hoverbgWhite">
+                     <input type="checkbox" id="SubKrCheckbox${subkr._id}-${i}">
+                     ${subkr.title}
+                 </div>`).join('')}
+         </div>`;
+            }
+        }
+    }
+
+    function CheckAllSubkrsBox(initiativeindex) {
+        let allsubkrs = initiative[initiativeindex]?.data?.subkrs;
+        for (let subkr of allsubkrs) {
+            document.getElementById('SubKrCheckbox' + subkr.id + '-' + initiativeindex).checked = true;
+        }
+    }
+
+    function CheckAllkrsBox(initiativeindex) {
+        let allkrs = initiative[initiativeindex]?.data?.krs;
+        for (let kr of allkrs) {
+            document.getElementById('KrCheckbox' + kr.id + '-' + initiativeindex).checked = true;
+        }
+    }
+    function filterAndSortSubKr(text) {
+        let subkrsbody = document.getElementById('initiativesSubKrdropdownbody' + initiativeindex)
+
+        let krsId = initiative[initiativeindex]?.data?.krs;
+
+        let all_subkrs = [];
+        for (let kr of krsId || []) {
+            all_subkrs.push(...subkrs.get(kr.id) || [])
+        }
+        all_subkr = all_subkrs.filter((subkr) => subkr.title.toLowerCase().includes(text.toLowerCase()))
+
+        subkrsbody.innerHTML = ''
+        if (all_subkr.length == 0) {
+            subkrsbody.innerHTML += `<div style="display: flex;
+   width: 100%;
+   height: 44px;
+   justify-content: center;
+   align-items: center;
+   border-radius: 8px 8px 0px 0px;">
+   No subkr is match with ${text}
+   </div>`
+        }
+        else {
+
+            for (let subkr of all_subkr) {
+                subkrsbody.innerHTML += `
+   <div style="height: 1px;
+   
+   background: var(--gray-200, #EAECF0);"></div>
+   <div style="display: flex;
+   padding: 16px 24px;
+   align-items: center;
+   gap: 12px;
+   flex: 1 0 0;" onclick="setSubkrToTask('${subkr._id}','$${subkr.title}')" class="hoverbgWhite">
+   <input type="checkbox" id="SubKrCheckbox${subkr._id}-${initiativeindex}">
+   
+   ${subkr.title}</div>`
+            }
+        }
+        CheckAllSubkrsBox(initiativeindex)
+    }
+
+    function setkrToTaskDropdown() {
+
+        let krsbodies = document.querySelectorAll('.initiativesKr');
+
+        for (let i = 0; i < krsbodies.length; i++) {
+            let objectiveId = initiative[i]?.data?.ObjectiveId;
+            let all_krs = krs.get(objectiveId) || [];
+            let krsbody = krsbodies[i]
+            krsbody.innerHTML = '';
+
+            if (all_krs.length === 0) {
+                krsbody.innerHTML = `
+                 <div style="display: flex;
+                     width: 100%;
+                     height: 44px;
+                     justify-content: center;
+                     align-items: center;
+                     border-radius: 8px 8px 0px 0px;">
+                     No KRs to select for the objective
+                 </div>`;
+                continue;
+            }
+            else {
+
+                krsbody.innerHTML = `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 gap:12px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;">
+                 <img src="../Project icons/Search_icon.svg">
+                 <input type="text" style="border: none;width: 100%;" placeholder="Search for Kr" id="searchkrInput"
+                     oninput="filterAndSortKr(event.target.value)">
+             </div> <div id="initiativesKrdropdownbody${i}">
+             ${all_krs.map(kr => `
+                 <div style="height: 1px;
+                     
+                     background: var(--gray-200, #EAECF0);"></div>
+   
+                 <div style="display: flex;
+                     padding: 16px 24px;
+                     align-items: center;
+                     gap: 12px;
+                     flex: 1 0 0;" onclick="setkrToTask('${kr._id}','${kr.title}')" class="hoverbgWhite">
+                   <input type="checkbox" id="KrCheckbox${kr._id}-${i}">  ${kr.title}
+                 </div>`).join('')}
+         </div>`;
+            }
+        }
+        setSubkrToTaskDropdown()
+    }
+
+    function setprojectToTaskDropdown() {
+        let Projectbodies = document.querySelectorAll('.initiativesProject');
+
+        for (let i = 0; i < Projectbodies.length; i++) {
+            let objectiveId = initiative[i]?.data?.ObjectiveId
+
+            let all_Projects = projectMap.get(objectiveId) || [];
+            let Projectbody = Projectbodies[i];
+            Projectbody.innerHTML = `<div style="display: flex;
+                     width: 100%;
+                     height: 44px;
+                     justify-content: center;
+                     align-items: center;
+                     border-radius: 8px 8px 0px 0px;">No Projects to select for the objective</div>`;
+            if (all_Projects.length > 0) {
+                Projectbody.innerHTML += `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 gap:12px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;">
+                 <img src="../Project icons/Search_icon.svg">
+                 <input type="text" style="border: none;width: 100%;" placeholder="Search for Project" id="searchProjectInput"
+                     oninput="filterAndSortModalProject(event.target.value, ${i})">
+             </div> 
+             <div id="initiativesProjectdropdownbody${i}" style="max-height:200px;overflow:auto">
+               
+                 ${all_Projects.map(Project => `
+                     <div style="height: 1px;
+                         
+                         background: var(--gray-200, #EAECF0);"></div>
+                     <div style="display: flex;
+                         padding: 16px 24px;
+                         align-items: center;
+                         gap: 12px;
+                         flex: 1 0 0;" onclick="setProjectToTask('${Project.id}','${Project.title}','${i}')" class="hoverbgWhite">
+                         ${Project.title}
+                     </div>`).join('')}
+             </div>`;
+            }
+        }
+        setkrToTaskDropdown()
+    }
+
+    function filterAndSortModalProject(text, i) {
+        let Projectbody = document.getElementById(`initiativesProjectdropdownbody${i}`);
+        let objectiveId = initiative[i]?.data?.objectiveId;
+        let all_Projects = projectMap.get(objectiveId) || [];
+        let filteredProjects = all_Projects.filter(Project => Project.title.toLowerCase().includes(text.toLowerCase()));
+
+        Projectbody.innerHTML = '';
+
+        if (filteredProjects.length === 0) {
+            Projectbody.innerHTML += `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;">
+                 No Project matches with ${text}
+             </div>`;
+        } else {
+            for (let Project of filteredProjects) {
+                Projectbody.innerHTML += `
+                 <div style="height: 1px;
+                     
+                     background: var(--gray-200, #EAECF0);"></div>
+                 <div style="display: flex;
+                     padding: 16px 24px;
+                     align-items: center;
+                     gap: 12px;
+                     flex: 1 0 0;" onclick="setProjectToTask('${Project.id}','${Project.title}','${i}')" class="hoverbgWhite">
+                      ${Project.title}
+                 </div>`;
+            }
+        }
+    }
+
+    function setProjectToTask(id, title, i) {
+        document.getElementById(`initiativeProject${i}`).innerHTML = `${title}`
+        initiative[i].data['projectId'] = id
+        initiative[i].data['projectTitle'] = title
+        setkrToTaskDropdown()
+        SaveTask(i)
+    }
+
+
+    function setobjectiveToTaskDropdown() {
+        let Objectivebodies = document.querySelectorAll('.initiativesObjective');
+
+        for (let i = 0; i < Objectivebodies.length; i++) {
+
+            let all_Objectives = Array.from(OKRS.values()).flat();
+
+            let Objectivebody = Objectivebodies[i];
+            Objectivebody.innerHTML = `<div style="display: flex;
+                     width: 100%;
+                     height: 44px;
+                     justify-content: center;
+                     align-items: center;
+                     border-radius: 8px 8px 0px 0px;">No Objective is created to select</div>`;
+            if (all_Objectives.length > 0) {
+                Objectivebody.innerHTML = `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 gap:12px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;">
+                 <img src="../Project icons/Search_icon.svg">
+                 <input type="text" style="border: none;width: 100%;" placeholder="Search for Objective" id="searchObjectiveInput"
+                     oninput="filterAndSortModalObjective(event.target.value, ${i})">
+             </div> 
+             <div id="initiativesObjectivedropdownbody${i}" style="max-height:200px;overflow:auto">
+                 ${all_Objectives.map(Objective => `
+                     <div style="height: 1px;
+                         
+                         background: var(--gray-200, #EAECF0);"></div>
+                     <div style="display: flex;
+                         padding: 16px 24px;
+                         align-items: center;
+                         gap: 12px;
+                         flex: 1 0 0;" onclick="setObjectiveToTask('${Objective._id}','${Objective.title}','${i}')" class="hoverbgWhite">
+                         ${Objective.title}
+                     </div>`).join('')}
+             </div>`;
+            }
+        }
+        setprojectToTaskDropdown()
+    }
+
+    function filterAndSortModalObjective(text, i) {
+        let Objectivebody = document.getElementById(`initiativesObjectivedropdownbody${i}`);
+
+        let all_Objectives = Array.from(OKRS.values()).flat();
+        let filteredObjectives = all_Objectives.filter(Objective => Objective.title.toLowerCase().includes(text.toLowerCase()));
+
+        Objectivebody.innerHTML = '';
+
+        if (filteredObjectives.length === 0) {
+            Objectivebody.innerHTML += `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;">
+                 No Objective matches with ${text}
+             </div>`;
+        } else {
+            for (let Objective of filteredObjectives) {
+                Objectivebody.innerHTML += `
+                 <div style="height: 1px;
+                     
+                     background: var(--gray-200, #EAECF0);"></div>
+                 <div style="display: flex;
+                     padding: 16px 24px;
+                     align-items: center;
+                     gap: 12px;
+                     flex: 1 0 0;" onclick="setObjectiveToTask('${Objective.id}','${Objective.title}','${i}')" class="hoverbgWhite">
+                      ${Objective.title}
+                 </div>`;
+            }
+        }
+    }
+
+    function setObjectiveToTask(id, title, i) {
+        document.getElementById(`initiativeObjective${i}`).innerHTML = `${title}`
+        initiative[i].data['ObjectiveId'] = id;
+        initiative[i].data['ObjectiveTitle'] = title;
+        setprojectToTaskDropdown()
+        SaveTask(i)
+    }
+
+    function filterAndSortKr(text) {
+        let krsbody = document.getElementById('initiativesKrdropdownbody' + initiativeindex);
+
+        let objectiveId = project.objectiveId;
+        let all_krs = krs.get(objectiveId) || [];
+        let filtered_krs = all_krs.filter((kr) => kr.title.toLowerCase().includes(text.toLowerCase()));
+
+        krsbody.innerHTML = '';
+
+        if (filtered_krs.length === 0) {
+            krsbody.innerHTML += `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;">
+                 No kr is match with ${text}
+             </div>`;
+        } else {
+
+            for (let kr of filtered_krs) {
+                krsbody.innerHTML += `
+                 <div style="height: 1px;
+                     
+                     background: var(--gray-200, #EAECF0);"></div>
+                 <div style="display: flex;
+                     padding: 16px 24px;
+                     align-items: center;
+                     gap: 12px;
+                     flex: 1 0 0;" onclick="setkrToTask('${kr._id}','${kr.title}')" class="hoverbgWhite">
+                     <input type="checkbox" id="KrCheckbox${kr._id}">
+                     ${kr.title}
+                 </div>`;
+            }
+        }
+        CheckAllSubkrsBox(initiativeindex)
+    }
+
+    function setSubkrToTask(id, title) {
+        let subkrsdata = initiative[initiativeindex].data?.subkrs || [];
+        let subkrCheckBox = document.getElementById(`SubKrCheckbox${id}-${initiativeindex}`)
+
+        if (subkrCheckBox.checked) {
+            let index = subkrsdata.findIndex((subkr) => subkr.id == id)
+            if (index == -1)
+                subkrsdata.push({ id: id, title: title })
+        }
+        else
+            subkrsdata = subkrsdata.filter((subkr) => subkr.id != id)
+        document.getElementById(`initiativeSubKR${initiativeindex}`).innerText = ''
+        for (let subkr of subkrsdata) {
+            document.getElementById(`initiativeSubKR${initiativeindex}`).innerText += subkr.title + ',';
+        }
+        if (subkrsdata.length == 0) {
+            document.getElementById(`initiativeSubKR${initiativeindex}`).innerText = 'Select Sub Key Result';
+        }
+        initiative[initiativeindex].data.subkrs = subkrsdata
+        SaveTask(initiativeindex)
+
+    }
+
+    function setkrToTask(id, title) {
+
+        let KrCheckbox = document.getElementById(`KrCheckbox${id}-${initiativeindex}`)
+
+        if (KrCheckbox.checked) {
+            let index = initiative[initiativeindex].data.krs.findIndex((kr) => kr.id == id)
+            if (index == -1)
+                initiative[initiativeindex].data.krs.push({ id: id, title: title })
+        }
+        else {
+            let krsdata = initiative[initiativeindex].data.krs;
+            krsdata = krsdata.filter((kr) => kr.id != id)
+            initiative[initiativeindex].data.krs = krsdata
+        }
+        document.getElementById(`initiativeKR${initiativeindex}`).innerText = ''
+
+        for (let kr of initiative[initiativeindex].data.krs) {
+
+            document.getElementById(`initiativeKR${initiativeindex}`).innerText += kr.title + ',';
+        }
+        if (initiative[initiativeindex].data.krs.length == 0) {
+            document.getElementById(`initiativeKR${initiativeindex}`).innerText = 'Select Key Result';
+        }
+
+        SaveTask(initiativeindex)
+        setSubkrToTaskDropdown()
+        CheckAllkrsBox(initiativeindex)
+    }
+
+    function setownerToTaskDropdown() {
+        let ownerbodies = document.querySelectorAll('.initiativesOwner');
+
+        for (let i = 0; i < ownerbodies.length; i++) {
+            let ownerbody = ownerbodies[i];
+            ownerbody.innerHTML = '';
+
+            ownerbody.innerHTML += `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 gap:12px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;" onclick="changeinitiativeIndex(${i})">
+                 <img src="../Project icons/Search_icon.svg">
+                 <input type="text" style="border: none;width: 100%;" placeholder="Search for Owner" id="searchownerInput"
+                     oninput="filterAndSortModalOwner(event.target.value, ${i})">
+             </div> 
+             <div id="initiativesOwnerdropdownbody${i}" style="max-height:200px;overflow:auto">
+                 ${currentemployeeList.map(owner => `
+                     <div style="height: 1px;
+                         
+                         background: var(--gray-200, #EAECF0);"></div>
+                     <div style="display: flex;
+                         padding: 16px 24px;
+                         align-items: center;
+                         gap: 12px;
+                         flex: 1 0 0;" onclick="setOwnerToTask('${owner._id}','${owner.displayName}','${owner.image}')"  class="hoverbgWhite">
+                         <img src="${owner.image}" style="width:24px;height:24px;border-radius:200px"> ${owner.displayName}
+                     </div>`).join('')}
+             </div>`;
+        }
+    }
+
+    function filterAndSortModalOwner(text, index) {
+        let ownerbody = document.getElementById(`initiativesOwnerdropdownbody${index}`);
+
+        let filteredOwners = currentemployeeList.filter(owner => owner.displayName.toLowerCase().includes(text.toLowerCase()));
+
+        ownerbody.innerHTML = '';
+
+        if (filteredOwners.length === 0) {
+            ownerbody.innerHTML += `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;">
+                 No owner matches with ${text}
+             </div>`;
+        } else {
+            for (let owner of filteredOwners) {
+                ownerbody.innerHTML += `
+                 <div style="height: 1px;
+                     
+                     background: var(--gray-200, #EAECF0);"></div>
+                 <div style="display: flex;
+                     padding: 16px 24px;
+                     align-items: center;
+                     gap: 12px;
+                     flex: 1 0 0;
+                      " onclick="setOwnerToTask('${owner._id}','${owner.displayName}','${owner.image}', ${index})" class="hoverbgWhite">
+                     <img src="${owner.image}" style="width:24px;height:24px;border-radius:200px"> ${owner.displayName}
+                 </div>`;
+            }
+        }
+    }
+
+    function setOwnerToTask(id, name, image) {
+        document.getElementById(`initiativeOwner${initiativeindex}`).innerHTML = `<img src="${image}" style="width:24px;height:24px;border-radius:200px"> ${name}`
+        initiative[initiativeindex].data['Owner'] = { id: id, name: name, image: image }
+        SaveTask(initiativeindex)
+    }
+    function setownerToSubTaskDropdown() {
+        let ownerbodies = document.querySelectorAll('.subinitiativesOwner');
+
+        for (let i = 0; i < ownerbodies.length; i++) {
+            let ownerbody = ownerbodies[i];
+            ownerbody.innerHTML = '';
+
+            ownerbody.innerHTML += `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 gap:12px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;">
+                 <img src="../Project icons/Search_icon.svg">
+                 <input type="text" style="border: none;width: 100%;" placeholder="Search for Owner" id="searchownerInput"
+                     oninput="filterAndSortModalsubOwner(event.target.value, ${i})">
+             </div> 
+             <div id="subinitiativesOwnerdropdownbody${i}" style="max-height:200px;overflow:auto">
+                 ${currentemployeeList.map(owner => `
+                     <div style="height: 1px;
+                         
+                         background: var(--gray-200, #EAECF0);"></div>
+                     <div style="display: flex;
+                         padding: 16px 24px;
+                         align-items: center;
+                         gap: 12px;
+                         flex: 1 0 0;" class="hoverbgWhite" onclick="setOwnerToSubTask('${owner._id}','${owner.displayName}','${owner.image}', ${i})">
+                         <img src="${owner.image}" style="width:24px;height:24px;border-radius:200px"> ${owner.displayName}
+                     </div>`).join('')}
+             </div>`;
+        }
+    }
+
+    function filterAndSortModalsubOwner(text, index) {
+        let ownerbody = document.getElementById(`subinitiativesOwnerdropdownbody${index}`);
+
+        let filteredOwners = currentemployeeList.filter(owner => owner.displayName.toLowerCase().includes(text.toLowerCase()));
+
+        ownerbody.innerHTML = '';
+
+        if (filteredOwners.length === 0) {
+            ownerbody.innerHTML += `
+             <div style="display: flex;
+                 width: 100%;
+                 height: 44px;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 8px 8px 0px 0px;">
+                 No owner matches with ${text}
+             </div>`;
+        } else {
+            for (let owner of filteredOwners) {
+                ownerbody.innerHTML += `
+                 <div style="height: 1px;
+                     
+                     background: var(--gray-200, #EAECF0);"></div>
+                 <div style="display: flex;
+                     padding: 16px 24px;
+                     align-items: center;
+                     gap: 12px;
+                     flex: 1 0 0;" class="hoverbgWhite" onclick="setOwnerToSubTask('${owner._id}','${owner.displayName}','${owner.image}', ${index})">
+                     <img src="${owner.image}" style="width:24px;height:24px;border-radius:200px"> ${owner.displayName}
+                 </div>`;
+            }
+        }
+    }
+
+    function setOwnerToSubTask(id, name, image, subtaskindex) {
+        document.getElementById(`initiativeOwner${initiativeindex}-${subtaskindex}`).innerHTML = `<img src="${image}" style="width:24px;height:24px;border-radius:200px"> ${name}`
+        subTasks[initiativeindex][subtaskindex].data['Owner'] = { id: id, name: name, image: image }
+        SaveSubTask(initiativeindex, subtaskindex)
+    }
+
+
+    function setStatusToTask(status, type, index) {
+        let statusbody = document.getElementById('initiative' + type + initiativeindex)
+        type = type.trim()
+
+        let statusbodydropdown = document.getElementById('initiative' + type + initiativeindex + 'dropdown')
+        let selectedChild = statusbodydropdown.children[index];
+        statusbody.innerHTML = selectedChild.innerHTML;
+        if (type == 'Status' && initiative[initiativeindex].data[type].label != status && (initiative[initiativeindex].data[type].label == 'In Progress' || status == 'In Progress')) {
+            if (status == 'In Progress') {
+                initiative[initiativeindex].InProgressStartedTime = new Date();
+            }
+            else {
+
+                initiative[initiativeindex].PervInProgressTime += new Date() - (initiative[initiativeindex].InProgressStartedTime ? new Date(initiative[initiativeindex].InProgressStartedTime) : new Date());
+                initiative[initiativeindex].InProgressStartedTime = null;
+            }
+        }
+        let mainitem = selectedChild.querySelector('.Status_hold').style;
+        initiative[initiativeindex].data[type] = { label: status, color: mainitem?.color, bgcolor: mainitem?.background };
+        SaveTask(initiativeindex)
+    }
+
+
+    // link and file upload for tasks 
+
+
+    function changeinitiativedata(index, type, value) {
+     
+        initiative[index].data[type] = value;
+        SaveTask(index)
+        let inputtype = "";
+        for (let header of tableHeader) {
+            if (header.usedName == type) {
+                inputtype = header.type;
+                break;
+            }
+        }
+        if (inputtype == 'date') {
+            document.getElementById(type + 'Task' + initiativeindex).textContent = formatDate(value)
+        }
+    }
+    function UpdateTaskFilebody() {
+
+        let dropdownBody = document.getElementById('initiativeTaskFile' + initiativeindex + 'dropdown')
+        let files = initiative[initiativeindex]?.data?.files || [];
+
+        let TaskfileBody = document.getElementById('Task-FileBody-' + initiativeindex)
+        if (!TaskfileBody)
+            return
+        TaskfileBody.innerText = files.length;
+        dropdownBody.innerHTML = ''
+        for (let file of files) {
+            let id = file.id;
+            dropdownBody.innerHTML += `
+     <div style="display: flex;
+                 padding: 12px 16px;
+                 align-items: center;
+                 gap: 12px;" onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='TaskFile-${id}' class="hoverbgWhite">
+         <img src="../Performance dashboard Icons/Document Added.svg">
+         <a href="${file.url}" target="_blank" download style="display: flex;
+                   flex-direction: column;
+                   align-items: flex-start;
+                   gap: 4px;
+                   flex: 1 0 0;">
+           <div style="
+                     color: var(--content-on-light-primary, #181818);
+                     font-size: 16px;
+                     max-width:150px;
+                     overflow: hidden;
+                     text-overflow: ellipsis;
+                     font-style: normal;
+                     font-weight: 600;
+                     line-height: 17.352px;">
+             ${file.title}
+           </div>
+           <div style="display: -webkit-box;
+                     -webkit-box-orient: vertical;
+                     -webkit-line-clamp: 1;
+                     
+                     overflow: hidden;
+                     max-width:150px;
+                     overflow: hidden;
+                     text-overflow: ellipsis;
+                     color: var(--content-on-light-secondary, #898989);
+                     text-overflow: ellipsis;
+                     font-size: 12px;
+                     font-style: normal;
+                     font-weight: 500;
+                     line-height: 17.352px;">
+             ${file.url}
+           </div>
+         </a>
+         <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveTaskFile("${id}")'>
+       </div>
+     `
+        }
+    }
+
+    function UpdateTaskLinkbody() {
+        let dropdownBody = document.getElementById('initiativeTaskLink' + initiativeindex + 'dropdown')
+        let links = initiative[initiativeindex]?.data?.links || [];
+        let TasklinksBody = document.getElementById('Task-LinkBody-' + initiativeindex)
+        if (!TasklinksBody)
+            return;
+        TasklinksBody.innerText = links.length;
+        dropdownBody.innerHTML = ''
+        for (let link of links) {
+            let id = link.id;
+
+            dropdownBody.innerHTML += `
+       <div style="display: flex;
+                 padding: 12px 16px;
+                 align-items: center;
+                 gap: 12px;
+                 flex: 1 0 0;
+                " onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='TaskLink-${id}' class="hoverbgWhite">
+         <img src="../Performance dashboard Icons/Link Added.svg">
+         <a href="${link.url}" target="_blank" style="display: flex;
+                   flex-direction: column;
+                   align-items: flex-start;
+                   gap: 4px;
+                   flex: 1 0 0;">
+           <div style="
+                     color: var(--content-on-light-primary, #181818);
+                     font-size: 16px;
+                     font-style: normal;
+                     max-width:150px;
+                     overflow: hidden;
+                     text-overflow: ellipsis;
+                     font-weight: 600;
+                     line-height: 17.352px;">
+             ${link.title}
+           </div>
+           <div style="display: -webkit-box;
+                     -webkit-box-orient: vertical;
+                     -webkit-line-clamp: 1;
+                     
+                     overflow: hidden;
+                     max-width:150px;
+                     overflow: hidden;
+                     text-overflow: ellipsis;
+                     color: var(--content-on-light-secondary, #898989);
+                     text-overflow: ellipsis;
+                     font-size: 12px;
+                     font-style: normal;
+                     font-weight: 500;
+                     line-height: 17.352px;">
+             ${link.url}
+           </div>
+         </a>
+         <img src='../Project icons/Edit.svg' style="display:none" class='Icons-${id}' onclick='EditTaskLink("${id}")' data-target='#AddTaskLink' data-toggle='modal'>
+         <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveTaskLink("${id}")'>
+       </div>`;
+        }
+    }
+    function AddTaskLink() {
+        let id = generateRandomId();
+        let link = document.getElementById('Tasklink-link').value
+        let title = document.getElementById('Tasklink-title').value
+        initiative[initiativeindex]?.data?.links.push({ id: id, url: link, title: title });
+        UpdateTaskLinkbody();
+        SaveTask(initiativeindex)
+    }
+
+    function AddTaskFile(title, url) {
+        let id = generateRandomId();
+        initiative[initiativeindex]?.data?.files.push({ id: id, title: title, url: url });
+        UpdateTaskFilebody();
+        SaveTask(initiativeindex)
+    }
+
+    function RemoveTaskFile(fileid) {
+        let id = `TaskFile-${fileid}`
+        const body = document.getElementById(id);
+        body.remove();
+
+        const index = initiative[initiativeindex]?.data?.files.findIndex((file) => file.id === fileid);
+        if (index != -1)
+            initiative[initiativeindex]?.data?.files.splice(index, 1);
+        let TaskfilesBody = document.getElementById('Task-FileBody-' + initiativeindex)
+        TaskfilesBody.innerText = initiative[initiativeindex]?.data?.files.length;
+        SaveTask(initiativeindex)
+    }
+
+    function RemoveTaskLink(linkid) {
+        if (!initiativeindex) {
+            return;
+        }
+        let id = `TaskLink-${linkid}`
+        const body = document.getElementById(id);
+        body.remove();
+        const index = initiative[initiativeindex]?.data?.links.findIndex((link) => link.id === linkid);
+        if (index != -1)
+            initiative[initiativeindex]?.data?.links.splice(index, 1);
+        let TasklinksBody = document.getElementById('Task-LinkBody-' + initiativeindex)
+        TasklinksBody.innerText = initiative[initiativeindex]?.data?.links.length;
+        SaveTask(initiativeindex)
+    }
+
+    function EditTaskLink(linkid) {
+        if (!initiativeindex) {
+            return;
+        }
+        const index = initiative[initiativeindex]?.data?.links.findIndex((link) => link.id === linkid);
+        let link = initiative[initiativeindex]?.data?.links[index];
+        RemoveTaskLink(link.id);
+        document.getElementById('Tasklink-title').value = link.title;
+        document.getElementById('Tasklink-link').value = link.url;
+    }
+
+
+    async function handleTaskFileSelect(event) {
+        try {
+            let data = event.target.files[0];
+            let filelink = await handleFileUpload(data);
+            let title = data.name;
+            let url = filelink;
+            AddTaskFile(title, url);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+
+    // link and file upload for subtasks 
+
+    function UpdatesubTaskFilebody(type) {
+
+        let dropdownBody = document.getElementById('initiativesubTaskFile' + initiativeindex + '-' + subTaskindex + 'dropdown')
+        let files = subTasks[initiativeindex][subTaskindex]?.data?.files || [];
+
+        let TaskfileBody = document.getElementById('subTask-FileBody-' + initiativeindex + '-' + subTaskindex)
+        TaskfileBody.innerText = files.length;
+        dropdownBody.innerHTML = ''
+        for (let file of files) {
+            let id = file.id;
+            dropdownBody.innerHTML += `
+<div style="display: flex;
+          padding: 12px 16px;
+          align-items: center;
+          gap: 12px;" onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='subTaskFile-${id}' class="hoverbgWhite">
+  <img src="../Performance dashboard Icons/Document Added.svg">
+  <a href="${file.url}" target="_blank" download style="display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            flex: 1 0 0;">
+    <div style="
+              color: var(--content-on-light-primary, #181818);
+              font-size: 16px;
+              max-width:150px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              font-style: normal;
+              font-weight: 600;
+              line-height: 17.352px;">
+      ${file.title}
+    </div>
+    <div style="display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
+              
+              overflow: hidden;
+              max-width:150px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              color: var(--content-on-light-secondary, #898989);
+              text-overflow: ellipsis;
+              font-size: 12px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: 17.352px;">
+      ${file.url}
+    </div>
+  </a>
+  ${type=='manager'&&`<img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemovesubTaskFile("${id}")'>`}
+</div>
+`
+        }
+    }
+
+    function UpdatesubTaskLinkbody(type) {
+        let dropdownBody = document.getElementById('initiativesubTaskLink' + initiativeindex + '-' + subTaskindex + 'dropdown')
+        let links = subTasks[initiativeindex][subTaskindex]?.data?.links || [];
+        let TasklinksBody = document.getElementById('subTask-LinkBody-' + initiativeindex + '-' + subTaskindex)
+        TasklinksBody.innerText = links.length;
+        dropdownBody.innerHTML = ''
+        for (let link of links) {
+            let id = link.id;
+
+            dropdownBody.innerHTML += `
+<div style="display: flex;
+          padding: 12px 16px;
+          align-items: center;
+          gap: 12px;
+          flex: 1 0 0;
+         " onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='subTaskLink-${id}' class="hoverbgWhite">
+  <img src="../Performance dashboard Icons/Link Added.svg">
+  <a href="${link.url}" target="_blank" style="display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            flex: 1 0 0;">
+    <div style="
+              color: var(--content-on-light-primary, #181818);
+              font-size: 16px;
+              font-style: normal;
+              max-width:150px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              font-weight: 600;
+              line-height: 17.352px;">
+      ${link.title}
+    </div>
+    <div style="display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 1;
+              
+              overflow: hidden;
+              max-width:150px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              color: var(--content-on-light-secondary, #898989);
+              text-overflow: ellipsis;
+              font-size: 12px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: 17.352px;">
+      ${link.url}
+    </div>
+  </a>
+  ${type=='manager'&&`<img src='../Project icons/Edit.svg' style="display:none" class='Icons-${id}' onclick='EditsubTaskLink("${id}")' data-target='#AddsubTaskLink' data-toggle='modal'>
+  <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemovesubTaskLink("${id}")'>`}
+</div>`;
+        }
+    }
+    function SetBgColor(color, headerusedname, index, headerIndex) {
+        for (let i = 0; i < initiative.length; i++) {
+            let selectedropdown = document.getElementById('initiative' + headerusedname + i + 'dropdown')
+            let selectedChild = selectedropdown.children[index];
+            let mainitem = selectedChild.children[0].querySelector('.Status_hold').style;
+            mainitem.background = color;
+        }
+        tableHeader[headerIndex].labels[index].bgcolor = color;
+        CreateNewHeader(tableHeader[headerIndex])
+    }
+    function AddsubTaskLink() {
+        let id = generateRandomId();
+        let link = document.getElementById('subTasklink-link').value
+        let title = document.getElementById('subTasklink-title').value
+        subTasks[initiativeindex][subTaskindex]?.data?.links.push({ id: id, url: link, title: title });
+        UpdatesubTaskLinkbody('manager');
+        SaveSubTask(initiativeindex, subTaskindex)
+    }
+
+    function AddsubTaskFile(title, url) {
+        let id = generateRandomId();
+        subTasks[initiativeindex][subTaskindex]?.data?.files.push({ id: id, title: title, url: url });
+        UpdatesubTaskFilebody('manager');
+        SaveSubTask(initiativeindex, subTaskindex)
+    }
+
+    function RemovesubTaskFile(fileid) {
+        let id = `subTaskFile-${fileid}`
+        const body = document.getElementById(id);
+        body.remove();
+
+        const index = subTasks[initiativeindex][subTaskindex]?.data?.files.findIndex((file) => file.id === fileid);
+        if (index != -1)
+            subTasks[initiativeindex][subTaskindex]?.data?.files.splice(index, 1);
+        let TaskfilesBody = document.getElementById('subTask-FileBody-' + initiativeindex + '-' + subTaskindex)
+        TaskfilesBody.innerText = subTasks[initiativeindex][subTaskindex]?.data?.files.length;
+        SaveSubTask(initiativeindex, subTaskindex)
+    }
+
+    function RemovesubTaskLink(linkid) {
+        if (!initiativeindex) {
+            return;
+        }
+        let id = `subTaskLink-${linkid}`
+        const body = document.getElementById(id);
+        body.remove();
+        const index = subTasks[initiativeindex][subTaskindex]?.data?.links.findIndex((link) => link.id === linkid);
+        if (index != -1)
+            subTasks[initiativeindex][subTaskindex]?.data?.links.splice(index, 1);
+        let TasklinksBody = document.getElementById('subTask-LinkBody-' + initiativeindex + '-' + subTaskindex)
+        TasklinksBody.innerText = subTasks[initiativeindex][subTaskindex]?.data?.links.length;
+        SaveSubTask(initiativeindex, subTaskindex)
+    }
+
+    function EditsubTaskLink(linkid) {
+        if (!initiativeindex) {
+            return;
+        }
+        const index = subTasks[initiativeindex][subTaskindex]?.data?.links.findIndex((link) => link.id === linkid);
+        let link = subTasks[initiativeindex][subTaskindex]?.data?.links[index];
+        RemovesubTaskLink(link.id);
+        document.getElementById('subTasklink-title').value = link.title;
+        document.getElementById('subTasklink-link').value = link.url;
+    }
+
+
+    async function handlesubTaskFileSelect(event) {
+        try {
+            let data = event.target.files[0];
+            let filelink = await handleFileUpload(data);
+            let title = data.name;
+            let url = filelink;
+            AddsubTaskFile(title, url);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+
+
+    function SetTeamImages(teams) {
+        teams = GiveUniqueEmployees(teams);
+        let teamsImage = document.getElementById('TeamsMembers')
+        let innerhtml = '';
+
+        for (let employeeId of teams) {
+
+            innerhtml += `<img style="display: flex;
+         width: 32px;
+         height: 32px;
+         margin-left: -10px;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         flex-shrink: 0;
+         border-radius: 200px;
+         border: 1.5px solid var(--White, #FFF)" src="${EmployeeMap.get(employeeId).image}">`
+        }
+        teamsImage.innerHTML = innerhtml;
+    }
+
+
+
+
+
+
+
+
+
+
+    function SelectTeams(employees, name, id) {
+        for (let i = 0; i < objective_teams.length; i++) {
+            if (objective_teams[i].id == id)
+                return;
+        }
+        document.getElementById(
+            "TeamSelected"
+        ).innerHTML += `<div class="teamBox" id='Team${id}'>${name} <img src="../Performance dashboard Icons/TeamCross.svg" onclick="RemoveFromTaskTeam('${id}')"></div>`;
+        objective_teams.push({ title: name, employees: employees, id: id });
+        MakeButtonActive()
+    }
+
+    function RemoveFromTaskTeam(id) {
+        for (let i = 0; i < objective_teams.length; i++) {
+            if (objective_teams[i].id == id) {
+                objective_teams.splice(i, 1);
+                break;
+            }
+        }
+        document.getElementById(`Team${id}`).remove();
+        MakeButtonActive();
+    }
+
+    function SearchTeams(value) {
+
+        let body = document.getElementById("DropDownTeams");
+        let innerHTML = "";
+
+        for (let team of teams) {
+            if (team.title.toLowerCase().includes(value.toLowerCase())) {
+                innerHTML += `<div style="display: flex;
+                 padding: 8px;
+                 align-items: center;
+                 gap: 10px;
+                 " onclick="SelectTeams('${team.employees}','${team.title}','${team._id}')" class="hoverbgWhite">
+                       <img src="../Performance dashboard Icons/teams_icon.svg">
+                       <div style="display: flex;
+                 flex-direction: column;
+                 align-items: flex-start;">
+                         <div style="color: var(--gray-700, #344054);
+                 
+                 font-size: 14px;
+                 font-style: normal;
+                 font-weight: 600;
+                 line-height: 20px; /* 142.857% */">${team.title}</div>
+                         <div style="display: -webkit-box;
+                  width: 85px;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 1;
+                  overflow: hidden;
+                  color: var(--text-content-secondary, #898989);
+                  text-overflow: ellipsis;
+                  
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: normal;
+                                      ">`;
+
+                for (let employeeId of team.employees) {
+                    innerHTML += `${EmployeeMap.get(employeeId)},`;
+                }
+                innerHTML += ` </div>
+                       </div>
+                     </div>`;
+            }
+        }
+        for (let employee of currentemployeeList) {
+            if (employee.displayName.toLowerCase().includes(value.toLowerCase())) {
+                innerHTML += `<div style="display: flex;
+                   padding: 8px;
+                   cursor: pointer;
+                   align-items: center;
+                   gap: 10px;
+                   " onclick="SelectTeams(['${employee._id}'],'${employee.displayName}','${employee._id}')" class="hoverbgWhite">
+                       <img style="display: flex;
+                   width: 32px;
+                   height: 32px;
+                   flex-direction: column;
+                   justify-content: center;
+                   align-items: center;
+                   border-radius: 200px;" src="${employee.image}">
+                       <div style="display: flex;
+                   flex-direction: column;
+                   white-space: nowrap;
+                   align-items: flex-start;">
+                         <div style="color: var(--gray-700, #344054);
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 20px; /* 142.857% */
+                  ">${employee.displayName}</div>
+                         <div style="color: var(--gray-500, #667085);
+                  
+                  font-size: 12px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: 18px; /* 150% */">${employee.team}</div>
+                       </div>
+                     </div>
+                     <div style="height: 1px;
+                  
+                  background: var(--gray-200, #EAECF0)"></div>`;
+            }
+        }
+        body.innerHTML = innerHTML;
+    }
+
+    function SetkrTeamImages(Id, teams) {
+        teams = GiveUniqueEmployees(teams)
+        let teamsImage = document.getElementById(Id)
+        let innerhtml = '';
+        for (let employeeId of teams) {
+            innerhtml += `<img style="display: flex;
+         width: 32px;
+         height: 32px;
+         margin-left: -10px;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         flex-shrink: 0;
+         border-radius: 200px;
+         border: 1.5px solid var(--White, #FFF)" src="${EmployeeMap.get(employeeId).image}">`
+        }
+        if (teams.length == 0)
+            innerhtml = `<div style="display: flex;
+   width: 32px;
+   height: 32px;
+   padding: 6px;
+   justify-content: center;
+   align-items: center;
+   flex-shrink: 0;
+   border-radius: 200px;
+   background: var(--primary-50, #F9F5FF);"><img src="../Performance dashboard Icons/Empty_User.svg"></div>Not Assigned yet`
+        teamsImage.innerHTML = innerhtml;
+    }
+
+
+
+
+    var initiativeindex = ''
+    function changeinitiativeIndex(i) {
+
+        initiativeindex = parseFloat(i);
+    }
+    let nullid = ''
+    function OpenDateInput(e, id) {
+        document.getElementById(id).showPicker();
+    }
+
+
+
+    // link and file upload 
+
+    function OpenFileInput(id) {
+      
+        document.getElementById(id).click();
+    }
+
+    function generateRandomId() {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+
+
+    function showIcons(classname) {
+        const box = document.querySelectorAll(classname);
+        box.forEach((element) => {
+            element.style.display = 'flex';
+        });
+    }
+
+    function removeIcons(classname) {
+        const box = document.querySelectorAll(classname);
+        box.forEach((element) => {
+            element.style.display = 'none';
+        });
+    }
+
+
+    async function handleProjectFileSelect(event) {
+        try {
+            let data = event.target.files[0];
+            let filelink = await handleFileUpload(data);
+            file.title = data.name;
+            file.url = filelink;
+            AddProjectFile();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+
+
+
+    async function handleFileUpload(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+            const uploadType = "EmployeeProject";
+            const urlRes = await fetch(
+                `/aws/get/preSignedUrl?fileName=${file.name}t&contentType=${file.type}&uploadType=${uploadType}`, {
+                method: "GET",
+            }
+            );
+            const urlData = await urlRes.json();
+            const response = await fetch(urlData.url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": file.type,
+                },
+                body: file,
+            });
+            let url = `https://dvfkpf9qxfl09.cloudfront.net/${urlData.key}`;
+
+            return url;
+        } catch (error) {
+            console.error('Error during file upload:', error);
+        }
+    }
+
+    function selectFile(id) {
+        document.getElementById(id).click();
+    }
+
+
+
+    function GiveUniqueEmployees(employeesList) {
+        let uniqueEmployees = [];
+        let teamEmployeesMap = new Map();
+        for (let team of employeesList) {
+            if (!team.employees) {
+                if (!teamEmployeesMap.has(team._id.toString())) {
+                    teamEmployeesMap.set(team._id.toString(), team._id.toString());
+                    uniqueEmployees.push(team._id.toString());
+                }
+            }
+            else {
+                for (let employeeid of team.employees) {
+                    if (!teamEmployeesMap.has(employeeid.toString())) {
+                        teamEmployeesMap.set(employeeid.toString(), employeeid);
+                        uniqueEmployees.push(employeeid);
+                    }
+                }
+            }
+        }
+        return uniqueEmployees;
+    }
+
+    async function SaveTask(initiativeindex) {
+        
+        let response = await fetch('/create/task', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(initiative[initiativeindex])
+        })
+        response = await response.json();
+        initiative[initiativeindex]._id = response._id;
+
+
+    }
+
+    async function SaveSubTask(initiativeindex, subTaskindex) {
+        let response = await fetch('/create/subtask', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(subTasks[initiativeindex][subTaskindex])
+        })
+        response = await response.json();
+        subTasks[initiativeindex][subTaskindex]._id = response._id;
+
+
+    }
+
+</script>
+
+<!--Resize task col  width -->
+<script>
+
+    let resizing = false;
+    let startOffset = 0;
+    let draggedColumn = null;
+
+    function MakeDragggable() {
+        for (let i = 0; i < tableHeader.length; i++) {
+            document.getElementById(`TaskMainTableManager${i}`).draggable = true;
+        }
+    }
+    function RemoveDragggable() {
+        for (let i = 0; i < tableHeader.length; i++) {
+            document.getElementById(`TaskMainTableManager${i}`).draggable = false;
+        }
+    }
+
+    const handleMouseDown = (event, column, callback) => {
+        if (!column) return;
+        column.querySelector('.HeaderBorder').style.background = 'rgb(75, 78, 105)';
+        callback();
+
+    };
+
+    const handleMouseMove = (event) => {
+        if (resizing && draggedColumn) {
+            const columnIndex = Array.from(draggedColumn.parentNode.children).indexOf(draggedColumn);
+            if (columnIndex > 0) {
+                const newWidth = startOffset + event.pageX;
+                draggedColumn.style.width = `${newWidth}px`;
+
+
+                localStorage.setItem(`ProjectTaskPageTasks<%=managerVisitingId||user._id%>-${tableHeader[columnIndex - 1]._id}`, JSON.stringify(`${newWidth}px`));
+                const Tasks = document.querySelectorAll('.Tasks');
+                tablecolstyles[columnIndex - 1] = `width:${newWidth}px;`
+                for (let i = 0; i < Tasks.length; i++) {
+                    const cell = Tasks[i].children[columnIndex];
+                    cell.style.width = `${newWidth}px`;
+                }
+            }
+        }
+    };
+
+    const handleMouseUp = () => {
+        resizing = false;
+        draggedColumn = null;
+    };
+
+    const makeColumnResizable = (columnId, callback) => {
+        const column = document.getElementById(columnId);
+        column?.addEventListener('mousedown', (event) => handleMouseDown(event, column.parentNode, callback));
+    };
+
+
+    for (let i = 0; i < tableHeader.length; i++) {
+        makeColumnResizable(`TaskMainTableManagerDiv${i}`, MakeDragggable);
+    }
+
+
+    function SetLocalStorageStyleToTableColums() {
+        for (let i = 0; i < tableHeader.length; i++) {
+            tablecolstyles.push(tableHeader[i].style)
+            let Item = localStorage.getItem(`ProjectTaskPageTasks<%=managerVisitingId ||user._id%>-${tableHeader[i]._id}`);
+            if (Item) {
+                Item = JSON.parse(Item);
+
+                tablecolstyles[i] += `;width:${Item};`;
+                const Tasks = document.querySelectorAll('.Tasks');
+                const TasksHeader = document.querySelectorAll('.TasksHeader');
+                if (TasksHeader.length > 0) {
+                    TasksHeader[0].children[i + 1].style.width = Item;
+
+                    for (let j = 0; j < Tasks?.length; j++) {
+                        const cell = Tasks[j].children[i + 1];
+                        if(cell)
+                        cell.style.width = Item;
+                    }
+                }
+            }
+
+        }
+    }
+
+    const handleMouseMoveCheck = (event) => {
+        const subTaskColumns = document.querySelectorAll('.subTask'); // Use querySelectorAll to get all subtask columns
+
+        if (isMouseOverColumn(event, subTaskColumns)) {
+            handleSubTaskMouseMove(event);
+        } else {
+            handleMouseMove(event);
+        }
+    };
+
+    const isMouseOverColumn = (event, columns) => {
+
+        return Array.from(columns).some((column) => {
+            const columnRect = column.getBoundingClientRect();
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            return (
+                mouseX >= columnRect.left &&
+                mouseX <= columnRect.right &&
+                mouseY >= columnRect.top &&
+                mouseY <= columnRect.bottom
+            );
+        });
+    };
+
+
+    document.addEventListener('mousemove', handleMouseMoveCheck);
+    document.addEventListener('mouseup', handleMouseUp);
+
+</script>
+
+<!-- drag and drop for col of tables task col-->
+
+<script>
+    var dragCol = null;
+    function handleDragStart(e) {
+        dragCol = this;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.outerHTML);
+        this.classList.add('drag-over');
+    }
+    function handleDragOver(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        e.dataTransfer.dropEffect = 'move';
+        return false;
+    }
+
+    function handleDrop(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+        document.querySelectorAll('.TasksHeader th').forEach(col => col.classList.remove('drag-over'));
+        document.querySelectorAll('.TasksHeader th').forEach(col => col.classList.remove('drag-over-cell'));
+
+
+        if (dragCol != this) {
+            var sourceIndex = Array.from(dragCol.parentNode.children).indexOf(dragCol);
+            var targetIndex = Array.from(this.parentNode.children).indexOf(this);
+            var table = document.getElementById('TaskTable');
+            if(sourceIndex==-1 || targetIndex==-1)
+            return ;
+             
+            ChangeOrder(sourceIndex, targetIndex)
+            SetAllInitiatives();
+            SetTaskHeaders();
+        }
+        return false;
+    }
+
+    function handleDragEnter(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        this.classList.add('drag-over-cell');
+
+        return false;
+    }
+
+    function handleDragLeave(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        this.classList.remove('drag-over-cell');
+    }
+
+    function AddDragDropResize() {
+        const table = document.querySelector('table .TasksHeader');
+        const headers = table?.querySelectorAll('th');
+        if (headers?.length > 0) {
+            [].forEach.call(headers, function (col) {
+                col.addEventListener('dragstart', handleDragStart, false);
+                col.addEventListener('dragover', handleDragOver, false);
+                col.addEventListener('drop', handleDrop, false);
+                col.addEventListener('dragenter', handleDragEnter, false);
+                col.addEventListener('dragleave', handleDragLeave, false);
+            });
+        }
+        table.querySelectorAll('.HeaderBorder').forEach(col => {
+            col.addEventListener('mouseover', (event) => {
+                let column = col.parentNode;
+                col.style.background = '#48bf84';
+                column.style.cursor = 'ew-resize';
+            });
+
+            col.addEventListener('mouseout', (event) => {
+                let column = col.parentNode;
+                col.style.background = 'rgb(75, 78, 105)';
+                column.style.cursor = 'move';
+            });
+            col.addEventListener('mousedown', (event) => {
+                let column = col.parentNode;
+                RemoveDragggable();
+                column.querySelector('.HeaderBorder').style.background = '#48bf84';
+                column.style.userSelect = 'none';
+                column.style.cursor = 'ew-resize';
+                resizing = true;
+                startOffset = column.offsetWidth - event.pageX;
+                draggedColumn = column;
+            });
+        });
+    }
+
+    async function ChangeOrder(sourceIndex, targetIndex) {
+    try {
+        sourceIndex -= 1; // Adjusting for 0-based indexing
+        targetIndex -= 1; // Adjusting for 0-based indexing
+       console.log(sourceIndex,targetIndex)
+        // Remove the element at sourceIndex and store it in a variable
+        let removedElement = tableHeader.splice(sourceIndex, 1)[0];
+        let removedCol=tablecolstyles.splice(sourceIndex, 1)[0];
+        // Insert the removed element at targetIndex
+        tableHeader.splice(targetIndex, 0, removedElement);
+        tablecolstyles.splice(targetIndex, 0, removedCol);
+        // Update the srNo property for all elements in tableHeader
+        tableHeader.forEach((item, index) => {
+            item.srNo = index;
+        });
+
+        let headerData=[];
+        tableHeader.forEach((header)=>{
+            headerData.push({id:header._id,srNo:header.srNo});
+        })
+        // Send the updated tableHeader to the server
+        let response = await fetch('/update/tableHeader', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(headerData)
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+    AddDragDropResize()
+
+
+</script>
+
+<!-- drag and drop for row of tables tasks-->
+<script>
+     dragCol = null;
+    
+   // tr means task row 
+
+    function handleTRDrop(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+        document.querySelectorAll('.Tasks').forEach(col => col.classList.remove('drag-over'));
+        document.querySelectorAll('.Tasks').forEach(col => col.classList.remove('drag-over-cell'));
+
+
+        if (dragCol != this) {
+            var sourceIndex = Array.from(dragCol.parentNode.children).indexOf(dragCol);
+            var targetIndex = Array.from(this.parentNode.children).indexOf(this);
+            var table = document.getElementById('TaskTable');
+            if(sourceIndex==-1 || targetIndex==-1)
+            return ;
+
+            
+            var rows = document.querySelectorAll('.Tasks');
+            ChangeTROrder(sourceIndex, targetIndex)
+           SetAllInitiatives();
+        }
+        return false;
+    }
+
+    function AddDragDropTaskRow() {
+        const rows = document.querySelectorAll('table .Tasks');
+      
+        if (rows?.length > 0) {
+            [].forEach.call(rows, function (row) {
+                row.addEventListener('dragstart', handleDragStart, false);
+                row.addEventListener('dragover', handleDragOver, false);
+                row.addEventListener('drop', handleTRDrop, false);
+                row.addEventListener('dragenter', handleDragEnter, false);
+                row.addEventListener('dragleave', handleDragLeave, false);
+            });
+           rows.forEach((row)=>{
+            row.addEventListener('mouseover',(event) => {
+                row.style.cursor = 'move';
+            })
+        });
+        }
+    }
+   
+    AddDragDropTaskRow()
+    async function ChangeTROrder(sourceIndex, targetIndex) {
+        try {
+            let temp = initiative.splice(sourceIndex,1)[0];
+            temp.srNo = targetIndex; // Update srNo of the removed subtask
+
+// Insert the removed subtask at targetIndex
+initiative.splice(targetIndex, 0, temp);
+initiative.forEach((task, index) => task.srNo = index); // Update srNo for all subtasks
+let tasks=[];
+initiative.forEach((task)=>{
+    tasks.push({id:task._id,srNo:task.srNo});
+})
+            let response = await fetch('/update/taskOrder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(tasks)
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+</script>  
+
+<!-- drag and drop for row of tables subtasks-->
+<script>
+    dragCol = null;
+   
+  // tr means task row 
+
+   function handleSubTRDrop(e) {
+       if (e.stopPropagation) {
+           e.stopPropagation();
+       }
+       document.querySelectorAll('.subTask').forEach(col => col.classList.remove('drag-over'));
+       document.querySelectorAll('.subTask').forEach(col => col.classList.remove('drag-over-cell'));
+
+
+       if (dragCol != this) {
+           var sourceIndex = Array.from( document.querySelectorAll('.subTask')).indexOf(dragCol);
+           var targetIndex = Array.from( document.querySelectorAll('.subTask')).indexOf(this);
+           var table = document.getElementById('TaskTable');
+           if(sourceIndex==-1 || targetIndex==-1)
+            return ;
+sourceIndex=sourceIndex-1;
+targetIndex=targetIndex-1; 
+
+           ChangeSubTROrder(sourceIndex, targetIndex)
+           ShowsubTasks(initiativeindex)
+           ShowsubTasks(initiativeindex)
+       }
+       return false;
+   }
+
+   function AddDragDropSubTaskRow() {
+       const rows = document.querySelectorAll('table .subTask');
+       let index=0;
+       if (rows?.length > 1) {
+           [].forEach.call(rows, function (row) {
+            if(index!=0){
+               row.addEventListener('dragstart', handleDragStart, false);
+               row.addEventListener('dragover', handleDragOver, false);
+               row.addEventListener('drop', handleSubTRDrop, false);
+               row.addEventListener('dragenter', handleDragEnter, false);
+               row.addEventListener('dragleave', handleDragLeave, false);
+            }
+            index++;
+           });
+           index=0;
+          rows.forEach((row)=>{
+            if(index!=0){
+           row.addEventListener('mouseover',(event) => {
+               row.style.cursor = 'move';
+           })
+        }
+        index++;
+       });
+       }
+   }
+   async function ChangeSubTROrder(sourceIndex, targetIndex) {
+    try {
+        // Remove the subtask at sourceIndex and store it in a variable
+        let temp = subTasks[initiativeindex].splice(sourceIndex, 1)[0];
+        temp.srNo = targetIndex; // Update srNo of the removed subtask
+
+        // Insert the removed subtask at targetIndex
+        subTasks[initiativeindex].splice(targetIndex, 0, temp);
+        subTasks[initiativeindex].forEach((subtask, index) => subtask.srNo = index); // Update srNo for all subtasks
+        let subtasks=[];
+        subTasks[initiativeindex].forEach((subtask)=>{
+            subtasks.push({id:subtask._id,srNo:subtask.srNo});
+        })
+        // Update the order on the server
+        let response = await fetch('/update/subtaskOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(subtasks)
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+</script>
+
+<!--Resize subtask col width -->
+<script>
+
+    function MakeSubTaskDragggable() {
+        const row = document.querySelector('.subTasks' + initiativeindex);
+        const headers = row?.querySelectorAll('th');
+        if (headers)
+            headers.forEach((header) => header.draggable = true);
+
+    }
+    function RemoveSubTaskDragggable() {
+        const row = document.querySelector('.subTasks' + initiativeindex);
+        const headers = row?.querySelectorAll('th');
+        if (headers)
+            headers.forEach((header) => header.draggable = false);
+    }
+
+
+
+    const handleSubTaskMouseMove = (event) => {
+        if (resizing && draggedColumn) {
+            const columnIndex = Array.from(draggedColumn.parentNode.children).indexOf(draggedColumn);
+            if (columnIndex > -1) {
+                const newWidth = startOffset + event.pageX;
+                const subTask = document.querySelectorAll('.subTask');
+                // draggedColumn.style.width = `;${newWidth}px;`;
+                for (let i = 0; i < subTask.length - 1; i++) {
+                    const cell = subTask[i].children[columnIndex];
+                    cell.style.width = `${newWidth}px`;
+                }
+               
+                localStorage.setItem(`ProjectTaskPageSubTasks<%=managerVisitingId||user._id%>-${subTaskHeader[columnIndex]._id}`, JSON.stringify(`${newWidth}px`));
+                 tablesubtaskcolstyles[columnIndex] = `;width:${newWidth}px;`
+               
+            }
+        }
+    };
+
+    function SetLocalStorageStyleToSubTaskTableColums() {
+        tablesubtaskcolstyles = [];
+        for (let i = 0; i < subTaskHeader.length; i++) {
+            tablesubtaskcolstyles.push(subTaskHeader[i].style)
+            let Item = localStorage.getItem(`ProjectTaskPageSubTasks<%=managerVisitingId ||user._id%>-${subTaskHeader[i]._id}`);
+            if (Item) {
+                Item = JSON.parse(Item);
+                tablesubtaskcolstyles[i] += `;width:${Item};`;
+            }
+
+        }
+    }
+</script>
+
+<!-- Drag and drop for subtasks col--> .
+<script>
+
+    function handleSubTaskDrop(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+        const row = document.querySelector('.subTasks' + initiativeindex);
+        const headers = row?.querySelectorAll('th');
+        headers.forEach(col => col.classList.remove('drag-over'));
+        headers.forEach(col => col.classList.remove('drag-over-cell'));
+        row.classList.remove('drag-over')
+        row.classList.remove('drag-over-cell')
+
+        if (dragCol != this) {
+            var sourceIndex = Array.from(headers).indexOf(dragCol);
+            var targetIndex = Array.from(headers).indexOf(this);
+
+    if(sourceIndex==-1 || targetIndex==-1)
+    return ;
+    ChangeSubTaskHeaderOrder(sourceIndex, targetIndex)
+     ShowsubTasks(initiativeindex)
+        ShowsubTasks(initiativeindex)
+          
+
+        }
+        return false;
+    }
+
+    async function ChangeSubTaskHeaderOrder(sourceIndex, targetIndex) {
+        try {
+            console.log(sourceIndex,targetIndex)
+           // Remove the element at sourceIndex and store it in a variable
+        let removedElement = subTaskHeader.splice(sourceIndex, 1)[0];
+        let removedCol=tablesubtaskcolstyles.splice(sourceIndex, 1)[0];
+        // Insert the removed element at targetIndex
+        subTaskHeader.splice(targetIndex, 0, removedElement);
+        tablesubtaskcolstyles.splice(targetIndex, 0, removedCol);
+        // Update the srNo property for all elements in tableHeader
+        subTaskHeader.forEach((item, index) => {
+            item.srNo = index;
+        });
+
+        let headerData=[];
+        subTaskHeader.forEach((header)=>{
+            headerData.push({id:header._id,srNo:header.srNo});
+        })
+            let response = await fetch('/update/tableHeader', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(headerData)
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    function AddDragDropResizeSubTask(initiativeindex) {
+        const row = document.querySelector('.subTasks' + initiativeindex);
+        const headers = row?.querySelectorAll('th');
+        if (headers?.length > 0) {
+            [].forEach.call(headers, function (col) {
+                col.addEventListener('dragstart', handleDragStart, false);
+                col.addEventListener('dragover', handleDragOver, false);
+                col.addEventListener('drop', handleSubTaskDrop, false);
+                col.addEventListener('dragenter', handleDragEnter, false);
+                col.addEventListener('dragleave', handleDragLeave, false);
+            });
+        }
+        row.querySelectorAll('.HeaderBorder').forEach(col => {
+            col.addEventListener('mouseover', (event) => {
+                let column = col.parentNode;
+                col.style.background = '#48bf84';
+                column.style.cursor = 'ew-resize';
+            });
+
+            col.addEventListener('mouseout', (event) => {
+                let column = col.parentNode;
+                col.style.background = 'rgb(75, 78, 105)';
+                column.style.cursor = 'move';
+            });
+            col.addEventListener('mousedown', (event) => {
+                let column = col.parentNode;
+                RemoveSubTaskDragggable();
+                column.querySelector('.HeaderBorder').style.background = '#48bf84';
+                column.style.userSelect = 'none';
+                column.style.cursor = 'ew-resize';
+                resizing = true;
+                startOffset = column.offsetWidth - event.pageX;
+                draggedColumn = column;
+            });
+        });
+    }
+
+
+</script>
+
+
+
+<script>
+    var projectchangeinfo = {};
+    function ShowIconsTS(id) {
+        let checkbox = document.getElementById('checkboxTs' + id)
+        let threedot = document.getElementById('threeDotTs' + id)
+
+        checkbox.style.display = 'flex'
+        threedot.style.display = 'flex'
+        ShowBottomBar()
+    }
+    function RemoveIconsTS(id) {
+        let checkbox = document.getElementById('checkboxTs' + id)
+        let threedot = document.getElementById('threeDotTs' + id)
+        if (checkbox.checked)
+            checkbox.style.display = 'flex'
+        else
+            checkbox.style.display = 'none'
+        threedot.style.display = 'none'
+        ShowBottomBar()
+    }
+    function ShowIconsT(id) {
+        let checkbox = document.getElementById('checkboxTs' + id)
+        let threedot = document.getElementById('threeDotTs' + id)
+
+        checkbox.style.display = 'flex'
+        threedot.style.display = 'flex'
+        ShowBottomBarT()
+    }
+    function RemoveIconsT(id) {
+        let checkbox = document.getElementById('checkboxTs' + id)
+        let threedot = document.getElementById('threeDotTs' + id)
+        if (checkbox.checked)
+            checkbox.style.display = 'flex'
+        else
+            checkbox.style.display = 'none'
+        threedot.style.display = 'none'
+        ShowBottomBarT()
+    }
+
+    function setProjectDataT(id, title) {
+        projectchangeinfo.title = title;
+        projectchangeinfo.id = id;
+    }
+    function HideBottmBarT() {
+        let bottombar = document.getElementById('BottomBarT')
+        bottombar.style.display = 'none'
+    }
+
+
+    function filterAndSortTProject(text) {
+        let Projectbodies = document.querySelectorAll('.tselectprojectbody');
+        let projectTitles = document.querySelectorAll('.tselectprojecttitles');
+        for (let i = 0; i < Projectbodies.length; i++) {
+            if (projectTitles[i].innerText.toLowerCase().includes(text.toLowerCase())) {
+                Projectbodies[i].style.display = 'flex'
+            }
+            else {
+                Projectbodies[i].style.display = 'none'
+            }
+        }
+    }
+
+    async function setProjectToT() {
+
+        let checkbox = document.querySelectorAll('.Tcheckbox')
+        for (let i = 1; i < checkbox.length; i++) {
+            if (checkbox[i].checked) {
+                initiative[i - 1].data.projectId = projectchangeinfo.id
+                initiative[i - 1].data.projectTitle = projectchangeinfo.title
+                initiative[i - 1].data.krs = []
+                initiative[i - 1].data.subkrs = []
+                await SaveTask(i - 1)
+                let tsindex = TaskSubmissions.findIndex(ts => ts.tasks.id == initiative[i - 1]._id)
+                if (tsindex != -1) {
+
+                    TaskSubmissions[tsindex].project = projectchangeinfo;
+                    TaskSubmissions[tsindex].krs = []
+                    TaskSubmissions[tsindex].subkrs = []
+                    await SaveTS(tsindex)
+                }
+            }
+        }
+        location.reload();
+    }
+
+    function SelectAllT() {
+        let checkboxes = document.querySelectorAll('.Tcheckbox')
+
+        for (let i = 1; i < checkboxes.length; i++) {
+            checkboxes[i].checked = checkboxes[0].checked;
+            if (checkboxes[i].checked)
+                checkboxes[i].style.display = 'flex'
+            else
+                checkboxes[i].style.display = 'none'
+        }
+        ShowBottomBarT()
+    }
+
+
+    function ShowBottomBarT() {
+        let checkboxes = document.querySelectorAll('.Tcheckbox')
+        let bottombar = document.getElementById('BottomBarT')
+        let count = 0;
+        for (let i = 1; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked)
+                count++;
+        }
+        if (count > 0) {
+            bottombar.style.display = 'flex'
+            document.getElementById('select_noT').innerText = count
+        }
+        else
+            bottombar.style.display = 'none'
+    }
+    async function DeleteT() {
+        try {
+            let ids = []
+            if (initiativeindex == -1) {
+                let checkboxes = document.querySelectorAll('.Tcheckbox')
+                for (let i = 1; i < checkboxes.length; i++) {
+                    if (checkboxes[i].checked) {
+                        ids.push(initiative[i - 1]._id);
+                    }
+                }
+            }
+            else {
+                ids.push(initiative[initiativeindex]._id);
+            }
+            let res = await fetch('/deleteTask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ids })
+            })
+            initiative = initiative.filter((task) => !ids.includes(task._id))
+            SetAllInitiatives();
+            ShowBottomBarT()
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function ChangeTaskStatus(status, type, index) {
+        let checkbox = document.querySelectorAll('.Tcheckbox')
+        for (let i = 1; i < checkbox.length; i++) {
+            if (checkbox[i].checked) {
+                initiativeindex = i - 1;
+                await setStatusToTask(status, type, index)
+            }
+        }
+    }
+
+
+    async function ApproveFroTaskSubmission() {
+        let checkbox = document.querySelectorAll('.Tcheckbox')
+        for (let i = 1; i < checkbox.length; i++) {
+            if (checkbox[i].checked) {
+                initiativeindex = i - 1;
+                await setStatusToTask('Approved', 'SubmissionApproval', 0)
+            }
+        }
+    }
+</script>
+
+<!----Delete Change name of subtask header-->
+
+<script>
+let SubHeaderInfo;
+    function setSubHeaderToDelete(id, usedName) {
+        SubHeaderInfo = { id, usedName }
+    }
+    async function DeleteSubTaskHeader() {
+        let response = await fetch('/create/header/', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(SubHeaderInfo)
+        })
+        location.reload()
+    }
+    async function UpdateSubTaskHeader(data) {
+        let response = await fetch('/create/header/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        location.reload()
+    }
+    async function ChangeSubTaskHeaderTitle(i, title) {
+        i = parseFloat(i);
+        subTaskHeader[i].title = title;
+        let response = await fetch('/create/header/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(subTaskHeader[i])
+        })
+        
+    }
+
+</script>
+
+<!-- Add New Column Script -->
+
+<script>
+    let NewColName = 'Col';
+    let HeaderInfo;
+    function setHeaderToDelete(id, usedName) {
+        HeaderInfo = { id, usedName }
+    }
+    async function DeleteTaskHeader() {
+        let response = await fetch('/create/header/', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(HeaderInfo)
+        })
+        location.reload()
+    }
+    function ChangeTaskHeaderTitle(index, title) {
+        index = parseFloat(index);
+   
+        tableHeader[index].title = title;
+
+        CreateNewHeader(tableHeader[index])
+    }
+    function openBox(id) {
+        document.getElementById(id).click()
+      
+    }
+    async function AddNewTaskCol(coltype, position) {
+        try {
+            let header = document.querySelector('.TasksHeader');
+
+            let style = 'width: 130px';
+            if (coltype === 'date') style = 'width: 150px';
+
+            if (!position) {
+                position = header.children.length - 2;
+            }
+
+            let title = `${NewColName}${header.children.length}`;
+            let usedName = "col" + coltype + generateRandomId();
+            let data = { title, usedName, style, srNo: position, type: coltype, category: 'ProjectTaskPageTasks' };
+            let newcol = await CreateNewHeader(data);
+
+            if (!newcol) {
+                return;
+            }
+
+            tableHeader.splice(position, 0, newcol);
+
+            let innerHTML = `
+      <th style="${newcol.style}" 
+        onmouseover="showIcons('.Border-${newcol._id}')" 
+        onmouseout="removeIcons('.Border-${newcol._id}')"  
+        id="TaskMainTableManager${position}">
+        <div style="display: flex;align-items: center;gap:5px;justify-content: center;width: calc( 100% - 6px );overflow:hidden" 
+          id="TaskMainTableManagerDiv${position}">
+          <input type="text" value="${newcol.title}" onchange="ChangeTaskHeaderTitle('${position}',event.target.value)" style="border:none;max-width:90%" size="${newcol.title + 1}">
+          <img src="../Performance dashboard Icons/three_dot.svg" class="Border-${newcol._id}" 
+            data-toggle="dropdown" aria-expanded="false" style="display: none;" >
+          <div class="dropdown-menu" style="flex-direction: column;
+            align-items: flex-start;
+            border: 1px solid var(--gray-300, #D0D5DD);
+            border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+            border-bottom: 1px solid var(--gray-300, #D0D5DD);">
+            <div class="dropdown_tab_active" 
+              data-toggle="modal" 
+              data-target="#DeleteTaskHeaderConfirmation" 
+              onclick="setHeaderToDelete('${newcol._id}','${newcol.usedName}')">
+              <img src="../Performance dashboard Icons/dropdown_delete.svg"> Delete
+            </div>
+            <div class="dropdown_tab_active"  data-toggle="dropdown" aria-expanded="false">
+                 <div style="display: flex;align-items: center;gap:8px;"  > <i class="fa fa-plus"></i> Add Column to right <i class="fa fa-angle-right" aria-hidden="true"></i></div>
+                  
+                </div>
+                <div  class="dropdown-menu"   style="flex-direction: column;
+          padding: 16px;
+          width: 370px;
+          align-items: flex-start;
+          gap: 16px;
+          color: var(--gray-800, #1D2939);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 20px; /* 125% */
+          background-color: white;
+          ">
+          <div >Column Type</div>
+<div style="display: flex;align-items: flex-start;gap:16px;justify-content: flex-start;flex-wrap: wrap;">
+<div class="AddColumnBox" onclick="AddNewTaskCol('label','${position + 1}')">
+  <img src="../img/clock.svg" style="width: 20px;">
+  Status
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('date','${position + 1}')">
+  <img src="../img/NewCalendar.svg" style="width: 20px;">
+ Date
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('text','${position + 1}')">
+  <i class="fa fa-text-width" aria-hidden="true"></i>
+  Text
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('timeline','${position + 1}')">
+  <img src="../img/NewCalendar.svg" style="width: 20px;">
+Timeline
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('numbers','${position + 1}')">
+  <img src="../img/NumberIcon.svg" style="width: 20px;">
+  Numbers
+</div>
+
+<div class="AddColumnBox" onclick="AddNewTaskCol('people','${position + 1}')">
+  <i class="fa fa-users" aria-hidden="true"></i>
+  People
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('label','${position + 1}')">
+  <i class="fa fa-tag" aria-hidden="true"></i>
+ Label
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('dropddown','${position + 1}')">
+ -<i class="fa fa-chevron-down" aria-hidden="true"></i>
+ Dropddown
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('files','${position + 1}')">
+  <i class="fa fa-file" aria-hidden="true"></i>
+Files
+</div>
+<div class="AddColumnBox" onclick="AddNewTaskCol('links','${position + 1}')">
+  <i class="fa fa-link" aria-hidden="true"></i>
+ Links
+</div>
+</div>
+            </div>
+          </div>
+        </div> 
+        <div class="Border-${newcol._id} HeaderBorder" style="display: none;"></div>
+      </th>
+    `;
+
+            header.children[position].insertAdjacentHTML('afterend', innerHTML);
+
+            let rows = document.querySelectorAll('.Tasks');
+            for (let taskindex = 0; taskindex < rows.length; taskindex++) {
+                initiative[taskindex].data[newcol.usedName] = '';
+
+                let innerhtml = '';
+                if (coltype === 'text') {
+                    innerhtml = `<td style="${newcol.style}"><input type="text" style="width:100%;border:none;" 
+          placeholder="Enter Text" onchange="changeinitiativedata('${taskindex}','${newcol.usedName}',event.target.value)"></td>`;
+                } else if (coltype === 'numbers') {
+                    innerhtml = `<td style="${newcol.style}"><input type="number" style="width:100%;border:none;" 
+          placeholder="Enter Number" onchange="changeinitiativedata('${taskindex}','${newcol.usedName}',event.target.value)"></td>`;
+                } else if (coltype === 'date') {
+                    initiative[taskindex].data[newcol.usedName] = formatDate(new Date());
+                    innerhtml = `<td onclick="OpenDateInput(event,'DateCalendarTaskNewcol${taskindex}')" 
+          style="color: var(--gray-800, #1D2939); line-height: 20px;${newcol.style};" >
+          <span id="AllotmentDateTask${taskindex}">${formatDate(new Date())}</span>
+          <img src="../img/NewCalendar.svg">
+          <input type="date" id="DateCalendarTaskNewcol${taskindex}" style="width:0px;" value="" 
+            onchange="changeinitiativedata('${taskindex}','${newcol.usedName}',event.target.value)"></td>`;
+                } else if (coltype === 'label') {
+                    initiative[taskindex].data[newcol.usedName] = { label: 'label', color: "#F79009", bgcolor: '#FFFAEB' };
+                    innerhtml = `<td style="${newcol.style}">
+          <div style="padding:5px 12px;border-radius:16px;" 
+            id="initiative${newcol.usedName}${taskindex}" data-toggle="dropdown" aria-expanded="false">
+            <div class="Status_progress">Label</div>
+          </div>
+          <div class="dropdown-menu" style="flex-direction: column;" 
+            aria-labelledby="initiative${newcol.usedName}${taskindex}" 
+            id="initiative${newcol.usedName}${taskindex}dropdown">
+            <div class="StatusBox">
+              <div class="Status_progress" style="color:#F79009,background:#FFFAEB">Label</div>
+            </div>
+            <div class="StatusBox">
+              <div class="Status_progress" style="color:#F79009,background:#FFFAEB">Label</div>
+            </div>
+            <div class="StatusBox" data-target="#manageLabels" data-toggle="modal" onclick="SetLabelsType('${newcol._id}')">
+                 <i class="fa fa-plus"></i> Add Label
+                </div>
+          </div>
+        </td>`;
+                }
+                rows[taskindex].children[position].insertAdjacentHTML('afterend', innerhtml);
+            }
+            SaveAllTask();
+            AddDragDropResize()
+        } catch (error) {
+            console.error('Error in AddNewTaskCol:', error);
+        }
+    }
+
+    async function SaveAllTask() {
+        try {
+            let response = await fetch('/update/Alltask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(initiative)
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+    async function CreateNewHeader(data) {
+
+        try {
+            let res = await fetch('/create/header/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            res = await res.json();
+            return res;
+        }
+        catch {
+            console.log(error)
+            return null;
+        }
+    }
+
+</script>
+
+<!--Add column edit column script-->
+
+<script>
+    let labelusedName = '', headerId, headerInfo;
+    async function SetLabelsType(id) {
+        try {
+            headerId = id;
+            let header = await fetch(`/header/${id}`);
+           
+            header = await header.json();
+           
+            headerInfo = header;
+            SetLabelsToModel(header.labels);
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+    function SetLabelsToModel(labels) {
+        let body = document.getElementById('LabelsModalBody');
+        let innerHTML = '';
+        let index = 0;
+        for (let label of labels) {
+            let bgcolors = [];
+            for (let i = 0; i < 80; i++) {
+                let bgcolor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+                bgcolors.push(bgcolor);
+            }
+            innerHTML += ` <div style="display: flex;
+     padding-right: 0px;
+     justify-content: space-between;
+     align-items: center;
+     align-self: stretch;">
+   <div style="display: flex;gap:12px;align-items: center;">
+   <img src="../Project icons/horizontalBar.svg">
+   <div style="display: flex;gap:8px;align-items: center;">
+   <div style="width: 15.695px;
+   height: 15.695px;border-radius: 50%;background:${label.color}" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></div>
+   <div  class="dropdown-menu" style="
+   width:300px;gap:5px;
+   flex-wrap:wrap;
+            align-items: flex-start;
+            border: 1px solid var(--gray-300, #D0D5DD);
+            border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+            border-bottom: 1px solid var(--gray-300, #D0D5DD);
+            " class="container_Style">
+           ${bgcolors.map(bgcolor => `<div style="width: 24px;height: 24px;border-radius: 24px;background-color: ${bgcolor};" onclick="SetBgColor('${bgcolor}','${index}')"></div>`).join("")}
+            </div>
+   <input style="display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 1;
+   overflow: hidden;
+   color: var(--gray-900, #101828);
+   text-overflow: ellipsis;
+   width: 80%;
+   font-size: 14px;
+   font-style: normal;
+   font-weight: 600;
+   line-height: 20px;" value="${label.label}" onchange="SetLabelName(event.target.value,'${index}')">
+   </div>
+   </div>  
+ 
+ <img src="../Project icons/delete_phase.svg" onclick="deleteLabel('${index}')">
+ </div>`
+            index++;
+        }
+        innerHTML += `<div style="display:flex;gap:8px;align-items:center;cursor:pointer" class="onhovercolorgreen" onclick="AdddLabel()"> <i class="fa fa-plus"></i> Add Label</div>`
+        body.innerHTML = innerHTML;
+    }
+    function SetBgColor(bgcolor, index) {
+        index = parseFloat(index);
+        let labels = headerInfo.labels;
+        labels[index].color = bgcolor;
+        bgcolor = bgcolor.replace('rgb', 'rgba').replace(')', ',0.06)');
+        labels[index].bgcolor = bgcolor;
+        headerInfo.labels = labels;
+        SetLabelsToModel(headerInfo.labels);
+    }
+    function AdddLabel() {
+        let labels = headerInfo.labels;
+        labels.push({ label: 'label', color: '#F79009', bgcolor: 'rgba(247, 144, 9, 0.06)' });
+        headerInfo.labels = labels;
+        SetLabelsToModel(headerInfo.labels);
+    }
+    function SetLabelName(label, index) {
+        index = parseFloat(index);
+        let labels = headerInfo.labels;
+        labels[index].label = label;
+        headerInfo.labels = labels;
+        SetLabelsToModel(headerInfo.labels);
+    }
+    async function deleteLabel(index) {
+        index = parseFloat(index);
+        let labels = headerInfo.labels;
+        labels.splice(index, 1);
+        headerInfo.labels = labels;
+        SetLabelsToModel(headerInfo.labels);
+    }
+
+    async function SaveLabelsChange() {
+        let response = await fetch('/create/header/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(headerInfo)
+        })
+        SetLabelDropdown(headerInfo.usedName);
+    }
+    function SetLabelDropdown(headerusedname) {
+        let tasks = document.querySelectorAll('.Tasks');
+
+        for (let i = 0; i < tasks.length; i++) {
+            let dropddownbody = document.getElementById(`initiative${headerusedname}${i}dropdown`);
+            dropddownbody.innerHTML = '';
+            let innerHTML = '';
+
+            let dropdownindex = 0;
+
+            for (let label of headerInfo.labels) {
+                let color = label.color;
+                let title = label.label;
+                let bgcolor = label.bgcolor;
+
+                innerHTML += `<div class="StatusBox" onclick="changeinitiativeIndex('${i}');setStatusToTask('${title}', '${headerInfo.usedName}', '${dropdownindex}')">
+        <div class="Status_hold" style="color: ${color}; background: ${bgcolor}">${title}</div>
+      </div>`;
+
+                dropdownindex += 1;
+            }
+            innerHTML += `<div class="StatusBox" data-target="#manageLabels" data-toggle="modal" onclick="SetLabelsType('${headerInfo._id}')">
+                 <i class="fa fa-plus"></i> Add Label
+                </div>`
+
+
+            dropddownbody.innerHTML = innerHTML;
+        }
+    }
+
+</script>
+
+<!--- OpenTaskSideBar -->
+<script>
+    let  user={image:'<%=user.image%>',name:'<%=user.firstName%>',team:'<%=user.team%>',id:'<%=user.id%>',position:'<%=user.position%>'};
+   
+    if('<%=managerVisiting%>'=='true')
+        {
+          user={image:'<%=managerVisitingInfo.image%>',name:'<%=managerVisitingInfo.firstName%>',team:'<%=managerVisitingInfo.team%>',id:'<%=managerVisitingInfo.id%>',position:'<%=managerVisitingInfo.position%>'};
+        }
+    let postIndex='';
+    let EditPostIndex='';
+    let ReplyCommentIndex=''
+
+    function setReplyCommentIndex(i)
+    {
+        ReplyCommentIndex=parseFloat(i);
+    }
+function OpenTaskSideBar(i)
+{ 
+    initiativeindex=parseFloat(i);
+    document.getElementById('OpenTaskSideBar').style.display='flex';
+    document.getElementById('OTBody').style.display='flex'
+    document.getElementById('TSBody').style.display='none'
+    SetTaskInfoOT(initiativeindex)
+}
+function OpenTaskSubmissionSideBar(i)
+{
+    document.getElementById('OpenTaskSideBar').style.display='flex';
+    document.getElementById('OTBody').style.display='none'
+    document.getElementById('TSBody').style.display='flex'
+    SetSubmitTask(i)
+}
+
+function SetTaskInfoOT(i)
+{ initiativeindex=i;
+let task=initiative[initiativeindex];
+SetPinnedPostOT(initiativeindex)
+let tasktitle=document.getElementById('TaskTitleOT')
+tasktitle.value=task.data['Tasks'];
+tasktitle.addEventListener('change',(event)=>{
+    changeinitiativedata(initiativeindex,'Tasks',event.target.value)
+})
+document.getElementById('TextAreaInitial').style.display='flex';
+tinymce.get('TextAreaFieldOT').setContent('Add an update');
+document.getElementById('TextAreaActual').style.display='none';
+setPostOT(task.posts);
+}
+
+function filterPostData(posts) {
+    // Use filter to create a new array with truthy values
+    let filteredPosts = posts.filter(post => post);
+
+    return filteredPosts;
+}
+
+function setPostOT(posts)
+{  posts=filterPostData(posts);
+    initiative[initiativeindex].posts=posts;
+    SaveTask(initiativeindex);
+    let postBodyOT=document.getElementById('postBodyOT')
+    postBodyOT.innerHTML='';
+let innerHTML=''
+UpdateTime(posts)
+for(let i=posts.length-1;i>=0;i--)
+{ 
+     innerHTML+=MakePostBodyOT(i)
+}
+postBodyOT.innerHTML=innerHTML;
+}
+
+function MakePostBodyOT(postIndex)
+{  
+    let post=initiative[initiativeindex].posts[postIndex];
+    let pinnedPosts=initiative[initiativeindex].pinnedPost;
+    let isPinned=false;
+    if(pinnedPosts[0]==post.id){
+        isPinned=true;
+    }
+    
+    let currentUserLiked = false;
+let index = post.likes.findIndex(id => id === user.id);
+
+if (index !== -1) {
+  currentUserLiked = true;
+}
+    let innerHTML=`<div style="display: flex;
+padding: 16px;
+flex-direction: column;
+align-items: flex-start;
+gap: 20px;
+align-self: stretch;
+border-radius: var(--Radius-medium, 8px);
+background: var(--White, #FFF);
+box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
+">
+${ isPinned?(`<div style="display: flex;
+padding-left: var(--Spacing-x6, 24px);
+mix-blend-mode: multiply;
+align-items: flex-start">
+<div style="display: flex;
+padding: 2px 8px 2px 10px;
+justify-content: center;
+align-items: center;
+gap: 4px;
+border-radius: 16px;
+background: var(--Gray-100, #F2F4F7);">
+<svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+  <path d="M3.16797 13.3474L6.5013 10.0141M6.5013 10.0141L9.13863 12.6514C9.21571 12.7284 9.31048 12.7854 9.41464 12.8172C9.51881 12.8491 9.6292 12.855 9.73616 12.8343C9.84313 12.8137 9.94339 12.7671 10.0282 12.6988C10.113 12.6304 10.1798 12.5423 10.2226 12.4421L11.726 8.93478C11.7604 8.85424 11.8104 8.78129 11.8731 8.72009C11.9358 8.65889 12.01 8.61065 12.0913 8.57812L14.2293 7.72278C14.3317 7.68181 14.4223 7.61608 14.493 7.53148C14.5637 7.44689 14.6124 7.34607 14.6346 7.23805C14.6568 7.13004 14.6518 7.01821 14.6202 6.91258C14.5886 6.80695 14.5312 6.71081 14.4533 6.63278L9.88263 2.06212C9.80461 1.9842 9.70847 1.92685 9.60284 1.89522C9.49721 1.86358 9.38537 1.85864 9.27736 1.88083C9.16935 1.90303 9.06853 1.95167 8.98394 2.0224C8.89934 2.09313 8.83361 2.18375 8.79263 2.28612L7.9373 4.42412C7.90477 4.50546 7.85653 4.57959 7.79533 4.64228C7.73413 4.70497 7.66117 4.75498 7.58063 4.78945L4.0733 6.29278C3.97315 6.33565 3.88504 6.40241 3.81666 6.48722C3.74829 6.57202 3.70174 6.67229 3.68108 6.77925C3.66042 6.88621 3.6663 6.99661 3.69818 7.10077C3.73006 7.20494 3.78698 7.29971 3.86397 7.37678L6.5013 10.0141Z" stroke="#344054" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<div class="text-black-20-700" style="font-size:14px">Pinned</div>
+</div>
+</div>`):''}
+<div style="display: flex;
+justify-content: space-between;
+align-items: flex-start;
+align-self: stretch;">
+<div style="display: flex;
+align-items: center;
+gap: 12px;">
+<img src="${post.user?.image}" style="width: 40px;
+height: 40px;;border-radius: 40px;">
+<div style="display: flex;
+flex-direction: column;
+
+align-items: flex-start;">
+<div class="text-black-14-500">${post.user?.name}</div>
+<div style="display: flex;
+align-items: flex-start;
+align-items: center;
+gap: 4px;">
+<div class="text-gray-14-500">${post.user?.team} </div>
+<i class="fa fa-circle" style="font-size: 7px;" aria-hidden="true"></i>
+${post.isEdited?'Edited':''}
+<span style="font-weight: 400;">${post.time}</span>
+</div>
+</div>
+</div>
+${post.user?.id == user.id ?`<img src="../Performance dashboard Icons/three_dot.svg"  class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="threeDotTask">
+<div aria-labelledby='threeDotTask' class="dropdown-menu" style="flex-direction: column;
+align-items: flex-start;
+border: 1px solid var(--gray-300, #D0D5DD);
+border-radius: var(--radius-medium, 8px) var(--radius-medium, 8px) 8px;
+border-bottom: 1px solid var(--gray-300, #D0D5DD);
+" class="container_Style">
+ <div class="dropdown_tab_active" onclick="EditPost('${postIndex}')">
+    <img src="../Performance dashboard Icons/dropdown_edit.svg"> Edit
+    </div>
+   ${user.position==0?`<div class="dropdown_tab_active" onclick="PinPostOT('${post.id}')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M4 19.9987L9 14.9987M9 14.9987L12.956 18.9547C13.0716 19.0702 13.2138 19.1556 13.37 19.2034C13.5263 19.2512 13.6919 19.26 13.8523 19.229C14.0127 19.1981 14.1631 19.1282 14.2903 19.0257C14.4176 18.9231 14.5177 18.7909 14.582 18.6407L16.837 13.3797C16.8887 13.2589 16.9637 13.1495 17.0578 13.0577C17.1518 12.9659 17.263 12.8935 17.385 12.8447L20.592 11.5617C20.7456 11.5003 20.8815 11.4017 20.9876 11.2748C21.0937 11.1479 21.1666 10.9966 21.1999 10.8346C21.2332 10.6726 21.2258 10.5049 21.1784 10.3464C21.1309 10.188 21.0449 10.0438 20.928 9.92672L14.072 3.07072C13.955 2.95384 13.8108 2.86782 13.6523 2.82036C13.4939 2.77291 13.3261 2.76549 13.1641 2.79879C13.0021 2.83209 12.8508 2.90505 12.724 3.01115C12.5971 3.11724 12.4985 3.25316 12.437 3.40672L11.154 6.61372C11.1052 6.73573 11.0328 6.84693 10.941 6.94096C10.8492 7.03499 10.7398 7.11001 10.619 7.16172L5.358 9.41672C5.20778 9.48102 5.07561 9.58116 4.97304 9.70837C4.87048 9.83557 4.80065 9.98598 4.76967 10.1464C4.73868 10.3069 4.74749 10.4725 4.79531 10.6287C4.84314 10.785 4.92852 10.9271 5.044 11.0427L9 14.9987Z" stroke="#344054" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          ${!isPinned?'Pin to top':'UnPin from top'} 
+        </div>`:''}
+<div class="dropdown_tab_active" data-toggle="modal" data-target="#DeletePostConfirmationOT" onclick="SetPostIndex('${postIndex}')">
+<img src="../Performance dashboard Icons/dropdown_delete.svg"> Delete
+</div>
+</div>`:""}
+</div>
+<div style="width:100%;overflow:hidden" class="text-black-16-500">${post.post}</div>
+<div style="display: flex;
+align-items: flex-start;
+gap: var(--Spacing-x6, 24px);">
+<div style="display: flex;
+align-items: center;
+cursor: pointer;
+gap: 4px;" class="text-gray-16-600" id="Like-${postIndex}">
+<i class="fa fa-thumbs-up" aria-hidden="true" style="color:${currentUserLiked && "#48bf84"}" onclick="LikePost('${postIndex}')"> </i>
+${post.likes.length}
+</div>
+<div style="display: flex;
+align-items: center;
+cursor: pointer;
+gap: 4px;" class="text-gray-16-600" id="PostComment${postIndex}" onclick="OpenComment('${postIndex}')">
+<img src="../img/message-square.svg">
+${post.comments.length}
+</div>
+</div>
+<div id="PostCommentBody${postIndex}" style="display: none;
+flex-direction: column;
+align-items: flex-start;
+gap: var(--Spacing-x6, 24px);
+align-self: stretch;">
+
+    </div>
+</div>`
+return innerHTML;
+}
+
+function LikePost(postIndex)
+{ 
+    postIndex=parseFloat(postIndex);
+    let post=initiative[initiativeindex].posts[postIndex];
+    let currentUserLiked = false;
+let index = post.likes.findIndex(id => id === user.id);
+
+if (index !== -1) {
+  currentUserLiked = true;
+}
+if(currentUserLiked)
+{
+    post.likes.splice(index,1)
+}
+else
+{
+    post.likes.push(user.id)
+}
+initiative[initiativeindex].posts[postIndex]=post
+SaveTask(initiativeindex)
+let likebody=document.getElementById(`Like-${postIndex}`)
+likebody.innerHTML=`<i class="fa fa-thumbs-up" aria-hidden="true" style="color:${!currentUserLiked && "#48bf84"}" onclick="LikePost('${postIndex}')"> ${post.likes.length}</i>`
+}
+
+function UpdateTime(posts) {
+    if(!posts)
+    return;
+  for (let post of posts) {
+    if(!post)
+    continue;
+    post.time = getTimeDifference(post.createdAt);
+    for (let comment of post.comments || []) {
+      comment.time = getTimeDifference(comment.createdAt);
+      for (let reply of comment.replies) {
+        reply.time = getTimeDifference(reply.createdAt);
+      }
+    }
+  }
+ if(initiative[initiativeindex])
+ { initiative[initiativeindex].posts = posts;
+  SaveTask(initiativeindex);}
+}
+
+function getTimeDifference(postDate) {
+  const currentDate = new Date();
+  const postDateTime = new Date(postDate);
+
+  const timeDifferenceInSeconds = Math.floor((currentDate - postDateTime) / 1000);
+
+  if (timeDifferenceInSeconds < 60) {
+    return `${timeDifferenceInSeconds} ${timeDifferenceInSeconds === 1 ? 'second' : 'seconds'} ago`;
+  } else if (timeDifferenceInSeconds < 3600) {
+    const minutes = Math.floor(timeDifferenceInSeconds / 60);
+    return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
+  } else if (timeDifferenceInSeconds < 86400) {
+    const hours = Math.floor(timeDifferenceInSeconds / 3600);
+    return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+  } else if (timeDifferenceInSeconds < 2592000) {
+    const days = Math.floor(timeDifferenceInSeconds / 86400);
+    return `${days} ${days === 1 ? 'day' : 'days'} ago`;
+  } else {
+    // Format the date in the desired way for older posts
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return postDateTime.toLocaleDateString(undefined, options);
+  }
+}
+
+function SetPostIndex(index)
+{
+    postIndex=parseFloat(index);
+}
+
+function DeletePost()
+{
+    let posts=initiative[initiativeindex].posts;
+    let post=posts[postIndex];
+    if(post.id==initiative[initiativeindex].pinnedPost[0])
+    initiative[initiativeindex].pinnedPost=[''];
+    posts.splice(postIndex,1);
+    initiative[initiativeindex].posts=posts;
+    SaveTask(initiativeindex)
+    setPostOT(initiative[initiativeindex].posts)
+}
+
+function SetPinnedPostOT(initiativeindex)
+{
+    let posts = initiative[initiativeindex].posts;
+    let postId=initiative[initiativeindex].pinnedPost[0];
+    let index = posts.findIndex(post => post.id == postId);
+
+    if (index !== -1) {
+        // Remove the post from its current position
+        let [post] = posts.splice(index, 1);
+        // Add the post to the beginning of the array
+        posts.push(post);
+        initiative[initiativeindex].posts=posts;
+        // Save the updated posts array
+        
+    }
+}
+function PinPostOT(postId) {
+    if(postId==initiative[initiativeindex].pinnedPost[0])
+    postId='';
+    initiative[initiativeindex].pinnedPost=[postId];
+    SetPinnedPostOT(initiativeindex)
+        SaveTask(initiativeindex);
+        // Update any UI or state based on the new post order
+        setPostOT(initiative[initiativeindex].posts);
+}
+
+function EditPost(postIndex)
+{
+    EditPostIndex=parseFloat(postIndex);
+    let post=initiative[initiativeindex].posts[postIndex];
+    document.getElementById('TextAreaInitial').style.display='none';
+    tinymce.get('TextAreaFieldOT').setContent(post.post);
+    document.getElementById('TextAreaActual').style.display='flex';
+}
+
+function ShowInputField(hideId,showId)
+    {
+        document.getElementById(hideId).style.display = "none";
+        document.getElementById(showId).style.display = "flex";
+    }
+
+function CloseTaskSideBar()
+{
+    document.getElementById("OpenTaskSideBar").style.display = "none";
+}
+
+function SavePostOT()
+{
+    let post =tinymce.get('TextAreaFieldOT').getContent();
+    if(EditPostIndex!='')
+    {
+    let postAtIndex=initiative[initiativeindex].posts[EditPostIndex];
+    postAtIndex.post=post;
+    postAtIndex.isEdited=true;
+    postAtIndex.createdAt=new Date();
+    initiative[initiativeindex].posts[EditPostIndex]=postAtIndex;
+    }
+    else{ 
+    let commentData={
+    post,
+    user,
+    id:generateRandomId(),
+    createdAt:new Date(),
+    time:'Just now',
+    comments:[],
+    isEdited:false,
+    likes:[]
+    }
+    if(initiative[initiativeindex].pinnedPost[0]!='')
+    initiative[initiativeindex].posts.splice(-1, 0, commentData);
+    else
+    initiative[initiativeindex].posts.push(commentData);
+}
+    SaveTask(initiativeindex)
+    SetPinnedPostOT(initiativeindex)
+    setPostOT(initiative[initiativeindex].posts)
+    tinymce.get('TextAreaFieldOT').setContent("Add an Update");
+    ShowInputField('TextAreaActual','TextAreaInitial')
+    EditPostIndex='';
+}
+
+function InitialStateofCommentBody(postIndex)
+{
+    for(let i = 0; i <initiative.length;i++){
+        if(i==postIndex)
+        continue;
+    let postcommentBody=document.getElementById(`PostCommentBody${i}`);
+    let postcommentIcon=document.getElementById(`PostComment${i}`);
+    if(postcommentBody)
+    {
+        postcommentBody.innerHTML='';
+        postcommentBody.style.display='none';
+        postcommentIcon.classList.remove('bluecolor');
+        postcommentIcon.getElementsByTagName('img')[0].src="../img/message-square.svg"
+    }
+    }
+}
+
+function OpenComment(postIndex)
+{ 
+    InitialStateofCommentBody(postIndex)
+    let postcommentIcon=document.getElementById(`PostComment${postIndex}`);
+    let postcommentBody=document.getElementById(`PostCommentBody${postIndex}`);
+    if(postcommentBody.style.display=='none')
+    {
+        postcommentBody.style.display='flex';
+        postcommentIcon.classList.add('bluecolor');
+        postcommentIcon.getElementsByTagName('img')[0].src="../img/message-square-active.svg"
+    }
+    else{
+        postcommentBody.style.display='none';
+        postcommentIcon.classList.remove('bluecolor');
+        postcommentIcon.getElementsByTagName('img')[0].src="../img/message-square.svg"
+    }
+    
+    UpdateTime(initiative[initiativeindex].posts)
+    SetComment(postIndex);
+}
+
+function SetComment(postIndex)
+{
+    let postcommentBody=document.getElementById(`PostCommentBody${postIndex}`);
+    let innerHTML=`
+<div style="display: flex;
+align-items: flex-start;
+gap: 16px;
+align-self: stretch;">
+<img src="${user.image}" style="width: 40px;height:40px;border-radius:40px;">
+<div style="display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 10px;
+width:100%;
+align-self: stretch;">
+<input type="text" id="commentInput" style="width:100%;display: flex;
+height: 40px;
+padding: 12px var(--Spacing-x6, 24px);
+align-items: center;
+gap: 4px;
+flex: 1 0 0;
+border-radius: 1000000000px;
+border: 1.5px solid var(--Gray-500, #667085);
+background: #FFF;
+    text-align: left;height:100%;" class="text-gray-16-600" placeholder="Write your reply" >
+<div class="buttonOT text-gray-16-600" onclick="AddComment('${postIndex}')">
+    Reply </div>
+</div>
+
+</div>`
+let commentIndex=0;
+let comments=initiative[initiativeindex]?.posts[postIndex]?.comments||[];
+for(let i=comments.length-1;i>=0;i--)
+{ commentIndex=i;
+    let currentUserLiked = false;
+    let index = comments[i].likes.findIndex(id => id === user.id);
+    if(index!=-1)
+    currentUserLiked=true;
+    let comment=comments[i];
+    innerHTML+=`
+    <div style="display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;">
+    <img src="${comment.user.image}" style="width: 40px;height:40px;border-radius:40px;">
+    <div style="display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    flex: 1 0 0;">
+    <div style="display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;">
+    <div style="display: flex;
+    align-items: flex-start;
+    gap: 12px;">
+    <div class="text-black-14-500">${comment.user.name}</div>
+    <div class="text-gray-14-500">${comment.time}</div>
+    </div>
+    <div class="text-black-16-500">${comment.comment}</div>
+    </div>
+    <div style="display: flex;
+    align-items: flex-start;
+    gap: var(--Spacing-x6, 24px);">
+    <div style="display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 4px;" class="text-gray-16-600" id="Like-${postIndex}-${commentIndex}">
+    <i class="fa fa-thumbs-up" aria-hidden="true" style="color:${currentUserLiked && "#48bf84"}" onclick="LikeComment('${postIndex}','${commentIndex}')"> </i>
+    ${comment.likes.length}
+    </div>
+    <div style="display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 4px;" class="text-gray-16-600" id="PostReply${postIndex}-${commentIndex}" onclick="OpenReply(${postIndex},${commentIndex})">
+    <img src="../img/message-square.svg">
+    ${comment.replies.length}
+    </div>
+    </div>
+    <div id="PostReplyBody${postIndex}-${commentIndex}" style="margin-left:52px;    display: none;
+    flex-direction: column;
+    margin-top:20px;
+    align-items: flex-start;
+    gap: 20px;
+    width: 90%;
+">
+
+        </div>
+    </div>
+    </div>
+    `
+}
+postcommentBody.innerHTML=innerHTML;
+}
+
+function LikeComment(postIndex,commentIndex)
+{ 
+    postIndex=parseFloat(postIndex);
+    commentIndex=parseFloat(commentIndex);
+    let comments=initiative[initiativeindex].posts[postIndex].comments;
+let comment=comments[commentIndex]
+    let currentUserLiked = false;
+let index = comment.likes.findIndex(id => id === user.id);
+
+if (index !== -1) {
+  currentUserLiked = true;
+}
+if(currentUserLiked)
+{
+    comment.likes.splice(index,1)
+}
+else
+{
+    comment.likes.push(user.id)
+}
+initiative[initiativeindex].posts[postIndex].comments[commentIndex]=comment;
+SaveTask(initiativeindex)
+let likebody=document.getElementById(`Like-${postIndex}-${commentIndex}`)
+likebody.innerHTML=`<i class="fa fa-thumbs-up" aria-hidden="true" style="color:${!currentUserLiked && "#48bf84"}" onclick="LikeComment('${postIndex}','${commentIndex}')"> ${comment.likes.length}</i>`
+}
+
+function AddComment(postIndex)
+{
+    let comment=document.getElementById('commentInput').value
+ let commentbody={
+    user,
+    comment,
+    createdAt:new Date(),
+    time:'Just now',
+    replies:[],
+    likes:[],
+    isEdited:false,
+ }
+    initiative[initiativeindex].posts[postIndex].comments.push(commentbody);
+    SaveTask(initiativeindex)
+    SetComment(postIndex)
+}
+
+function AddReply(postIndex, commentIndex) {
+    let reply = document.getElementById('replyInput').value;
+    let replyBody = {
+        user,
+        reply,
+        createdAt: new Date(),
+        time: 'Just now',
+        likes: [],
+        isEdited: false,
+    };
+    if(ReplyCommentIndex=='')
+    initiative[initiativeindex].posts[postIndex].comments[commentIndex].replies.push(replyBody);
+    else
+    initiative[initiativeindex].posts[postIndex].comments[commentIndex].replies.splice(ReplyCommentIndex+1, 0, replyBody);
+   
+    SaveTask(initiativeindex);
+    SetReply(postIndex, commentIndex);
+    ReplyCommentIndex=''
+}
+
+function InitialStateofReplyBody(postIndex, commentIndex) {
+    for (let i = 0; i < initiative[initiativeindex].posts[postIndex].comments.length; i++) {
+        if (i ==commentIndex) continue;
+        let postReplyIcon = document.getElementById(`PostReply${postIndex}-${i}`);
+        let postReplyBody = document.getElementById(`PostReplyBody${postIndex}-${i}`);
+
+        if (postReplyBody) {
+            postReplyBody.innerHTML = '';
+            postReplyBody.style.display = 'none';
+        }
+
+        if (postReplyIcon) {
+            postReplyIcon.classList.remove('bluecolor');
+            let imgElement = postReplyIcon.getElementsByTagName('img');
+            if (imgElement.length>0) {
+                imgElement[0].src = "../img/message-square.svg";
+            }
+        }
+    }
+}
+
+function OpenReply(postIndex, commentIndex) {
+    postIndex = parseFloat(postIndex);
+    commentIndex = parseFloat(commentIndex);
+    InitialStateofReplyBody(postIndex, commentIndex);
+    let postReplyBody = document.getElementById(`PostReplyBody${postIndex}-${commentIndex}`);
+    let postReplyIcon = document.getElementById(`PostReply${postIndex}-${commentIndex}`);
+    let commentIcons = postReplyIcon.getElementsByTagName('img');
+
+   
+    if (postReplyBody.style.display === 'none') {
+        postReplyBody.style.display = 'flex';
+        postReplyIcon.classList.add('bluecolor');
+        if(commentIcons?.length>0)
+        commentIcons[0].src = "../img/message-square-active.svg";
+       
+    } else {
+        postReplyBody.style.display = 'none'; 
+        postReplyIcon.classList.remove('bluecolor');
+        if(commentIcons?.length>0)
+        commentIcons[0].src = "../img/message-square.svg";
+    }
+
+    UpdateTime(initiative[initiativeindex].posts);
+    SetReply(postIndex,commentIndex);
+}
+
+function SetReply(postIndex, commentIndex) {
+    postIndex = parseFloat(postIndex);
+    commentIndex = parseFloat(commentIndex);
+    let postReplyBody = document.getElementById(`PostReplyBody${postIndex}-${commentIndex}`);
+    let innerHTML = ''
+
+    let replyIndex = 0;
+    let replies = initiative[initiativeindex]?.posts[postIndex]?.comments[commentIndex]?.replies || [];
+    for (let i = 0; i <replies.length; i++) {
+        let currentUserLiked = false;
+        let index = replies[i].likes.findIndex(id => id === user.id);
+        if(index!=-1)
+        currentUserLiked=true;
+        let reply = replies[i];
+        innerHTML += `
+        <div style="display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        align-self: stretch;">
+        <img src="${reply.user.image}" style="width: 40px;height:40px;border-radius:40px;">
+        <div style="display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        flex: 1 0 0;">
+        <div style="display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        align-self: stretch;">
+        <div style="display: flex;
+        align-items: flex-start;
+        gap: 12px;">
+        <div class="text-black-14-500">${reply.user.name}</div>
+        <div class="text-gray-14-500">${reply.time}</div>
+        </div>
+        <div class="text-black-16-500">${reply.reply}</div>
+        </div>
+        <div style="display: flex;
+        align-items: flex-start;
+        gap: var(--Spacing-x6, 24px);">
+        <div style="display: flex;
+        align-items: center;
+        cursor: pointer;
+        gap: 4px;" class="text-gray-16-600" id="Like-${postIndex}-${commentIndex}-${replyIndex}">
+        <i class="fa fa-thumbs-up" aria-hidden="true" style="color:${currentUserLiked ? "#48bf84" : ""}" onclick="LikeReply('${postIndex}','${commentIndex}','${replyIndex}')"> </i>
+        ${reply.likes.length}
+        </div>
+        <div style="display: flex;
+        align-items: center;
+        cursor: pointer;
+        gap: 4px;" class="text-gray-16-600"   onclick="setReplyCommentIndex(${replyIndex});AddTagtoReply('${reply.user.name}')">
+        Reply
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        `;
+        replyIndex++;
+    }
+  
+    innerHTML+=`
+        <div style="display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch;">
+        <img src="${user.image}" style="width: 40px;height:40px;border-radius:40px;">
+        <div style="display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        width:100%;
+        align-self: stretch;">
+        <input type="text" id="replyInput" style="width:100%;display: flex;
+        height: 40px;
+        padding: 12px var(--Spacing-x6, 24px);
+        align-items: center;
+        gap: 4px;
+        border-radius: 1000000000px;
+        border: 1.5px solid var(--Gray-500, #667085);
+        text-align: left;" class="text-gray-16-600" placeholder="Write your reply" >
+        <div class="buttonOT text-gray-16-600"  onclick="AddReply('${postIndex}','${commentIndex}')">
+            Reply 
+        </div>
+        </div>
+    </div>`;
+    postReplyBody.innerHTML = innerHTML;
+}
+
+function LikeReply(postIndex, commentIndex, replyIndex) {
+    postIndex = parseFloat(postIndex);
+    commentIndex = parseFloat(commentIndex);
+    replyIndex = parseFloat(replyIndex);
+    let replies = initiative[initiativeindex].posts[postIndex].comments[commentIndex].replies;
+    let reply = replies[replyIndex];
+    let currentUserLiked = false;
+    let index = reply.likes.findIndex(id => id === user.id);
+
+    if (index !== -1) {
+        currentUserLiked = true;
+        reply.likes.splice(index, 1);
+    } else {
+        reply.likes.push(user.id);
+    }
+    initiative[initiativeindex].posts[postIndex].comments[commentIndex].replies[replyIndex] = reply;
+    SaveTask(initiativeindex);
+    let likebody = document.getElementById(`Like-${postIndex}-${commentIndex}-${replyIndex}`);
+    likebody.innerHTML = `<i class="fa fa-thumbs-up" aria-hidden="true" style="color:${currentUserLiked ? "" : "#48bf84"}" onclick="LikeReply('${postIndex}','${commentIndex}','${replyIndex}')"> ${reply.likes.length}</i>`;
+}
+
+function AddTagtoReply(name) {
+    let input = document.getElementById('replyInput');
+    input.value = `@${name} `;
+}
+
+</script>
+
+<!--set nudge to task -->
+<script>
+    let NudgeTaskIndex = '';
+    let Nudge = {
+        read: false,
+        title: '',
+        img: '',
+        description: '',
+        style: '',
+        Id: ''
+    };
+
+    if ('<%=managerVisiting%>' == 'true') {
+        Nudge.img = '<%=managerVisitingInfo.image%>';
+        Nudge.title = '<%=managerVisitingInfo.firstName%>';
+        Nudge.Id = '<%=managerVisitingInfo._id%>';
+    }
+
+    function SetTaskNudgeInfo(id, data) {
+        let box = document.getElementById(id);
+
+        if (id == 'TaskNudgeTitle') {
+            Nudge.title = data.title;
+            Nudge.img = data.img;
+            Nudge.description = data.description;
+            Nudge.style = data.style;
+            box.innerHTML = Nudge.title;
+            Nudge.Id = '';
+        } else {
+            Nudge.title = '<%=managerVisitingInfo.displayName%>';
+            Nudge.Id = '<%=managerVisitingInfo._id%>';
+            Nudge.description = data.description;
+            Nudge.img = '<%=managerVisitingInfo.image%>';
+            Nudge.style = '';
+        }
+    }
+
+    function SendTaskNudge() {
+    if (Nudge.description === '') {
+        return;
+    }
+    Nudge.createdAt = new Date();
+
+    let arr = [];
+    let x = { ...Nudge };  // Create a new object by spreading Nudge
+    arr = initiative[initiativeindex].data['Nudge'];
+   
+    arr.push(x);
+    initiative[initiativeindex].data['Nudge'] = arr;
+    SaveTask(initiativeindex);
+}
+function CreateNudgeBody(nudge,j)
+{let innerHTML=''
+    let i=parseFloat(j);
+            let time= getTimeDifference(nudge.createdAt);
+            innerHTML += `<div style="display: flex;
+            padding: 12px;
+            width:100%;
+            border-radius: var(--Radius-medium, 8px);
+            border: 1px solid var(--Gray-200, #EAECF0);
+            background: var(--White, #FFF);
+            gap: 10px;
+            align-self: stretch;" onmouseover="showIcons('.NudegTask${i}')" onmouseout="removeIcons('.NudegTask${i}')">
+            <div style="display: flex;
+            width: 32px;
+            height: 32px;
+            padding: 8px;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            border-radius: 28px;
+            ${nudge.style}
+            ">
+                <img src="${nudge.img}" style="${nudge.Id == '' ? '' : 'width:40px;height:40px;border-radius:40px;'}">
+            </div>
+            <div style="display: flex;flex-direction:column;gap:0px;width:100%">
+                <div style="display: flex;justify-content: space-between;align-items: center;gap: 10px;width:100%">
+<div style="display: flex;align-items: center;gap: 10px; font-size: 14px;
+                    font-style: normal;
+                    text-wrap: wrap;
+                    font-weight: 600;
+                    line-height: 20px; ">
+                    <div style="color: var(--Gray-700, #344054);
+                   "> ${nudge.title}
+                    </div>
+                    <div style="color: var(--Gray-500, #667085);">${time}</div>
+                    </div>
+                    <i style="color: #D0D5DD; cursor: pointer; display: none;" data-toggle="modal" data-target="#delete-NudegTask" class="NudegTask${i} fas fa-solid fa-trash" onclick="SetNudegTaskToDelete('${i}')"></i>
+
+                </div>
+                <div style="color: var(--Gray-700, #667085);
+                font-size: 14px;
+                font-style: normal;
+                text-wrap: wrap;
+                font-weight: 500;
+                letter-spacing: 0.14px;
+                line-height: 20px; ">
+                    ${nudge.description}
+                </div>
+            </div>
+        </div>`;
+   return innerHTML;
+}
+
+    function SetTaskNudgeModal(i) {
+       
+        initiativeindex = parseFloat(i);
+        let nudges = initiative[i].data.Nudge || [];
+        let innerHTML = '';
+        let PerviousTaskNudge = document.getElementById('PerviousTaskNudge');
+        if (nudges.length > 0) {
+            innerHTML += `<div style="color: var(--Gray-800, #1D2939);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;">
+                Previous Nudges
+            </div>`;
+        }
+        if(nudges.length>0){
+            let i=nudges.length-1;
+              innerHTML+=CreateNudgeBody(nudges[i],i);
+    }
+    if(nudges.length>1)
+    {
+        innerHTML+=`<div id="RemNudges" style="display: flex;
+width: 100%;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;"><div style="display: flex;
+justify-content: center;
+align-items: center;
+gap: 8px;
+cursor: pointer;
+color: #48BF84;
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+align-self: stretch;" onclick="ShowAllNudges('${initiativeindex}')">
+View All Nudges <i class="fas fa-solid fa-chevron-down"></i>
+</div></div>`
+    }
+    PerviousTaskNudge.innerHTML = innerHTML;
+    document.getElementById('TaskNudgeTitle').innerHTML = `Select the type of nudge you'd like to send.`;
+    document.getElementById('TaskNudgedescription').value = "";
+}
+function ShowAllNudges(i)
+{
+    initiativeindex = parseFloat(i);
+    let RemNudges=document.getElementById('RemNudges');
+    let nudges = initiative[initiativeindex].data.Nudge || [];
+    let innerHTML = '';
+    for(let i=nudges.length-2;i>=0;i--)
+    {
+     innerHTML+=CreateNudgeBody(nudges[i],i);
+    }
+    innerHTML+=`<div style="display: flex;
+justify-content: center;
+align-items: center;
+gap: 8px;
+color: #48BF84;
+text-align: center;
+font-size: 14px;
+cursor: pointer;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+align-self: stretch;" onclick="HideAllNudges('${initiativeindex}')">
+Hide Nudges <i class="fas fa-solid fa-chevron-up"></i>
+</div>`
+RemNudges.innerHTML=innerHTML;
+}
+function HideAllNudges(i)
+{
+    initiativeindex = parseFloat(i);
+    let RemNudges=document.getElementById('RemNudges');
+   
+    let innerHTML = '';
+    
+    innerHTML+=`<div style="display: flex;
+justify-content: center;
+align-items: center;
+gap: 8px;
+color: #48BF84;
+cursor: pointer;
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+align-self: stretch;" onclick="ShowAllNudges('${initiativeindex}')">
+View All Nudges <i class="fas fa-solid fa-chevron-down"></i>
+</div>`
+RemNudges.innerHTML=innerHTML;
+}
+
+function SetNudegTaskToDelete(index) {
+    NudgeTaskIndex = parseFloat(index);
+}
+
+function deleteTaskNudge() {
+    initiative[initiativeindex].data['Nudge'].splice(NudgeTaskIndex, 1);
+    SaveTask(initiativeindex);
+    SetTaskNudgeModal(initiativeindex);
+}
+
+</script>
+
+

@@ -14,7 +14,7 @@ const AuthorizedAdminSchema = new mongoose.Schema({
   },
   position: {
     type: Number,
-    required: true, // 0 -> Admin, 1-> Intern
+    required: true, // 0 -> Manager, 1-> Employee
   },
   createdAt: {
     type: Number,

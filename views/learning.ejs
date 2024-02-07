@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <meta name="author" content="Webpixels" />
+    <title>Trainity - Admin Panel</title>
+    <!-- Favicon -->
+    <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+    <!-- Font Awesome 5 -->
+    <link
+      rel="stylesheet"
+      href="../libs/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+    <!-- Purpose CSS -->
+    <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+    <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css"><!-- Page CSS -->
+  <link rel="stylesheet" href="../libs/fullcalendar/dist/fullcalendar.min.css">
+
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+  <!-- Hotjar Tracking Code for Admin Website -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3534926,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+  </head>
+
+  <body class="application application-offset">
+    <!-- Chat modal -->
+
+    <!-- Application container -->
+    <div class="container-fluid container-application">
+      <!-- Sidenav -->
+      <%- include('partials/sidepanel'); -%>
+      <!-- Content -->
+      <div class="main-content position-relative">
+        <!-- Main nav -->
+        <%- include('partials/navbar'); -%>
+
+        <!-- Page content -->
+        <div class="page-content">
+          
+          <!-- Page title -->
+          <div class="page-title">
+            <div class="row justify-content-between align-items-center">
+              <div
+                class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0"
+              >
+                <!-- Page title + Go Back button -->
+                <div class="d-inline-block">
+                  <h5 class="h4 d-inline-block font-weight-400 mb-0 text-white">
+                    Admin Panel
+                  </h5>
+                </div>
+                
+              </div>
+              
+            </div>
+          </div>
+
+          
+
+          <div class="card px-4 py-5">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    Course
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/book-lover.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">Create Course</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/create/course" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/folder-open.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">View Courses</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/view/courses" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+                    
+    
+    
+                    
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="card px-4 py-5">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    Track
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/book-lover.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">Create track</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/create/track" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/folder-open.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">View Tracks</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/view/tracks" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card px-4 py-5">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    Module
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/book-lover.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">Create Module</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/create/module" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/folder-open.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">View Modules</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/view/modules" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card px-4 py-5">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    Lesson
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/book-lover.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">Create Lesson</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/create/lesson" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/folder-open.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">View Lessons</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/view/lessons" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card px-4 py-5">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    Instructor
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/teaching.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">Create Instructor</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/create/lesson" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/folder-open.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">View Instructors</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/view/instructors" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card px-4 py-5">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    Projects
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/teaching.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">Create Project</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/create/project" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/folder-open.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">View Projects</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/view/project" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card px-4 py-5">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    Live Sessions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/teaching.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">Create Session</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/create/session" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                    <div class="list-group-item">
+                        
+                        <div class="media align-items-center">
+                            <div class="mr-3">
+                                <img alt="Image placeholder" src="./img/svg/illustrations/folder-open.svg" class="avatar  rounded-circle">
+                        
+                            </div>
+                            <div class="media-body text-limit">
+                                <h6 class="text-sm d-block text-limit mb-0">View Sessions</h6>
+                            </div>
+                            <div class="media-body text-right">
+                                <a href="/learning/view/sessions" type="button" class="btn btn-sm btn-secondary">Open</a>
+                            </div>
+                        </div>
+                
+                
+                    </div>
+
+                </div>
+            </div>
+        </div>
+          
+          
+          
+          
+          
+
+        
+      </div>
+    </div>
+    <!-- Scripts -->
+    <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+    <script src="../js/purpose.core.js"></script>
+    <!-- Page JS -->
+    <script src="../libs/autosize/dist/autosize.min.js"></script>
+    <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+  <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="../libs/moment/min/moment.min.js"></script>
+
+  <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+    <!-- Purpose JS -->
+    <script src="../js/purpose.js"></script>
+    <!-- Demo JS - remove it when starting your project -->
+    <script src="../js/demo.js"></script>
+    
+
+   
+   
+  </body>
+</html>

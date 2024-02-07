@@ -1,0 +1,4399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <meta name="author" content="Webpixels" />
+  <title>Trainity - Admin Panel</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+  <!-- Purpose CSS -->
+  <link rel="stylesheet" href="../css/purpose.css" id="stylesheet" />
+  <!-- Font Awesome 5 -->
+  <link rel="stylesheet" href="../libs/@fortawesome/fontawesome-free/css/all.min.css" />
+
+  <!-- <link rel="stylesheet" href="../libs/fullcalendar/dist/fullcalendar.min.css" />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../assets/libs/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+  <style>
+      body{
+            font-family: 'Manrope', sans-serif;
+        }
+    input {
+      background: transparent;
+    }
+  
+    .ProgressStep {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      flex: 1 0 0;
+      background: #FFF;
+    }
+  
+    input,
+    select {
+      border: none;
+      border-radius: 6px;
+    }
+  
+    textarea {
+      width: 100%;
+      height: 100px;
+    }
+  
+    thead {
+      background: var(--gray-100, #F2F4F7);
+    }
+  
+    td,.dropdown-menu {
+      color: var(--gray-700, #344054);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 142.857% */
+      /* 142.857% */
+    }
+  
+    th {
+      white-space: nowrap;
+      color: var(--gray-800, #1D2939);
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 18px;
+      /* 150% */
+    }
+  
+    .select_box {
+      white-space: nowrap;
+      display: flex;
+      min-height: 48px;
+      padding: 14px 20px;
+      align-items: center;
+      align-self: stretch;
+      border-radius: 12px;
+      border: 1px solid var(--gray-400, #98a2b3);
+      background: var(--gray-50, #f9fafb);
+      color: var(--gray-500, #667085);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      letter-spacing: 0.21px;
+    }
+  
+    .selected {
+      border-radius: 4px;
+      background: var(--success-50, #ECFDF3);
+    }
+  
+    
+  
+  
+    .progressTask {
+  
+      height: 8px;
+      flex-shrink: 0;
+      width: 95%;
+      border-radius: 4px;
+      background: var(--success-100, #D1FADF);
+    }
+  
+    .ProgressKeyResult {
+      height: 8px;
+      flex-shrink: 0;
+      width: 100%;
+      border-radius: 4px;
+      background: var(--success-100, #D1FADF);
+    }
+  
+    .progress__fill {
+  
+      height: 100%;
+      background: #48bf84;
+      transition: all 0.2s;
+      border-radius: 4px;
+    }
+  
+    .progress__bar {
+      height: 100%;
+      background: #48bf84;
+      transition: all 0.2s;
+      border-radius: 4px;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+</head>
+
+<body class="application application-offset" style="background: #fafafa;display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 24px;
+
+flex: 1 0 0;padding:32px;padding-top:10px;padding-right:32px;" id="MainPageContent">
+  <div style="
+    display: flex;
+    padding: 16px 4px 16px 32px;
+    align-items: center;
+    color: var(--gray-500, #667085);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+    gap: 4px;
+    cursor: pointer;
+  ">
+    <div onclick="Goback()" style="display: flex;align-items: center;gap:8px;"> <i class="fa fa-angle-left"
+        aria-hidden="true"></i>
+      Back</div>
+
+  </div>
+
+  <div style="
+  display: flex;
+align-items: flex-start;
+gap: 48px;
+flex-wrap: wrap;
+align-self: stretch;
+  ">
+    <div style="
+  max-width: min(100%,450px);
+  display: flex;
+padding: 24px 16px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 4px;
+flex: 1 0 0;
+align-self: stretch;
+border-radius: 12px;
+border: 1px dashed #DCDCDC;
+background: var(--surface-primary, #FFF);
+" onclick="selectFile('videoselection')" ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
+      <div id="video-uploaded-text" style="display: flex;
+
+flex-direction: column;
+justify-content: center;
+align-items: center;
+">
+        <img src="../Project icons/video-upload.svg">
+        <input type="file" name="file-1[]" accept="image/*, video/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="videoselection" class="custom-input-file"  onchange="handleFileSelect(event)" />
+        <p style="display: flex;gap:20px;color: #48BF84;color: var(--surface-button-primary, #48BF84);
+text-align: center;
+
+font-size: 12px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;">
+          <i class="fa fa-upload"></i>
+          <span>Click to Upload 
+
+          </span>
+        </p>
+        <span class="text-secondery">or Drag and Drop
+          ( jpg,png,pdf )</span>
+      </div>
+      <div style="display: none;
+  height: 79px;
+  align-items: center;
+  width: 222px;
+  justify-content: center;" id="file-uploaded-perview">
+       <img  style="width: 100%; height: 100%;" src="">
+      </div>
+    </div>
+    <div style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      flex: 1 0 0;
+      align-self: stretch;
+    ">
+      <input type="text" value="<%=project.title%>" style="
+        color: var(--gray-900, #101828);
+        font-size: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 135%;
+        width: 100%;
+        background-color: transparent;
+        border: none;
+      " />
+      <div style="display: flex;
+      align-items: center;
+      gap: 16px;
+      align-self: stretch;">
+        <div style="
+       display: flex;
+       align-items: center;
+       gap: 8px;
+       align-self: stretch;">
+          <img src="../img/Star.svg" style="
+       width: 32px;
+       height: 32px;
+       flex-shrink: 0;"> -
+        </div>
+        <div style="
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      align-self: stretch;">
+          <img src="../img/gem.svg" style="
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;"> -
+        </div>
+      </div>
+      <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;
+      ">
+        <div style="display: flex; align-items: center; gap: 16px">
+          <div style="
+            color: var(--gray-800, #1d2939);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          ">
+            Time period
+          </div>
+
+          <div id="reportrange" style="
+            display: flex;
+            padding: 10px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border-radius: var(--radius-medium, 8px);
+            border: 1px solid var(--gray-300, #d0d5dd);
+            background: var(--White, #fff);
+            /* Shadow/xs */
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+            color: var(--gray-700, #344054);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 20px; /* 142.857% */
+          ">
+
+            <img src="../Performance dashboard Icons/calander.svg" style="display: flex;
+          width: 40px;
+          height: 40px;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border: 1.5px solid var(--White, #FFF)" />
+            <span>
+              <%=project.startDate%>-<%=project.endDate%>
+            </span>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px">
+          <div style="
+            color: var(--gray-500, #667085);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+          ">
+            Owner
+          </div>
+          <% let EmployeeMap=new Map();%>
+            <div style="
+            display: flex;
+            padding: 0px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border-radius: var(--radius-medium, 8px);
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+            align-self: stretch;
+          ">
+              <img src="" id="OwnerImage" style="display: flex;
+        width: 40px;
+        height: 40px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 200px;
+        border: 1.5px solid var(--White, #FFF)">
+              <i class="fa fa-angle-down" aria-hidden="true" data-toggle="dropdown" aria-expanded="false"
+                id="Owners"></i>
+              <div class="dropdown-menu" style="
+            max-height: 300px;
+            min-width:250px;
+            max-width: max(300px, 50%);
+            overflow: auto;
+            flex-direction: column;
+          " aria-labelledby="Owners" id="DropDownOwners">
+                <%for(let employee of employeeList){%>
+                  <% EmployeeMap.set(employee._id.toString(),employee.displayName);%>
+                    <div style="
+              display: flex;
+              padding: 8px;
+              cursor: pointer;
+              align-items: center;
+              gap: 10px;
+              align-self: stretch;
+            " onclick="SelectOwner('<%=employee._id.toString()%>','<%=employee.image%>')">
+                      <img style="
+                display: flex;
+                width: 32px;
+                height: 32px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border-radius: 200px;
+              " src="<%=employee.image%>" />
+                      <div style="
+                display: flex;
+                flex-direction: column;
+                white-space: nowrap;
+                align-items: flex-start;
+              ">
+                        <div style="
+                  color: var(--gray-700, #344054);
+                  font-size: 14px;
+                  font-style: normal;
+                  
+    text-align: center;
+                  font-weight: 600;
+                  line-height: 20px; /* 142.857% */
+                ">
+                          <%=employee.displayName%>
+                        </div>
+                        <div style="
+                  color: var(--gray-500, #667085);
+                  
+                  font-size: 12px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: 18px; /* 150% */
+                ">
+                          <%=employee.team%>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="
+              height: 1px;
+              align-self: stretch;
+              background: var(--gray-200, #eaecf0);
+            "></div>
+                    <%}%>
+              </div>
+
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px">
+          <div style="
+            color: var(--gray-500, #667085);
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 24px; /* 150% */
+          ">
+            Sub- Owner
+          </div>
+          <div style="display: flex;max-width:200px ;overflow: hidden;align-items: center;" id="TeamsMembers">
+
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 16px">
+            <div style="
+              display: flex;
+              width: 40px;
+              height: 40px;
+              padding: 8px;
+              justify-content: center;
+              align-items: center;
+              border-radius: 20px;
+              border: 1px dashed var(--gray-300, #d0d5dd);
+              background: var(--White, #fff);
+            " id="Teams" data-toggle="modal" data-target="#selectTeamemployee" onclick="MarkSelectedEmployee()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
+                <path d="M8.80241 3.88416V13.2175M4.13574 8.55082H13.4691" stroke="#98A2B3" stroke-width="1.33333"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      align-self: stretch;
+      border-radius: 8px;
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+    <div style="
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+  ">
+      <div style="
+      color: var(--gray-800, #1d2939);
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px; /* 120% */
+    ">
+        Progress
+      </div>
+      <i class="fa fa-angle-down" aria-hidden="true" id="ProgressIcon"
+        onclick="ToogleIcon('ProgressIcon','ProgressBox')"></i>
+    </div>
+    <div style="
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        justify-content: space-between;
+        align-self: stretch;
+      " id="ProgressBox">
+      <% for(let i=0;i<project.phases;i++){%>
+        <div style="display: flex;
+      padding: 0px 12px;
+      align-items: flex-start;
+      gap: 16px;
+      align-self: stretch;">
+          <div class="ProgressStep">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="7.84766" r="7.84766" fill="#FDB022" />
+            </svg>
+
+            <div style="display: flex;gap:8px;align-items: center;flex-direction: column;">
+              <div style="display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        color: var(--gray-900, #101828);
+        text-overflow: ellipsis;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 20px; /* 142.857% */
+        ">
+               <%=project.phases[i].title%>
+              </div>
+              <div style="color: var(--gray-500, #667085);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px; /* 142.857% */"> <%=project.phases[i].date%> </div>
+            </div>
+          </div>
+        </div>
+        <%}%>
+
+    </div>
+    <div style=" display: flex;
+      width: 100%;
+      justify-content: space-between;align-items: center;">
+      <div class="progressTask">
+        <div class="progress__fill" id="progressPhases" style="width:  <%=project.progress%>%;"></div>
+
+      </div>
+      <div style="
+          color: var(--gray-700, #344054);
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 28px; /* 155.556% */
+        " id="progressPhasesValue">
+       <%=project.progress%>%
+      </div>
+    </div>
+    <div style="display: flex;align-items: center;gap:16px" data-target="#managephases" data-toggle="modal" onclick="SetPhases()">
+      <img src="../Performance dashboard Icons/setting.svg">
+      <div style="color: var(--ref-primary-primary-60-brand, #48BF84);
+      font-size: 16px;
+      cursor:pointer;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px; /* 100% */">Manage Phases</div>
+    </div>
+  </div>
+
+  <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      align-self: stretch;
+      border-radius: var(--radius-medium, 8px);
+
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+    <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+      ">
+      <div style="
+          color: var(--gray-800, #1d2939);
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px; /* 120% */
+        ">
+        PRD
+      </div>
+      <i class="fa fa-angle-down" aria-hidden="true" id="PRDIcon" onclick="ToogleIcon('PRDIcon','PRDBox')"></i>
+    </div>
+    <textarea style="
+        display: flex;
+        padding: 4px;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        border-radius: 8px;
+        background: #fff;
+        color: var(--gray-700, #344054);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px; /* 150% */
+        border: none;
+      " id="PRDBox" onchange="ChangeProjectData('PRD',event.target.value)" placeholder="Briefly describe about your project"><%=project.PRD%></textarea>
+  </div>
+  <div style="display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch; 
+    border-radius: var(--radius-medium, 8px);
+  
+    border: 1px solid var(--gray-300, #D0D5DD);
+    background: #FFF;">
+    <div style="
+             display: flex;
+             justify-content: space-between;
+             align-items: flex-start;
+             align-self: stretch;
+           ">
+      <div style="
+               color: var(--gray-800, #1d2939);
+               font-size: 20px;
+               font-style: normal;
+               font-weight: 700;
+               line-height: 24px; /* 120% */
+             ">
+        Objective
+      </div>
+      <i class="fa fa-angle-down" aria-hidden="true" id="ObjectiveIcon"
+        onclick="ToogleIcon('ObjectiveIcon','ObjectiveBox')"></i>
+    </div>
+    <div style="display: flex;width: 100%;" id="ObjectiveBox">
+      <div style="display: flex;
+      height: 48px;
+      width: 100%;
+      padding: 14px 20px;
+      justify-content: space-between;
+      align-items: center;
+      align-self: stretch;
+      border-radius: 12px;
+      border: 1px solid var(--gray-400, #98A2B3);
+      background: var(--White, #FFF);" id="ObjectiveBody" data-toggle="dropdown" aria-expanded="false">
+       <% for(let objective of OKRs) { %>
+ <% if(objective._id==project.objectiveId){%>
+    <%= objective.title%>
+  <%}%>
+        <%}%>
+    </div>
+      <div class="dropdown-menu" style="
+max-height: 300px;
+width: 95%;
+overflow: auto;
+flex-direction: column;
+" aria-labelledby="ObjectiveBody" id="DropDownObjectiveBody">
+        <% for(let objective of OKRs) { %>
+          <div style="
+display: flex;
+width: 100%;
+padding: 12px 16px;
+flex-direction:column;
+border-bottom: 1px solid var(--gray-300, #D0D5DD);
+background: #FFF;
+" onclick="SetObjectiveDetails('<%=objective._id%>','<%= objective.title%>')" data-target="#ChangingObjectiveAlert" data-toggle="modal">
+            <div style="color: var(--gray-900, #101828);
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 18px; /* 112.5% */
+letter-spacing: 0.24px;">
+              <%= objective.title%>
+            </div>
+            <div style="display: flex;align-items: center;gap:8px;">
+              <div style="color: var(--gray-500, #667085);
+
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 142.857% */
+letter-spacing: 0.21px;">
+                <%=objective.timePeriod.startDate%>-<%=objective.timePeriod.endDate%>
+              </div>
+            </div>
+          </div>
+          <%}%>
+      </div>
+    </div>
+  </div>
+  <div style="
+      display: flex;
+      padding: 16px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      align-self: stretch;
+      border-radius: var(--radius-medium, 8px);
+      border: 1px solid var(--gray-300, #d0d5dd);
+      background: #fff;
+    ">
+    <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+      ">
+      <div style="
+          color: var(--gray-800, #1d2939);
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 24px; /* 120% */
+        ">
+        Key Results
+      </div>
+      <i class="fa fa-angle-down" aria-hidden="true" id="KeyResultsIcon"
+        onclick="ToogleIcon('KeyResultsIcon','KeyResultsBox')"></i>
+    </div>
+    <div class="table-responsive" id="KeyResultsBox">
+      <table class="table align-items-center" >
+        <thead>
+      <tr>
+        <th scope="col" style="width: 300px;">Key Results</th>
+        <th scope="col">Owner</th>
+        <th scope="col">Status</th>
+        <th scope="col">DueDate</th>
+        <th scope="col">
+          Progress
+        </th>
+      </tr>
+      <tbody id="KeyResultsBody" class="list">
+     
+          <tr id="ClicktoaddnewKR" data-target="#ConnectKeyResults" style="cursor: pointer;" data-toggle="modal">
+            <td>
+              <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+    <path d="M15.2031 17.6953C16.5838 17.6953 17.7031 16.576 17.7031 15.1953C17.7031 13.8146 16.5838 12.6953 15.2031 12.6953C13.8224 12.6953 12.7031 13.8146 12.7031 15.1953C12.7031 16.576 13.8224 17.6953 15.2031 17.6953Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M5.20312 7.69531C6.58384 7.69531 7.70312 6.57602 7.70312 5.19531C7.70312 3.8146 6.58384 2.69531 5.20312 2.69531C3.82241 2.69531 2.70312 3.8146 2.70312 5.19531C2.70312 6.57602 3.82241 7.69531 5.20312 7.69531Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M5.20312 17.6953V7.69531C5.20313 9.68444 5.9933 11.5921 7.39982 12.9986C8.80635 14.4051 10.714 15.1953 12.7031 15.1953" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+              Click to Connect more KRs
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+
+        </tbody>
+    </table>
+  </div>
+ </div>
+  <div style="
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  border-radius: var(--radius-medium, 8px);
+  border: 1px solid var(--gray-300, #d0d5dd);
+  background: #fff;
+">
+<div style="
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+  ">
+  <div style="
+      color: var(--gray-800, #1d2939);
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px; /* 120% */
+    ">
+    Initiatives
+  </div>
+  <i class="fa fa-angle-down" aria-hidden="true" id="InitiativesIcon"
+    onclick="ToogleIcon('InitiativesIcon','InitiativesBox')"></i>
+</div>
+<div class="table-responsive" style="width: 100%;overflow: auto;" id="InitiativesBox">
+  <table class="table align-items-center" >
+    <thead> 
+      <tr >
+         <th scope="col">Sr No</th>
+        <% for(let header of TaskTableHeaders) {%>
+         <th scope="col"><%=header.title%></th>
+        <%}%>
+
+        
+        <!-- <th scope="col" style="width: auto;display: flex;gap:4px;align-items: center;"><i class="fa fa-plus" aria-hidden="true"></i>Add column</th> -->
+      </tr>
+    </thead>
+    <tbody  class="list" id="InitiativesBody">
+     
+  <% for(let i=0;i<initiative.length;i++){%>
+    <tr onclick="changeinitiativeIndex('<%=i%>')">
+      <td><%=i+1%></td>
+      <td onmouseover="showIcons('.OpenIcons<%=initiative[i]._id%>')" onmouseout="removeIcons('.OpenIcons<%=initiative[i]._id%>')" style="width: 300px;">
+        <div style="display: flex;align-items: center;gap:40px">
+        <div style="display: flex;gap:8px;align-items: center;">
+          <i class="fa fa-angle-right" style="font-size: 25px;color: #1D2939;" onclick="ShowsubTasks('<%=i%>')" id="ToogleIcon<%=i%>"></i>
+        <input type="text" value="<%=initiative[i].data?.Tasks%>" placeholder="Enter task title "  style="border:none;border-radius:6px;height: 30px;
+        background: transparent;" onchange="changeinitiativedata('<%=i%>','title',event.target.value)">
+        <img src="../Project icons/subparticon.svg"> <%=subTasks[i]?.length%>
+      </div>
+      <a href="/task/<%=initiative[i]._id%>" class="OpenIcons<%=initiative[i]._id%>" style="display: none;align-items: center;gap:8px;color: var(--gray-500, #667085);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 20px;">
+            <img src="../Project icons/maximize.svg">
+            Open
+            </a>
+    </div>
+      </td>
+      <td  style="width: 300px;">
+        <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        align-self: stretch;
+        overflow: hidden;
+        max-width:150px;
+        overflow: hidden;
+        text-overflow: ellipsis;" id="initiativeKR<%=i%>" data-toggle="dropdown" aria-expanded="false" onclick="CheckAllkrsBox('<%=i%>')">
+          <% if (initiative[i].data?.krs?.length === 0) { %>
+            Select  Key result
+        <% } else { %>
+            <% for (let j = 0; j < initiative[i].data?.krs?.length; j++) { %>
+                <%= initiative[i].data.krs[j].title %><%= j < initiative[i].data?.krs?.length - 1 ? ',' : '' %>
+            <% } %>
+        <% } %>
+        </div>
+      <div class="dropdown-menu initiativesKr" style="
+      flex-direction: column;
+
+      padding:5px 12px;border-radius:8px;
+    " aria-labelledby="initiativeKR<%=i%>">
+       
+      </div>
+       </td>
+       <td  style="width: 300px;">
+        <div  style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    align-self: stretch;
+                    overflow: hidden;
+                    max-width:150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;" id="initiativeSubKR<%=i%>" data-toggle="dropdown" aria-expanded="false" onclick="CheckAllSubkrsBox('<%=i%>')">
+          <% if (initiative[i].data?.subkrs?.length === 0) { %>
+            Select Sub Key result
+        <% } else { %>
+            <% for (let j = 0; j < initiative[i].data?.subkrs?.length; j++) { %>
+                <%= initiative[i].data.subkrs[j].title %><%= j < initiative[i].data?.subkrs?.length - 1 ? ',' : '' %>
+            <% } %>
+        <% } %>
+        
+          
+          
+      </div>
+       <div class="dropdown-menu initiativesSubKr" style="
+         flex-direction: column;
+         padding:5px 12px;border-radius:8px;
+       " aria-labelledby="initiativeSubKR<%=i%>">
+          
+         </div>
+       </td>
+      <td>
+        <div  style="padding:5px 12px;border-radius:16px;" id="initiativePImpact<%=i%>" data-toggle="dropdown" aria-expanded="false">
+      
+        <%if(initiative[i].data?.PImpact=='Extreme'){%>
+          <div class="Status_hold">Extreme</div>
+          <%}%>
+            <%if(initiative[i].data?.PImpact=='High'){%>
+              <div class="Status_progress">High</div>
+              <%}%>
+                <%if(initiative[i].data?.PImpact=='Very High'){%>
+                  <div class="Status_orange">Very High</div>
+                  <%}%>
+                    <%if(initiative[i].data?.PImpact=='Low'){%>
+                      <div class="Status_notStarted">Low</div>
+                      <%}%>
+                       
+
+      
+      </div>
+       <div class="dropdown-menu" style="
+         flex-direction: column;
+       " aria-labelledby="initiativePImpact<%=i%>" id="initiativePImpact<%=i%>dropdown">
+           <div class="StatusBox" onclick="setStatusToTask('Extreme','PImpact',0)">
+            <div class="Status_hold">Extreme</div>
+          </div>
+          <div class="StatusBox" onclick="setStatusToTask('High','PImpact',1)">
+            <div class="Status_progress">High</div>
+          </div>
+          <div class="StatusBox" onclick="setStatusToTask('Very High','PImpact',2)">
+            <div class="Status_orange">Very High</div>
+          </div>
+          <div class="StatusBox" onclick="setStatusToTask('Low','PImpact',3)">
+            <div class="Status_notStarted">Low</div>
+          </div>
+         </div>
+       </td>
+     <td><input type="text" style="width:50px;border:1px solid" value="<%=initiative[i].data?.Effort%>" onchange="changeinitiativedata('<%=i%>','Effort',event.target.value)"></td>
+     <td>
+      <div  style="padding:5px 12px;border-radius:16px;" id="initiativeClarity<%=i%>" data-toggle="dropdown" aria-expanded="false">
+    
+
+          <%if(initiative[i].data?.Clarity=='High'){%>
+            <div class="Status_completed">High</div>
+            <%}%>
+              <%if(initiative[i].data?.Clarity=='Medium'){%>
+                <div class="Status_orange">Medium</div>
+                <%}%>
+                  <%if(initiative[i].data?.Clarity=='Low'){%>
+                    <div class="Status_progress">Low</div>
+                    <%}%>
+                     
+
+    
+    </div>
+     <div class="dropdown-menu" style="
+       flex-direction: column;
+     " aria-labelledby="initiativeClarity<%=i%>" id="initiativeClarity<%=i%>dropdown">
+        
+        <div class="StatusBox" onclick="setStatusToTask('High','Clarity',0)">
+          <div class="Status_completed">High</div>
+        </div>
+        <div class="StatusBox" onclick="setStatusToTask('Medium','Clarity',1)">
+          <div class="Status_orange">Medium</div>
+        </div>
+        <div class="StatusBox" onclick="setStatusToTask('Low','Clarity',2)">
+          <div class="Status_progress">Low</div>
+        </div>
+       </div>
+     </td>
+     <td id="Owner<%=i%>">
+      <div  style="display: flex;align-items: center;gap:12px;" id="initiativeOwner<%=i%>" data-toggle="dropdown" aria-expanded="false">
+    <img src="<%=initiative[i].data?.Owner?.image?.length>0?initiative[i].data?.Owner?.image:'../Performance dashboard Icons/Empty_User.svg'%>" style="width: 24px;height: 24px;border-radius:200px ;"> <%=initiative[i].data?.Owner?.name?.length>0?initiative[i].data?.Owner?.name:'Select Owner'%>
+    </div>
+    <div class="dropdown-menu initiativesOwner" style="
+    flex-direction: column;
+    padding: 5px 12px;
+  " aria-labelledby="initiativeOwner<%=i%>">
+
+  </div>
+    </td>
+     <td><input type="number" style="width: 50px;border:1px solid" value="<%=initiative[i].data?.Badges%>" onchange="changeinitiativedata('<%=i%>','Badges',event.target.value)"></td>
+     <td><input type="date" style="width: 100px;" value="<%=initiative[i].data['DueDate']%>" onchange="changeinitiativedata('<%=i%>','DueDate',event.target.value)"></td>
+     <td><input type="date" style="width: 100px;" value="<%=initiative[i].data['AllotmentDate']%>" onchange="changeinitiativedata('<%=i%>','AllotmentDate',event.target.value)"></td>
+     <td>
+      <div  style="padding:5px 12px;border-radius:16px;" id="initiativeStatus<%=i%>" data-toggle="dropdown" aria-expanded="false">
+          <%if(initiative[i].data?.Status=='Completed'){%>
+            <div class="Status_completed">Completed</div>
+            <%}%>
+              <%if(initiative[i].data?.Status=='In Progress'){%>
+                <div class="Status_progress">In Progress</div>
+                <%}%>
+                <%if(initiative[i].data?.Status=='Upcoming'){%>
+                  <div class="Status_upcoming">Upcoming</div>
+                  <%}%>
+                    <%if(initiative[i].data?.Status=='Not Started'){%>
+                      <div class="Status_notStarted">Not Started</div>
+                      <%}%>
+                  <%if(initiative[i].data?.Status=='On Hold'){%>
+                    <div class="Status_hold">On Hold</div>
+                    <%}%>
+                     
+
+    
+    </div>
+     <div class="dropdown-menu" style="
+       flex-direction: column;
+     " aria-labelledby="initiativeStatus<%=i%>" id="initiativeStatus<%=i%>dropdown">
+        
+        <div class="StatusBox" onclick="setStatusToTask('Completed','Status',0)">
+          <div class="Status_completed">Completed</div>
+        </div>
+        <div class="StatusBox" onclick="setStatusToTask('In Progress','Status',1)">
+          <div class="Status_progress">In Progress</div>
+        </div>
+        <div class="StatusBox" onclick="setStatusToTask('Upcoming','Status',2)">
+          <div class="Status_upcoming">Upcoming</div>
+        </div>
+        <div class="StatusBox" onclick="setStatusToTask('Not Started','Status',3)">
+          <div class="Status_notStarted">Not Started</div>
+        </div>
+        <div class="StatusBox" onclick="setStatusToTask('On Hold','Status',4)">
+          <div class="Status_hold">On Hold</div>
+        </div>
+       </div>
+     </td>
+     <td class="d-flex align-items-center gap-3">
+      <input type="file" id="TaskFileInputField<%=i%>" style="width: 0px;" onchange="handleTaskFileSelect(event)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*">
+      <div id="initiativeStatus<%=i%>" data-toggle="dropdown" aria-expanded="false">
+          <span id='Task-FileBody-<%=i%>'><%= initiative[i].data?.files?.length%></span>
+          <img src="../Performance dashboard Icons/File.svg" style="width: 24px; height: 24px;">
+      </div>
+      <img src="../img/Add.svg" onclick="OpenFileInput('TaskFileInputField<%=i%>')">
+      <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativeTaskFile<%=i%>dropdown"></div>
+  </td>
+ 
+  
+  <td>
+    <div  style="padding:5px 12px;border-radius:16px;" id="initiativeSubmissionApproval<%=i%>" data-toggle="dropdown" aria-expanded="false">
+  
+
+        <%if(initiative[i].data['SubmissionApproval']=='Approved'){%>
+          <div class="Status_completed">Approved</div>
+          <%}%>
+                <%if(initiative[i].data['SubmissionApproval']=='Pending'){%>
+                  <div class="Status_progress">Pending</div>
+                  <%}%>
+                   
+
+  
+  </div>
+   <div class="dropdown-menu" style="
+     flex-direction: column;
+   " aria-labelledby="initiativeSubmissionApproval<%=i%>" id="initiativeSubmissionApproval<%=i%>dropdown">
+      
+      <div class="StatusBox" onclick="setStatusToTask('Approved','SubmissionApproval',0)">
+        <div class="Status_completed">Approved</div>
+      </div>
+      <div class="StatusBox" onclick="setStatusToTask('Pending','SubmissionApproval',1)">
+        <div class="Status_progress">Pending</div>
+      </div>
+     </div>
+   </td>
+
+       <td class="d-flex align-items-center gap-3">
+        <div style="padding: 5px 12px; border-radius: 16px; display: flex; gap: 8px; align-items: center;" data-toggle="dropdown" aria-expanded="false">
+          <span id='Task-LinkBody-<%=i%>'><%= initiative[i].data && initiative[i].data.links ? initiative[i].data.links.length : 0 %></span>
+          <img src="../Performance dashboard Icons/Link.svg" style="width: 24px; height: 24px;">
+          
+        </div>
+        <img src="../img/Add.svg" data-target="#AddTaskLink" data-toggle="modal">
+        <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativeTaskLink<%=i%>dropdown"></div>
+    </td>
+     </tr>
+     <% for(let j=0;j<subTasks[i].length;j++){%>
+      <tr onclick="changeSubTaskIndex('<%=j%>')" style="display: none;" class="subTasks<%=i%>">
+        <td></td>
+        <td onmouseover="showIcons('.OpenIcon<%=subTasks[i][j]._id%>')" onmouseout="removeIcons('.OpenIcon<%=subTasks[i][j]._id%>')" style="width: 300px;display:flex;gap:8px;align-items: center;">
+          <img src="../img/subkrdropdown.svg" style="margin: -16px 0px;"> 
+            <div style="display: flex;align-items: center;gap:40px">
+                <div style="display: flex;gap:8px;align-items: center;">
+                   <input type="text" value="<%=subTasks[i][j].data.Tasks%>" placeholder="Enter Sub Task title "  style="border: none;
+                   border-radius: 6px;
+                   height: 30px;
+                   background: transparent;" onchange="changesubTaskdata('<%=i%>','Tasks',event.target.value)">
+                   
+                </div>
+            </div>
+        </td>
+        <td style="width: 300px;">
+           
+        </td>
+        <td style="width: 300px;">
+           
+        </td>
+       
+        <td>
+          <div  style="padding:5px 12px;border-radius:16px;" id="subTaskPImpact<%=i%>-<%=j%>" data-toggle="dropdown" aria-expanded="false">
+          
+          <%if(subTasks[i][j].data?.PImpact=='Extreme'){%>
+            <div class="Status_hold">Extreme</div>
+            <%}%>
+              <%if(subTasks[i][j].data?.PImpact=='High'){%>
+                <div class="Status_progress">High</div>
+                <%}%>
+                  <%if(subTasks[i][j].data?.PImpact=='Very High'){%>
+                    <div class="Status_orange">Very High</div>
+                    <%}%>
+                      <%if(subTasks[i][j].data?.PImpact=='Low'){%>
+                        <div class="Status_notStarted">Low</div>
+                        <%}%>
+                         
+          
+                        
+          </div>
+          <div class="dropdown-menu" style="
+           flex-direction: column;
+          " aria-labelledby="subTaskPImpact<%=i%>-<%=j%>" id="subTaskPImpact<%=i%>-<%=j%>dropdown">
+             <div class="StatusBox" onclick="setStatusToSubTask('Extreme','PImpact',0)">
+              <div class="Status_hold">Extreme</div>
+            </div>
+            <div class="StatusBox" onclick="setStatusToSubTask('High','PImpact',1)">
+              <div class="Status_progress">High</div>
+            </div>
+            <div class="StatusBox" onclick="setStatusToSubTask('Very High','PImpact',2)">
+              <div class="Status_orange">Very High</div>
+            </div>
+            <div class="StatusBox" onclick="setStatusToSubTask('Low','PImpact',3)">
+              <div class="Status_notStarted">Low</div>
+            </div>
+           </div>
+          </td>
+          <td><input type="text" style="width:50px;border:1px solid" value="<%=subTasks[i][j].data?.Effort%>" onchange="changesubTaskdata('<%=j%>','Effort',event.target.value)"></td>
+          <td>
+          <div  style="padding:5px 12px;border-radius:16px;" id="subTaskClarity<%=i%>-<%=j%>" data-toggle="dropdown" aria-expanded="false">
+          
+          
+            <%if(subTasks[i][j].data?.Clarity=='High'){%>
+              <div class="Status_completed">High</div>
+              <%}%>
+                <%if(subTasks[i][j].data?.Clarity=='Medium'){%>
+                  <div class="Status_orange">Medium</div>
+                  <%}%>
+                    <%if(subTasks[i][j].data?.Clarity=='Low'){%>
+                      <div class="Status_progress">Low</div>
+                      <%}%>
+                       
+          
+          
+          </div>
+          <div class="dropdown-menu" style="
+          flex-direction: column;
+          " aria-labelledby="subTaskClarity<%=i%>-<%=j%>" id="subTaskClarity<%=i%>-<%=j%>dropdown">
+          
+          <div class="StatusBox" onclick="setStatusToSubTask('High','Clarity',0)">
+            <div class="Status_completed">High</div>
+          </div>
+          <div class="StatusBox" onclick="setStatusToSubTask('Medium','Clarity',1)">
+            <div class="Status_orange">Medium</div>
+          </div>
+          <div class="StatusBox" onclick="setStatusToSubTask('Low','Clarity',2)">
+            <div class="Status_progress">Low</div>
+          </div>
+          </div>
+          </td>
+        <td >
+           
+        </td>
+        <td><input type="number" style="width: 50px;border:1px solid" value="<%=subTasks[i][j].data.Badges%>"  onchange="changesubTaskdata('<%=j%>','Badges',event.target.value)"></td>
+     <td><input type="date" style="width: 100px;"  value="<%=subTasks[i][j].data['DueDate']%>"  onchange="changesubTaskdata('<%=j%>','DueDate',event.target.value)"></td>
+     <td><input type="date" style="width: 100px;"  value="<%=subTasks[i][j].data['AllotmentDate']%>"  onchange="changesubTaskdata('<%=j%>','AllotmentDate',event.target.value)"></td>
+     
+        <td>
+            <div style="padding:5px 12px;border-radius:16px;" id="subTaskStatus<%=i%>-<%=j%>" data-toggle="dropdown" aria-expanded="false">
+
+                <%if(subTasks[i][j].data?.Status=='Completed'){%>
+            <div class="Status_completed">Completed</div>
+            <%}%>
+              <%if(subTasks[i][j].data?.Status=='In Progress'){%>
+                <div class="Status_progress">In Progress</div>
+                <%}%>
+                <%if(subTasks[i][j].data?.Status=='Upcoming'){%>
+                  <div class="Status_upcoming">Upcoming</div>
+                  <%}%>
+                    <%if(subTasks[i][j].data?.Status=='Not Started'){%>
+                      <div class="Status_notStarted">Not Started</div>
+                      <%}%>
+                  <%if(subTasks[i][j].data?.Status=='On Hold'){%>
+                    <div class="Status_hold">On Hold</div>
+                    <%}%>
+                   </div>
+            <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="subTaskStatus<%=i%>-<%=j%>" id="subTaskStatus<%=i%>-<%=j%>dropdown">
+               <div class="StatusBox" onclick="setStatusToSubTask('Completed','Status',0)"><div class="Status_completed">Completed</div></div>
+                <div class="StatusBox" onclick="setStatusToSubTask('In Progress','Status',1)"><div class="Status_progress">In Progress</div></div>
+                <div class="StatusBox" onclick="setStatusToSubTask('Upcoming','Status',2)"><div class="Status_upcoming">Upcoming</div></div>
+               <div class="StatusBox" onclick="setStatusToSubTask('Not Started','Status',3)"><div class="Status_notStarted">Not Started</div></div>
+                <div class="StatusBox" onclick="setStatusToSubTask('On Hold','Status',4)"><div class="Status_hold">On Hold</div></div>
+            </div>
+        </td>
+        <td class="d-flex align-items-center gap-3">
+           </td>
+        <td>
+            <div style="padding:5px 12px;border-radius:16px;" id="subTaskSubmissionApproval<%=i%>-<%=j%>" data-toggle="dropdown" aria-expanded="false">
+              <%if(subTasks[i][j].data['SubmissionApproval']=='Approved'){%>
+                <div class="Status_completed">Approved</div>
+                <%}%>
+                      <%if(subTasks[i][j].data['SubmissionApproval']=='Pending'){%>
+                        <div class="Status_progress">Pending</div>
+                        <%}%>
+            </div>
+            <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="subTaskSubmissionApproval<%=i%>-<%=j%>" id="subTaskSubmissionApproval<%=i%>-<%=j%>dropdown">
+              <div class="StatusBox" onclick="setStatusToSubTask('Approved','SubmissionApproval',0)"><div class="Status_completed">Approved</div></div>
+               <div class="StatusBox" onclick="setStatusToSubTask('Pending','SubmissionApproval',1)"><div class="Status_progress">Pending</div></div>
+            </div>
+        </td>
+        <td class="d-flex align-items-center gap-3">
+           </td>
+    </tr>
+
+      <%}%>
+
+      <tr id="ClicktoaddnewsubTasks<%=i%>" class="subTasks<%=i%>" style="display: none;" >
+        <td></td>
+        <td style="display: flex;gap:8px;align-items: center;" >
+          <img src="../img/subkrdropdown.svg" style="margin: -16px 0px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none" onclick="AddsubTasks('<%=i%>')">
+            <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <div style="display: flex;
+          padding: 4px;
+          justify-content: center;
+          align-items: center;
+          gap: 4px;
+          cursor: pointer;
+          border-radius: 4px;
+          border: 1px solid var(--gray-600, #475467);" onclick="AddsubTasks('<%=i%>')">
+          Click to add new subTasks
+          </div>
+
+        </td>
+        
+      </tr>
+    <%}%>
+      <tr id="Clicktoaddnewinitiative" >
+        <td></td>
+        <td style="display: flex;gap:8px;align-items: center;" >
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none" onclick="Addinitiatives()">
+            <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <div style="display: flex;
+          padding: 4px;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          gap: 4px;
+          border-radius: 4px;
+          border: 1px solid var(--gray-600, #475467);" onclick="Addinitiatives()">
+          Click to add new initiative
+          </div>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+</table>
+</div>
+</div>
+
+<div style="
+display: flex;
+padding: 16px;
+flex-direction: column;
+align-items: flex-start;
+gap: 12px;
+align-self: stretch;
+border-radius: var(--radius-medium, 8px);
+
+border: 1px solid var(--gray-300, #d0d5dd);
+background: #fff;
+">
+<div style="
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+">
+  <div style="
+    color: var(--gray-800, #1d2939);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 120% */
+  ">
+    Roadmap
+  </div>
+  <i class="fa fa-angle-down" aria-hidden="true" id="RoadmapIcon"
+    onclick="ToogleIcon('RoadmapIcon','RoadmapBox')"></i>
+</div>
+<div style="display: flex;flex-direction: column; gap: 8px; align-items: flex-start" id="RoadmapBox">
+  <% for(let i=0;i<project.roadmap?.length;i++){%>
+    <div style="display: flex;align-items: center;gap:8px" >
+      <input type="checkbox" style="width:25px;height: 25px;" <%= project.roadmap[i].status ? 'checked' : '' %> onclick="ChangeStatusRoadMapPoint('<%=i%>')"/>
+     <input type="text" onchange="ChangeTitleRoadMapPoint('<%=i%>',event.target.value)"
+        placeholder="Click to add new Checkpoint" style="border:none;border-radius:6px;padding:4px;color: var(--gray-800, #1D2939);
+width:100%;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */" value="<%=project.roadmap[i].title%>">
+    </div>
+    <%}%>
+
+    <div style="display: flex;align-items: center;gap:8px" id="AddRoadMapPoint" onclick="AddRoadMapPoint()">
+      <!-- <input type="checkbox" style="width: 20px;height: 20px;"/>
+      -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+          <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        <div style="display: flex;
+            padding: 4px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 1px solid var(--gray-600, #475467);">
+        Click to add new Checkpoint
+        </div>
+    </div>
+</div>
+</div>
+
+  <div style="
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+    border-radius: var(--radius-medium, 8px);
+
+    border: 1px solid var(--gray-300, #d0d5dd);
+    background: #fff;
+  ">
+    <div style="
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      align-self: stretch;
+    ">
+      <div style="
+        color: var(--gray-800, #1d2939);
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px; /* 120% */
+      ">
+        Parameters
+      </div>
+      <i class="fa fa-angle-down" aria-hidden="true" id="ParametersIcon"
+        onclick="ToogleIcon('ParametersIcon','ParametersBox')"></i>
+    </div>
+    <textarea style="
+      display: flex;
+      padding: 4px;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      border-radius: 4px;
+      background: #fff;
+      color: var(--gray-700, #344054);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px; /* 150% */
+    " id="ParametersBox" onchange="ChangeProjectData('Parameters',event.target.value)"
+      placeholder="Feature: Employee Productivity Improvement Module Description: This module aims to enhance employee productivity by streamlining work processes and providing tools to monitor and measure performance."><%=project.Parameters%></textarea>
+  </div>
+
+  <div style="display: flex;
+  padding: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  align-self: stretch;
+  border-radius: var(--radius-medium, 8px);
+  border: 1px solid var(--gray-300, #D0D5DD);
+  background: #FFF;
+  ">
+                          <div style="color: var(--gray-800, #1D2939);
+  
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;">Attach files and links</div>
+                          <div style="display: flex;align-items: center;gap:8px;flex-wrap: wrap;"
+                            id="Project_LinkFileBody">
+  
+                          </div>
+                          <div style="display: flex;
+  align-items: flex-start;
+  gap: 8px;">
+                            <div style="display: flex;
+  width: 103px;
+  height: 52px;
+  padding: 16px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: #FFF;" onclick="OpenFileInput('FileInputFild')">
+                              <input type="file" id="FileInputFild" style="width: 0px;"
+                                onchange="handleProjectFileSelect(event)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                  text/plain, application/pdf, image/*">
+                              <img src="../Performance dashboard Icons/File.svg">
+                              <img src="../Performance dashboard Icons/AddMedia.svg">
+                            </div>
+                            <div style="display: flex;
+  width: 103px;
+  height: 52px;
+  padding: 16px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: #FFF;" data-target="#AddProjectLink" data-toggle="modal">
+                              <img src="../Performance dashboard Icons/Link.svg">
+                              <img src="../Performance dashboard Icons/AddMedia.svg">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div style="display: flex;
+                        padding: 16px;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 20px;
+                        align-self: stretch;
+                        border-radius: var(--radius-medium, 8px);
+                        border: 1px solid var(--gray-300, #D0D5DD);
+                        background: #FFF;">
+                        <div style="color: var(--gray-800, #1D2939);
+                        font-size: 20px;
+                        font-style: normal;
+                        font-weight: 700;
+                        line-height: 24px; /* 120% */">Comments</div>
+                        <div style="display: flex;
+                        align-items: flex-start;
+                        gap: 8px;
+                        align-self: stretch;">
+                      <img src="<%=user?.image%>" style="display: flex;
+                      width: 32px;
+                      height: 32px;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      border-radius: 200px;">
+                      <div style="width: 100%;">
+                      <textarea style="display: flex;
+                      padding: 14px 20px;
+                      align-items: flex-start;
+                      gap: 10px;
+                      width: 100%;
+                      height: 100px;
+                      flex: 1 0 0;
+                      align-self: stretch;
+                      border-radius: 12px;
+                      border: 1px solid #ECECEC;
+                      color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+                      background: #FFF;" placeholder="Leave a comment" id="CommentBox"></textarea>
+                       <button class="btn btn-outline-primary" style="display: flex;
+                      margin-top: 12px;
+                       justify-content: center;
+                       align-items: center;
+                       gap: 8px;
+                       align-self: stretch;
+                       border-radius: 12px;" onclick="SaveComment()"> Comment</button>
+                      </div>
+                    </div>
+                      <div style="display: flex;flex-direction: column;gap:12px;align-items: flex-start;" id="CommentBody">
+                      <%for(let comment of project.comments){%>
+                        <div style="display: flex;
+                        align-items: flex-start;
+                        gap: 8px;
+                        align-self: stretch;">
+                      <img src="<%=comment.image%>" style="display: flex;
+                      width: 32px;
+                      height: 32px;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      border-radius: 200px;">
+                      <div style="display: flex;
+                      padding: 14px 20px;
+                      align-items: flex-start;
+                      gap: 10px;
+                      width: 100%;
+                      flex: 1 0 0;
+                      align-self: stretch;
+                      border-radius: 12px;
+                      border: 1px solid #ECECEC;
+                      color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+                      background: #FFF;" placeholder="Leave a comment"><%=comment.content%></div>
+                      </div>
+                        <%}%>
+                      </div>
+                        </div>
+  <!--  select Employee -->
+
+  <div class="modal fade docs-example-modal-lg" id="selectTeamemployee" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="max-height: 90vh;overflow: auto;">
+        <div class="modal-header" style="display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 70px;">
+          <h5 class="modal-title h6">Add Team member</h5>
+
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+
+        </div>
+        <div class="modal-body" style="border-radius: 14px;
+          background: var(--surface-secondary, #FAFAFA);">
+          <div style="display: flex;
+            padding: 10px 14px;
+            align-items: center;
+            gap: 8px;
+            align-self: stretch;
+            border-radius: var(--radius-medium, 8px);
+            border: 1px solid var(--gray-300, #D0D5DD);
+            background: var(--White, #FFF);
+            /* Shadow/xs */
+            box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);">
+            <img src="../Project icons/Search_icon.svg">
+            <input type="text" style="border: none;width: 100%;" placeholder="Search for Employee" id="searchModalInput"
+              oninput="filterAndSortModalEmployees(event.target.value)">
+          </div>
+
+          <div style="display:flex;flex-wrap: wrap;gap:0px 16px" id="EmployeesModalBody">
+
+            <% for(let team of teams){%>
+
+              <div onclick="MarkSelectedEmployeeinModal('<%=team.title%>','<%=team._id%>','team')" style="display: flex;
+                  padding: 16px 24px;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 8px;
+                  flex: 1 0 0;
+                  align-self: stretch;" id="Employee-<%=team._id%>" class="Employees">
+                <div style="position: relative;display: none;" id="selectIcon-<%=team._id%>" class="EmployeesIcons">
+                  <div>
+                    <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+                      width: 20px;
+                      height: 20px;
+                      padding: 3px;
+                      justify-content: center;
+                      align-items: center;
+                      position: absolute;
+                      right: -70px;
+                      top: -8px;
+                      border-radius: 30.001px;
+                      background: var(--brand-primary, #48BF84);">
+                  </div>
+                </div>
+                <img style="display: flex;
+                 width: 40px;
+                 height: 40px;
+                 flex-direction: column;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 200px;" src="../Performance dashboard Icons/teams_icon.svg">
+                <div style="display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;">
+                  <div style="color: var(--text-content-primary, #181818);
+      font-size: 14px;
+      font-style: normal;
+      white-space: nowrap;
+      font-weight: 600;
+      line-height: normal;">
+                    <%=team.title%>
+                  </div>
+                  <div style="display: -webkit-box;
+width: 85px;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 1;
+overflow: hidden;
+color: var(--text-content-secondary, #898989);
+text-overflow: ellipsis;
+
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+                    ">
+                    <% for(let employeeId of team.employees) {%>
+                      <%=EmployeeMap.get(employeeId)%> ,
+                        <%}%>
+                  </div>
+                </div>
+
+              </div>
+              <% } %>
+
+
+                <% for (let employee of employeeList) { %>
+                  <% let index=employee._id%>
+                    <% employee=employee;%>
+                      <div
+                        onclick="MarkSelectedEmployeeinModal('<%=employee.displayName%>','<%=employee._id%>',['<%=employee._id%>'])"
+                        style="display: flex;
+              padding: 16px 24px;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              gap: 8px;
+              flex: 1 0 0;
+              align-self: stretch;" id="Employee-<%=employee._id%>" class="Employees">
+                        <div style="position: relative;display: none;" id="selectIcon-<%=employee._id%>"
+                          class="EmployeesIcons">
+                          <div>
+                            <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+                  width: 20px;
+                  height: 20px;
+                  padding: 3px;
+                  justify-content: center;
+                  align-items: center;
+                  position: absolute;
+                  right: -70px;
+                  top: -8px;
+                  border-radius: 30.001px;
+                  background: var(--brand-primary, #48BF84);">
+                          </div>
+                        </div>
+                        <img style="display: flex;
+             width: 40px;
+             height: 40px;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;
+             border-radius: 200px;" src="<%=employee.image%>">
+                        <div style="display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;">
+                          <div style="color: var(--text-content-primary, #181818);
+  font-size: 14px;
+  font-style: normal;
+  white-space: nowrap;
+ 
+    text-align: center;
+  font-weight: 600;
+  line-height: normal;">
+                            <%=employee.displayName%>
+                          </div>
+                          <div style="color: var(--text-content-secondary, #898989);
+  font-size: 14px;
+  font-style: normal;
+  white-space: nowrap;
+  font-weight: 600;
+  line-height: normal;">
+                            <%=employee.team%>
+                          </div>
+                        </div>
+
+                      </div>
+                      <% } %>
+          </div>
+        </div>
+        <div class="modal-footer" style="padding: 0.5rem;">
+          <button type="button" class="btn btn-outline-primary" data-dismiss="modal" style="display: flex;
+            padding: 16px 40px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+          
+            border-radius: 12px;">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SaveEmployee()" style="display: flex;
+            padding: 16px 40px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            background-color: #48BF84;
+            border-radius: 12px;">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--  Manage Phases -->
+
+  <div class="modal fade docs-example-modal-lg" id="managephases" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="max-height: 90vh;overflow: auto;">
+        <div class="modal-header" style="display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 70px;">
+          <h5 class="modal-title h6">Manage Phases</h5>
+
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+
+        </div>
+        <div class="modal-body" style="    display: flex;
+        border-radius: 14px;
+        padding: 45px 10px;
+        gap: 16px;
+        background: white;
+        flex-direction: column;" id="PhasesModalBody">
+        <div style="display: flex;
+        padding-right: 0px;
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;">
+      <div style="display: flex;gap:12px;align-items: center;">
+      <img src="../Project icons/horizontalBar.svg">
+      <div style="display: flex;gap:8px;align-items: center;">
+      <div style="width: 15.695px;
+      height: 15.695px;border-radius: 50%;" class="bg-yellow"></div>
+      <div style="display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+      color: var(--gray-900, #101828);
+      text-overflow: ellipsis;
+      
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 20px; /* 142.857% */">Intitation</div>
+      </div>
+      </div>  
+      <div id="phaseDate${id}">
+
+      </div>
+      <div style="display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 24px;">
+    <img src="../Project icons/green_rounded.svg" id="Phase${id}" onclick="CompletePhase()">
+    <img src="../Project icons/delete_phase.svg" onclick="deletePhase('title')">
+    </div>
+      </div>
+        </div>
+        <div class="modal-footer" style="padding: 0.5rem;">
+          <button type="button" class="btn btn-outline-primary" data-dismiss="modal" style="display: flex;
+            padding: 16px 40px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+          
+            border-radius: 12px;">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SetPhaseProject()" style="display: flex;
+            padding: 16px 40px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            background-color: #48BF84;
+            border-radius: 12px;">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+
+  <!--  Connect Key Results -->
+  <div class="modal fade docs-example-modal-xl" tabindex="-1" role="dialog" id="ConnectKeyResults"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header" style="
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+      ">
+          <div style="
+          color: var(--gray-900, #101828);
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+        ">
+             Connect Key Results
+          </div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal" />
+        </div>
+
+        <div class="modal-body" style="
+        display: flex;
+        padding: 20px 32px;
+        flex-direction: column;
+        overflow: auto;
+        max-height: 70vh;
+        align-items: flex-start;
+        gap: 32px;
+      ">
+<div style="color: var(--gray-600, #475467);
+font-size: 16px;
+font-style: normal;
+flex: 1 0 0;
+font-weight: 500;
+line-height: normal;">Select Key Results which you wish to connect with <span style="font-weight: 700;" id="ObjectiveTitleModal">P - management: Internal team productivity enhancement tool</span></div>
+        <div class="table-responsive">
+          <table class="table align-items-center" >
+            <thead> 
+          <tr id="KrsModalHeader">
+            <th scope="col"  class="sort" onclick="CheckAllKrs()" id="checkall"><input type="checkbox" style="width:25px;height: 25px;"></th>
+            <th scope="col" style="width: 300px;">Key Results</th>
+            <th scope="col">Owner</th>
+           
+            <th scope="col">DueDate</th>
+            <th scope="col">Status</th>
+            <th scope="col">
+              Progress
+            </th>
+          </tr>
+        </thead>
+        <tbody class="list" id="KeyResultsBoxModal">
+          </tbody>
+        </table>
+      </div>
+        </div>
+
+        <div class="modal-footer" style="padding: 0.5rem">
+          <button class="btn btn-outline-primary" style="
+          display: flex;
+          width: 189px;
+          padding: 16px 40px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          align-self: stretch;
+          border-radius: 12px;
+        " data-dismiss="modal">
+            Cancel
+          </button>
+          <button class="btn btn-primary" style="
+          display: flex;
+          padding: 16px 40px;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          align-self: stretch;
+          border-radius: 12px;
+        " data-dismiss="modal" onclick="SetKrsProject()" id="Objective_Submit">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Add Project Link -->
+    <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="AddProjectLink"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content" style="background-color: #FAFAFA;">
+        <div class="modal-header"
+          style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+          <div style="color: var(--gray-900, #101828);
+font-size: 24pxpx;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Add Link</div>
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+        </div>
+        <div class="modal-body" style="display: inline-flex;
+padding-top: 24px;
+flex-direction: column;
+align-items: flex-start;
+gap: 22px;
+border-radius: 12px;">
+          <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+            <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link Title</div>
+            <input type="text" id="link-title" placeholder="Design_draft1" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+  border: 1px solid var(--stroke-secondary, #DCDCDC);
+  background: var(--surface-primary, #FFF);" onchange="ChangeLinkContent('title',event.target.value)">
+          </div>
+          <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+            <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link </div>
+            <input type="link" id="link-link"
+              placeholder="www.figma.com/file/4E5bk36Ib1giid=4861%3A134681&m" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+  border: 1px solid var(--stroke-secondary, #DCDCDC);
+  background: var(--surface-primary, #FFF);" onchange="ChangeLinkContent('url',event.target.value)"
+              required>
+          </div>
+        </div>
+        <div class="modal-footer" style="padding:0.5rem">
+
+          <button type="button" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" class="btn btn-outline-primary" data-dismiss="modal">
+            Cancel
+          </button>
+
+          <button type="button" data-dismiss="modal" class="btn btn-primary" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" onclick="AddProjectLink()" id="AddLinkButton" disabled>
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- Add Task Link -->
+   <div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" id="AddTaskLink"
+   aria-labelledby="myLargeModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered modal-lg">
+     <div class="modal-content" style="background-color: #FAFAFA;">
+       <div class="modal-header"
+         style="display: flex;width: 100%;justify-content: space-between;align-items: center;">
+         <div style="color: var(--gray-900, #101828);
+font-size: 24pxpx;
+font-style: normal;
+font-weight: 700;
+line-height: normal;">Add Link</div>
+         <img src="../img/icons performance mgmt/desktop/close_40x40.svg" data-dismiss="modal">
+       </div>
+       <div class="modal-body" style="display: inline-flex;
+padding-top: 24px;
+flex-direction: column;
+align-items: flex-start;
+gap: 22px;
+border-radius: 12px;">
+         <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+           <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link Title</div>
+           <input type="text" id="Tasklink-title" placeholder="Design_draft1" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+ border: 1px solid var(--stroke-secondary, #DCDCDC);
+ background: var(--surface-primary, #FFF);" >
+         </div>
+         <div style="display: flex;
+width: 100%;
+align-items: center;
+gap: 22px;">
+           <div style="color: var(--content-on-light-primary, #181818);
+width: 100px;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;">Link </div>
+           <input type="link" id="Tasklink-link"
+             placeholder="www.figma.com/file/4E5bk36Ib1giid=4861%3A134681&m" style="width:100%;padding:10px;margin:15px 0px;border-radius: var(--radius-medium, 8px);
+ border: 1px solid var(--stroke-secondary, #DCDCDC);
+ background: var(--surface-primary, #FFF);" 
+             required>
+         </div>
+       </div>
+       <div class="modal-footer" style="padding:0.5rem">
+
+         <button type="button" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" class="btn btn-outline-primary" data-dismiss="modal">
+           Cancel
+         </button>
+
+         <button type="button" data-dismiss="modal" class="btn btn-primary" style="display: flex;
+height: 48px;
+padding: 8px 16px;
+align-items: center;
+gap: 8px;
+border-radius: 12px;" onclick="AddTaskLink()" id="AddTaskLinkButton">
+           Add
+         </button>
+       </div>
+     </div>
+   </div>
+ </div>
+
+   <!-- Changing Objective Alert -->
+
+   <div class="modal docs-example-modal" tabindex="-1" id="ChangingObjectiveAlert" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal">
+      <div class="modal-content" id="myModalsm" style="border-radius: 12px;width:400px">
+        <div class="modal-header">
+          <div style="
+                  color: var(--text-content-primary, #181818);
+                  font-size: 16px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 130%;
+                ">
+           Changing Objective Alert
+          </div>
+        </div>
+        <div class="modal-body">
+          <div style="
+                color: var(--gray-600, #475467);
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: 135%; /* 18.9px */
+letter-spacing: 0.14px;
+
+
+                ">
+          Attention! Changing the objective associated with this project will disconnect tasks from their current Key Results (KRs) and SubKRs.
+          </div>
+          <div style="color: var(--gray-600, #475467);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 135%; /* 18.9px */
+            letter-spacing: 0.14px;">This action can affect task alignment with the project's previous objectives.</div>
+        </div>
+        <div style="display: flex; flex-direction: row; gap: 10px;padding:0.7rem;width: 400px;" class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary heading" style="display: flex;
+            padding: 8px 16px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex: 1 0 0;
+            align-self: stretch;
+            border-radius: var(--radius-medium, 8px);
+            color: var(--gray-700, #344054);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+
+            border: 1px solid var(--gray-300, #D0D5DD);" data-dismiss="modal">
+            Cancel
+          </button>
+          <button type="button" class="btn" style="
+                display: flex;
+height: 46px;
+padding: 10px 16px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+color: var(--content-inverted-primary, #FFF);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+letter-spacing: 0.1px;
+flex: 1 0 0;
+border-radius: var(--radius-medium, 8px);
+background: var(--Red, #FF6565);
+                " data-dismiss="modal" id="ChangeObjectiveButton" onclick="ChangeObjective()">
+           Change Objective
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    let project = ''
+    let starting=true;
+    getproject()
+    function definedates() {
+      var start = moment().subtract(29, "days");
+      var end = moment();
+
+      function cb(start, end) {
+        $("#reportrange span").html(
+          start.format("MMM D") + " - " + end.format("MMM D, YYYY")
+        );
+        if(starting)
+        {
+          starting=false;
+          return;
+        }
+        project.startDate = start.format("YYYY-MM-DD");
+        project.endDate = end.format("YYYY-MM-DD");
+        SaveProjectDataApi()
+      }
+
+      $("#reportrange").daterangepicker(
+        {
+          startDate: start,
+          endDate: end,
+          ranges: {
+            "This Year": [moment().startOf("year"), moment().endOf("year")],
+            "Next 6 Months": [moment(), moment().add(6, "months")],
+            "Next 3 Months": [moment(), moment().add(3, "months")],
+            "Last 30 Days": [moment().subtract(29, "days"), moment()],
+            "This Month": [moment().startOf("month"), moment().endOf("month")],
+            "Last Month": [
+              moment().subtract(1, "month").startOf("month"),
+              moment().subtract(1, "month").endOf("month"),
+            ],
+          },
+        },
+        cb
+      );
+
+      cb(start, end);
+    }
+    
+    definedates();
+   async function getproject()
+   {
+    let response=await fetch('/projects/<%=project._id%>');
+    response=await response.json();
+    project=response;
+   
+    setSubkrToTaskDropdown()
+setkrToTaskDropdown()
+setownerToTaskDropdown()
+
+for(let i=0;i<initiative.length;i++)
+{
+  initiativeindex=i;
+  UpdateTaskFilebody() 
+UpdateTaskLinkbody() 
+}
+    SetKrsProject();
+    setkrToTaskDropdown()
+    setSubkrToTaskDropdown()
+    UploadResultfile(project.ResultFile)
+    MarkSelectedEmployee()
+    if(project.owners.length>0)
+    document.getElementById('OwnerImage').src = EmployeeMap.get(project.owners[0])?.image;
+    let objectiveTitle=OKRS.find(okrs=>okrs._id==project.objectiveId)?.title;
+SetObjective(project.objectiveId,objectiveTitle);
+SetPhaseProject(project.phases);
+let employeeList_Project = project.teams;
+SetTeamImages(employeeList_Project)
+for(let i=0;i<project.files.length;i++){
+                  file = project.files[i];
+                  UpdateFilebody();
+                }
+                for(let i=0;i<project.links.length;i++){
+                  Link = project.links[i];
+                  UpdateLinkbody();
+                }
+
+   }
+    
+   
+    function SetObjectiveDetails(id,title)
+    {
+      const changeObjectiveButton = document.getElementById('ChangeObjectiveButton');
+  changeObjectiveButton.setAttribute('onclick', `SetObjective('${id}', '${title}')`);
+    }
+    
+    let objective_owner = "";
+    let objective_teams = [];
+    let krs = `<%-JSON.stringify(krsmap)%>`;
+    krs = JSON.parse(krs);
+    krs=new Map(krs);
+    let subkrs = `<%-JSON.stringify(subkrsmap)%>`;
+    subkrs = JSON.parse(subkrs);
+    subkrs=new Map(subkrs);
+    let teams = `<%-JSON.stringify(teams)%>`;
+    teams = JSON.parse(teams);
+    let initiative=`<%-JSON.stringify(initiative)%>`;
+    initiative=JSON.parse(initiative)
+    let tableHeader='<%-JSON.stringify(TaskTableHeaders)%>'
+    tableHeader=JSON.parse(tableHeader)
+    let currentemployeeList = `<%-JSON.stringify(employeeList)%>`
+    currentemployeeList = JSON.parse(currentemployeeList)
+    let EmployeeMap = new Map();
+    let OKRS = `<%-JSON.stringify(OKRs)%>`;
+    OKRS = JSON.parse(OKRS);
+    
+    let subTasks=`<%-JSON.stringify(subTasks)%>`;
+    subTasks=JSON.parse(subTasks);
+    for (let employee of currentemployeeList)
+      EmployeeMap.set(employee._id.toString(), employee);
+     
+    
+
+    function SaveComment(){
+  // i is for identify comment should insert only one time
+  let value=document.getElementById('CommentBox').value;
+  project.comments.push({image:'<%=user?.image%>',employeeId:'<%=user?.id%>',content:value,date:new Date()});
+  SaveProjectDataApi()
+  document.getElementById('CommentBox').value='';
+  document.getElementById('CommentBody').innerHTML=` <div style="display: flex;
+                          align-items: flex-start;
+                          gap: 8px;
+                          align-self: stretch;">
+                        <img src="<%=user?.image%>" style="display: flex;
+                        width: 32px;
+                        height: 32px;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 200px;">
+                        <div style="display: flex;
+                        padding: 14px 20px;
+                        align-items: flex-start;
+                        gap: 10px;
+                        width: 100%;
+                        flex: 1 0 0;
+                        align-self: stretch;
+                        border-radius: 12px;
+                        border: 1px solid #ECECEC;
+                        color: var(--gray-500, #667085);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.21px;
+                        background: #FFF;" placeholder="Leave a comment">${value}</div>
+                        </div>` +document.getElementById('CommentBody').innerHTML
+}
+
+
+
+// add initaive
+
+function ShowsubTasks(i)
+{
+  i=parseFloat(i)
+      let ToogleIcon=document.getElementById('ToogleIcon'+i);
+      let initiativeBox=document.querySelectorAll('.subTasks'+i);
+      if(ToogleIcon.classList.contains('fa-angle-right'))
+      {
+        ToogleIcon.classList.remove('fa-angle-right');
+        ToogleIcon.classList.add('fa-angle-down');
+        initiativeBox.forEach(box=>{
+            box.style.display='flex';
+        })
+      }
+      else
+      {
+        ToogleIcon.classList.remove('fa-angle-down');
+        ToogleIcon.classList.add('fa-angle-right');
+        initiativeBox.forEach(box=>{
+            box.style.display='none';
+        })
+      }
+      
+}
+
+async function Addinitiatives()
+{
+ 
+  let data={}
+  for(let header of tableHeader)
+  {
+    data[header.usedName]=''
+  }
+  data['projectId']=project._id.toString();
+  data['ObjectiveId']=project.objectiveId;
+  data['ObjectiveTitle']=document.getElementById('ObjectiveBody').innerText;
+  data['projectTitle']=project.title;
+  data['PImpact']='High'
+  data['Effort']='1D'
+  data['Clarity']='Low'
+  data['Status']='Not Started'
+  data['SubmissionApproval']='Pending'
+  data['links']=[]
+  data['files']=[]
+  data['subkrs']=[]
+  data['krs']=[]
+ subTasks.push([]);
+  initiative.push({data})
+  let i=initiative.length-1;
+initiativeindex=i;
+  
+  
+await SaveTask(initiativeindex);
+let Addinitiativesbox=document.getElementById('Clicktoaddnewinitiative')
+
+  let initaiveBody=''
+  let innerHTML=`
+    <tr onclick="changeinitiativeIndex(${i})">
+        <td>${i + 1}</td>
+        <td onmouseover="showIcons('.OpenIcons${initiative[i]._id}')" onmouseout="removeIcons('.OpenIcons${initiative[i]._id}')" style="width: 300px;">
+            <div style="display: flex;align-items: center;gap:40px">
+                <div style="display: flex;gap:8px;align-items: center;">
+                    <i class="fa fa-angle-right" style="font-size: 25px;color: #1D2939;" onclick="ShowsubTasks('${i}')" id="ToogleIcon${i}"></i>
+                    <input type="text" value="" placeholder="Enter Task title "  style="border:none;border-radius:6px;height: 30px;
+    background: transparent;" onchange="changeinitiativedata('${i}','Tasks',event.target.value)">
+                    <img src="../Project icons/subparticon.svg">0
+                </div>
+                <a href="/task/${initiative[i]._id}" class="OpenIcons${initiative[i]._id}" style="display: none;align-items: center;gap:8px;color: var(--gray-500, #667085);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 20px;">
+            <img src="../Project icons/maximize.svg">
+            Open
+            </a>
+            </div>
+        </td>
+        <td style="width: 300px;">
+            <div style="padding:5px 12px;border-radius:16px;display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    align-self: stretch;
+                    overflow: hidden;
+                    max-width:150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;" id="initiativeKR${i}" data-toggle="dropdown" aria-expanded="false" onclick="CheckAllkrsBox(${i})">
+               Select Key result
+            </div>
+            <div class="dropdown-menu initiativesKr" style="flex-direction: column; display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    align-self: stretch;
+                    overflow: hidden;
+                    max-width:150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;padding:5px 12px;border-radius:8px;" aria-labelledby="initiativeKR${i}">
+            </div>
+        </td>
+        <td style="width: 300px;">
+            <div style="padding:5px 12px;border-radius:16px;" id="initiativeSubKR${i}" data-toggle="dropdown" aria-expanded="false" onclick="CheckAllSubkrsBox(${i})">
+              Select sub Key result
+            </div>
+            <div class="dropdown-menu initiativesSubKr" style="flex-direction: column; padding:5px 12px;border-radius:8px;" aria-labelledby="initiativeSubKR${i}">
+            </div>
+        </td>
+        <td>
+            <div style="padding:5px 12px;border-radius:16px;" id="initiativePImpact${i}" data-toggle="dropdown" aria-expanded="false">
+               <div class="Status_notStarted">Low</div>
+            </div>
+            <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="initiativePImpact${i}" id="initiativePImpact${i}dropdown">
+               <div class="StatusBox" onclick="setStatusToTask('Extreme','PImpact',0)"><div class="Status_hold">Extreme</div></div>
+               <div class="StatusBox" onclick="setStatusToTask('High','PImpact',1)"><div class="Status_progress">High</div></div>
+               <div class="StatusBox" onclick="setStatusToTask('Very High','PImpact',2)"><div class="Status_orange">Very High</div></div>
+                <div class="StatusBox" onclick="setStatusToTask('Low','PImpact',3)"><div class="Status_notStarted">Low</div></div>
+            </div>
+        </td>
+        <td><input type="text" style="width:50px;border:1px solid" value="1D" onchange="changeinitiativedata('${i}','Effort',event.target.value)"></td>
+        <td>
+            <div style="padding:5px 12px;border-radius:16px;" id="initiativeClarity${i}" data-toggle="dropdown" aria-expanded="false">
+                <div class="Status_progress">Low</div>
+            </div>
+            <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="initiativeClarity${i}" id="initiativeClarity${i}dropdown">
+               <div class="StatusBox" onclick="setStatusToTask('High','Clarity',0)"><div class="Status_completed">High</div></div>
+               <div class="StatusBox" onclick="setStatusToTask('Medium','Clarity',1)"><div class="Status_orange">Medium</div></div>
+               <div class="StatusBox" onclick="setStatusToTask('Low','Clarity',2)"><div class="Status_progress">Low</div></div>
+            </div>
+        </td>
+        <td id="Owner${i}">
+            <div style="display: flex;align-items: center;gap:12px;" id="initiativeOwner${i}" data-toggle="dropdown" aria-expanded="false">
+                <img src="../Performance dashboard Icons/Empty_User.svg" style="width: 24px;height: 24px;border-radius:200px ;"> Select Owner
+            </div>
+            <div class="dropdown-menu initiativesOwner" style="flex-direction: column; padding: 5px 12px;" aria-labelledby="initiativeOwner${i}">
+            </div>
+        </td>
+        <td><input type="number" style="width: 50px;border:1px solid"  onchange="changeinitiativedata('${i}','Badges',event.target.value)"></td>
+     <td><input type="date" style="width: 100px;"  onchange="changeinitiativedata('${i}','DueDate',event.target.value)"></td>
+     <td><input type="date" style="width: 100px;" onchange="changeinitiativedata('${i}','AllotmentDate',event.target.value)"></td>
+     
+        <td>
+            <div style="padding:5px 12px;border-radius:16px;" id="initiativeStatus${i}" data-toggle="dropdown" aria-expanded="false">
+                <div class="Status_notStarted">Not Started</div>
+                   </div>
+            <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="initiativeStatus${i}" id="initiativeStatus${i}dropdown">
+               <div class="StatusBox" onclick="setStatusToTask('Completed','Status',0)"><div class="Status_completed">Completed</div></div>
+                <div class="StatusBox" onclick="setStatusToTask('In Progress','Status',1)"><div class="Status_progress">In Progress</div></div>
+                <div class="StatusBox" onclick="setStatusToTask('Upcoming','Status',2)"><div class="Status_upcoming">Upcoming</div></div>
+               <div class="StatusBox" onclick="setStatusToTask('Not Started','Status',3)"><div class="Status_notStarted">Not Started</div></div>
+                <div class="StatusBox" onclick="setStatusToTask('On Hold','Status',4)"><div class="Status_hold">On Hold</div></div>
+            </div>
+        </td>
+        <td class="d-flex align-items-center gap-3">
+            <input type="file" id="TaskFileInputField${i}" style="width: 0px;" onchange="handleTaskFileSelect(event)" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*">
+            <div id="initiativeStatus${i}" data-toggle="dropdown" aria-expanded="false">
+                <span id='Task-FileBody-${i}'>0</span>
+                <img src="../Performance dashboard Icons/File.svg" style="width: 24px; height: 24px;">
+            </div>
+            <img src="../img/Add.svg" onclick="OpenFileInput('TaskFileInputField${i}')">
+            <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativeTaskFile${i}dropdown"></div>
+        </td>
+        <td>
+            <div style="padding:5px 12px;border-radius:16px;" id="initiativeSubmissionApproval${i}" data-toggle="dropdown" aria-expanded="false">
+                <div class="Status_progress">Pending</div>
+            </div>
+            <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="initiativeSubmissionApproval${i}" id="initiativeSubmissionApproval${i}dropdown">
+              <div class="StatusBox" onclick="setStatusToTask('Approved','SubmissionApproval',0)"><div class="Status_completed">Approved</div></div>
+               <div class="StatusBox" onclick="setStatusToTask('Pending','SubmissionApproval',1)"><div class="Status_progress">Pending</div></div>
+            </div>
+        </td>
+        <td class="d-flex align-items-center gap-3">
+            <div style="padding: 5px 12px; border-radius: 16px; display: flex; gap: 8px; align-items: center;" data-toggle="dropdown" aria-expanded="false">
+                <span id='Task-LinkBody-${i}'>0</span>
+                <img src="../Performance dashboard Icons/Link.svg" style="width: 24px; height: 24px;">
+            </div>
+            <img src="../img/Add.svg" data-target="#AddTaskLink" data-toggle="modal">
+            <div class="dropdown-menu" style="flex-direction: column; width: 350px; padding: 5px 12px; border-radius: 16px;" id="initiativeTaskLink${i}dropdown"></div>
+        </td>
+    </tr>
+   
+        <tr id="ClicktoaddnewsubTasks${i}" class="subTasks${i}" style="display: none;" >
+          <td></td>  
+          <td style="display: flex;gap:8px;align-items: center;" >
+            <img src="../img/subkrdropdown.svg" style="margin: -16px 0px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none" onclick="AddsubTasks('${i}')">
+            <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <div style="display: flex;
+          padding: 4px;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          gap: 4px;
+          border-radius: 4px;
+          border: 1px solid var(--gray-600, #475467);" onclick="AddsubTasks('${i}')">
+          Click to add new subTasks
+          </div>
+        </td>
+      </tr>
+`
+Addinitiativesbox.insertAdjacentHTML('beforebegin',innerHTML)
+setSubkrToTaskDropdown()
+setkrToTaskDropdown()
+setownerToTaskDropdown()
+}
+var subTaskindex=''
+
+function changeSubTaskIndex(i)
+{
+subTaskindex=i;
+}
+async function AddsubTasks()
+{
+ 
+  let data={}
+  for(let header of tableHeader)
+  {
+    data[header.usedName]=''
+  }
+  data['projectId']=project._id.toString();
+  data['PImpact']='Low'
+  data['Effort']='1D'
+  data['Carity']='Low'
+  data['Status']='Completed'
+  data['SubmissionApproval']='Pending'
+  data['links']=[]
+  data['files']=[]
+  data['subkrs']=[]
+data['taskId']=initiative[initiativeindex]._id.toString();
+  subTasks[initiativeindex].push({data})
+  
+  let i=subTasks[initiativeindex].length-1;
+subTaskindex=i;
+  
+  
+await SaveSubTask(initiativeindex,subTaskindex);
+let Addinitiativesbox=document.getElementById('ClicktoaddnewsubTasks'+initiativeindex)
+
+let initaiveBody=''
+let innerHTML=`
+  <tr onclick="changeSubTaskIndex(${i})" class="subTasks${i}">
+      <td></td>
+      <td  style="width: 300px;display:flex;gap:8px;align-items: center;">
+          <img src="../img/subkrdropdown.svg" style="margin: -16px 0px;"> 
+          <div style="display: flex;align-items: center;gap:40px">
+              <div style="display: flex;gap:8px;align-items: center;">
+                 <input type="text" value="" placeholder="Enter Sub Task title "  style="border: none;
+    border-radius: 6px;
+    height: 30px;
+    background: transparent;" onchange="changesubTaskdata('${i}','Tasks',event.target.value)">
+                  
+              </div>
+          </div>
+      </td>
+      <td style="width: 300px;">
+               
+              </td>
+              <td style="width: 300px;">
+                 
+              </td>
+
+      
+<td>
+<div style="padding:5px 12px;border-radius:16px;" id="subTaskPImpact${initiativeindex}-${i}" data-toggle="dropdown" aria-expanded="false">
+   <div class="Status_notStarted">Low</div>
+</div>
+<div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="subTaskPImpact${initiativeindex}-${i}" id="subTaskPImpact${initiativeindex}-${i}dropdown">
+   <div class="StatusBox" onclick="setStatusToSubTask('Extreme','PImpact',0)"><div class="Status_hold">Extreme</div></div>
+   <div class="StatusBox" onclick="setStatusToSubTask('High','PImpact',1)"><div class="Status_progress">High</div></div>
+   <div class="StatusBox" onclick="setStatusToSubTask('Very High','PImpact',2)"><div class="Status_orange">Very High</div></div>
+    <div class="StatusBox" onclick="setStatusToSubTask('Low','PImpact',3)"><div class="Status_notStarted">Low</div></div>
+</div>
+</td>
+<td><input type="text" style="width:50px;border:1px solid" value="1D" onchange="changesubTaskdata('${initiativeindex}-${i}','Effort',event.target.value)"></td>
+<td>
+<div style="padding:5px 12px;border-radius:16px;" id="subTaskClarity${initiativeindex}-${i}" data-toggle="dropdown" aria-expanded="false">
+    <div class="Status_progress">Low</div>
+</div>
+<div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="subTaskClarity${initiativeindex}-${i}" id="subTaskClarity${initiativeindex}-${i}dropdown">
+   <div class="StatusBox" onclick="setStatusToSubTask('High','Clarity',0)"><div class="Status_completed">High</div></div>
+   <div class="StatusBox" onclick="setStatusToSubTask('Medium','Clarity',1)"><div class="Status_orange">Medium</div></div>
+   <div class="StatusBox" onclick="setStatusToSubTask('Low','Clarity',2)"><div class="Status_progress">Low</div></div>
+</div>
+</td>
+      <td >
+         
+      </td>
+      <td><input type="number" style="width: 50px;border:1px solid"  onchange="changesubTaskdata('${i}','Badges',event.target.value)"></td>
+   <td><input type="date" style="width: 100px;"  onchange="changesubTaskdata('${i}','DueDate',event.target.value)"></td>
+   <td><input type="date" style="width: 100px;" onchange="changesubTaskdata('${i}','AllotmentDate',event.target.value)"></td>
+   
+      <td>
+          <div style="padding:5px 12px;border-radius:16px;" id="subTaskStatus${initiativeindex}-${i}" data-toggle="dropdown" aria-expanded="false">
+              <div class="Status_completed">Completed</div>
+                 </div>
+          <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="subTaskStatus${initiativeindex}-${i}" id="subTaskStatus${initiativeindex}-${i}dropdown">
+             <div class="StatusBox" onclick="setStatusToSubTask('Completed','Status',0)"><div class="Status_completed">Completed</div></div>
+              <div class="StatusBox" onclick="setStatusToSubTask('In Progress','Status',1)"><div class="Status_progress">In Progress</div></div>
+              <div class="StatusBox" onclick="setStatusToSubTask('Upcoming','Status',2)"><div class="Status_upcoming">Upcoming</div></div>
+             <div class="StatusBox" onclick="setStatusToSubTask('Not Started','Status',3)"><div class="Status_notStarted">Not Started</div></div>
+              <div class="StatusBox" onclick="setStatusToSubTask('On Hold','Status',4)"><div class="Status_hold">On Hold</div></div>
+          </div>
+      </td>
+      <td class="d-flex align-items-center gap-3">
+         </td>
+      <td>
+          <div style="padding:5px 12px;border-radius:16px;" id="subTaskSubmissionApproval${initiativeindex}-${i}" data-toggle="dropdown" aria-expanded="false">
+              <div class="Status_progress">Pending</div>
+          </div>
+          <div class="dropdown-menu" style="flex-direction: column;" aria-labelledby="isubTaskSubmissionApproval${initiativeindex}-${i}" id="subTaskSubmissionApproval${initiativeindex}-${i}dropdown">
+            <div class="StatusBox" onclick="setStatusToSubTask('Approved','SubmissionApproval',0)"><div class="Status_completed">Approved</div></div>
+             <div class="StatusBox" onclick="setStatusToSubTask('Pending','SubmissionApproval',1)"><div class="Status_progress">Pending</div></div>
+          </div>
+      </td>
+      <td class="d-flex align-items-center gap-3">
+         </td>
+  </tr>
+`
+Addinitiativesbox.insertAdjacentHTML('beforebegin',innerHTML)
+
+}
+
+
+
+function changesubTaskdata(i,type,value)
+{
+subTasks[initiativeindex][i].data[type]=value;
+SaveSubTask(initiativeindex,i)
+}
+function setStatusToSubTask(status,type,index)
+{
+  let statusbody=document.getElementById('subTask'+type+initiativeindex+'-'+subTaskindex)
+  subTasks[initiativeindex][subTaskindex].data[type]=status;
+  type=type.trim()
+   let statusbodydropdown=document.getElementById('subTask'+type+initiativeindex+'-'+subTaskindex+'dropdown')
+   let selectedChild = statusbodydropdown.children[index];
+   statusbody.innerHTML=selectedChild.innerHTML;
+   
+   SaveSubTask(initiativeindex,subTaskindex)
+}
+
+
+function setSubkrToTaskDropdown() {
+    let subkrsbodies = document.querySelectorAll('.initiativesSubKr');
+
+    for (let i = 0; i < subkrsbodies.length; i++) {
+        let subkrsbody = subkrsbodies[i];
+        initiativeindex=i;
+        let krsId=initiative[initiativeindex]?.data?.krs;
+
+  let all_subkrs=[];
+  for(let kr of krsId)
+  {
+    all_subkrs.push(...subkrs.get(kr.id) || [])
+  }
+        subkrsbody.innerHTML = '';
+
+        if (all_subkrs.length === 0) {
+            subkrsbody.innerHTML += `
+                <div style="display: flex;
+                    width: 100%;
+                    height: 44px;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 8px 8px 0px 0px;">
+                    No subkr is created for this objective 
+                </div>`;
+            continue;
+        }
+
+        subkrsbody.innerHTML += `
+            <div style="display: flex;
+                width: 100%;
+                height: 44px;
+                justify-content: center;
+                align-items: center;
+                gap:12px;
+                border-radius: 8px 8px 0px 0px;">
+                <img src="../Project icons/Search_icon.svg">
+                <input type="text" style="border: none;width: 100%;" placeholder="Search for SubKr" id="searchsubkrInput"
+                    oninput="filterAndSortSubKr(event.target.value)">
+            </div> <div id="initiativesSubKrdropdownbody${initiativeindex}">
+            ${all_subkrs.map(subkr => `
+                <div style="height: 1px;
+                    align-self: stretch;
+                    background: var(--gray-200, #EAECF0);"></div>
+                <div style="display: flex;
+                    padding: 16px 4px;
+                    align-items: center;
+                    gap: 12px;
+                    flex: 1 0 0;
+                    align-self: stretch;
+                    background: #FFF;" onclick="setSubkrToTask('${subkr._id}','${subkr.title}')">
+                    <input type="checkbox" id="SubKrCheckbox${subkr._id}-${i}">
+                    ${subkr.title}
+                </div>`).join('')}
+        </div>`;
+    }
+}
+
+function CheckAllSubkrsBox(initiativeindex)
+{
+  let allsubkrs=initiative[initiativeindex]?.data?.subkrs;
+  for(let subkr of allsubkrs)
+  {
+    document.getElementById('SubKrCheckbox'+subkr.id+'-'+initiativeindex).checked=true;
+  }
+}
+
+function CheckAllkrsBox(initiativeindex)
+{
+  let allkrs=initiative[initiativeindex]?.data?.krs;
+  for(let kr of allkrs)
+  { 
+    document.getElementById('KrCheckbox'+kr.id+'-'+initiativeindex).checked=true;
+  }
+}
+function filterAndSortSubKr(text)
+{
+let subkrsbody=document.getElementById('initiativesSubKrdropdownbody'+initiativeindex)
+
+  let krsId=initiative[initiativeindex]?.data?.krs;
+
+  let all_subkrs=[];
+  for(let kr of krsId)
+  {
+    all_subkrs.push(...subkrs.get(kr.id) || [])
+  }
+  all_subkr=all_subkrs.filter((subkr)=>subkr.title.toLowerCase().includes(text.toLowerCase()))
+
+subkrsbody.innerHTML=''
+if(all_subkr.length==0)
+{subkrsbody.innerHTML+=`<div style="display: flex;
+width: 100%;
+height: 44px;
+justify-content: center;
+align-items: center;
+border-radius: 8px 8px 0px 0px;">
+No subkr is match with ${text}
+</div>`
+}
+else {
+ 
+for(let subkr of all_subkr)
+{
+subkrsbody.innerHTML+=`
+<div style="height: 1px;
+align-self: stretch;
+background: var(--gray-200, #EAECF0);"></div>
+<div style="display: flex;
+padding: 16px 24px;
+align-items: center;
+gap: 12px;
+flex: 1 0 0;
+align-self: stretch;
+background: #FFF;" onclick="setSubkrToTask('${subkr._id}','$${subkr.title}')">
+<input type="checkbox" id="SubKrCheckbox${subkr._id}-${initiativeindex}">
+
+${subkr.title}</div>`
+}
+}
+CheckAllSubkrsBox(initiativeindex)
+}
+
+function setkrToTaskDropdown() {
+    let objectiveId = project.objectiveId;
+    let all_krs = krs.get(objectiveId) || [];
+    let krsbodies = document.querySelectorAll('.initiativesKr');
+
+    for (let i=0;i<krsbodies.length;i++) {
+      let krsbody=krsbodies[i]
+        krsbody.innerHTML = '';
+
+        if (all_krs.length === 0) {
+            krsbody.innerHTML += `
+                <div style="display: flex;
+                    width: 100%;
+                    height: 44px;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 8px 8px 0px 0px;">
+                    No kr is created for this objective 
+                </div>`;
+            continue;
+        }
+
+        krsbody.innerHTML += `
+            <div style="display: flex;
+                width: 100%;
+                height: 44px;
+                gap:12px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 8px 8px 0px 0px;">
+                <img src="../Project icons/Search_icon.svg">
+                <input type="text" style="border: none;width: 100%;" placeholder="Search for Kr" id="searchkrInput"
+                    oninput="filterAndSortKr(event.target.value)">
+            </div> <div id="initiativesKrdropdownbody${i}">
+            ${all_krs.map(kr => `
+                <div style="height: 1px;
+                    align-self: stretch;
+                    background: var(--gray-200, #EAECF0);"></div>
+
+                <div style="display: flex;
+                    padding: 16px 4px;
+                    align-items: center;
+                    gap: 12px;
+                    flex: 1 0 0;
+                    align-self: stretch;
+                    background: #FFF;" onclick="setkrToTask('${kr._id}','${kr.title}')">
+                  <input type="checkbox" id="KrCheckbox${kr._id}-${i}">  ${kr.title}
+                </div>`).join('')}
+        </div>`;
+    }
+}
+
+function filterAndSortKr(text) {
+    let krsbody = document.getElementById('initiativesKrdropdownbody'+initiativeindex);
+
+    let objectiveId = project.objectiveId;
+    let all_krs = krs.get(objectiveId) || [];
+    let filtered_krs = all_krs.filter((kr) => kr.title.toLowerCase().includes(text.toLowerCase()));
+
+    krsbody.innerHTML = '';
+
+    if (filtered_krs.length === 0) {
+        krsbody.innerHTML += `
+            <div style="display: flex;
+                width: 100%;
+                height: 44px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 8px 8px 0px 0px;">
+                No kr is match with ${text}
+            </div>`;
+    } else {
+       
+        for (let kr of filtered_krs) {
+            krsbody.innerHTML += `
+                <div style="height: 1px;
+                    align-self: stretch;
+                    background: var(--gray-200, #EAECF0);"></div>
+                <div style="display: flex;
+                    padding: 16px 24px;
+                    align-items: center;
+                    gap: 12px;
+                    flex: 1 0 0;
+                    
+                    align-self: stretch;
+                    background: #FFF;" onclick="setkrToTask('${kr._id}','${kr.title}')">
+                    <input type="checkbox" id="KrCheckbox${kr._id}">
+                    ${kr.title}
+                </div>`;
+        }
+    }
+    CheckAllSubkrsBox(initiativeindex)
+}
+
+function setSubkrToTask(id,title)
+{
+  let subkrsdata=initiative[initiativeindex].data?.subkrs || [];
+  let subkrCheckBox=document.getElementById(`SubKrCheckbox${id}-${initiativeindex}`)
+ 
+  if(subkrCheckBox.checked)
+  subkrsdata.push({id:id,title:title})
+  else
+  subkrsdata=subkrsdata.filter((subkr)=>subkr.id!=id)
+  document.getElementById(`initiativeSubKR${initiativeindex}`).innerText=''
+  for(let subkr of subkrsdata)
+  {
+    document.getElementById(`initiativeSubKR${initiativeindex}`).innerText+=subkr.title+',';
+  }
+  initiative[initiativeindex].data.subkrs=subkrsdata
+  SaveTask(initiativeindex)
+
+}
+
+function setkrToTask(id,title)
+{
+ 
+  let KrCheckbox=document.getElementById(`KrCheckbox${id}-${initiativeindex}`)
+  
+  if(KrCheckbox.checked)
+  initiative[initiativeindex].data.krs.push({id:id,title:title})
+  else{
+    let krsdata=initiative[initiativeindex].data.krs;
+    krsdata=krsdata.filter((kr)=>kr.id!=id)
+    initiative[initiativeindex].data.krs=krsdata
+  }
+  document.getElementById(`initiativeKR${initiativeindex}`).innerText=''
+ 
+  for(let kr of initiative[initiativeindex].data.krs)
+  {
+    
+    document.getElementById(`initiativeKR${initiativeindex}`).innerText+=kr.title+',';
+  }
+ 
+  SaveTask(initiativeindex)
+  setSubkrToTaskDropdown()
+  CheckAllkrsBox(initiativeindex)
+}
+
+function setownerToTaskDropdown() {
+    let ownerbodies = document.querySelectorAll('.initiativesOwner');
+
+    for (let i = 0; i < ownerbodies.length; i++) {
+        let ownerbody = ownerbodies[i];
+        ownerbody.innerHTML = '';
+
+        ownerbody.innerHTML += `
+            <div style="display: flex;
+                width: 100%;
+                height: 44px;
+                gap:12px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 8px 8px 0px 0px;">
+                <img src="../Project icons/Search_icon.svg">
+                <input type="text" style="border: none;width: 100%;" placeholder="Search for Owner" id="searchownerInput"
+                    oninput="filterAndSortModalOwner(event.target.value, ${i})">
+            </div> 
+            <div id="initiativesOwnerdropdownbody${i}" style="height:200px;overflow:auto">
+                ${currentemployeeList.map(owner => `
+                    <div style="height: 1px;
+                        align-self: stretch;
+                        background: var(--gray-200, #EAECF0);"></div>
+                    <div style="display: flex;
+                        padding: 16px 24px;
+                        align-items: center;
+                        gap: 12px;
+                        flex: 1 0 0;
+                        align-self: stretch;
+                        background: #FFF;" onclick="setOwnerToTask('${owner._id}','${owner.displayName}','${owner.image}', ${i})">
+                        <img src="${owner.image}" style="width:24px;height:24px;border-radius:200px"> ${owner.displayName}
+                    </div>`).join('')}
+            </div>`;
+    }
+}
+
+function filterAndSortModalOwner(text, index) {
+    let ownerbody = document.getElementById(`initiativesOwnerdropdownbody${index}`);
+
+    let filteredOwners = currentemployeeList.filter(owner => owner.displayName.toLowerCase().includes(text.toLowerCase()));
+
+    ownerbody.innerHTML = '';
+
+    if (filteredOwners.length === 0) {
+        ownerbody.innerHTML += `
+            <div style="display: flex;
+                width: 100%;
+                height: 44px;
+                justify-content: center;
+                align-items: center;
+                border-radius: 8px 8px 0px 0px;">
+                No owner matches with ${text}
+            </div>`;
+    } else {
+        for (let owner of filteredOwners) {
+            ownerbody.innerHTML += `
+                <div style="height: 1px;
+                    align-self: stretch;
+                    background: var(--gray-200, #EAECF0);"></div>
+                <div style="display: flex;
+                    padding: 16px 24px;
+                    align-items: center;
+                    gap: 12px;
+                    flex: 1 0 0;
+                    align-self: stretch;
+                    background: #FFF;" onclick="setOwnerToTask('${owner._id}','${owner.displayName}','${owner.image}', ${index})">
+                    <img src="${owner.image}" style="width:24px;height:24px;border-radius:200px"> ${owner.displayName}
+                </div>`;
+        }
+    }
+}
+
+function setOwnerToTask(id,name,image)
+{
+  document.getElementById(`initiativeOwner${initiativeindex}`).innerHTML=`<img src="${image}" style="width:24px;height:24px;border-radius:200px"> ${name}`
+  initiative[initiativeindex].data['Owner']={id:id,name:name,image:image}
+  SaveTask(initiativeindex)
+}
+
+
+function setStatusToTask(status,type,index)
+{
+   let statusbody=document.getElementById('initiative'+type+initiativeindex)
+   initiative[initiativeindex].data[type]=status;
+   type=type.trim()
+   let statusbodydropdown=document.getElementById('initiative'+type+initiativeindex+'dropdown')
+   let selectedChild = statusbodydropdown.children[index];
+   statusbody.innerHTML=selectedChild.innerHTML;
+  
+   SaveTask(initiativeindex)
+}
+
+function SetObjective(id, title) {
+    let objectiveBox = document.getElementById('ObjectiveBody');
+    objectiveBox.innerHTML = title;
+    if(project.objectiveId!=id)
+    {
+      let initaiveBody=document.getElementById('InitiativesBody')
+   initiative=[];
+   subTasks=[]
+   DeleteAllSubTaskAndTasks();
+   initaiveBody.innerHTML=`<tr id="Clicktoaddnewinitiative" >
+        <td></td>
+        <td style="display: flex;gap:8px;align-items: center;" >
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none" onclick="Addinitiatives()">
+            <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <div style="display: flex;
+          padding: 4px;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          gap: 4px;
+          border-radius: 4px;
+          border: 1px solid var(--gray-600, #475467);" onclick="Addinitiatives()">
+          Click to add new initiative
+          </div>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>`
+    }
+    project.objectiveId = id;
+document.getElementById('ObjectiveTitleModal').innerText=title;
+ let KrsModalHeader=document.getElementById('KrsModalHeader')
+ KrsModalHeader.innerHTML=''
+ KrsModalHeader.innerHTML+=`
+ <th scope="col"  class="sort" onclick="CheckAllKrs('${id}')" ><input type="checkbox" style="width:25px;height: 25px;" id="checkall${id}"></th>
+            <th scope="col" style="width: 300px;">Key Results</th>
+            <th scope="col">Owner</th>
+           
+            <th scope="col">DueDate</th>
+            <th scope="col">Status</th>
+            <th scope="col">
+              Progress
+            </th>
+ `    
+
+    let krbodyModal = document.getElementById('KeyResultsBoxModal');
+    let allKrs = krs.get(id)||[]; 
+    
+    let exist=false;
+    if(project.krs.length>0)
+    {
+      for(let kr_ of allKrs)
+      {
+        if(kr_._id==project.krs[0].id)
+     {  exist=true;
+        break;}
+      }
+    }
+    if(!exist)
+    project.krs = [];
+  
+    krbodyModal.innerHTML=''
+   
+    for (let i = 0; i < allKrs.length; i++) {
+        let kr = allKrs[i];
+        let checkbox=false;
+        if (project.krs?.some((kr_) => kr.id == kr_.id)) 
+         checkbox=true;
+         krbodyModal.innerHTML += `
+            <tr>
+                <td ><input type="checkbox"  id='checkboxkr${kr._id}' style="width:24px;height:24px" ${checkbox && 'checked'} onclick="AddKrToProject('${kr._id}','${kr.title}')"></td>
+                <td><input  disabled type="text" value="${kr.title}" placeholder="Enter key result" style="border:none;border-radius:6px;" ></td>
+                <td id="AssignedTo${kr._id}${i}" style="max-width: 200px;overflow: hidden;display: flex;align-items: center;gap:8px;white-space:nowrap;">
+                    ${kr.teams.length === 0 ? `<div style="display: flex;width: 32px;height: 32px;padding: 6px;justify-content: center;align-items: center;flex-shrink: 0;border-radius: 200px;background: var(--primary-50, #F9F5FF);"><img src="../Performance dashboard Icons/Empty_User.svg"></div>Not Assigned yet` : ''}
+                </td>
+                <td><input type="date" disabled  value="${kr.timePeriod.endDate}" style="border-radius:6px;"></td>
+                <td>
+                    <div  style="padding:5px 12px;border-radius:16px;" id="KRStatus${i}" >
+                        ${kr.status === 'On Track' ? `<div class="Status_completed">On Track</div>` : ''}
+                        ${kr.status === 'At risk' ? `<div class="Status_progress">At risk</div>` : ''}
+                        ${kr.status === 'Off Track' ? `<div class="Status_hold">Off Track</div>` : ''}
+                        ${kr.status === 'Achieved' ? `<div class="Status_completed">Achieved</div>` : ''}
+                        ${kr.status === 'Partial' ? `<div class="Status_progress">Partial</div>` : ''}
+                        ${kr.status === 'Missed' ? `<div class="Status_hold">Missed</div>` : ''}
+                        ${kr.status === 'Dropped' ? `<div class="Status_notStarted">Dropped</div>` : ''}
+                    </div>
+                </td>
+                <td>
+                    <div style="display: flex;flex-direction: column;align-items: center;">
+                        <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarCV${i}">
+                            ${kr.matrix.currentValue}${kr.matrix.type}
+                        </div>
+                        <div class="ProgressKeyResult">
+                            <div class="progress__bar" style="width: ${kr.matrix.currentValue}%;" id="ProgressBar${i}"></div>
+                        </div>
+                        <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                            <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarIV${i}">
+                                ${kr.matrix.startingValue}${kr.matrix.type}
+                            </div>
+                            <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarTV${i}">
+                                ${kr.matrix.targetValue}${kr.matrix.type}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>`;
+            SetkrTeamImages(`AssignedTo${kr._id}${i}`, kr.teams);
+   
+} 
+}
+
+function AddKrToProject(krid,krtitle)
+{
+  let checkbox=document.getElementById('checkboxkr'+krid)
+  
+  if (checkbox.checked) {
+       
+        if (!project.krs?.some((kr) => kr.id === krid)) {
+            project.krs.push({ id: krid, title: krtitle });
+        }
+    } else {
+        
+        const krIndex = project.krs.findIndex((kr) => kr.id === krid);
+        if (krIndex !== -1) {
+            project.krs.splice(krIndex, 1);
+        }
+    }
+}
+function CheckAllKrs(objectiveId)
+{
+  let all_krs=krs.get(objectiveId)||[];
+  let checkall=document.getElementById('checkall'+objectiveId);
+  for(let kr of all_krs)
+  {
+    let checkbox=document.getElementById('checkboxkr'+kr._id)
+    checkbox.checked=checkall.checked;
+    AddKrToProject(kr._id,kr.title)
+  }
+}
+
+function SetKrsProject() {
+  let krbody = document.getElementById('KeyResultsBody');
+    let allkrs = krs.get(project.objectiveId)||[];
+
+    krbody.innerHTML='';
+    for (let i = 0; i < project?.krs.length; i++) {
+        let krid = project.krs[i]?.id;
+        let kr = allkrs.find(kr_ => kr_._id == krid);
+        if(!kr)
+        continue;
+        krbody.innerHTML += `
+            <tr>
+                <td  style="width: 300px;"><input type="text" value="${kr.title}" placeholder="Enter key result" style="border:none;border-radius:6px;" ></td>
+                <td id="AssignedTo${i}" disabled style="max-width: 200px;overflow: hidden;display: flex;align-items: center;gap:8px;white-space:nowrap;">
+                    ${kr.teams.length === 0 ? `<div style="display: flex;width: 32px;height: 32px;padding: 6px;justify-content: center;align-items: center;flex-shrink: 0;border-radius: 200px;background: var(--primary-50, #F9F5FF);"><img src="../Performance dashboard Icons/Empty_User.svg"></div>Not Assigned yet` : ''}
+                </td>
+                <td>
+                    <div  style="padding:5px 12px;border-radius:16px;" id="KRStatus${i}" >
+                        ${kr.status === 'On Track' ? `<div class="Status_completed">On Track</div>` : ''}
+                        ${kr.status === 'At risk' ? `<div class="Status_progress">At risk</div>` : ''}
+                        ${kr.status === 'Off Track' ? `<div class="Status_hold">Off Track</div>` : ''}
+                        ${kr.status === 'Achieved' ? `<div class="Status_completed">Achieved</div>` : ''}
+                        ${kr.status === 'Partial' ? `<div class="Status_progress">Partial</div>` : ''}
+                        ${kr.status === 'Missed' ? `<div class="Status_hold">Missed</div>` : ''}
+                        ${kr.status === 'Dropped' ? `<div class="Status_notStarted">Dropped</div>` : ''}
+                    </div>
+                </td>
+                <td><input type="date" disabled value="${kr.timePeriod.endDate}" style="border-radius:6px;"></td>
+               
+                <td>
+                    <div style="display: flex;flex-direction: column;align-items: center;">
+                        <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarCV${i}">
+                            ${kr.matrix.currentValue}${kr.matrix.type}
+                        </div>
+                        <div class="ProgressKeyResult">
+                            <div class="progress__bar" style="width: ${kr.matrix.currentValue}%;" id="ProgressBar${i}"></div>
+                        </div>
+                        <div style="display: flex;align-items: center;justify-content: space-between;width: 100%;">
+                            <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarIV${i}">
+                                ${kr.matrix.startingValue}${kr.matrix.type}
+                            </div>
+                            <div style="display: flex;width: 19px;height: 13px;flex-direction: column;justify-content: center;color: var(--gray-500, #667085);font-size: 12px;font-style: normal;font-weight: 500;line-height: 28px;" id="ProgressBarTV${i}">
+                                ${kr.matrix.targetValue}${kr.matrix.type}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>`;
+    }
+    
+   krbody.innerHTML+=`<tr id="ClicktoaddnewKR" data-target="#ConnectKeyResults" style="cursor:pointer" data-toggle="modal">
+            <td>
+              <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+    <path d="M15.2031 17.6953C16.5838 17.6953 17.7031 16.576 17.7031 15.1953C17.7031 13.8146 16.5838 12.6953 15.2031 12.6953C13.8224 12.6953 12.7031 13.8146 12.7031 15.1953C12.7031 16.576 13.8224 17.6953 15.2031 17.6953Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M5.20312 7.69531C6.58384 7.69531 7.70312 6.57602 7.70312 5.19531C7.70312 3.8146 6.58384 2.69531 5.20312 2.69531C3.82241 2.69531 2.70312 3.8146 2.70312 5.19531C2.70312 6.57602 3.82241 7.69531 5.20312 7.69531Z" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M5.20312 17.6953V7.69531C5.20313 9.68444 5.9933 11.5921 7.39982 12.9986C8.80635 14.4051 10.714 15.1953 12.7031 15.1953" stroke="#667085" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+              Click to Connect more KRs
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>`
+    for (let i = 0; i < project?.krs.length; i++) {
+        let krid = project.krs[i]?.id;
+        let kr = allkrs.find(kr_ => kr_._id == krid);
+     if(kr)
+        SetkrTeamImages(`AssignedTo${i}`, kr.teams);
+    }
+    SaveProjectDataApi();
+}
+
+
+
+async function DeleteAllSubTaskAndTasks()
+{
+  try{
+  let response=await fetch('/delete/tasksubtask',{
+    method:'DELETE',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({projectId:project._id})
+  })
+  }
+  catch(error)
+  {
+    console.log(error)
+  }
+}
+// link and file upload for tasks 
+ 
+
+function changeinitiativedata(index,type,value)
+{
+  initiative[index].data[type]=value;
+  SaveTask(index)
+}
+function UpdateTaskFilebody()
+{
+
+  let dropdownBody=document.getElementById('initiativeTaskFile'+initiativeindex+'dropdown')
+  let files=initiative[initiativeindex]?.data?.files || [];
+  let TaskfileBody=document.getElementById('Task-FileBody-'+initiativeindex)
+  TaskfileBody.innerText=files.length;
+  dropdownBody.innerHTML=''
+  for(let file of files)
+  {
+    let id=file.id;
+    dropdownBody.innerHTML+=`
+    <div style="display: flex;
+                padding: 12px 16px;
+                align-items: center;
+                gap: 12px;" onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='TaskFile-${id}'>
+        <img src="../Performance dashboard Icons/Document Added.svg">
+        <a href="${file.url}" target="_blank" download style="display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  gap: 4px;
+                  flex: 1 0 0;">
+          <div style="align-self: stretch;
+                    color: var(--content-on-light-primary, #181818);
+                    font-size: 16px;
+                    max-width:150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 17.352px;">
+            ${file.title}
+          </div>
+          <div style="display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    align-self: stretch;
+                    overflow: hidden;
+                    max-width:150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    color: var(--content-on-light-secondary, #898989);
+                    text-overflow: ellipsis;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 17.352px;">
+            ${file.url}
+          </div>
+        </a>
+        <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveTaskFile("${id}")'>
+      </div>
+    `
+  }
+}
+
+function UpdateTaskLinkbody()
+{ 
+  let dropdownBody=document.getElementById('initiativeTaskLink'+initiativeindex+'dropdown')
+  let links=initiative[initiativeindex]?.data?.links ||[];
+  let TasklinksBody=document.getElementById('Task-LinkBody-'+initiativeindex)
+  TasklinksBody.innerText=links.length;
+  dropdownBody.innerHTML=''
+  for(let link of links)
+  {
+    let id=link.id;
+
+    dropdownBody.innerHTML+= `
+      <div style="display: flex;
+                padding: 12px 16px;
+                align-items: center;
+                gap: 12px;
+                flex: 1 0 0;
+               " onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='TaskLink-${id}'>
+        <img src="../Performance dashboard Icons/Link Added.svg">
+        <a href="${link.url}" target="_blank" style="display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  gap: 4px;
+                  flex: 1 0 0;">
+          <div style="align-self: stretch;
+                    color: var(--content-on-light-primary, #181818);
+                    font-size: 16px;
+                    font-style: normal;
+                    max-width:150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    font-weight: 600;
+                    line-height: 17.352px;">
+            ${link.title}
+          </div>
+          <div style="display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    align-self: stretch;
+                    overflow: hidden;
+                    max-width:150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    color: var(--content-on-light-secondary, #898989);
+                    text-overflow: ellipsis;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 17.352px;">
+            ${link.url}
+          </div>
+        </a>
+        <img src='../Project icons/Edit.svg' style="display:none" class='Icons-${id}' onclick='EditTaskLink("${id}")' data-target='#AddTaskLink' data-toggle='modal'>
+        <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveTaskLink("${id}")'>
+      </div>`;
+}
+}
+                function AddTaskLink() {
+    let id = generateRandomId();
+   let link=document.getElementById('Tasklink-link').value
+   let title=document.getElementById('Tasklink-title').value
+    initiative[initiativeindex]?.data?.links.push({id:id,url:link,title:title});
+    UpdateTaskLinkbody();
+    SaveTask(initiativeindex)
+  }
+
+                function AddTaskFile(title,url) {
+                  let id = generateRandomId();
+                  initiative[initiativeindex]?.data?.files.push({id:id,title:title,url:url});
+                  UpdateTaskFilebody();
+                 SaveTask(initiativeindex)
+                }
+
+                function RemoveTaskFile(fileid) {
+                  let id = `TaskFile-${fileid}`
+                  const body = document.getElementById(id);
+                  body.remove();
+               
+                  const index = initiative[initiativeindex]?.data?.files.findIndex((file) => file.id === fileid);
+                  if (index != -1)
+                  initiative[initiativeindex]?.data?.files.splice(index, 1);
+                  let TaskfilesBody=document.getElementById('Task-FileBody-'+initiativeindex)
+                  TaskfilesBody.innerText=initiative[initiativeindex]?.data?.files.length;
+                  
+                }
+
+                function RemoveTaskLink(linkid) {
+                  if(!initiativeindex)
+                  {
+                    return;
+                  }
+                  let id = `TaskLink-${linkid}`
+                  const body = document.getElementById(id);
+                  body.remove();
+                  const index = initiative[initiativeindex]?.data?.links.findIndex((link) => link.id === linkid);
+                  if (index != -1)
+                  initiative[initiativeindex]?.data?.links.splice(index, 1);
+                  let TasklinksBody=document.getElementById('Task-LinkBody-'+initiativeindex)
+  TasklinksBody.innerText=initiative[initiativeindex]?.data?.links.length;
+                }
+
+                function EditTaskLink(linkid) {
+                          if(!initiativeindex)
+                          {
+                            return;
+                          }
+                  const index = initiative[initiativeindex]?.data?.links.findIndex((link) => link.id === linkid);
+                  let link= initiative[initiativeindex]?.data?.links[index];
+                  RemoveTaskLink(link.id);
+                  document.getElementById('Tasklink-title').value = link.title;
+                  document.getElementById('Tasklink-link').value = link.url;
+                }
+
+            
+                async function handleTaskFileSelect(event) {
+                  try {
+                    let data = event.target.files[0];
+                    let filelink = await handleFileUpload(data);
+                   let title = data.name;
+                    let url = filelink;
+                    AddTaskFile(title,url);
+                  } catch (error) {
+                    console.log(error)
+                  }
+                }
+
+//manage phases
+function SetPhaseProject() // set phases at project pages
+{
+ let phasesbody=document.getElementById('ProgressBox');
+ let completed=0;
+ phasesbody.innerHTML='';
+ for(let i=0;i<project.phases.length;i++)
+ {
+  if(project.phases[i].completed)
+  completed++;
+  phasesbody.innerHTML+=`<div style="display: flex;
+      padding: 0px 12px;
+      align-items: flex-start;
+      gap: 16px;
+      align-self: stretch;">
+          <div class="ProgressStep">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="7.84766" r="7.84766" fill="${project.phases[i].completed?'#48bf84':'#FDB022'}" />
+            </svg>
+
+            <div style="display: flex;gap:8px;align-items: center;flex-direction: column;">
+              <div style="display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        color: var(--gray-900, #101828);
+        text-overflow: ellipsis;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 20px; /* 142.857% */
+        ">
+               ${project.phases[i].title}
+              </div>
+              <div style="color: var(--gray-500, #667085);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px; /* 142.857% */"> ${project.phases[i].date} </div>
+            </div>
+          </div>
+        </div>`
+ }
+ let progress_completed=project.phases.length==0?0:(completed/project.phases.length) *100;
+ progress_completed= progress_completed.toFixed(2)
+ project.progress=progress_completed
+document.getElementById('progressPhases').style.width = progress_completed+'%';
+document.getElementById('progressPhasesValue').innerHTML=progress_completed+'%';
+SaveProjectDataApi();
+}
+
+
+
+function SetPhases()
+{
+  let modalbody=document.getElementById('PhasesModalBody');
+  modalbody.innerHTML='';
+  for(let i=0;i<project.phases?.length;i++)
+  {
+    modalbody.innerHTML+=`<div style="display: flex;
+        padding-right: 0px;
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;">
+      <div style="display: flex;gap:12px;align-items: center;">
+      <img src="../Project icons/horizontalBar.svg">
+      <div style="display: flex;gap:8px;align-items: center;">
+      <div style="width: 15.695px;
+      background-color: ${project.phases[i].completed?'#48BF84':'#FEC84B'};
+      height: 15.695px;border-radius: 50%;" id="phase${i}">
+      </div>
+      <input style="display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+      color: var(--gray-900, #101828);
+      text-overflow: ellipsis;
+      
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      background: transparent;
+      line-height: 20px; /* 142.857% */;border:none"  onchange="changephaseData('${i}','title',event.target.value)" value="${project.phases[i].title}">
+      </div>
+      </div>  
+      
+      <div style="display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 24px;">
+      <div id="phaseDate${i}" style="display:${project.phases[i].completed?'block':'none'}">
+        <input type="date" value="${project.phases[i].date}" style="border:none; background: transparent;" onchange="changephaseData('${i}','date',event.target.value)">
+      </div>
+    <img src="${project.phases[i].completed?'../Project icons/right_green_rounded.svg':'../Project icons/green_rounded.svg'}" id="phaseCheckbox${i}" onclick="CompletePhase('${i}')">
+    <img src="../Project icons/delete_phase.svg" onclick="deletePhase('${i}')">
+    </div>
+      </div>`
+ 
+     
+    }
+    modalbody.innerHTML+=`<div style="display: flex;gap:16px;align-items: center;" onclick="AddPhase()">
+        <img src="../Project icons/phase_add.svg">
+       <div style="display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 1;
+overflow: hidden;
+color: var(--gray-400, #98A2B3);
+text-overflow: ellipsis;
+cursor:pointer;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+"> Add phase</div>
+        </div>`
+}
+function AddPhase()
+{
+  project.phases.push({title:'',completed:false,date:''})
+  SetPhases();
+}
+
+
+function CompletePhase(i)
+{
+  i=parseFloat(i)
+  let phase=document.getElementById(`phase${i}`);
+  let phaseDate=document.getElementById(`phaseDate${i}`);
+  let phaseCheckbox=document.getElementById(`phaseCheckbox${i}`);
+  if(project.phases[i].completed)
+  {
+    phaseCheckbox.src='../Project icons/green_rounded.svg'
+    phase.style.backgroundColor='#FEC84B'
+    phaseDate.style.display='none'
+    project.phases[i].completed=false;
+    project.phases[i].date='';
+    return;
+  }
+  phaseCheckbox.src='../Project icons/right_green_rounded.svg'
+  phase.style.backgroundColor='#48bf84'
+  phaseDate.style.display='block'
+  let year=new Date().getFullYear();
+  let month=new Date().getMonth()+1;
+  let date=new Date().getDate();
+  phaseDate.children[0].value=year+'-'+month+'-'+date;
+  project.phases[i].date=year+'-'+month+'-'+date;
+  
+project.phases[i].completed=true;
+}
+function deletePhase(i)
+{
+  i=parseFloat(i)
+  project.phases.splice(i,1);
+  SetPhases();
+}
+
+function changephaseData(i,type,value)
+{
+  i=parseFloat(i)
+  project.phases[i][type]=value;
+}
+
+   
+    let krindex = 0;
+    function SetTeamImages(teams) {
+      teams=GiveUniqueEmployees(teams);
+      let teamsImage = document.getElementById('TeamsMembers')
+      let innerhtml = '';
+      
+        for (let employeeId of teams) {
+
+          innerhtml += `<img style="display: flex;
+        width: 32px;
+        height: 32px;
+        margin-left: -10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 200px;
+        border: 1.5px solid var(--White, #FFF)" src="${EmployeeMap.get(employeeId).image}">`
+      }
+      teamsImage.innerHTML = innerhtml;
+    }
+   
+
+    function SelectOwner(id, image) {
+      document.getElementById('OwnerImage').src = image;
+      project.owners[0] = id;
+      SaveProjectDataApi();
+    }
+
+    function Goback() {
+      window.history.back()
+    }
+
+
+
+
+
+
+    function SelectTeams(employees, name, id) {
+      for (let i = 0; i < objective_teams.length; i++) {
+        if (objective_teams[i].id == id)
+          return;
+      }
+      document.getElementById(
+        "TeamSelected"
+      ).innerHTML += `<div class="teamBox" id='Team${id}'>${name} <img src="../Performance dashboard Icons/TeamCross.svg" onclick="RemoveFromTeam('${id}')"></div>`;
+      objective_teams.push({ title: name, employees: employees, id: id });
+      MakeButtonActive()
+    }
+
+    function RemoveFromTeam(id) {
+      for (let i = 0; i < objective_teams.length; i++) {
+        if (objective_teams[i].id == id) {
+          objective_teams.splice(i, 1);
+          break;
+        }
+      }
+      document.getElementById(`Team${id}`).remove();
+      MakeButtonActive();
+    }
+
+    function SearchTeams(value) {
+     
+      let body = document.getElementById("DropDownTeams");
+      let innerHTML = "";
+
+      for (let team of teams) {
+        if (team.title.toLowerCase().includes(value.toLowerCase())) {
+          innerHTML += `<div style="display: flex;
+                padding: 8px;
+                align-items: center;
+                gap: 10px;
+                align-self: stretch;" onclick="SelectTeams('${team.employees}','${team.title}','${team._id}')">
+                      <img src="../Performance dashboard Icons/teams_icon.svg">
+                      <div style="display: flex;
+                flex-direction: column;
+                align-items: flex-start;">
+                        <div style="color: var(--gray-700, #344054);
+                
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 20px; /* 142.857% */">${team.title}</div>
+                        <div style="color: var(--gray-500, #667085);
+                
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 18px; /* 150% */">`;
+
+          for (let employeeId of team.employees) {
+            innerHTML += `${EmployeeMap.get(employeeId)},`;
+          }
+          innerHTML += ` </div>
+                      </div>
+                    </div>`;
+        }
+      }
+      for (let employee of currentemployeeList) {
+        if (employee.displayName.toLowerCase().includes(value.toLowerCase())) {
+          innerHTML += `<div style="display: flex;
+                  padding: 8px;
+                  cursor: pointer;
+                  align-items: center;
+                  gap: 10px;
+                  align-self: stretch;" onclick="SelectTeams(['${employee._id}'],'${employee.displayName}','${employee._id}')">
+                      <img style="display: flex;
+                  width: 32px;
+                  height: 32px;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  border-radius: 200px;" src="${employee.image}">
+                      <div style="display: flex;
+                  flex-direction: column;
+                  white-space: nowrap;
+                  align-items: flex-start;">
+                        <div style="color: var(--gray-700, #344054);
+                 font-size: 14px;
+                 font-style: normal;
+                 
+    text-align: center;
+                 font-weight: 600;
+                 line-height: 20px; /* 142.857% */
+                 ">${employee.displayName}</div>
+                        <div style="color: var(--gray-500, #667085);
+                 
+                 font-size: 12px;
+                 font-style: normal;
+                 font-weight: 400;
+                 line-height: 18px; /* 150% */">${employee.team}</div>
+                      </div>
+                    </div>
+                    <div style="height: 1px;
+                 align-self: stretch;
+                 background: var(--gray-200, #EAECF0)"></div>`;
+        }
+      }
+      body.innerHTML = innerHTML;
+    }
+
+    function SetkrTeamImages(Id,teams) {
+      teams=GiveUniqueEmployees(teams)
+      let teamsImage = document.getElementById(Id)
+      let innerhtml = '';
+      for (let employeeId of teams) {
+          innerhtml += `<img style="display: flex;
+        width: 32px;
+        height: 32px;
+        margin-left: -10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        border-radius: 200px;
+        border: 1.5px solid var(--White, #FFF)" src="${EmployeeMap.get(employeeId).image}">`
+      }
+      if (teams.length == 0)
+        innerhtml = `<div style="display: flex;
+width: 32px;
+height: 32px;
+padding: 6px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+border-radius: 200px;
+background: var(--primary-50, #F9F5FF);"><img src="../Performance dashboard Icons/Empty_User.svg"></div>Not Assigned yet`
+      teamsImage.innerHTML = innerhtml;
+    }
+
+    function SearchOwners(value) {
+
+      let body = document.getElementById("DropDownOwners");
+      let innerHTML = "";
+
+      for (let employee of currentemployeeList) {
+        if (employee.displayName.toLowerCase().includes(value.toLowerCase())) {
+          innerHTML += `<div style="display: flex;
+                  padding: 8px;
+                  cursor: pointer;
+                  align-items: center;
+                  gap: 10px;
+                  align-self: stretch;" onclick="SelectOwner('${employee._id}','${employee.image}')">
+                      <img style="display: flex;
+                  width: 32px;
+                  height: 32px;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  border-radius: 200px;" src="${employee.image}">
+                      <div style="display: flex;
+                  flex-direction: column;
+                  white-space: nowrap;
+                  align-items: flex-start;">
+                        <div style="color: var(--gray-700, #344054);
+                 font-size: 14px;
+                 font-style: normal;
+                 
+    text-align: center;
+                 font-weight: 600;
+                 line-height: 20px; /* 142.857% */
+                 ">${employee.displayName}</div>
+                        <div style="color: var(--gray-500, #667085);
+                 
+                 font-size: 12px;
+                 font-style: normal;
+                 font-weight: 400;
+                 line-height: 18px; /* 150% */">${employee.team}</div>
+                      </div>
+                    </div>
+                    <div style="height: 1px;
+                 align-self: stretch;
+                 background: var(--gray-200, #EAECF0)"></div>`;
+        }
+      }
+      body.innerHTML = innerHTML;
+    }
+
+    function ChangeProjectData(type, value) {
+      project[type] = value;
+      SaveProjectDataApi();
+    }
+
+
+    function ToogleIcon(Iconid, boxid) {
+      let icon = document.getElementById(Iconid);
+      let box = document.getElementById(boxid);
+      if (icon.classList.contains("fa-angle-down")) {
+        icon.classList.remove("fa-angle-down");
+        icon.classList.add("fa-angle-up");
+        box.style.display = "none";
+      }
+      else {
+        icon.classList.remove("fa-angle-up");
+        icon.classList.add("fa-angle-down");
+        box.style.display = "flex";
+      }
+    }
+
+    function MarkSelectedEmployee() {
+      let employees = document.querySelectorAll('.Employees');
+      let employee_icons = document.querySelectorAll('.EmployeesIcons');
+      for (let employeeId of employees) {
+        if (employeeId.classList.contains('selected')) {
+          employeeId.classList.remove('selected');
+        }
+      }
+      for (let employeeId of employee_icons) {
+        if (employeeId.style.display == 'flex') {
+          employeeId.style.display = 'none';
+        }
+      }
+      for (let employeeId of project.teams) {
+        let employee_box = document.getElementById('Employee-' + employeeId.id);
+        if (employee_box && !employee_box.classList.contains('selected')) {
+          employee_box.classList.add('selected');
+          let employee_icons = document.getElementById('selectIcon-' + employeeId.id);
+          employee_icons.style.display = 'flex';
+        }
+      }
+    }
+
+    function MarkSelectedEmployeeinModal(name, employeeId, employees) {
+      if (employees == 'team') {
+        for (let team of teams) {
+          if (team._id == employeeId) {
+            employees = team.employees;
+            break;
+          }
+        }
+      }
+      let employee_box = document.getElementById('Employee-' + employeeId);
+      if (employee_box.classList.contains('selected')) {
+        employee_box.classList.remove('selected');
+        let employee_icons = document.getElementById('selectIcon-' + employeeId);
+        employee_icons.style.display = 'none';
+        project.teams = project.teams.filter((employee) => employee.id != employeeId);
+      } else {
+        employee_box.classList.add('selected');
+        let employee_icons = document.getElementById('selectIcon-' + employeeId);
+        employee_icons.style.display = 'flex';
+        project.teams.push({ title: name, employees: employees, id: employeeId });
+      }
+
+    }
+
+    async function SaveEmployee() {
+      SetTeamImages(project.teams)
+      SaveProjectDataApi();
+    }
+
+    // updateEmployeeList(employeeList_Project);
+   
+    function filterAndSortModalEmployees(searchText) {
+
+      let filteredEmployees = currentemployeeList.filter((employee) => {
+        return employee.displayName.toLowerCase().includes(searchText);
+      });
+
+      // Sort the filtered employees so that matches come first
+      filteredEmployees.sort((a, b) => {
+        const aName = a.displayName.toLowerCase();
+        const bName = b.displayName.toLowerCase();
+        return aName.indexOf(searchText) - bName.indexOf(searchText);
+      });
+      const filteredTeams = teams.filter((team) => {
+        return team.title.toLowerCase().includes(searchText);
+      });
+
+      // Sort the filtered employees so that matches come first
+      filteredTeams.sort((a, b) => {
+        const aName = a.title.toLowerCase();
+        const bName = b.title.toLowerCase();
+        return aName.indexOf(searchText) - bName.indexOf(searchText);
+      });
+       filteredEmployees =filteredTeams.concat(filteredEmployees)
+      updateEmployeeList(filteredEmployees);
+    }
+
+
+    function updateEmployeeList(employeeList) {
+
+      employeeListContainer = document.getElementById('EmployeesModalBody');
+      employeeListContainer.innerHTML = '';
+      for (const employee of employeeList) {
+        let employeeElement = '';
+        if (employee.id == employee.employees[0])
+          employeeElement = createEmployeeElement(employee);
+        else
+          employeeElement = createTeamElement(employee);
+        employeeListContainer.innerHTML += employeeElement;
+      }
+      MarkSelectedEmployee()
+    }
+
+
+    function createEmployeeElement(employee) {
+      return `  <div onclick="MarkSelectedEmployeeinModal('${employee.displayName}','${employee._id}',['${employee._id}'])" style="display: flex;
+        padding: 16px 24px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex: 1 0 0;
+        align-self: stretch;" id="Employee-${employee._id}" class="Employees">
+          <div style="position: relative;display: none;" id="selectIcon-${employee._id}" class="EmployeesIcons">
+            <div>
+              <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+            width: 20px;
+            height: 20px;
+            padding: 3px;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            right: -70px;
+            top: -8px;
+            border-radius: 30.001px;
+            background: var(--brand-primary, #48BF84);">
+            </div>
+          </div>
+          <img style="display: flex;
+       width: 40px;
+       height: 40px;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       border-radius: 200px;" src="${employee.image}">
+          <div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+            <div style="color: var(--text-content-primary, #181818);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+
+    text-align: center;
+line-height: normal;">${employee.displayName}</div>
+            <div style="color: var(--text-content-secondary, #898989);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+
+    text-align: center;
+font-weight: 600;
+line-height: normal;">${employee.team}</div>
+          </div>
+
+        </div>`
+    }
+    var initiativeindex=''
+    function changeinitiativeIndex(i) {
+      initiativeindex = parseFloat(i);
+    }
+    function createTeamElement(team) {
+      let x=''
+      x+= `  <div onclick="MarkSelectedEmployeeinModal('${team.title}','${team._id}','team')" style="display:flex;
+        padding: 16px 24px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex: 1 0 0;
+        align-self: stretch;" id="Employee-${team._id}" class="Employees">
+          <div style="position: relative;display: none;" id="selectIcon-${team._id}" class="EmployeesIcons">
+            <div>
+              <img src="../Performance dashboard Icons/select_employee.svg" style="display: flex;
+            width: 20px;
+            height: 20px;
+            padding: 3px;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            right: -70px;
+            top: -8px;
+            border-radius: 30.001px;
+            background: var(--brand-primary, #48BF84);">
+            </div>
+          </div>
+          <img style="display: flex;
+                 width: 40px;
+                 height: 40px;
+                 flex-direction: column;
+                 justify-content: center;
+                 align-items: center;
+                 border-radius: 200px;" src="../Performance dashboard Icons/teams_icon.svg">
+          <div style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+            <div style="color: var(--text-content-primary, #181818);
+font-size: 14px;
+font-style: normal;
+white-space: nowrap;
+font-weight: 600;
+line-height: normal;">${team.title}</div>
+            <div style="display: -webkit-box;
+width: 85px;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 1;
+overflow: hidden;
+color: var(--text-content-secondary, #898989);
+text-overflow: ellipsis;
+
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+                    ">`
+for(let employeeId of team.employees) {
+                 x+=EmployeeMap.get(employeeId).firstName +','
+                     }
+              x+=`</div>
+          </div>
+
+        </div>`
+        return x;
+    }
+    async function SaveProjectDataApi() {
+      try {
+        let res = await fetch('/create/project', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(project)
+        })
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+  
+
+//roadmap
+
+function AddRoadMapPoint()
+{
+ 
+  project.roadmap.push({title:'',status:false});
+  let roadmapBody=document.getElementById('RoadmapBox')
+  document.getElementById('AddRoadMapPoint').remove();
+  roadmapBody.innerHTML='';
+  for(let i=0;i<project.roadmap.length;i++){
+  roadmapBody.innerHTML+=`<div style="display: flex;align-items: center;gap:8px" >
+        <input type="checkbox" ${project.roadmap[i].status?'checked':''} style="width: 20px;height: 20px;" onclick="ChangeStatusRoadMapPoint(${i})"/>
+       <input type="text" onchange="ChangeTitleRoadMapPoint(${i},event.target.value)"
+       value='${project.roadmap[i].title}'
+          placeholder="Click to add new Checkpoint" style="border:none;border-radius:6px;padding:4px;color: var(--gray-800, #1D2939);
+width:100%;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */">
+      </div>`
+    }
+  roadmapBody.innerHTML+=`<div style="display: flex;align-items: center;gap:8px" id="AddRoadMapPoint" onclick="AddRoadMapPoint()">
+       
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+            <path d="M12.8027 5.55078V19.5508" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M5.80273 12.5508H19.8027" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <div style="display: flex;
+            padding: 4px;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 1px solid var(--gray-600, #475467);">
+          Click to add new Checkpoint
+          </div>
+      </div>`
+
+}
+
+function ChangeStatusRoadMapPoint(i)
+{
+  project.roadmap[i].status=!project.roadmap[i].status;
+  SaveProjectDataApi();
+}
+function ChangeTitleRoadMapPoint(i,value)
+{
+  project.roadmap[i].title=value
+  SaveProjectDataApi();
+}
+
+
+// link and file upload 
+
+               function OpenFileInput(id) {
+                
+                  document.getElementById(id).click();
+                }
+
+               
+                let Link = {},
+                  file = {};
+
+                function ChangeLinkContent(type, value) {
+                  Link[type] = value;
+                  MakeLinkButtonAble();
+
+                }
+
+                function AddProjectLink() {
+    let id = generateRandomId();
+    Link.id = id;
+    project.links.push(Link);
+    UpdateLinkbody();
+    SaveProjectDataApi();
+  }
+
+                function AddProjectFile() {
+                  let id = generateRandomId();
+                  file.id = id;
+                  project.files.push(file);
+                  UpdateFilebody();
+                  SaveProjectDataApi();
+                }
+
+                function MakeLinkButtonAble() {
+                  if (Link.title?.length > 0 && Link.url?.length > 0) {
+                    document.getElementById('AddLinkButton').disabled = false;
+                  } else {
+                    document.getElementById('AddLinkButton').disabled = true;
+                  }
+                }
+
+
+                function generateRandomId() {
+                  return '_' + Math.random().toString(36).substr(2, 9);
+                }
+
+                function UpdateLinkbody() {
+                  let id = Link.id;
+                  let body = document.getElementById('Project_LinkFileBody');
+                  let innerhtmlfile = `
+      <div style="display: flex;
+                padding: 12px 16px;
+                align-items: center;
+                gap: 12px;
+                flex: 1 0 0;
+                border-radius: 12px;
+                border: 1px solid #ECECEC;
+                background: #FFF;" onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='link-${id}'>
+        <img src="../Performance dashboard Icons/Link Added.svg">
+        <a href="${Link.url}" target="_blank" style="display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  gap: 4px;
+                  flex: 1 0 0;">
+          <div style="align-self: stretch;
+                    color: var(--content-on-light-primary, #181818);
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 17.352px;">
+            ${Link.title}
+          </div>
+          <div style="display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    align-self: stretch;
+                    overflow: hidden;
+                    color: var(--content-on-light-secondary, #898989);
+                    text-overflow: ellipsis;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 17.352px;">
+            ${Link.url}
+          </div>
+        </a>
+        <img src='../Project icons/Edit.svg' style="display:none" class='Icons-${id}' onclick='EditLink("${id}")' data-target='#AddProjectLink' data-toggle='modal'>
+        <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveLink("${id}")'>
+      </div>`;
+
+                  body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+                }
+
+                function UpdateFilebody() {
+                  
+                  let id = file.id;
+                  let body = document.getElementById('Project_LinkFileBody');
+                  let innerhtmlfile = `
+      <div style="display: flex;
+                padding: 12px 16px;
+                align-items: center;
+                gap: 12px;
+                flex: 1 0 0;
+                border-radius: 12px;
+                border: 1px solid #ECECEC;
+                background: #FFF;" onmouseover="showIcons('.Icons-${id}')" onmouseout="removeIcons('.Icons-${id}')" id='file-${id}'>
+        <img src="../Performance dashboard Icons/Document Added.svg">
+        <a href="${file.url}" target="_blank" download style="display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  gap: 4px;
+                  flex: 1 0 0;">
+          <div style="align-self: stretch;
+                    color: var(--content-on-light-primary, #181818);
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 17.352px;">
+            ${file.title}
+          </div>
+          <div style="display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    align-self: stretch;
+                    overflow: hidden;
+                    color: var(--content-on-light-secondary, #898989);
+                    text-overflow: ellipsis;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 17.352px;">
+            ${file.url}
+          </div>
+        </a>
+        <img src='../Project icons/Delete.svg' style="display:none" class='Icons-${id}' onclick='RemoveFile("${id}")'>
+      </div>`;
+
+                  body.insertAdjacentHTML('afterbegin', innerhtmlfile);
+                }
+
+              
+               
+
+                function RemoveFile(fileid) {
+                  let id = `file-${fileid}`
+                  const body = document.getElementById(id);
+                  body.remove();
+                  const index = project.files.findIndex((file) => file.id === fileid);
+                  if (index != -1)
+                  project.files.splice(index, 1);
+                  SaveProjectDataApi();
+                }
+
+                function RemoveLink(linkid) {
+                  let id = `link-${linkid}`
+                  const body = document.getElementById(id);
+                  body.remove();
+                  const index = project.links.findIndex((link) => link.id === linkid);
+                  if (index != -1)
+                    project.links.splice(index, 1);
+                    SaveProjectDataApi();
+                }
+
+                function EditLink(linkid) {
+                  const index = project.links.findIndex((link) => link.id === linkid);
+                  Link = project.links[index];
+                  RemoveLink(linkid);
+                  document.getElementById('link-title').value = Link.title;
+                  document.getElementById('link-link').value = Link.url;
+                }
+
+                function showIcons(classname) {
+                  const box = document.querySelectorAll(classname);
+                  box.forEach((element) => {
+                    element.style.display = 'flex';
+                  });
+                }
+
+                function removeIcons(classname) {
+                  const box = document.querySelectorAll(classname);
+                  box.forEach((element) => {
+                    element.style.display = 'none';
+                  });
+                }
+
+
+                async function handleProjectFileSelect(event) {
+                  try {
+                    let data = event.target.files[0];
+                    let filelink = await handleFileUpload(data);
+                    file.title = data.name;
+                    file.url = filelink;
+                    AddProjectFile();
+                  } catch (error) {
+                    console.log(error)
+                  }
+                }
+
+
+
+
+
+                async function handleFileUpload(file) {
+                  const formData = new FormData();
+                  formData.append('file', file);
+                  try {
+                    const uploadType = "EmployeeProject";
+                    const urlRes = await fetch(
+                      `/aws/get/preSignedUrl?fileName=${file.name}t&contentType=${file.type}&uploadType=${uploadType}`, {
+                      method: "GET",
+                    }
+                    );
+                    const urlData = await urlRes.json();
+                    const response = await fetch(urlData.url, {
+                      method: "PUT",
+                      headers: {
+                        "Content-Type": file.type,
+                      },
+                      body: file,
+                    });
+                    let url = `https://dvfkpf9qxfl09.cloudfront.net/${urlData.key}`;
+
+                    return url;
+                  } catch (error) {
+                    console.error('Error during file upload:', error);
+                  }
+                }
+
+                function selectFile(id) {
+      document.getElementById(id).click();
+    }
+    async function handleFileSelect(event, Id) {
+      const file = event.target.files[0];
+     let videolink=  await handleFileUpload(file);
+      project.ResultFile={link:videolink,title:file.name,type:file.type}
+      UploadResultfile( project.ResultFile)
+      SaveProjectDataApi()
+    }
+   
+  function UploadResultfile(file)
+  {
+    const textbox=document.getElementById("video-uploaded-text")
+      const perviewbox=document.getElementById("file-uploaded-perview")
+      let videolink=file?.link;
+      if(file && videolink)
+      {
+        textbox.style.display = 'none';
+        perviewbox.style.display = 'flex';
+        const fileType = file.type;
+    const fileName = file.title;
+        if (fileType.startsWith("image/")) {
+perviewbox.innerHTML=`<img src="${videolink}" style="width:100%;height:100%;">`
+        }
+        else if (fileType.startsWith("video/")) {
+          perviewbox.innerHTML=` <video controls id="video-upload-preview" style="width: 100%; height: 100%;">
+                      <source src="${videolink}"  id="video-uplopade_perview" type="video/mp4"> 
+                    </video>`
+        }
+        else{
+          perviewbox.innerHTML=`<p  style="width:100%;height:100%;">File: ${fileName} uploaded</p>`
+        }
+
+    
+      }
+      else{
+        textbox.style.display = 'flex';
+        perviewbox.style.display = 'none';
+      }
+  }
+
+    function GiveUniqueEmployees(employeesList)
+{
+let uniqueEmployees=[];
+ let teamEmployeesMap=new Map();
+ for(let team of employeesList)
+ {
+  if(!team.employees)
+  {
+    if(!teamEmployeesMap.has(team._id.toString()))
+    {
+      teamEmployeesMap.set(team._id.toString(),team._id.toString());
+      uniqueEmployees.push(team._id.toString());
+    }
+  }
+  else{
+    for(let employeeid of team.employees)
+    {
+      if(!teamEmployeesMap.has(employeeid.toString()))
+    {
+      teamEmployeesMap.set(employeeid.toString(),employeeid);
+      uniqueEmployees.push(employeeid);
+    }
+    }
+  }
+ }
+ return uniqueEmployees;
+}
+
+
+    async function SaveTask(initiativeindex)
+    {
+     let response=await fetch('/create/task',{
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify(initiative[initiativeindex])
+     })
+     response=await response.json();
+      initiative[initiativeindex]._id=response._id;
+    
+
+    }
+
+    async function SaveSubTask(initiativeindex,subTaskindex)
+    {
+     let response=await fetch('/create/subtask',{
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify(subTasks[initiativeindex][subTaskindex])
+     })
+     response=await response.json();
+     subTasks[initiativeindex][subTaskindex]._id=response._id;
+     
+
+    }
+    
+
+  </script>
+  <!-- Include JavaScript files -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+  <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+  <script src="../js/purpose.core.js"></script>
+  <!-- Page JS -->
+  <script src="../libs/autosize/dist/autosize.min.js"></script>
+
+  <script src="../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+  <script src="../libs/progressbar.js/dist/progressbar.min.js"></script>
+  <script src="../libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="../libs/moment/min/moment.min.js"></script>
+
+  <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="../libs/fullcalendar/dist/fullcalendar.min.js"></script>
+  <!-- Purpose JS -->
+  <script src="../js/purpose.js"></script>
+  <!-- Demo JS - remove it when starting your project -->
+  <script src="../js/demo.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+
+
+
+</body>
+
+</html>

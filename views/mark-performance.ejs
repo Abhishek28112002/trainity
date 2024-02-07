@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Purpose Application UI is the following chapter we've finished in order to create a complete and robust solution next to the already known Purpose Website UI."
+    />
+    <!-- Hotjar Tracking Code for Admin Website -->
+<script>
+  (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:3534926,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+    <meta name="author" content="Webpixels" />
+    <title>Trainity Dashboard</title>
+    <!-- Favicon -->
+    <!-- Favicon -->
+    <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+    <!-- Font Awesome 5 -->
+    <link
+      rel="stylesheet"
+      href="../../libs/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+    <!-- Page CSS -->
+    <!-- <link
+      rel="stylesheet"
+      href="../../libs/quill/dist/quill.core.css"
+      type="text/css"
+    /> -->
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+    <link rel="stylesheet" href="../../libs/select2/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="../../libs/flatpickr/dist/flatpickr.min.css" />
+    <!-- Purpose CSS -->
+    <link rel="stylesheet" href="../../css/purpose.css" id="stylesheet" />
+    <style>
+      .block {
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body class="application application-offset">
+    <div
+      class="modal fade fixed-right"
+      id="modal-products"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-vertical" role="document">
+        <div class="modal-content">
+          <div class="scrollbar-inner">
+            <div class="modal-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Application container -->
+    <div class="container-fluid container-application">
+      <!-- Sidenav -->
+      <%- include('partials/sidepanel'); -%>
+      <!-- Content -->
+      <div class="main-content footer-margin-mobile position-relative">
+        <!-- Main nav -->
+        <%- include('partials/navbar'); -%>
+
+        <!-- Page content -->
+        <div class="page-content">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <!-- Page title -->
+              <div class="page-title">
+                <div class="row justify-content-between align-items-center">
+                  <div
+                    class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0"
+                  >
+                    <!-- Page title + Go Back button -->
+                    <div class="d-inline-block">
+                      <h5
+                        class="h4 d-inline-block font-weight-400 mb-0 text-white"
+                      >
+                        Mark Performance
+                      </h5>
+                    </div>
+                    <!-- Additional info -->
+                  </div>
+                </div>
+              </div>
+              <%- include('partials/utility-modals'); -%>
+              <form class="mt-4">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label class="form-control-label">Employee Alloted</label>
+                      <select
+                        name="employeeID"
+                        id="employeeID"
+                        class="custom-select"
+                      >
+                        <option value="-1" selected>
+                          Open this select menu
+                        </option>
+                        <% for(var employee of employeeList) { %>
+                        <option value="<%= employee._id %>">
+                          <%= employee.firstName + " " + employee.lastName %>
+                        </option>
+                        <% } %>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label">Date</label>
+                      <input
+                        name="date"
+                        type="text"
+                        class="form-control"
+                        data-toggle="date"
+                        placeholder="Select date"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label">Rating</label>
+                      <input
+                        type="number"
+                        name="rating"
+                        class="form-control"
+                        required
+                        min="1"
+                        max="5"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">Feedback</label>
+                      <textarea
+                        class="form-control"
+                        name="feedback"
+                        placeholder="Enter today's feedback"
+                        rows="3"
+                        resize="none"
+                      ></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label">Tasks</label>
+
+                      <div class="task-status">
+                        <div class="custom-control custom-checkbox"></div>
+                      </div>
+                    </div>
+
+                    <!-- Button trigger modal -->
+                    <button type="submit" class="btn btn-primary">
+                      Create
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <!-- Scripts -->
+    <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+    <script src="../../js/purpose.core.js"></script>
+    <!-- Page JS -->
+    <script src="../../libs/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="../../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <!-- <script src="../../libs/quill/dist/quill.min.js"></script> -->
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="../../libs/select2/dist/js/select2.min.js"></script>
+    <script src="../../libs/flatpickr/dist/flatpickr.min.js"></script>
+    <!-- Purpose JS -->
+    <script src="../../js/purpose.js"></script>
+    <!-- Demo JS - remove it when starting your project -->
+    <script src="../../js/demo.js"></script>
+
+    <script>
+      const employeeSelectMenu = document.getElementById("employeeID");
+      const taskStausGroup = document.querySelector(".task-status");
+      employeeSelectMenu.addEventListener("change", async (e) => {
+        const employeeID = e.target.value;
+        if (employeeID != -1) {
+          const dailyTasksResponse = await fetch(
+            `/fetch/dailyTasks?employeeID=${employeeID}`,
+            {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+          const dailyTasks = await dailyTasksResponse.json();
+          console.log(dailyTasks);
+          if (dailyTasks.length > 1) {
+            for (let i = 1; i < dailyTasks.length; i++) {
+              const taskCheckBox = document.createElement("div");
+              taskCheckBox.classList = "custom-control custom-checkbox block";
+              taskCheckBox.innerHTML = `<input
+                              type="checkbox"
+                              class="custom-control-input"
+                              name="taskStatus"
+                              id="checkbox-${dailyTasks[i].taskID}"
+                            />
+                            <label class="custom-control-label" for="checkbox-${dailyTasks[i].taskID}"
+                              >${dailyTasks[i].description}</label
+                            >`;
+              taskStausGroup.appendChild(taskCheckBox);
+            }
+          }
+        } else {
+          taskStausGroup.innerHTML = ``;
+        }
+      });
+    </script>
+
+    <script>
+      const form = document.querySelector("form");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const employeeID = form.employeeID.value;
+        const date = form.date.value;
+        const feedback = form.feedback.value;
+        const rating = form.rating.value;
+        const taskStatusArr = form.taskStatus;
+        const taskStatus = [];
+        for (let i = 0; i < taskStatusArr.length; i++) {
+          taskStatus.push(taskStatusArr[i].checked);
+        }
+        $("#loadingModal").modal("show");
+        $("#errorModal").modal("hide");
+        $("#successModal").modal("hide");
+
+        try {
+          const res = await fetch("/mark/performance", {
+            method: "POST",
+            body: JSON.stringify({
+              employeeID,
+              date,
+              feedback,
+              rating,
+              taskStatus,
+            }),
+            headers: { "Content-Type": "application/json" },
+          });
+
+          const data = await res.json();
+
+          if (data._id) {
+            $("#loadingModal").modal("hide");
+            $("#errorModal").modal("hide");
+            $("#successModal").modal("show");
+          } else {
+            $("#loadingModal").modal("hide");
+            $("#errorModal").modal("show");
+            $("#successModal").modal("hide");
+          }
+        } catch (error) {
+          $("#loadingModal").modal("hide");
+          $("#errorModal").modal("show");
+          $("#successModal").modal("hide");
+          console.log(error);
+        }
+      });
+    </script>
+  </body>
+</html>

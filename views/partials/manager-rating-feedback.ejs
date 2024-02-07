@@ -1,0 +1,1868 @@
+<style>
+ .inputcheckbox {
+            visibility: hidden;
+        }
+          
+        /* Creating a custom checkbox
+        based on demand */
+        .geekmark {
+          display: flex;
+            width: 25px;
+            height: 25px;
+            border: 1px solid #DCDCDC;
+            border-radius: 4px;
+        }
+          
+      
+          
+        /* Specify the background color to be
+        shown when checkbox is active */
+        .main input:active ~ .geekmark {
+            background-color: red;
+        }
+          
+        /* Specify the background color to be
+        shown when checkbox is checked */
+        .main input:checked ~ .geekmark {
+            background-color: #FF6565;
+        }
+          
+        /* Checkmark to be shown in checkbox */
+        /* It is not be shown when not checked */
+        .geekmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+          
+        /* Display checkmark when checked */
+        .main input:checked ~ .geekmark:after {
+            display: block;
+        }
+          
+        /* Styling the checkmark using webkit */
+        /* Rotated the rectangle by 45 degree and 
+        showing only two border to make it look
+        like a tickmark */
+        .main .geekmark:after {
+          position: relative;
+            left: 8px;
+            bottom: 0px;
+            width: 6px;
+            height: 18px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+       
+          
+        /* Creating a custom checkbox
+        based on demand */
+        .unratablemark {
+            display: flex;
+            width: 25px;
+            height: 25px;
+            border: 1px solid #DCDCDC;
+            border-radius: 4px;
+        }
+          
+      
+          
+        /* Specify the background color to be
+        shown when checkbox is active */
+        .main input:active ~ .unratablemark {
+            background-color: #FDB022;
+        }
+          
+        /* Specify the background color to be
+        shown when checkbox is checked */
+        .main input:checked ~ .unratablemark {
+            background-color: #FDB022;
+        }
+          
+        /* Checkmark to be shown in checkbox */
+        /* It is not be shown when not checked */
+        .unratablemark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+          
+        /* Display checkmark when checked */
+        .main input:checked ~ .unratablemark:after {
+            display: block;
+        }
+          
+        /* Styling the checkmark using webkit */
+        /* Rotated the rectangle by 45 degree and 
+        showing only two border to make it look
+        like a tickmark */
+        .main .unratablemark:after {
+          position: relative;
+            left: 8px;
+            bottom: 0px;
+            width: 6px;
+            height: 18px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+  body {
+    font-family: "Manrope", sans-serif !important;
+  }
+
+ 
+  .textarea {
+    border: none;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .heading {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    color: #000000;
+  }
+
+  .rounded-list {
+    list-style: none;
+    counter-reset: item;
+    padding-left: 0;
+  }
+
+  .rounded-list li {
+    position: relative;
+    margin-bottom: 1px;
+    padding-left: 25px;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  .box {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 10px;
+    gap: 1px;
+    background: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 14px;
+  }
+
+  .rounded-list li:before {
+    content: counter(item);
+    counter-increment: item;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 25px;
+    height: 25px;
+    color: #000;
+    text-align: center;
+    line-height: 25px;
+  }
+
+  .black {
+    background-color: #000;
+  }
+
+  .text-black {
+    color: black;
+  }
+
+  .yellow {
+    background-color: #fdecaa;
+  }
+
+  .orange {
+    background-color: #fffbeb;
+  }
+
+  .success {
+    background-color: #f2faf6;
+  }
+
+  .normal {
+    background-color: #fafafa;
+  }
+
+  .text-normal {
+    color: "#898989";
+  }
+
+  .text-success {
+    color: #48bf84;
+    cursor: pointer;
+  }
+
+  .p {
+    width: 169.32px;
+    height: 28px;
+    margin-top: -8px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .activeTab {
+    background: #f2faf6;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .navbar-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .navbar-toggle span {
+    width: 30px;
+    height: 3px;
+    background-color: #000;
+  }
+
+  .list-group-item {
+   
+    margin: 5px;
+    border-radius: 12px;
+  }
+
+  .navbartop {
+    display: none;
+  }
+
+  .datepicker-wrapper {
+    position: relative;
+  }
+
+  .rating-button-web {
+    display: block !important;
+  }
+
+  .rating-button-mobile {
+    display: none !important;
+  }
+  .taskvideobox {
+    padding: 24px;
+    width: 100%;
+    display: flex;
+  }
+  .ratingcard {
+    padding: 20px !important;
+    width: 100%;
+  }
+  .videoNotUploaded {
+    color: #48bf84;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 24px;
+    margin: auto;
+    margin-top: 20px;
+  }
+
+  .updownarrow {
+    display: none !important;
+  }
+
+ 
+  .cardbutton {
+    display: flex !important;
+  }
+
+  .mobile-navbar {
+    display: none !important;
+  }
+
+  .task-color {
+    background-color: #f4f5fb;
+  }
+
+  .text-disabled {
+    color: #dcdcdc;
+  }
+
+  .btn-status-green {
+    padding: 5px 10px;
+    border-radius: 14px;
+    color: var(--pill-text-blue, #3b82f6);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.24px;
+    border-radius: 8px;
+    border-bottom: 1px solid #ececec;
+    background: #f4f5fb;
+  }
+
+  .btn-status-red {
+    padding: 5px 10px;
+    border-radius: 14px;
+    align-items: flex-start;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    letter-spacing: 0.24px;
+    background: #ebebeb;
+  }
+
+  .videoTab {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex: 1 0 0;
+    border-radius: 14px 0px 0px 14px;
+    border: 1px solid var(--stroke-primary, #ececec);
+  }
+  .videoTabBody {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 16px 16px 0 16px;
+    border-radius: 14px 0px 0px 14px;
+    font-size: 12px;
+  }
+  .datevalue {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    padding-left: 45px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+  .modal-user-profile {
+    width: 64px;
+    height: 64px;
+    border-radius: 61.2787px;
+  }
+  .modal-header-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #48bf84;
+  }
+  .modal-header-title {
+    width: 649px;
+    height: 27px;
+    font-style: normal;
+    margin-left: 10px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    color: #181818;
+  }
+  .modal-tasks-img {
+    width: 24px;
+    height: 24px;
+  }
+  .badges-button-body {
+    display: flex;
+    height: 69px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--stroke-secondary, #dcdcdc);
+    background: var(--surface-primary, #fff);
+  }
+  .rating-button-body {
+    display: flex;
+    padding: 6px 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 12px;
+  }
+  .modal-badges-meter-col {
+    display: flex;
+    flex-direction: row;
+    padding: 24px;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 280px;
+    border-radius: 12px;
+    border: 1px solid #ececec;
+    background: #ececec;
+    font-size: 20px;
+ 
+    font-weight: 600;
+    line-height: 16px;
+    color: black;
+  }
+  .modal-badges-meter-star {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    color: #facc15;
+    font-size: 16px;
+   
+    font-weight: 700;
+  }
+
+  .borderless-number-input {
+    border: none;
+    width: 40px;
+    text-align: center;
+    -moz-appearance: textfield; /* Firefox */
+  }
+
+  .borderless-number-input::-webkit-inner-spin-button,
+  .borderless-number-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  @media (max-width: 768px) {
+    .closeButton {
+      display: none !important;
+    }
+    .taskvideobox {
+      padding: 10px;
+      display: flex;
+      width: 100%;
+    }
+    .modal-tasks-img {
+      width: 18px;
+      height: 18px;
+    }
+    .rating-button-body {
+      display: flex;
+      width: 100%;
+      padding: 0px;
+    }
+    .starbox {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .navbar-toggle {
+      display: flex;
+    }
+
+    .modal-header {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .youtube {
+      width: 300px;
+      height: 200px;
+    }
+
+    #datevalue {
+      padding-left: 0 !important;
+    }
+
+    #navcontainer {
+      display: none;
+    }
+
+    .rating-button {
+      width: 300px;
+      height: 70px;
+      margin: auto;
+    }
+
+    .rating-box {
+      display: flex;
+      flex-direction: column;
+      margin: 10px 0px;
+    }
+
+    .navbartop {
+      display: flex;
+      /* show navbar */
+      align-items: center;
+    }
+
+    .cardbutton {
+      display: none;
+    }
+
+    .containers {
+      display: none;
+    }
+
+
+    .navbarcard {
+      margin: 20px;
+    }
+
+    .updownarrow {
+      display: block !important;
+    }
+
+    .mobile-header {
+      display: flex !important;
+    }
+
+    .navbar-sidebar {
+      display: none !important;
+    }
+
+    .text {
+      display: none !important;
+    }
+
+    .mobile-navbar {
+      display: block !important;
+    }
+
+    .navbtn {
+      color: white;
+    }
+    .modal-user-profile {
+      width: 48px;
+      height: 48px;
+      border-radius: 61.2787px;
+    }
+    .modal-header-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: #48bf84;
+    }
+    .modal-header-title {
+      margin-left: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 27px;
+      color: #181818;
+    }
+    .videoTabBody {
+      display: flex;
+      padding: 8px;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      flex: 1 0 0;
+      border-radius: 14px 0px 0px 14px;
+    }
+    .btn-status-green {
+      display: flex;
+      padding: 4px 8px;
+      align-items: flex-start;
+      gap: 8px;
+      border-radius: 8px;
+      background: var(--pill-surface-blue, #f4f5fb);
+    }
+
+    .btn-status-red {
+      border-radius: 8px;
+      background: var(--surface-fourth, #ebebeb);
+      display: flex;
+      padding: 4px 8px;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .videoNotUploaded {
+      color: #48bf84;
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 24px;
+      margin: auto;
+      margin-top: 20px;
+    }
+    .rating-badges-body {
+      padding: 24px;
+      align-items: center;
+      width: 100%;
+      border-radius: 12px;
+      background: var(--surface-primary, #fff);
+    }
+    .ratingcard {
+      padding: 0px !important;
+      width: 100%;
+    }
+    .badges-button-body {
+      margin-bottom: 20px;
+    }
+    .tabs {
+      display: flex;
+      margin: 0px;
+    }
+  }
+  @media (min-width: 767px) {
+    .tabs {
+      display: flex;
+      margin-right: -10px;
+      margin-left: -10px;
+    }
+    .rating-badges-body {
+      display: flex;
+      padding: 24px;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 24px;
+      flex: 1 0 0;
+      align-self: stretch;
+      border-radius: 12px;
+      justify-content: space-between;
+      background: var(--surface-primary, #fff);
+    }
+    #navcontainer {
+      display: flex !important;
+      flex-direction: row;
+      justify-content: space-around;
+      flex-flow: wrap;
+    }
+
+    .updownarrow {
+      display: none !important;
+    }
+
+    
+
+    .cardbutton {
+      display: flex !important;
+    }
+
+    .mobile-navbar {
+      display: none !important;
+    }
+  }
+  @media (min-width: 1170px) {
+     .ratingcard{
+      width: 40%;
+     }
+     .taskvideobox{
+      width: 60%;
+     }
+  }
+</style>
+
+<!-- Extra large modal -->
+
+<div
+class="modal "
+tabindex="-1"
+role="dialog"
+id="managerModalRating"
+  aria-labelledby="myExtraLargeModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header" style="padding-bottom: 0.2rem">
+        <div style="display: flex; gap: 10px">
+          <div>
+            <img src="" id="modal-userprofile" class="modal-user-profile" />
+          </div>
+          <div>
+            <h5 class="mb-0">
+              <span class="modal-header-name" id="modal-header-name"></span
+              ><span class="modal-header-title">Rating and Feedback</span>
+            </h5>
+            <% function ChangeDate(date) { const options = { day: "numeric",
+            month: "long", year: "numeric" }; const formattedDate = new
+            Date(date).toLocaleDateString(undefined, options); return
+            formattedDate; } %>
+            <p class="modal-header-date"></p>
+          </div>
+        </div>
+
+        <div class="closeButton" type="button" data-dismiss="modal">
+          <img src="../img/icons performance mgmt/desktop/close_40x40.svg" />
+        </div>
+      </div>
+      <div
+        class="modal-body"
+        style="background-color: #fbfcff; max-height: 70vh; overflow-y: auto"
+      >
+      <div style="display: flex;flex-direction:column ;gap:20px;">
+      <div style="display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+      flex-direction: row;
+      align-self: stretch;">
+    <div style="display: flex;gap:10px;align-items: center;">
+    <div style="color: var(--gray-600, #475467);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 158.6%;" class="modal-header-date"></div>
+    <div style="color: var(--gray-900, #101828);
+    
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;" id="modal-header-time">Sign In time: </div>
+    </div>  
+    <input type="date" style="display: flex;
+padding: 10px 16px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+border-radius: var(--radius-medium, 8px);
+border: 1px solid var(--gray-300, #D0D5DD);
+background: var(--White, #FFF);
+/* Shadow/xs */
+box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);" id="datePickerModal">
+</div>
+      <div id="KeyPointsBody"  class='card' style="display: flex;
+      padding: 16px 24px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      color:black;
+      align-self: stretch;
+      border-radius: 14px;">
+
+      </div>
+    </div>
+        <div class="row" style="flex-wrap: wrap;" >
+          <div class="card taskvideobox">
+            <div class="box-heading" style="width: 100%;">
+              <div class="tabs" style="margin-bottom: 20px">
+                <div
+                  class="col activeTab videoTab"
+                  id="tab3"
+                  onclick="clickTab(3)"
+                >
+                  <div class="videoTabBody">
+                    <div>
+                      <img
+                        src="../img/icons performance mgmt/desktop/d_eod_disabled_big.svg"
+                        class="modal-tasks-img"
+                        id="modal-eod-img"
+                      />
+                    </div>
+                    <div id="modal-eod-text">EOD Update</div>
+                  </div>
+                  <div id="modal-task-status3"></div>
+                </div>
+                <div class="col videoTab" onclick="clickTab(2)" id="tab2">
+                  <div class="videoTabBody">
+                    <div>
+                      <img
+                        src="../img/icons performance mgmt/desktop/d_noon_done_disabled_big.svg"
+                        class="modal-tasks-img"
+                        id="modal-noon-img"
+                      />
+                    </div>
+                    <div id="modal-noon-text">Noon Update</div>
+                  </div>
+                  <div id="modal-task-status2"></div>
+                </div>
+                <div class="col videoTab" onclick="clickTab(1)" id="tab1">
+                  <div class="videoTabBody">
+                    <div>
+                      <img
+                        src="../img/icons performance mgmt/desktop/d_tasks_done_disabled_big.svg"
+                        class="modal-tasks-img"
+                        id="modal-task-img"
+                      />
+                    </div>
+                    <div id="modal-task-text">Tasks</div>
+                  </div>
+                  <div id="modal-task-status1"></div>
+                </div>
+              </div>
+
+              <div id="modal-video-div-tab3" style="width: 100%;">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                  "
+                >
+                  <img
+                    src="../img/icons performance mgmt/desktop/video not uploaded.svg"
+                    style="margin: auto"
+                    width="327.39px;"
+                    height="241.32px;"
+                  />
+                  <div class="videoNotUploaded">Video not Uploaded</div>
+                </div>
+              </div>
+              <div id="modal-video-div-tab2" style="display: none;width: 100%;">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                  "
+                >
+                  <img
+                    src="../img/icons performance mgmt/desktop/video not uploaded.svg"
+                    style="margin: auto"
+                    width="327.39px;"
+                    height="241.32px;"
+                  />
+                  <div
+                    style="
+                      color: #48bf84;
+                      font-weight: 700;
+                      font-size: 32px;
+                      line-height: 24px;
+                      margin: auto;
+                      margin-top: 20px;
+                    "
+                  >
+                    Video not Uploaded
+                  </div>
+                </div>
+              </div>
+              <div id="modal-video-div-tab1" style="display: none;width: 100%;">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                  "
+                >
+                  <img
+                    src="../img/icons performance mgmt/desktop/video not uploaded.svg"
+                    style="margin: auto"
+                    width="327.39px;"
+                    height="241.32px;"
+                  />
+                  <div
+                    style="
+                      color: #48bf84;
+                      font-weight: 700;
+                      font-size: 32px;
+                      line-height: 24px;
+                      margin: auto;
+                      margin-top: 20px;
+                    "
+                  >
+                    Video not Uploaded
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card ratingcard">
+            <div style="display: flex; align-items: center; gap: 24px">
+              <div style="display: flex; gap: 10px; align-items: center; color: var(--pill-text-red, #FF6565);
+                  font-size: 14px; font-style: normal; font-weight: 700; line-height: normal;">
+                  <label class="main">
+                      <input type="checkbox"  class="inputcheckbox"id="PaidleaveCheckbox" style="width: 0.1px; height: 0.1px;" onclick="MarkLeaveforEmployee('PaidleaveCheckbox')">
+                      <span class="geekmark"></span>
+                  </label>
+                  <div style="margin-top: 10px;">Paid</div>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center; color: var(--pill-text-red, #FF6565);
+              font-size: 14px; font-style: normal; font-weight: 700; line-height: normal;">
+              <label class="main">
+                  <input type="checkbox" class="inputcheckbox" id="UnpaidleaveCheckbox" style="width: 0.1px; height: 0.1px;" onclick="MarkLeaveforEmployee('UnpaidleaveCheckbox')">
+                  <span class="geekmark"></span>
+              </label>
+              <div style="margin-top: 10px;"> UnPaid</div>
+          </div>
+              <div style="display: flex; gap: 10px; align-items: center; color: var(--warning-400, #FDB022);
+                  font-size: 14px; font-style: normal; font-weight: 700; line-height: normal;">
+                  <label class="main">
+                      <input type="checkbox" class="inputcheckbox" id="UnrateableCheckbox" style="width: 0.1px; height: 0.1px;" onclick="MarkUnrateableforEmployee('UnrateableCheckbox')">
+                      <span class="unratablemark"></span>
+                  </label>
+                  <div style="margin-top: 10px;"> Unrateable</div>
+              </div>
+          </div>
+          
+            <div class="rating-badges-body" style="padding:24px 0px">
+              <div style="display: flex; gap: 10px">
+                <div class="badges-button-body">
+                  <img
+                    onclick="UpdateBadges(-0.5)"
+                    src="../img/icons performance mgmt/desktop/d_substract_green.svg"
+                  />
+                  <div
+                    style="
+                      display: flex;
+                      font-size: 21px;
+                      font-weight: 600;
+                      color: black;
+                    "
+                  >
+                    <div>
+                      <input
+                        type="number"
+                        id="badges-count"
+                        class="borderless-number-input"
+                      />
+                    </div>
+                    <img
+                      src="../img/icons performance mgmt/desktop/d_badge.svg"
+                    />
+                  </div>
+                  <img
+                    onclick="UpdateBadges(0.5)"
+                    src="../img/icons performance mgmt/desktop/d_add_green.svg"
+                  />
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 10px;
+                  "
+                >
+                  <img
+                    src="../img/icons performance mgmt/desktop/reset.svg"
+                    onclick="resetbadges()"
+                  />
+                  <img
+                    src="../img/icons performance mgmt/desktop/info.svg"
+                    data-toggle="modal"
+                    data-target="#infobadges"
+                  />
+                </div>
+              </div>
+
+              <div class="rating-button-body">
+                <button
+                  type="button"
+                  class="btn rating-button"
+                  id="modal-rating-button-m"
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 6px 16px;
+                    border-radius: 12px;
+                    gap: 8px;
+                  "
+                >
+                  <div>
+                    <div
+                      id="modal-rating-text-m"
+                      style="
+                        color: #facc15;
+                        font-size: 20px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 5px;
+                      "
+                    >
+                      <img
+                        src="../img/icons performance mgmt/desktop/d_star_empty.svg"
+                      />
+                    </div>
+                    <div
+                      style="
+                        width: 90px;
+                        height: 16px;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 12px;
+                        line-height: 16px;
+                        color: #edf1f5;
+                        flex: none;
+                        order: 1;
+                        flex-grow: 0;
+                      "
+                    >
+                      Today's Avarage
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div>
+              <div>
+                <ol class="rounded-list" id="RatingBodyManager">
+                  <li>
+                    <div
+                      style="
+                        display: flex;
+
+                        justify-content: space-between;
+                        flex-wrap: nowrap;
+                        align-items: stretch;
+                      "
+                      class="rating-box"
+                    >
+                      <div>
+                        <h6 class="heading">Work Size</h6>
+                        <p class="p">
+                          Ability to do good amount of work
+                        </p>
+                      </div>
+                      <div class="star-rating">
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      style="display: flex; justify-content: space-between"
+                      class="rating-box"
+                    >
+                      <div>
+                        <h6 class="heading">Quality</h6>
+                        <p class="p">
+                          Driving positive business outcome
+                        </p>
+                      </div>
+                      <div class="star-rating">
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      style="display: flex; justify-content: space-between"
+                      class="rating-box"
+                    >
+                      <div>
+                        <h6 class="heading">Loom Uploads</h6>
+                        <p class="p">
+                          Submissions of daily Loom uploads
+                        </p>
+                      </div>
+                      <div class="star-rating">
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      style="display: flex; justify-content: space-between"
+                      class="rating-box"
+                    >
+                      <div>
+                        <h6 class="heading">Task Summary</h6>
+                        <p class="p">
+                          Keeping everyone updated with your work
+                        </p>
+                      </div>
+
+                      <div class="star-rating">
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      style="display: flex; justify-content: space-between"
+                      class="rating-box"
+                    >
+                      <div>
+                        <h6 class="heading">Explanation Clarity</h6>
+                        <p class="p">
+                          Driving results/solving problems with the founder 
+                        </p>
+                      </div>
+
+                      <div class="star-rating">
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                        <i
+                          class="fas fa-star"
+                          size="24px"
+                          style="color: #dddfe1;font-size:24px;"
+                        ></i>
+                      </div>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="gap: 30px">
+          <div class="col box">
+            <div class="box-heading">
+              <h5 class="card-title mb-0">Manager Feedback / Appreciation and Actionalbles</h5>
+              <span class="text-muted text-sm"
+                > <%= user.firstName %> <%= user.lastName %></span
+              >
+            </div>
+            <div class="box-body">
+              <textarea
+                class="textarea"
+                style="border-radius: 14px;
+                background: var(--surface-secondary, #FAFAFA);"
+                id="feedback"
+                placeholder="Write your feedback in points (if possible)."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="padding: 0.5rem">
+        <div style="float: right">
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            data-target="#myModalsm"
+            data-toggle="modal"
+          >
+            Cancel
+          </button>
+          <button type="button" class="btn btn-success" id="submitButton" data-dismiss="modal"   onclick="submitButtonModalRating()">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Large modal -->
+
+<div
+  class="modal docs-example-modal-sm"
+  tabindex="-1"
+  id="myModalsm"
+  role="dialog"
+  aria-labelledby="myExtraLargeModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div
+      class="modal-content"
+      id="myModalsm"
+      style="width: 350px; padding: 20px"
+    >
+      <div>
+        <h5>Discard Changes</h5>
+        <p>
+          Warning: This will revert all the changes made. Are you sure you want
+          to discard changes
+        </p>
+      </div>
+      <div style="display: flex; flex-direction: row; gap: 10px">
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          style="width: 140px"
+          data-dismiss="modal"
+        >
+          No thanks
+        </button>
+        <button
+          type="button"
+          class="btn btn-success discardbtn"
+          data-dismiss="modal"
+          onclick="closeModals()"
+        >
+          Discard
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- badges modal -->
+
+<div
+  class="modal fade docs-example-modal-sm"
+  id="infobadges"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="mySmallModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title h6" id="mySmallModalLabel">
+          <img src="../img/icons performance mgmt/desktop/d_badge.svg" />Badges
+          Meter
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div
+        class="modal-body"
+        style="
+          display: inline-flex;
+          padding: 24px 12px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 16px;
+          border-radius: 12px;
+        "
+      >
+        <div class="modal-badges-meter-col">
+          <div>
+            2<img src="../img/icons performance mgmt/desktop/d_badge.svg" />
+          </div>
+          <div class="modal-badges-meter-star">
+            <div>
+              5
+              <img
+                src="../img/icons performance mgmt/desktop/d_star_full.svg"
+              />
+            </div>
+            <div>
+              4.9
+              <img
+                src="../img/icons performance mgmt/desktop/d_star_full.svg"
+              />
+            </div>
+            <div>
+              4.8
+              <img
+                src="../img/icons performance mgmt/desktop/d_star_full.svg"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="modal-badges-meter-col">
+          <div>
+            1.5<img src="../img/icons performance mgmt/desktop/d_badge.svg" />
+          </div>
+          <div class="modal-badges-meter-star">
+            <div>
+              4.7
+              <img
+                src="../img/icons performance mgmt/desktop/d_star_full.svg"
+              />
+            </div>
+            <div>
+              4.6
+              <img
+                src="../img/icons performance mgmt/desktop/d_star_full.svg"
+              />
+            </div>
+            <div>
+              4.5
+              <img
+                src="../img/icons performance mgmt/desktop/d_star_full.svg"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="modal-badges-meter-col">
+          <div>
+            1<img src="../img/icons performance mgmt/desktop/d_badge.svg" />
+          </div>
+          <div class="modal-badges-meter-star">
+            <div>
+              4.4
+              <img
+                src="../img/icons performance mgmt/desktop/d_star_full.svg"
+              />
+            </div>
+            <div>
+              4.3
+              <img
+                src="../img/icons performance mgmt/desktop/d_star_full.svg"
+              />
+            </div>
+            <div>
+              4.2
+              <img
+                src="../img/icons performance mgmt/desktop/d_star_full.svg"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+  let employeeID;
+  let admindata = [];
+  let ratingList = [];
+  let employeeOnLeave=false;
+  let leaveType='';
+  let employeeUnrateable=false;
+  let datepickermodal=document.getElementById('datePickerModal');
+  datepickermodal.addEventListener('change',(event)=>{
+  openmodal(datepickermodal.value);
+})
+  function clickTab(i) {
+    let index = i;
+    for (let j = 1; j <= 3; j++) {
+      const videodiv = document.getElementById("modal-video-div-tab" + j);
+      const tab = document.getElementById("tab" + j);
+
+      if (j === index) {
+        videodiv.style.display = "block";
+        tab.classList.add("activeTab");
+      } else {
+        videodiv.style.display = "none";
+        tab.classList.remove("activeTab");
+      }
+    }
+  }
+  let badge = document.getElementById("badges-count");
+  function closeModals() {
+    const modals = document.getElementsByClassName("modal");
+    for (let i = 0; i < modals.length; i++) {
+      const modal = modals[i];
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
+
+      modal.style = "";
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+      const backdrop = document.getElementsByClassName("modal-backdrop");
+      if (backdrop.length > 0) {
+        backdrop[0].parentNode.removeChild(backdrop[0]);
+      }
+    }
+  }
+
+  let starRatingDivs = document.getElementsByClassName("star-rating");
+  const ratingtextm = document.getElementById("modal-rating-text-m");
+  const ratingbuttonm = document.getElementById("modal-rating-button-m");
+  const modalUserProfile = document.getElementById("modal-userprofile");
+  const feedbackTextarea = document.getElementById("feedback");
+  function getYouTubeVideoId(videoUrl) {
+    var youtubeRegex = /(?:https?:\/\/)?(?:www\.)?youtu\.be\/([^\s]+)/i;
+    var loomRegex =
+      /(?:https?:\/\/)?(?:www\.)?(?:loom\.com\/embed\/|loom\.com\/share\/)([a-zA-Z0-9]+)/i;
+
+    if (videoUrl.match(youtubeRegex)) {
+      // Extract video ID from YouTube URL
+      var match = videoUrl.match(youtubeRegex);
+      return match[1];
+    } else if (videoUrl.match(loomRegex)) {
+      // Extract video ID from Loom URL
+      var match = videoUrl.match(loomRegex);
+      return match[1];
+    } else {
+      // Invalid video URL
+      return null;
+    }
+  }
+  
+  function ChangeDate(date) {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    const formattedDate = new Date(date).toLocaleDateString(undefined, options);
+    return formattedDate;
+  }
+  let  date='';
+  let managerRatingBody = document.getElementById('RatingBodyManager');
+let managerRatingBodyStars = managerRatingBody.getElementsByTagName('i');
+
+  function sendData(admindata, data, newdate) {
+    date=newdate;
+    try{
+   
+    admindata = JSON.parse(admindata);
+    employeeID = data;
+    let KeyPointsBody=document.getElementById('KeyPointsBody');
+    let keypoints=admindata?.performanceRecord?.keyPoints;
+  
+    if(keypoints.length>0){
+      KeyPointsBody.style.display='flex'
+     let innerthml=`
+     <div style="color: var(--content-on-light-primary, #181818);
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 130%; /">Task Summary</div>
+     <ul>`
+      for(let i=0; i<keypoints.length;i++){
+        if(keypoints[i].length>0)
+    innerthml+=`<li>${keypoints[i]}</li>`
+      }
+      innerthml+=`</li>`
+      KeyPointsBody.innerHTML=innerthml;
+    }
+    else{
+      KeyPointsBody.style.display='none'
+    }
+    document.getElementById('modal-header-time').innerHTML=admindata?.performanceRecord?.submittedAt[0]==''?'Not Signed In':'Signed In @ '+admindata.performanceRecord?.submittedAt[0];
+    modalUserProfile.src = admindata.admin.image;
+    const headername = document.getElementById("modal-header-name");
+    headername.innerHTML = admindata.admin.firstName + "'s ";
+    const headerdate = document.querySelectorAll(".modal-header-date");
+    headerdate[0].innerHTML = ChangeDate(date);
+    headerdate[1].innerHTML = ChangeDate(date);
+    const taskimg = document.getElementById("modal-task-img");
+    const noonimg = document.getElementById("modal-noon-img");
+    const tasktext = document.getElementById("modal-task-text");
+    const noontext = document.getElementById("modal-noon-text");
+    const eodtext = document.getElementById("modal-eod-text");
+    const eodimg = document.getElementById("modal-eod-img");
+
+    if (
+      admindata.performanceRecord &&
+      admindata.performanceRecord.taskStatus[1]
+    ) {
+      taskimg.src = "../img/icons performance mgmt/desktop/tasks_green.svg  ";
+      tasktext.classList.add("text-success");
+      tasktext.classList.remove("text-normal");
+    } else {
+      taskimg.src =
+        "../img/icons performance mgmt/desktop/d_tasks_done_disabled_big.svg  ";
+      tasktext.classList.remove("text-success");
+      tasktext.classList.add("text-normal");
+    }
+
+    if (
+      admindata.performanceRecord &&
+      admindata.performanceRecord.taskStatus[3]
+    ) {
+      eodimg.src = "../img/icons performance mgmt/desktop/eod_green.svg  ";
+      eodtext.classList.add("text-success");
+      eodtext.classList.remove("text-normal");
+    } else {
+      eodimg.src =
+        "../img/icons performance mgmt/desktop/d_eod_disabled_big.svg";
+      eodtext.classList.remove("text-success");
+      eodtext.classList.add("text-normal");
+    }
+    if (
+      admindata.performanceRecord &&
+      admindata.performanceRecord.taskStatus[2]
+    ) {
+      noonimg.src =
+        "../img/icons performance mgmt/desktop/noon_update_green.svg";
+      noontext.classList.add("text-success");
+      noontext.classList.remove("text-normal");
+    } else {
+      noonimg.src =
+        "../img/icons performance mgmt/desktop/d_noon_done_disabled_big.svg";
+      noontext.classList.remove("text-success");
+      noontext.classList.add("text-normal");
+    }
+
+    for (let i = 1; i <= 3; i++) {
+      const videodiv = document.getElementById("modal-video-div-tab" + i);
+      const taskStatus = document.getElementById("modal-task-status" + i);
+      if (
+        admindata.performanceRecord &&
+        admindata.performanceRecord.links[i].length > 0
+      ) {
+        taskStatus.classList.add("btn-status-green");
+        if(admindata.performanceRecord.submittedAt && admindata.performanceRecord.submittedAt[i]!='')
+        taskStatus.innerHTML = `UPLOADED @ ${admindata.performanceRecord.submittedAt[i]}`;
+        else
+        taskStatus.innerHTML = "UPLOADED";
+        let videoId = getYouTubeVideoId(admindata.performanceRecord.links[i]);
+        var link = "";
+        if (admindata.performanceRecord.links[i].indexOf("loom") != -1)
+          link = `https://www.loom.com/embed/${videoId}`;
+        else link = `https://www.youtube.com/embed/${videoId}`;
+   
+        videodiv.innerHTML = `
+                     <div class="box-body" style="width:100%" >
+                    <iframe
+                      width="100%"
+                      height="330"
+                      class="youtube"
+                      src=${link}
+                      frameborder="0"
+                      allowfullscreen
+                      id="modal-youtube-video"
+                    ></iframe>
+                  </div>`;
+      } else {
+        taskStatus.classList.add("btn-status-red");
+        taskStatus.innerHTML = "PENDING";
+        videodiv.innerHTML = `
+        <div style="display: flex;flex-direction: column;justify-content: center;">
+                    <img src="../img/icons performance mgmt/desktop/video not uploaded.svg" style="margin:auto" width="327.39px;"
+                    height= "241.32px;">
+                    <div style="color:#48BF84;font-weight: 700;
+                    font-size: 32px;
+                    line-height: 24px;margin:auto;margin-top:20px">Video not Uploaded</div>
+                  </div>`;
+      }
+    }
+
+    if (admindata.performanceRecord && admindata.performanceRecord.rating > 0) {
+      badge.value = admindata.performanceRecord.badges;
+      ratingbuttonm.classList.add("black");
+      ratingtextm.innerHTML = `<input type='text'  id="rating-input" style="width: 40px;
+    background: none;
+    color: white;
+    border: none;" value="${admindata.performanceRecord.rating}"> <img src='../img/icons performance mgmt/desktop/d_star_full.svg'>`;
+     // ratingtextm.innerHTML = `${admindata.performanceRecord.rating} <img src='../img/icons performance mgmt/desktop/d_star_full.svg'>`;
+    } else {
+      badge.value = 0;
+      ratingbuttonm.classList.add("black");
+      ratingtextm.innerHTML = `<input type='text'  id="rating-input" style="width: 40px;
+    background: none;
+    color: white;
+    border: none;" value="0"> <img src='../img/icons performance mgmt/desktop/d_star_full.svg'>`;
+    }
+    
+    let box1=document.getElementById('UnpaidleaveCheckbox')
+    let box2=document.getElementById('PaidleaveCheckbox')
+    box1.checked=false;
+        box2.checked=false;
+    if(admindata.performanceRecord&&admindata.performanceRecord.onleave)
+    {
+      
+      let leaveType=admindata.performanceRecord.leaveType;
+     
+     if(leaveType=='unpaid')
+     {
+        box1.checked=true;
+        box2.checked=false;
+      }
+      else if(leaveType=='paid')
+      {
+        box1.checked=false;
+        box2.checked=true;
+     }
+    }
+    employeeOnLeave=admindata.performanceRecord?admindata.performanceRecord.onleave :false;
+    document.getElementById('UnrateableCheckbox').checked=admindata.performanceRecord?admindata.performanceRecord.unratable :false;
+    employeeUnrateable=admindata.performanceRecord?admindata.performanceRecord.unratable :false;
+    for (let i = 0; i < managerRatingBodyStars.length; i++) {
+      
+      let ratingbox = admindata.performanceRecord
+        ? admindata.performanceRecord.ratingList[Math.floor(i/5)]
+        : 0;
+     
+        
+        if (ratingbox > i%5) managerRatingBodyStars[i].style.color = "#facc15";
+        else managerRatingBodyStars[i].style.color = "#eff2f7";
+    }
+    feedbackTextarea.value = admindata.performanceRecord
+      ? admindata.performanceRecord.feedback
+      : "";
+    ratingList = admindata.performanceRecord
+      ? admindata.performanceRecord.ratingList
+      : [0, 0, 0, 0, 0];
+  }
+  catch(error)
+  { console.log(error); 
+
+  }
+}
+
+  let feedback = "";
+
+
+  feedbackTextarea.onchange = function () {
+    feedback = feedbackTextarea.value;
+  };
+
+ 
+
+  
+  function handleStarClick(index, stars,incr) {
+  
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].className='fas fa-star'
+        stars[i].style.color = "#eff2f7";
+    }
+    for (let i = 0; i < stars.length; i++) {
+      if (i <= index) {
+        stars[i].style.color = "#facc15"; // Yellow color
+      
+        if(incr<1 && index==i)
+        {
+          stars[i].className='fas fa-star-half'
+         
+        }
+      } else {
+        stars[i].style.color = "#eff2f7";
+      }
+    }
+  }
+
+  function UpdateBadges(extra) {
+    let badges = parseFloat(badge.value);
+    if (eval(badges + extra) >= 0) badge.value = eval(badges + extra);
+  }
+  
+  function resetbadges() {
+    var badges = parseFloat(badge.value);
+    if (avgrating / 5 > 4.7) badge.value = 2;
+    else if (avgrating / 5 > 4.4) badge.value = 1.5;
+    else if (avgrating / 5 > 4.1) badge.value = 1;
+    else badge.value = 0;
+  }
+
+
+  for (let i = 0; i < starRatingDivs.length; i++) {
+    let stars = starRatingDivs[i].getElementsByTagName("i");
+
+    for (let j = 0; j < stars.length; j++) {
+
+      stars[j].addEventListener("click", function (e) {
+        ChangeProperty(stars,j,e,i)
+      });
+    }
+  }
+
+  function ChangeProperty(stars,j,e,i)
+  {
+    let boxProperty = stars[j].getBoundingClientRect();
+       
+       let diff=e.clientX-boxProperty.x;
+     
+       if(diff<(boxProperty.width)/2)
+       {
+         ratingList[i] = j +0.5;
+         handleStarClick(j, stars,0.5);
+       }
+      else
+      { ratingList[i] = j + 1;
+       handleStarClick(j, stars,1)
+     }
+       avgrating =
+         ratingList[0] +
+         ratingList[1] +
+         ratingList[2] +
+         ratingList[3] +
+         ratingList[4];
+       if (avgrating > 0) {
+         if (avgrating / 5 > 4.7) badge.value = 2;
+         else if (avgrating / 5 > 4.4) badge.value = 1.5;
+         else if (avgrating / 5 > 4.1) badge.value = 1;
+         else badge.value = 0;
+         ratingbuttonm.classList.add("black");
+         ratingtextm.innerHTML = `<input type='text'  id="rating-input" style="width: 40px;
+   background: none;
+   color: white;
+   border: none;" value="${
+           avgrating / 5
+         }"> <img src='../img/icons performance mgmt/desktop/d_star_full.svg'>`;
+       }
+  }
+  
+//   // Attach hover event listeners
+// for (let i = 0; i < starRatingDivs.length; i++) {
+//     let stars = starRatingDivs[i].getElementsByTagName("i");
+
+//     for (let j = 0; j < stars.length; j++) {
+//         stars[j].addEventListener("mouseover", function (e) {
+//           let boxProperty = stars[j].getBoundingClientRect();
+       
+//        let diff=e.clientX-boxProperty.x;
+      
+//        if(diff<(boxProperty.width)/2)
+//        {
+//          handleStarClick(j, stars,0.5);
+//        }
+//       else
+//       { 
+//        handleStarClick(j, stars,1)
+//      }
+//         });
+
+//         stars[j].addEventListener("mouseout", function (e) {
+         
+
+//           let boxProperty = stars[j].getBoundingClientRect();
+       
+//        let diff=e.clientX-boxProperty.x;
+      
+//        if(diff<(boxProperty.width)/2)
+//        {
+//          handleStarClick(j, stars,0.5);
+//        }
+//       else
+//       { 
+//         stars[j].className='fas fa-star'
+//           stars[j].style.color = "#eff2f7";
+//      }
+//      if(e.clientY<boxProperty.y || e.clientY>boxProperty.y+boxProperty.height)
+//       {
+//         for (let i = 0; i < stars.length; i++) {
+//         stars[i].className='fas fa-star'
+//         stars[i].style.color = "#eff2f7";
+//     }
+//       }
+//         });
+//     }
+// }
+
+
+
+
+
+  function MarkLeaveforEmployee(id) {
+    let box1=document.getElementById('UnpaidleaveCheckbox')
+    let box2=document.getElementById('PaidleaveCheckbox')
+    
+  if(box1.checked || box2.checked)
+  {
+    if(box1.checked)
+    box2.checked=false,leaveType="unpaid";
+    else
+    box1.checked=false,leaveType="paid";
+    employeeOnLeave=true;
+  }
+  else{
+   box1.checked=false;
+   box2.checked=false;
+   leaveType=""
+    employeeOnLeave=false;
+  }
+}
+function MarkUnrateableforEmployee(id) {
+    let box=document.getElementById(id)
+  if (box.checked) {
+    employeeUnrateable = true;
+  } else {
+    employeeUnrateable = false;
+  }
+}
+
+
+  async function submitButtonModalRating () {
+      let badges = parseFloat(badge.value);
+      badges = Number(badges);
+      var rating=document.getElementById("rating-input")?document.getElementById("rating-input").value:0;
+      const data = {
+        badges,
+        leaveType,
+        date,
+        feedback,
+        ratingList,
+        employeeID,
+        rating,
+        onleave:employeeOnLeave,
+        unratable:employeeUnrateable
+      };
+
+      let response = await fetch('/mark/performance', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      setStreak();
+    }
+
+</script>
+

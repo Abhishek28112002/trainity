@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Purpose Application UI is the following chapter we've finished in order to create a complete and robust solution next to the already known Purpose Website UI."
+    />
+    <meta name="author" content="Webpixels" />
+    <title>Trainity Dashboard</title>
+    <!-- Favicon -->
+    <!-- Favicon -->
+    <link rel="icon" href="../img/custom/favicon-32x32.jpg" type="image/png" />
+    <!-- Font Awesome 5 -->
+    <link
+      rel="stylesheet"
+      href="../../libs/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+    <!-- Page CSS -->
+    <!-- <link
+      rel="stylesheet"
+      href="../../libs/quill/dist/quill.core.css"
+      type="text/css"
+    /> -->
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css" />
+    <link rel="stylesheet" href="../../libs/select2/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="../../libs/flatpickr/dist/flatpickr.min.css" />
+    <!-- Purpose CSS -->
+    <link rel="stylesheet" href="../../css/purpose.css" id="stylesheet" />
+    <style>
+      .task-div {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        margin-bottom: 1rem;
+      }
+      .judgementCriteria-div {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        margin-bottom: 1rem;
+      }
+      .relatedLink-div {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        margin-bottom: 1rem;
+      }
+    </style>
+    <!-- Hotjar Tracking Code for Admin Website -->
+<script>
+  (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:3534926,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+  </head>
+
+  <body class="application application-offset">
+    <div
+      class="modal fade fixed-right"
+      id="modal-products"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-vertical" role="document">
+        <div class="modal-content">
+          <div class="scrollbar-inner">
+            <div class="modal-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Application container -->
+    <div class="container-fluid container-application">
+      <!-- Sidenav -->
+      <%- include('partials/sidepanel'); -%>
+      <!-- Content -->
+      <div class="main-content footer-margin-mobile position-relative">
+        <!-- Main nav -->
+        <%- include('partials/navbar'); -%>
+
+        <!-- Page content -->
+        <div class="page-content">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <!-- Page title -->
+              <div class="page-title">
+                <div class="row justify-content-between align-items-center">
+                  <div
+                    class="col-md-6 d-flex align-items-center justify-content-between justify-content-md-start mb-3 mb-md-0"
+                  >
+                    <!-- Page title + Go Back button -->
+                    <div class="d-inline-block">
+                      <h5
+                        class="h4 d-inline-block font-weight-400 mb-0 text-white"
+                      >
+                        Create Project
+                      </h5>
+                    </div>
+                    <!-- Additional info -->
+                  </div>
+                </div>
+              </div>
+              <%- include('partials/utility-modals'); -%>
+              <form class="mt-4">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label class="form-control-label">Title</label>
+                      <input type="text" name="title" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">Course ID</label>
+                      <select name="courseID" class="custom-select">
+                        <option selected>Open this select menu</option>
+                        <% for(var course of courseList) { %>
+                        <option value="<%= course.courseID %>">
+                          <%= course.title %>
+                        </option>
+                        <% } %>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">Module ID</label>
+                      <select name="moduleID" class="custom-select">
+                        <option selected>Open this select menu</option>
+                        <% for(var module of moduleList) { %>
+                        <option value="<%= module._id %>">
+                          <%= module.title %>
+                        </option>
+                        <% } %>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">Project ID</label>
+                      <input
+                        type="number"
+                        name="projectID"
+                        class="form-control"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">Deadline</label>
+                      <input
+                        type="number"
+                        name="deadline"
+                        class="form-control"
+                        placeholder="Days after joining"
+                        min="0"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">Difficulty</label>
+                      <input
+                        type="number"
+                        name="difficulty"
+                        class="form-control"
+                        min="1"
+                        max="3"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">Points</label>
+                      <input
+                        type="number"
+                        name="points"
+                        class="form-control"
+                        min="0"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">PRD Link</label>
+                      <input
+                        type="text"
+                        name="prdLink"
+                        class="form-control"
+                        min="0"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label">Description</label>
+                      <textarea
+                        class="form-control"
+                        name="description"
+                        placeholder="Enter project description"
+                        rows="3"
+                        resize="none"
+                      ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <div
+                        style="
+                          display: grid;
+                          grid-template-columns: 1fr auto;
+                          margin-bottom: 1rem;
+                        "
+                      >
+                        <label class="form-control-label">Tasks</label>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-primary"
+                          onclick="addTask()"
+                        >
+                          Add Task
+                        </button>
+                      </div>
+                      <div id="taskList">
+                        <div class="task task-div">
+                          <div>
+                            <input
+                              type="text"
+                              class="form-control task-title"
+                              style="margin-bottom: 1rem"
+                              placeholder="Enter Task Title"
+                            />
+                            <textarea
+                              class="form-control task-description"
+                              placeholder="Enter Task Description"
+                              rows="2"
+                              resize="none"
+                            ></textarea>
+                          </div>
+                          <div style="align-items: center">
+                            <button
+                              type="button"
+                              class="btn btn-danger"
+                              onclick="removeTask(this)"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div
+                        style="
+                          display: grid;
+                          grid-template-columns: 1fr auto;
+                          margin-bottom: 1rem;
+                        "
+                      >
+                        <label class="form-control-label"
+                          >Judgement Criteria</label
+                        >
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-primary"
+                          onclick="addJudgementCriteria()"
+                        >
+                          Add Judgement Criteria
+                        </button>
+                      </div>
+                      <div id="judgementCriteriaList">
+                        <div class="judgementCriteria judgementCriteria-div">
+                          <div>
+                            <input
+                              type="text"
+                              class="form-control judgementCriteria-title"
+                              style="margin-bottom: 1rem"
+                              placeholder="Enter Judgement Criteria Title"
+                            />
+                            <textarea
+                              class="form-control judgementCriteria-description"
+                              placeholder="Enter Judgement Criteria Description"
+                              rows="2"
+                              resize="none"
+                            ></textarea>
+                          </div>
+                          <div style="align-items: center">
+                            <button
+                              type="button"
+                              class="btn btn-danger"
+                              onclick="removeJudgementCriteria(this)"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div
+                        style="
+                          display: grid;
+                          grid-template-columns: 1fr auto;
+                          margin-bottom: 1rem;
+                        "
+                      >
+                        <label class="form-control-label">Related Links</label>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-primary"
+                          onclick="addRelatedLink()"
+                        >
+                          Add Related Links
+                        </button>
+                      </div>
+                      <div id="relatedLinksList">
+                        <div class="relatedLink relatedLink-div">
+                          <div>
+                            <select
+                              class="custom-select relatedLinkType"
+                              style="margin-bottom: 1rem"
+                            >
+                              <option value="" selected>
+                                Choose Link Type
+                              </option>
+                              <option value="1">XLS</option>
+                              <option value="2">PDF</option>
+                              <option value="3">DOC</option>
+                              <option value="4">External URL</option>
+                            </select>
+                            <input
+                              type="text"
+                              class="form-control relatedLink-title"
+                              style="margin-bottom: 1rem"
+                              placeholder="Enter Related Link Title"
+                            />
+                            <input
+                              type="text"
+                              class="form-control relatedLink-subTitle"
+                              style="margin-bottom: 1rem"
+                              placeholder="Enter Related Link subTitle"
+                            />
+
+                            <input
+                              type="text"
+                              class="form-control relatedLink-URL"
+                              style="margin-bottom: 1rem"
+                              placeholder="Enter Related Link URL"
+                            />
+                          </div>
+                          <div style="align-items: center">
+                            <button
+                              type="button"
+                              class="btn btn-danger"
+                              onclick="removeRelatedLink(this)"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="mt-4">
+                        <label class="form-control-label">Project Icon</label>
+                        <input
+                          type="file"
+                          name="project-icon"
+                          id="project-icon"
+                          class="custom-input-file custom-input-file--2"
+                          data-multiple-caption="{count} files selected"
+                        />
+                        <label for="project-icon">
+                          <i class="fa fa-upload"></i>
+                          <span>Choose a file…</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="mt-4">
+                        <label class="form-control-label"
+                          >Project Explanation Video</label
+                        >
+                        <input
+                          type="file"
+                          name="explanation-video"
+                          id="explanation-video"
+                          class="custom-input-file custom-input-file--2"
+                          data-multiple-caption="{count} files selected"
+                        />
+                        <label for="explanation-video">
+                          <i class="fa fa-upload"></i>
+                          <span>Choose a file…</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- Task date -->
+                    <!-- Button trigger modal -->
+                    <button type="submit" class="btn btn-primary">
+                      Create
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- Footer -->
+        <%- include('partials/footer'); -%>
+      </div>
+    </div>
+    <!-- Scripts -->
+    <!-- Core JS - includes jquery, bootstrap, popper, in-view and sticky-kit -->
+    <script src="../../js/purpose.core.js"></script>
+    <!-- Page JS -->
+    <script src="../../libs/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="../../libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <!-- <script src="../../libs/quill/dist/quill.min.js"></script> -->
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="../../libs/select2/dist/js/select2.min.js"></script>
+    <script src="../../libs/flatpickr/dist/flatpickr.min.js"></script>
+    <!-- Purpose JS -->
+    <script src="../../js/purpose.js"></script>
+    <!-- Demo JS - remove it when starting your project -->
+    <script src="../../js/demo.js"></script>
+
+    <script>
+      function addTask() {
+        var taskList = document.getElementById("taskList");
+        var taskInput = document.createElement("div");
+        taskInput.classList.add("task");
+        taskInput.classList.add("task-div");
+        taskInput.innerHTML = `
+        
+                          <div>
+                            <input
+                              type="text"
+                              class="form-control"
+                              style="margin-bottom: 1rem"
+                              placeholder="Enter Task Title"
+                            />
+                            <textarea
+                              class="form-control"
+                              placeholder="Enter Task Description"
+                              rows="2"
+                              resize="none"
+                            ></textarea>
+                          </div>
+                          <div style="align-items: center">
+                            <button
+                              type="button"
+                              class="btn btn-danger"
+                              onclick="removeTask(this)"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        
+          `;
+        taskList.appendChild(taskInput);
+      }
+
+      function removeTask(button) {
+        const element = button.parentNode.previousElementSibling;
+        const parent = button.parentNode;
+        element.remove();
+        parent.remove();
+      }
+    </script>
+
+    <script>
+      function addJudgementCriteria() {
+        var judgementCriteriaList = document.getElementById(
+          "judgementCriteriaList"
+        );
+        var judgementCriteriaInput = document.createElement("div");
+        judgementCriteriaInput.classList.add("judgementCriteria");
+        judgementCriteriaInput.classList.add("judgementCriteria-div");
+        judgementCriteriaInput.innerHTML = `
+      
+        <div>
+                            <input
+                              type="text"
+                              class="form-control judgementCriteria-title"
+                              style="margin-bottom: 1rem"
+                              placeholder="Enter Judgement Criteria Title"
+                            />
+                            <textarea
+                              class="form-control judgementCriteria-description"
+                              placeholder="Enter Judgement Criteria Description"
+                              rows="2"
+                              resize="none"
+                            ></textarea>
+                          </div>
+                          <div style="align-items: center">
+                            <button
+                              type="button"
+                              class="btn btn-danger"
+                              onclick="removeJudgementCriteria(this)"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                      
+        `;
+        judgementCriteriaList.appendChild(judgementCriteriaInput);
+      }
+
+      function removeJudgementCriteria(button) {
+        const element = button.parentNode.previousElementSibling;
+        const parent = button.parentNode;
+        element.remove();
+        parent.remove();
+      }
+    </script>
+
+    <script>
+      function addRelatedLink() {
+        var relatedLinksList = document.getElementById("relatedLinksList");
+        var relatedLinkInput = document.createElement("div");
+        relatedLinkInput.classList.add("relatedLink");
+        relatedLinkInput.classList.add("relatedLink-div");
+        relatedLinkInput.innerHTML = `
+    
+        <div>
+                            <select
+                              class="custom-select relatedLinkType"
+                              style="margin-bottom: 1rem"
+                            >
+                              <option value="" selected>
+                                Choose Link Type
+                              </option>
+                              <option value="1">XLS</option>
+                              <option value="2">PDF</option>
+                              <option value="3">DOC</option>
+                              <option value="4">External URL</option>
+                            </select>
+                            <input
+                              type="text"
+                              class="form-control relatedLink-title"
+                              style="margin-bottom: 1rem"
+                              placeholder="Enter Related Link Title"
+                            />
+                            <input
+                              type="text"
+                              class="form-control relatedLink-subTitle"
+                              style="margin-bottom: 1rem"
+                              placeholder="Enter Related Link subTitle"
+                            />
+
+                            <input
+                              type="text"
+                              class="form-control relatedLink-URL"
+                              style="margin-bottom: 1rem"
+                              placeholder="Enter Related Link URL"
+                            />
+                          </div>
+                          <div style="align-items: center">
+                            <button
+                              type="button"
+                              class="btn btn-danger"
+                              onclick="removeRelatedLink(this)"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                    
+      `;
+        relatedLinksList.appendChild(relatedLinkInput);
+      }
+
+      function removeRelatedLink(button) {
+        const element = button.parentNode.previousElementSibling;
+        const parent = button.parentNode;
+        element.remove();
+        parent.remove();
+      }
+    </script>
+
+    <script>
+      const form = document.querySelector("form");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const courseID = form.courseID.value;
+        const moduleID = form.moduleID.value;
+        const projectID = form.projectID.value;
+        const deadline = form.deadline.value;
+        const difficulty = form.difficulty.value;
+        const points = form.points.value;
+        const title = form.title.value;
+        const description = form.description.value;
+        const prdLink = form.prdLink.value;
+
+        const projectIconFile =
+          document.querySelector("#project-icon").files[0];
+        const projectIconFileName = projectIconFile.name;
+        const projectIconContentType = projectIconFile.type;
+        const uploadType = "project";
+
+        const explanationVideoFile =
+          document.querySelector("#explanation-video").files[0];
+        const explanationVideoFileName = explanationVideoFile.name;
+        const explanationVideoContentType = explanationVideoFile.type;
+
+        const taskDivs = document.querySelectorAll(".task");
+        const tasks = [];
+
+        for (let i = 0; i < taskDivs.length; i++) {
+          const taskTitle = taskDivs[i].querySelector("input").value;
+          const taskDescription = taskDivs[i].querySelector("textarea").value;
+          if (taskTitle.length > 0 && taskDescription.length > 0)
+            tasks.push({
+              title: taskTitle,
+              description: taskDescription,
+            });
+        }
+
+        console.log(tasks);
+
+        const judgementCriteriaDivs =
+          document.querySelectorAll(".judgementCriteria");
+        const judgementCriteria = [];
+
+        for (let i = 0; i < judgementCriteriaDivs.length; i++) {
+          const judgementCriteriaTitle =
+            judgementCriteriaDivs[i].querySelector("input").value;
+          const judgementCriteriaDescription =
+            judgementCriteriaDivs[i].querySelector("textarea").value;
+          if (
+            judgementCriteriaTitle.length > 0 &&
+            judgementCriteriaDescription.length > 0
+          )
+            judgementCriteria.push({
+              title: judgementCriteriaTitle,
+              description: judgementCriteriaDescription,
+            });
+        }
+
+        console.log(judgementCriteria);
+
+        const relatedLinksDivs = document.querySelectorAll(".relatedLink");
+        const relatedLinks = [];
+
+        console.log(relatedLinksDivs);
+
+        for (let i = 0; i < relatedLinksDivs.length; i++) {
+          const relatedLinkTitle =
+            relatedLinksDivs[i].querySelector(".relatedLink-title").value;
+          const relatedLinkSubTitle = relatedLinksDivs[i].querySelector(
+            ".relatedLink-subTitle"
+          ).value;
+          const relatedLinkURL =
+            relatedLinksDivs[i].querySelector(".relatedLink-URL").value;
+
+          const relatedLinkType =
+            relatedLinksDivs[i].querySelector("select").value;
+
+          if (relatedLinkTitle.length > 0)
+            relatedLinks.push({
+              type: Number(relatedLinkType),
+              title: relatedLinkTitle,
+              subTitle: relatedLinkSubTitle,
+              url: relatedLinkURL,
+            });
+        }
+
+        console.log(relatedLinks);
+
+        $("#loadingModal").modal("show");
+        $("#errorModal").modal("hide");
+        $("#successModal").modal("hide");
+
+        const projectIconUrlRes = await fetch(
+          `/aws/get/preSignedUrl?fileName=${projectIconFileName}t&contentType=${projectIconContentType}&uploadType=${uploadType}`,
+          {
+            method: "GET",
+          }
+        );
+        const projectIconUrlData = await projectIconUrlRes.json();
+
+        const explanationVideoUrlRes = await fetch(
+          `/aws/get/preSignedUrl?fileName=${explanationVideoFileName}t&contentType=${explanationVideoContentType}&uploadType=${uploadType}&bucket=protected`,
+          {
+            method: "GET",
+          }
+        );
+        const explanationVideoUrlData = await explanationVideoUrlRes.json();
+
+        console.log(projectIconUrlData);
+        console.log(explanationVideoUrlData);
+
+        try {
+          const projectIconResponse = await fetch(projectIconUrlData.url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": projectIconContentType,
+            },
+            body: projectIconFile,
+          });
+          const explanationVideoResponse = await fetch(
+            explanationVideoUrlData.url,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": explanationVideoContentType,
+              },
+              body: explanationVideoFile,
+            }
+          );
+          if (
+            projectIconResponse.status === 200 &&
+            projectIconResponse.url &&
+            explanationVideoResponse.status === 200
+          ) {
+            console.log(projectIconResponse);
+            console.log(explanationVideoResponse);
+
+            const res = await fetch("/create/project", {
+              method: "POST",
+              body: JSON.stringify({
+                courseID,
+                moduleID,
+                projectID,
+                deadline,
+                difficulty,
+                points,
+                title,
+                description,
+                prdLink,
+                judgementCriteria,
+                tasks,
+                relatedLinks,
+                projectIcon: `https://dvfkpf9qxfl09.cloudfront.net/${projectIconUrlData.key}`,
+                explanationVideo: `https://d10ynt8nxjhucn.cloudfront.net/${explanationVideoUrlData.key}`,
+              }),
+              headers: { "Content-Type": "application/json" },
+            });
+
+            const data = await res.json();
+            console.log(data);
+
+            if (data._id) {
+              $("#loadingModal").modal("hide");
+              $("#errorModal").modal("hide");
+              $("#successModal").modal("show");
+            }
+          } else {
+            $("#loadingModal").modal("hide");
+            $("#errorModal").modal("show");
+            $("#successModal").modal("hide");
+          }
+        } catch (error) {
+          $("#loadingModal").modal("hide");
+          $("#errorModal").modal("show");
+          $("#successModal").modal("hide");
+          console.log(error);
+        }
+      });
+    </script>
+  </body>
+</html>
